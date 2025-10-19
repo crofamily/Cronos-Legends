@@ -19,6 +19,117 @@
             overflow-x: hidden;
         }
 
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+
         .hero {
             position: relative;
             height: 100vh;
@@ -32,6 +143,7 @@
                 rgba(0, 255, 100, 0.15) 50%,
                 rgba(255, 50, 50, 0.15) 100%
             ), #0a0a0a;
+            margin-top: 80px;
         }
 
         .hero::before {
@@ -109,7 +221,7 @@
 
         .subtitle {
             font-size: 1.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: #FFD700;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -117,59 +229,59 @@
         }
 
         .countdown-container {
-            margin: 50px 0;
-            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            margin: 20px auto 40px;
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 20px;
-            padding: 40px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px 30px;
         }
 
         .countdown-title {
-            font-size: 1.4rem;
-            color: #FFD700;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
             font-weight: 600;
+            text-transform: uppercase;
         }
 
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .countdown-item {
             background: rgba(255, 215, 0, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 25px 35px;
-            min-width: 110px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            min-width: 70px;
             transition: all 0.3s ease;
         }
 
         .countdown-item:hover {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.4);
         }
 
         .countdown-value {
-            font-size: 3.5rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: #FFD700;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
             font-family: 'Cinzel', serif;
         }
 
         .countdown-label {
-            font-size: 0.9rem;
-            color: #aaa;
+            font-size: 0.7rem;
+            color: #888;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 8px;
-            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 500;
         }
 
         .hero-text {
@@ -184,57 +296,104 @@
 
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-top: 40px;
         }
 
         .btn {
-            padding: 18px 45px;
-            font-size: 1rem;
+            padding: 16px 35px;
+            font-size: 0.95rem;
             font-weight: 700;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
         }
 
         .btn-game {
             background: linear-gradient(135deg, #00FF64, #00CC50);
             color: #000;
-            box-shadow: 0 5px 30px rgba(0, 255, 100, 0.3);
+            box-shadow: 0 5px 25px rgba(0, 255, 100, 0.4);
+            border: 2px solid transparent;
         }
 
         .btn-game:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 50px rgba(0, 255, 100, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(0, 255, 100, 0.6);
+            border-color: #00FF64;
         }
 
         .btn-discord {
             background: linear-gradient(135deg, #5865F2, #4752C4);
             color: #fff;
-            box-shadow: 0 5px 30px rgba(88, 101, 242, 0.3);
+            box-shadow: 0 5px 25px rgba(88, 101, 242, 0.3);
+            border: 2px solid transparent;
         }
 
         .btn-discord:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(88, 101, 242, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(88, 101, 242, 0.5);
+            border-color: #5865F2;
         }
 
         .btn-twitter {
             background: linear-gradient(135deg, #1DA1F2, #0c85d0);
             color: #fff;
-            box-shadow: 0 5px 30px rgba(29, 161, 242, 0.3);
+            box-shadow: 0 5px 25px rgba(29, 161, 242, 0.3);
+            border: 2px solid transparent;
         }
 
         .btn-twitter:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(29, 161, 242, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(29, 161, 242, 0.5);
+            border-color: #1DA1F2;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #FFD700;
+            border: 2px solid #FFD700;
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(255, 215, 0, 0.4);
         }
 
         .section {
@@ -563,14 +722,36 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">CRONOS LEGENDS</a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Home</a></li>
+                <li><a href="#nft-section">NFT</a></li>
+                <li><a href="#factions">Factions</a></li>
+                <li><a href="https://discord.gg/cronoslegends" target="_blank">Discord</a></li>
+                <li><a href="#" onclick="alert('Whitepaper coming soon!')">Whitepaper</a></li>
+                <li><a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a></li>
+                <li><a href="#" onclick="alert('FAQ coming soon!')">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="hero">
         <div class="particles" id="particles"></div>
         <div class="hero-content">
             <h1 class="logo">CRONOS LEGENDS</h1>
             <div class="subtitle">⚔️ Legends Awaken II 💎</div>
             
+            <p class="hero-text">
+                The saga continues. Ancient powers stir, and new forces enter the fray.<br>
+                The fate of the world rests on more than brute strength.
+            </p>
+
             <div class="countdown-container">
-                <div class="countdown-title">NFT Launch Countdown</div>
+                <div class="countdown-title">NFT Launch Dec 2025</div>
                 <div class="countdown">
                     <div class="countdown-item">
                         <div class="countdown-value" id="days">00</div>
@@ -591,20 +772,16 @@
                 </div>
             </div>
 
-            <p class="hero-text">
-                The saga continues. Ancient powers stir, and new forces enter the fray.
-                The fate of the world rests on more than brute strength.
-            </p>
             <div class="cta-buttons">
-                <a href="game.html" class="btn btn-game">🎮 PLAY TRINARI DEFENSE</a>
-                <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">Join Discord</a>
-                <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter">Follow on X</a>
+                <a href="game.html" class="btn btn-game"><span>🎮 Play Trinari Defense</span></a>
+                <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+                <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">⚔️ Three Factions, One Destiny</h2>
+        <h2 class="section-title" id="factions">⚔️ Three Factions, One Destiny</h2>
         <p class="section-subtitle">Choose your alliance in the battle for the realm</p>
         <div class="factions">
             <div class="faction-card blue">
@@ -631,7 +808,7 @@
         </div>
     </div>
 
-    <div class="nft-section">
+    <div class="nft-section" id="nft-section">
         <div class="section">
             <h2 class="section-title">💎 Legends Awaken II NFT Collection</h2>
             <div class="nft-announcement">
@@ -739,14 +916,38 @@
             this chapter is a defining moment — and the beginning of something far greater.
         </p>
         <div class="social-links">
-            <a href="game.html" class="btn btn-game">🎮 Play Game</a>
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">Discord</a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter">X (Twitter)</a>
+            <a href="game.html" class="btn btn-game"><span>🎮 Play Game</span></a>
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 X (Twitter)</span></a>
+            <a href="#" onclick="alert('Whitepaper coming soon!')" class="btn btn-outline"><span>📄 Whitepaper</span></a>
         </div>
         <p style="color: #666; margin-top: 60px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
 
     <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
         // Countdown Timer
         const countdownDate = new Date('December 20, 2025 12:00:00 GMT').getTime();
 
@@ -765,7 +966,7 @@
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 
             if (distance < 0) {
-                document.querySelector('.countdown-title').textContent = 'LEGENDS AWAKENED!';
+                document.querySelector('.countdown-title').textContent = 'NFTs Launched!';
                 document.getElementById('days').textContent = '00';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
