@@ -682,9 +682,31 @@
 
         .footer {
             text-align: center;
-            padding: 80px 20px;
+            padding: 80px 20px 40px;
             background: #000;
             border-top: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
         }
 
         .social-links {
@@ -729,11 +751,8 @@
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#">Home</a></li>
-                <li><a href="game.html">Play Game</a></li>
-                <li><a href="#nft-section">NFT</a></li>
-                <li><a href="#factions">Factions</a></li>
-                <li><a href="https://discord.gg/cronoslegends" target="_blank">Discord</a></li>
-                <li><a href="#" onclick="alert('Whitepaper coming soon!')">Whitepaper</a></li>
+                <li><a href="game.html">Games</a></li>
+                <li><a href="#nft-section">NFT & Tokens</a></li>
                 <li><a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a></li>
                 <li><a href="#" onclick="alert('FAQ coming soon!')">FAQ</a></li>
             </ul>
@@ -913,9 +932,19 @@
         <div class="social-links">
             <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
             <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
-            <a href="#" onclick="alert('Whitepaper coming soon!')" class="btn btn-outline"><span>📄 Whitepaper</span></a>
         </div>
-        <p style="color: #666; margin-top: 60px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+        
+        <div class="footer-links">
+            <a href="#factions">Factions</a>
+            <a href="#" onclick="alert('Whitepaper coming soon!')">Whitepaper</a>
+            <a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a>
+            <a href="#" onclick="alert('FAQ coming soon!')">FAQ</a>
+            <a href="#" onclick="alert('Contact info coming soon!')">Contact</a>
+            <a href="#" onclick="alert('Privacy policy coming soon!')">Privacy Policy</a>
+            <a href="#" onclick="alert('Terms coming soon!')">Terms of Service</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
 
     <script>
