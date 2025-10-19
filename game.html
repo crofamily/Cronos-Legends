@@ -116,6 +116,7 @@
             projectiles: [],
             enemyProjectiles: [],
             particles: [],
+            hearts: [],
             wave: 1,
             kills: 0,
             keys: {},
@@ -716,10 +717,23 @@
                         e.health--;
                         createParticles(p.x, p.y, '#FFD700', 5);
                         if (e.health <= 0) {
+                            const deadX = e.x;
+                            const deadY = e.y;
                             game.enemies.splice(i, 1);
                             game.kills++;
                             game.screenShake = 5;
-                            createParticles(e.x, e.y, '#FFD700', 15);
+                            createParticles(deadX, deadY, '#FFD700', 15);
+                            
+                            // 10% chance to drop a heart
+                            if (Math.random() < 0.1) {
+                                game.hearts.push({
+                                    x: deadX,
+                                    y: deadY,
+                                    life: 180, // 3 seconds at 60 fps
+                                    size: 12
+                                });
+                            }
+                            
                             updateUI();
                         }
                         return false;
@@ -734,6 +748,46 @@
                 ctx.fill();
                 ctx.shadowBlur = 0;
                 return p.x > 0 && p.x < 800 && p.y > 0 && p.y < 600;
+            });
+            
+            // Update and draw hearts
+            game.hearts = game.hearts.filter(h => {
+                h.life--;
+                
+                // Check if player picks up heart
+                const dist = Math.sqrt((h.x - game.player.x) ** 2 + (h.y - game.player.y) ** 2);
+                if (dist < game.player.size + h.size) {
+                    if (game.player.health < game.player.maxHealth) {
+                        game.player.health++;
+                        updateUI();
+                    }
+                    createParticles(h.x, h.y, '#FF69B4', 15);
+                    return false;
+                }
+                
+                // Blink effect in last second
+                const shouldDraw = h.life > 60 || Math.floor(h.life / 10) % 2 === 0;
+                
+                if (shouldDraw) {
+                    ctx.save();
+                    ctx.fillStyle = '#FF1493';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#FF69B4';
+                    
+                    // Draw heart shape
+                    ctx.beginPath();
+                    ctx.moveTo(h.x, h.y + h.size * 0.3);
+                    ctx.bezierCurveTo(h.x, h.y, h.x - h.size * 0.5, h.y - h.size * 0.5, h.x - h.size, h.y + h.size * 0.3);
+                    ctx.bezierCurveTo(h.x - h.size, h.y + h.size, h.x, h.y + h.size * 1.7, h.x, h.y + h.size * 1.7);
+                    ctx.bezierCurveTo(h.x, h.y + h.size * 1.7, h.x + h.size, h.y + h.size, h.x + h.size, h.y + h.size * 0.3);
+                    ctx.bezierCurveTo(h.x + h.size * 0.5, h.y - h.size * 0.5, h.x, h.y, h.x, h.y + h.size * 0.3);
+                    ctx.fill();
+                    
+                    ctx.shadowBlur = 0;
+                    ctx.restore();
+                }
+                
+                return h.life > 0;
             });
             
             if (game.enemies.length === 0) {
