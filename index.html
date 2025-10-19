@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronos Legends - Legends Awaken II</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Segoe+UI&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(to right, 
+                rgba(0, 100, 255, 0.3) 0%,
+                rgba(0, 255, 100, 0.3) 50%,
+                rgba(255, 50, 50, 0.3) 100%
+            ), #0a0a0a;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 100, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 100, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 50, 50, 0.2) 0%, transparent 50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFED4E);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite, logoGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+            }
+            50% { 
+                filter: drop-shadow(0 0 50px rgba(255, 215, 0, 1)) drop-shadow(0 0 80px rgba(255, 215, 0, 0.6));
+            }
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: subtitleGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes subtitleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(255, 215, 0, 1); }
+        }
+
+        .countdown-container {
+            margin: 40px 0;
+        }
+
+        .countdown-title {
+            font-size: 1.3rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px 30px;
+            min-width: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #ccc;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-game {
+            background: linear-gradient(135deg, #00FF64, #00CC50);
+            color: #000;
+            animation: gameButtonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gameButtonPulse {
+            0%, 100% { 
+                box-shadow: 0 5px 30px rgba(0, 255, 100, 0.4);
+            }
+            50% { 
+                box-shadow: 0 10px 50px rgba(0, 255, 100, 0.8);
+            }
+        }
+
+        .btn-game:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(0, 255, 100, 1);
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #7289DA);
+            color: #fff;
+        }
+
+        .btn-discord:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(88, 101, 242, 0.6);
+        }
+
+        .btn-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #14171A);
+            color: #fff;
+        }
+
+        .btn-twitter:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(29, 161, 242, 0.6);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .factions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .faction-card {
+            background: linear-gradient(135deg, rgba(26, 0, 51, 0.6), rgba(10, 10, 10, 0.8));
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faction-card.blue {
+            background: linear-gradient(135deg, rgba(0, 50, 150, 0.3), rgba(10, 10, 10, 0.8));
+        }
+
+        .faction-card.blue:hover {
+            border-color: #0064FF;
+            box-shadow: 0 20px 60px rgba(0, 100, 255, 0.4);
+        }
+
+        .faction-card.green {
+            background: linear-gradient(135deg, rgba(0, 100, 50, 0.3), rgba(10, 10, 10, 0.8));
+        }
+
+        .faction-card.green:hover {
+            border-color: #00FF64;
+            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.4);
+        }
+
+        .faction-card.red {
+            background: linear-gradient(135deg, rgba(150, 20, 20, 0.3), rgba(10, 10, 10, 0.8));
+        }
+
+        .faction-card.red:hover {
+            border-color: #FF3232;
+            box-shadow: 0 20px 60px rgba(255, 50, 50, 0.4);
+        }
+
+        .faction-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .faction-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .faction-name {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .faction-card.blue .faction-name {
+            color: #0064FF;
+        }
+
+        .faction-card.green .faction-name {
+            color: #00FF64;
+        }
+
+        .faction-card.red .faction-name {
+            color: #FF3232;
+        }
+
+        .faction-desc {
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .story-section {
+            background: linear-gradient(to right,
+                rgba(0, 100, 255, 0.1) 0%,
+                rgba(0, 255, 100, 0.1) 50%,
+                rgba(255, 50, 50, 0.1) 100%
+            );
+            padding: 100px 20px;
+        }
+
+        .story-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+
+        .trinari-section {
+            padding: 100px 20px;
+            background: #0a0a0a;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-box {
+            background: rgba(26, 0, 51, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            background: rgba(26, 0, 51, 0.6);
+            border-color: #FFD700;
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: #000;
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .social-links {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .countdown {
+                gap: 15px;
+            }
+            .countdown-item {
+                padding: 15px 20px;
+                min-width: 80px;
+            }
+            .countdown-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="logo">CRONOS LEGENDS</h1>
+            <div class="subtitle">⚔️ Legends Awaken II Coming Soon! 💀</div>
+            
+            <div class="countdown-container">
+                <div class="countdown-title">Launch Countdown</div>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="hero-text">
+                The saga continues. Ancient powers stir, and new forces enter the fray.<br>
+                The fate of the world rests on more than brute strength.
+            </p>
+            <div class="cta-buttons">
+                <a href="game.html" class="btn btn-game">🎮 PLAY TRINARI DEFENSE</a>
+                <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">Join Discord</a>
+                <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter">Follow on X</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">⚔️ Three Factions, One Destiny ⚔️</h2>
+        <div class="factions">
+            <div class="faction-card blue">
+                <div class="faction-icon">🛡️</div>
+                <h3 class="faction-name">Cronos Guardians</h3>
+                <p class="faction-desc">
+                    Noble defenders of order and tradition. Warriors bound by honor, wielding ancient power to protect the realm from chaos.
+                </p>
+            </div>
+            <div class="faction-card green">
+                <div class="faction-icon">🌿</div>
+                <h3 class="faction-name">Trinari</h3>
+                <p class="faction-desc">
+                    Mystical beings of nature, long hidden in silence. Elemental spirits now risen to restore balance through harmony or power.
+                </p>
+            </div>
+            <div class="faction-card red">
+                <div class="faction-icon">⚡</div>
+                <h3 class="faction-name">Chaos Horde</h3>
+                <p class="faction-desc">
+                    Fierce warriors driven by conquest and chaos. They seek dominance through raw power and unrelenting fury.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="story-section">
+        <div class="story-content">
+            <h2 class="section-title">✨ The Trinari Rise ✨</h2>
+            <p class="story-text">
+                Once ethereal whispers in the forests and winds, the Trinari now take physical form. 
+                They are not born of war, but of harmony — guardians of nature, bound to the very magic 
+                that sustains the world. Each Trinari embodies a primal element, from blazing fire sprites 
+                to shimmering crystal wisps.
+            </p>
+            <p class="story-text">
+                But don't be fooled by their soft features — the Trinari are powerful and purposeful. 
+                Their mission is clear: restore the balance broken by war and ambition. 
+                Whether through peace… or power.
+            </p>
+        </div>
+    </div>
+
+    <div class="trinari-section">
+        <div class="section">
+            <h2 class="section-title">🎨 More Than A Story 🎨</h2>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">🖼️</div>
+                    <h3 class="feature-title">Unique NFTs</h3>
+                    <p>Exclusive character collections featuring all three factions with rich lore and utility.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🎮</div>
+                    <h3 class="feature-title">Interactive Content</h3>
+                    <p>Engage with the evolving story through gameplay and community-driven events.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🏆</div>
+                    <h3 class="feature-title">Rewards System</h3>
+                    <p>Unlock exclusive rewards and benefits as you journey through the Cronos universe.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Living World</h3>
+                    <p>A constantly evolving ecosystem where your choices shape the future of the realm.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2 class="section-title">🔮 The Future Awaits 🔮</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px;">
+            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,<br>
+            this chapter is a defining moment — and the beginning of something far greater.
+        </p>
+        <div class="social-links">
+            <a href="game.html" class="btn btn-game">🎮 Play Game</a>
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">Discord</a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter">X (Twitter)</a>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        const countdownDate = new Date('December 20, 2025 12:00:00 GMT').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown-title').textContent = 'LEGENDS AWAKENED!';
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.width = Math.random() * 4 + 1 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll for buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 100);
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.faction-card, .feature-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a2a3a 50%, #0a1a0a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 40px 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, #FFD700, #00FF64, #00BFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 255, 100, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #c0c0c0;
+            margin-bottom: 40px;
+        }
+
+        .game-info {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .play-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            text-decoration: none;
+            padding: 20px 60px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .controls {
+            margin-top: 40px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        .controls h3 {
+            color: #00BFFF;
+            margin-bottom: 15px;
+        }
+
+        .controls ul {
+            list-style: none;
+        }
+
+        .controls li {
+            padding: 8px 0;
+            color: #c0c0c0;
+        }
+
+        .controls kbd {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 4px 8px;
+            border-radius: 5px;
+            color: #FFD700;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #00BFFF;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 TRINARI DEFENSE 🛡️</h1>
+        <p class="subtitle">Defend the forest against the Chaos Horde and Cronos Guardians!</p>
+
+        <div class="game-info">
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🌳</div>
+                    <h3>Play as Trinari</h3>
+                    <p>Wooden guardian with magical powers</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚔️</div>
+                    <h3>Epic Battles</h3>
+                    <p>Face skeletons and guardians</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">✨</div>
+                    <h3>Special Powers</h3>
+                    <p>Dash, Auto-Fire & Ultimate</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💖</div>
+                    <h3>Collect Hearts</h3>
+                    <p>Restore health and survive</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="game.html" class="play-button">▶ PLAY NOW</a>
+
+        <div class="controls">
+            <h3>🎮 Controls</h3>
+            <ul>
+                <li><kbd>WASD</kbd> or <kbd>Arrow Keys</kbd> - Move Trinari</li>
+                <li><kbd>Mouse Click</kbd> - Shoot magic projectiles</li>
+                <li><kbd>Space</kbd> - Dash (2s cooldown)</li>
+                <li><kbd>E</kbd> - Auto-Fire 20 shots (15s cooldown)</li>
+                <li><kbd>Q</kbd> - Ultimate AOE Blast (10s cooldown)</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>🌿 Trinari Defense © 2025 | <a href="https://github.com/yourusername/trinari-defense" target="_blank">View on GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>
