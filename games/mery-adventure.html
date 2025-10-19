@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mery's Adventure - Cronos City Runner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to bottom, #1a5490, #2d7bc7, #4a9fe5);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #4a9fe5;
+            color: #4a9fe5;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: rgba(74, 159, 229, 0.2);
+            transform: translateX(-5px);
+        }
+
+        h1 { 
+            color: #FFD700; 
+            text-shadow: 0 0 20px rgba(255,105,180,0.8);
+            margin-top: 20px;
+            font-size: 2.5rem;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background: linear-gradient(to bottom, #87CEEB, #4682B4);
+            border: 4px solid #FF69B4;
+            border-radius: 10px;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            background: linear-gradient(135deg, #2d7bc7, #1a5490);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 8px 25px rgba(74, 159, 229, 0.5); 
+        }
+
+        button:disabled { 
+            opacity: 0.5; 
+            cursor: not-allowed;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(0,0,0,0.7);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 3px solid #4a9fe5;
+        }
+
+        .stat-value { 
+            font-size: 2rem; 
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .controls-hint {
+            margin: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 2px solid #4a9fe5;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-top: 50px;
+            }
+
+            canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../game.html" class="back-button">← Back to Games</a>
+
+    <h1>👻 $MERY'S GHOST ADVENTURE 🏙️</h1>
+    
+    <div class="stats">
+        <div class="stat">
+            <div>⭐ Score</div>
+            <div class="stat-value" id="score">0</div>
+        </div>
+        <div class="stat">
+            <div>🏃 Distance</div>
+            <div class="stat-value" id="distance">0m</div>
+        </div>
+        <div class="stat">
+            <div>💰 Coins</div>
+            <div class="stat-value" id="coins">0</div>
+        </div>
+    </div>
+
+    <div class="controls-hint">
+        🎮 <strong>Controls:</strong> SPACE/UP to Jump | DOWN to Duck | Tap/Click on Mobile
+    </div>
+
+    <button onclick="startGame()" id="startBtn">▶ START RUNNING</button>
+    
+    <canvas id="canvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let game = {
+            running: false,
+            score: 0,
+            distance: 0,
+            coins: 0,
+            speed: 6,
+            player: {
+                x: 100,
+                y: 250,
+                width: 40,
+                height: 50,
+                velocityY: 0,
+                jumping: false,
+                ducking: false,
+                grounded: false
+            },
+            obstacles: [],
+            collectibles: [],
+            clouds: [],
+            buildings: [],
+            keys: {},
+            gravity: 0.8,
+            jumpPower: -15,
+            groundY: 300,
+            frame: 0
+        };
+
+        function startGame() {
+            game.running = true;
+            game.score = 0;
+            game.distance = 0;
+            game.coins = 0;
+            game.speed = 6;
+            game.obstacles = [];
+            game.collectibles = [];
+            game.clouds = [];
+            game.buildings = [];
+            game.frame = 0;
+            game.player.y = game.groundY - game.player.height;
+            game.player.velocityY = 0;
+            game.player.jumping = false;
+            game.player.ducking = false;
+            
+            document.getElementById('startBtn').disabled = true;
+            
+            for (let i = 0; i < 5; i++) {
+                game.clouds.push({
+                    x: Math.random() * 800,
+                    y: Math.random() * 150,
+                    width: 60 + Math.random() * 40,
+                    speed: 1 + Math.random()
+                });
+            }
+            
+            for (let i = 0; i < 4; i++) {
+                game.buildings.push({
+                    x: i * 250,
+                    height: 100 + Math.random() * 100,
+                    width: 120,
+                    speed: 3
+                });
+            }
+            
+            updateUI();
+            gameLoop();
+        }
+
+        function gameLoop() {
+            if (!game.running) return;
+            
+            game.frame++;
+            
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            game.clouds.forEach(cloud => {
+                cloud.x -= cloud.speed;
+                if (cloud.x + cloud.width < 0) {
+                    cloud.x = canvas.width;
+                    cloud.y = Math.random() * 150;
+                }
+                
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.beginPath();
+                ctx.arc(cloud.x, cloud.y, cloud.width/3, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.width/3, cloud.y, cloud.width/2.5, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.width/1.5, cloud.y, cloud.width/3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            game.buildings.forEach(building => {
+                building.x -= building.speed;
+                if (building.x + building.width < 0) {
+                    building.x = canvas.width;
+                    building.height = 100 + Math.random() * 100;
+                }
+                
+                ctx.fillStyle = '#666';
+                ctx.fillRect(building.x, game.groundY - building.height, building.width, building.height);
+                ctx.strokeStyle = '#444';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(building.x, game.groundY - building.height, building.width, building.height);
+                
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < Math.floor(building.height / 30); j++) {
+                        ctx.fillStyle = Math.random() > 0.5 ? '#FFD700' : '#333';
+                        ctx.fillRect(building.x + 20 + i * 35, game.groundY - building.height + 20 + j * 30, 20, 15);
+                    }
+                }
+            });
+            
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(0, game.groundY, canvas.width, canvas.height - game.groundY);
+            ctx.fillStyle = '#654321';
+            for (let i = 0; i < canvas.width; i += 40) {
+                ctx.fillRect(i, game.groundY, 30, 5);
+            }
+            
+            game.player.velocityY += game.gravity;
+            game.player.y += game.player.velocityY;
+            
+            if (game.player.y >= game.groundY - game.player.height) {
+                game.player.y = game.groundY - game.player.height;
+                game.player.velocityY = 0;
+                game.player.jumping = false;
+                game.player.grounded = true;
+            } else {
+                game.player.grounded = false;
+            }
+            
+            if ((game.keys.ArrowUp || game.keys[' ']) && game.player.grounded && !game.player.ducking) {
+                game.player.velocityY = game.jumpPower;
+                game.player.jumping = true;
+            }
+            
+            game.player.ducking = game.keys.ArrowDown && game.player.grounded;
+            
+            const playerHeight = game.player.ducking ? game.player.height / 2 : game.player.height;
+            const playerY = game.player.ducking ? game.player.y + game.player.height / 2 : game.player.y;
+            
+            // Draw Mery the Ghost
+            ctx.save();
+            
+            // Ghost body (white with wavy bottom)
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(game.player.x + 20, playerY + 15, 16, Math.PI, 0, false);
+            ctx.lineTo(game.player.x + 36, playerY + playerHeight - 8);
+            
+            // Wavy bottom
+            for (let i = 0; i < 3; i++) {
+                ctx.arc(game.player.x + 32 - i * 8, playerY + playerHeight - 5, 4, 0, Math.PI, false);
+            }
+            ctx.lineTo(game.player.x + 4, playerY + playerHeight - 8);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Ghost outline/shadow
+            ctx.strokeStyle = 'rgba(200, 200, 255, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Blue jacket
+            ctx.fillStyle = '#2d4e7d';
+            ctx.fillRect(game.player.x + 8, playerY + 22, game.player.width - 16, playerHeight/2.5);
+            
+            // White circle logo on jacket
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(game.player.x + 20, playerY + 28, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // "C" in the circle
+            ctx.strokeStyle = '#2d7bc7';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(game.player.x + 20, playerY + 28, 3, 0.5, Math.PI * 1.5, false);
+            ctx.stroke();
+            
+            // Sunglasses
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(game.player.x + 12, playerY + 12, 6, 4);
+            ctx.fillRect(game.player.x + 22, playerY + 12, 6, 4);
+            // Bridge
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(game.player.x + 18, playerY + 14);
+            ctx.lineTo(game.player.x + 22, playerY + 14);
+            ctx.stroke();
+            
+            // Ghost blush/cheeks (cute touch)
+            ctx.fillStyle = 'rgba(255, 182, 193, 0.4)';
+            ctx.beginPath();
+            ctx.ellipse(game.player.x + 10, playerY + 18, 3, 2, 0, 0, Math.PI * 2);
+            ctx.ellipse(game.player.x + 30, playerY + 18, 3, 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Floating effect (subtle animation)
+            const floatOffset = Math.sin(game.frame * 0.1) * 2;
+            ctx.globalAlpha = 0.3;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(game.player.x + 20, playerY + playerHeight + floatOffset, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            
+            ctx.restore();
+            
+            if (game.frame % 100 === 0) {
+                const type = Math.random();
+                if (type < 0.4) {
+                    game.obstacles.push({
+                        x: canvas.width,
+                        y: game.groundY - 80 - Math.random() * 50,
+                        width: 60,
+                        height: 40,
+                        type: 'fud'
+                    });
+                } else if (type < 0.7) {
+                    game.obstacles.push({
+                        x: canvas.width,
+                        y: game.groundY - 50,
+                        width: 40,
+                        height: 50,
+                        type: 'tax'
+                    });
+                } else {
+                    game.obstacles.push({
+                        x: canvas.width,
+                        y: game.groundY - 60,
+                        width: 50,
+                        height: 60,
+                        type: 'chart'
+                    });
+                }
+            }
+            
+            if (game.frame % 80 === 0 && Math.random() > 0.5) {
+                game.collectibles.push({
+                    x: canvas.width,
+                    y: game.groundY - 100 - Math.random() * 80,
+                    width: 20,
+                    height: 20,
+                    type: Math.random() > 0.7 ? 'token' : 'coin'
+                });
+            }
+            
+            game.obstacles = game.obstacles.filter(obs => {
+                obs.x -= game.speed;
+                
+                if (obs.type === 'fud') {
+                    ctx.fillStyle = '#555';
+                    ctx.beginPath();
+                    ctx.ellipse(obs.x + obs.width/2, obs.y + obs.height/2, obs.width/2, obs.height/2, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#FF0000';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('FUD', obs.x + 15, obs.y + 25);
+                } else if (obs.type === 'tax') {
+                    ctx.fillStyle = '#8B0000';
+                    ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+                    ctx.fillStyle = '#FFD700';
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillText('💸', obs.x + 10, obs.y + 35);
+                } else {
+                    ctx.fillStyle = '#FF4444';
+                    ctx.beginPath();
+                    ctx.moveTo(obs.x + obs.width/2, obs.y);
+                    ctx.lineTo(obs.x, obs.y + obs.height);
+                    ctx.lineTo(obs.x + obs.width, obs.y + obs.height);
+                    ctx.fill();
+                    ctx.strokeStyle = '#8B0000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                
+                if (obs.x < game.player.x + game.player.width &&
+                    obs.x + obs.width > game.player.x &&
+                    obs.y < playerY + playerHeight &&
+                    obs.y + obs.height > playerY) {
+                    gameOver();
+                    return false;
+                }
+                
+                return obs.x + obs.width > 0;
+            });
+            
+            game.collectibles = game.collectibles.filter(col => {
+                col.x -= game.speed;
+                
+                if (col.type === 'coin') {
+                    ctx.fillStyle = '#FFD700';
+                    ctx.beginPath();
+                    ctx.arc(col.x + col.width/2, col.y + col.height/2, col.width/2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#FFA500';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                } else {
+                    ctx.fillStyle = '#00CED1';
+                    ctx.beginPath();
+                    ctx.moveTo(col.x + col.width/2, col.y);
+                    ctx.lineTo(col.x + col.width, col.y + col.height/2);
+                    ctx.lineTo(col.x + col.width/2, col.y + col.height);
+                    ctx.lineTo(col.x, col.y + col.height/2);
+                    ctx.fill();
+                    ctx.fillStyle = '#FFD700';
+                    ctx.font = '12px Arial';
+                    ctx.fillText('$', col.x + 5, col.y + 15);
+                }
+                
+                if (col.x < game.player.x + game.player.width &&
+                    col.x + col.width > game.player.x &&
+                    col.y < playerY + playerHeight &&
+                    col.y + col.height > playerY) {
+                    if (col.type === 'coin') {
+                        game.coins++;
+                        game.score += 10;
+                    } else {
+                        game.coins += 5;
+                        game.score += 50;
+                    }
+                    return false;
+                }
+                
+                return col.x + col.width > 0;
+            });
+            
+            game.score += 1;
+            game.distance = Math.floor(game.score / 10);
+            
+            if (game.frame % 500 === 0) {
+                game.speed += 0.5;
+            }
+            
+            updateUI();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameOver() {
+            game.running = false;
+            alert(`Game Over!\n\n⭐ Final Score: ${game.score}\n🏃 Distance: ${game.distance}m\n💰 Coins Collected: ${game.coins}`);
+            document.getElementById('startBtn').disabled = false;
+        }
+
+        function updateUI() {
+            document.getElementById('score').textContent = game.score;
+            document.getElementById('distance').textContent = game.distance + 'm';
+            document.getElementById('coins').textContent = game.coins;
+        }
+
+        window.addEventListener('keydown', e => {
+            game.keys[e.key] = true;
+            if (e.key === ' ' || e.key === 'ArrowUp') e.preventDefault();
+        });
+        
+        window.addEventListener('keyup', e => {
+            game.keys[e.key] = false;
+        });
+
+        canvas.addEventListener('touchstart', handleTouch, { passive: false });
+        canvas.addEventListener('click', handleTouch);
+
+        function handleTouch(e) {
+            e.preventDefault();
+            if (!game.running) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const y = e.touches ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+            
+            if (y < canvas.height / 2) {
+                if (game.player.grounded && !game.player.ducking) {
+                    game.player.velocityY = game.jumpPower;
+                    game.player.jumping = true;
+                }
+            } else {
+                game.keys.ArrowDown = true;
+                setTimeout(() => {
+                    game.keys.ArrowDown = false;
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>
