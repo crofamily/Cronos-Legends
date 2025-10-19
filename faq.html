@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .hero-section {
+            padding: 150px 20px 80px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.05), transparent);
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .faq-category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #FFD700;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: #FFD700;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 2000px;
+        }
+
+        .faq-answer-content {
+            padding: 0 30px 25px;
+            color: #bbb;
+            line-height: 1.8;
+        }
+
+        .faq-answer-content ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .faq-answer-content li {
+            margin-bottom: 8px;
+        }
+
+        .faq-answer-content strong {
+            color: #FFD700;
+        }
+
+        .faq-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .faq-table td {
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contract-address {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            color: #FFD700;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .category-title {
+                font-size: 1.8rem;
+            }
+
+            .faq-question {
+                padding: 20px;
+                font-size: 1rem;
+            }
+
+            .faq-answer-content {
+                padding: 0 20px 20px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1 class="page-title">❓ Frequently Asked Questions</h1>
+        <p class="page-subtitle">Find answers to common questions about Cronos Legends, tokens, NFTs, and more</p>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search for answers...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all')">All</button>
+        <button class="tab-btn" onclick="filterCategory('basics')">Basics</button>
+        <button class="tab-btn" onclick="filterCategory('tokens')">Tokens & Trading</button>
+        <button class="tab-btn" onclick="filterCategory('nfts')">NFTs</button>
+        <button class="tab-btn" onclick="filterCategory('gameplay')">Gameplay & Rewards</button>
+        <button class="tab-btn" onclick="filterCategory('community')">Community</button>
+    </div>
+
+    <div class="container">
+        <!-- BASICS CATEGORY -->
+        <div class="faq-category" data-category="basics">
+            <h2 class="category-title"><span class="category-icon">🌟</span>The Basics</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What is Cronos Legends?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Cronos Legends is a Web3 fantasy universe built on the Cronos blockchain. It features collectible NFTs, immersive lore, and a unique battleground system where players can compete and earn crypto rewards. The project includes multiple tokens and NFTs across three powerful factions: the Chaos Horde, Cronos Guardians, and Trinari.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What are the Factions?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Cronos Legends features three powerful factions, each with unique traits and philosophy:
+                        <ul>
+                            <li><strong>🟣 Chaos Horde</strong> – Embodies raw destruction, power, and chaos. Warriors driven by conquest and fury.</li>
+                            <li><strong>🔵 Cronos Guardians</strong> – Represents order, protection, and celestial might. Noble defenders of tradition and honor.</li>
+                            <li><strong>🟢 Trinari</strong> – Mystical beings of nature embodying balance and ancient wisdom. Elemental spirits risen to restore harmony.</li>
+                        </ul>
+                        Your faction choice influences your journey, story progression, and available rewards throughout the Cronos Legends universe.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Is the project safe?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Yes! Cronos Legends is built with transparency and community trust as core principles. All tokenomics are publicly available, the development team is active and accessible, and liquidity pools are visible on-chain for verification. We aim to stand apart from typical short-lived projects by focusing on long-term value and community engagement.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Is there a roadmap?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Yes! Our roadmap outlines the project's development phases, upcoming features, and major milestones. Visit our website or Discord for the latest roadmap updates and announcements.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOKENS & TRADING CATEGORY -->
+        <div class="faq-category" data-category="tokens">
+            <h2 class="category-title"><span class="category-icon">💰</span>Tokens & Trading</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What is the $CLG Token?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        The $CLG token is the core utility and community token of Cronos Legends. It serves multiple purposes within the ecosystem:
+                        <ul>
+                            <li>Access to Battleground competitions and events</li>
+                            <li>Staking and liquidity provision rewards</li>
+                            <li>Governance rights for community decisions</li>
+                            <li>Special perks and benefits for holders</li>
+                            <li>Required for certain Discord game features</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Where can I buy the tokens?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        You can buy $CLG on VVS Finance or other supported DEXs on the Cronos chain. Always verify you're using the correct contract address:
+                        <div class="contract-address">0x08d9cb5100C306C2909B63415d7ff05268633b41</div>
+                        <strong>Important:</strong> Never buy from unofficial sources and always double-check the contract address to avoid scams.
+                        <br><br>
+                        <a href="https://vvs.finance" target="_blank" class="link-button">Trade on VVS Finance →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How can I add liquidity to $CLG?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>Step-by-step guide to adding liquidity on VVS Finance:</strong>
+                        <ol style="margin: 15px 0 15px 25px;">
+                            <li>Visit VVS Finance and connect your wallet</li>
+                            <li>Navigate to the "Liquidity" section</li>
+                            <li>Select $CLG and pair it with $CRO or another token</li>
+                            <li>Make sure you select the <strong>V2 pool</strong></li>
+                            <li>Enter the amount of either $CLG or $CRO you want to add</li>
+                            <li>VVS Finance will automatically calculate the matching amount for the other token</li>
+                            <li>Confirm the transaction in your wallet</li>
+                        </ol>
+                        LP providers may be eligible for future rewards and staking benefits. Always ensure you understand impermanent loss before providing liquidity.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What is $CRONUS and how does it relate to Cronos Legends?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        $CRONUS is a partner project token within the Cronos Legends ecosystem. Holders of $CRONUS receive special bonuses and benefits in Battlegrounds and other events. Check the rewards structure in the Gameplay & Rewards section for specific bonus details.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NFTS CATEGORY -->
+        <div class="faq-category" data-category="nfts">
+            <h2 class="category-title"><span class="category-icon">🖼️</span>NFTs & Collections</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How to receive free Legends Awaken II NFT?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🎁 Holder Reward Program</strong><br>
+                        Hold 5 or more Legends Awaken I NFTs (in your Crypto.com/NFT account or non-custodial wallet) to be eligible for 1 free Legends Awaken II NFT.
+                        <br><br>
+                        <strong>📅 Snapshot Details:</strong><br>
+                        The snapshot will be taken at a random time closer to the mint date to encourage active holding and prevent gaming the system.
+                        <br><br>
+                        <strong>🎮 Community Engagement:</strong><br>
+                        Stay active in the Cronos Legends Discord! Community members may find additional opportunities to receive Legends Awaken II NFTs through events, competitions, and special activities.
+                        <br><br>
+                        <strong>⚠️ Note:</strong> Faction allocation (Chaos/Guardian/Trinari) may vary and is subject to change based on availability and distribution requirements.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What are the different NFT tiers?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>Legends Awaken (1st Edition) NFT Tiers:</strong>
+                        <table class="faq-table">
+                            <tr>
+                                <th>NFT Type</th>
+                                <th>Battleground Bonus</th>
+                                <th>Special Benefits</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Awakened X</strong></td>
+                                <td>+$2.00</td>
+                                <td>Highest tier, exclusive perks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Awakened +</strong></td>
+                                <td>+$1.00</td>
+                                <td>Enhanced benefits</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Awakened</strong></td>
+                                <td>+$0.50</td>
+                                <td>Standard access</td>
+                            </tr>
+                        </table>
+                        <br>
+                        Each tier provides increasing benefits in Battlegrounds and other ecosystem activities.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAMEPLAY & REWARDS CATEGORY -->
+        <div class="faq-category" data-category="gameplay">
+            <h2 class="category-title"><span class="category-icon">🎮</span>Gameplay & Rewards</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How do the Battlegrounds, games, and competitions work?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>Battlegrounds Overview:</strong><br>
+                        Battlegrounds are competitive events where $CLG holders and NFT owners can enter and compete for massive prize pools. Winners are determined through various mechanics including skill, strategy, luck, or event-specific challenges.
+                        <br><br>
+                        <strong>📋 Entry Requirements:</strong><br>
+                        To participate in Battlegrounds, you must hold at least 1 $CLG token to receive the "$CLG Legend 💎" role in Discord, making you eligible for participation.
+                        <br><br>
+                        <strong>💎 Reward Structure:</strong>
+                        <table class="faq-table">
+                            <tr>
+                                <th>Role / Tier</th>
+                                <th>Reward Amount</th>
+                            </tr>
+                            <tr>
+                                <td>CLG Legend 💎</td>
+                                <td>$1.00</td>
+                            </tr>
+                            <tr>
+                                <td>Chaos Overlord / Guardian Overlord</td>
+                                <td>+$1.50</td>
+                            </tr>
+                            <tr>
+                                <td>Chaos Warrior / Guardian Warrior</td>
+                                <td>+$1.00</td>
+                            </tr>
+                            <tr>
+                                <td>Chaos Recruit / Guardian Recruit</td>
+                                <td>+$0.50</td>
+                            </tr>
+                            <tr>
+                                <td>Trinari 1% Holder</td>
+                                <td>+$1.00</td>
+                            </tr>
+                            <tr>
+                                <td>Trinari 0.5% Holder</td>
+                                <td>+$0.50</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <strong>🌸 CARA NFT Bonuses:</strong>
+                        <table class="faq-table">
+                            <tr>
+                                <th>CARA Trait</th>
+                                <th>Bonus</th>
+                            </tr>
+                            <tr>
+                                <td>CARA with Knife 🔪</td>
+                                <td>+$1.50</td>
+                            </tr>
+                            <tr>
+                                <td>CARA with Crown 👑</td>
+                                <td>+$1.00</td>
+                            </tr>
+                            <tr>
+                                <td>CARA with Rock 🪨</td>
+                                <td>+$0.50</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <strong>🤝 Partner Project ($CRONUS) Bonuses:</strong>
+                        <table class="faq-table">
+                            <tr>
+                                <th>Role</th>
+                                <th>Bonus</th>
+                            </tr>
+                            <tr>
+                                <td>Cronus Warrior</td>
+                                <td>+$1.50</td>
+                            </tr>
+                            <tr>
+                                <td>Cronus Overlord</td>
+                                <td>+$1.00</td>
+                            </tr>
+                            <tr>
+                                <td>Cronus Recruit</td>
+                                <td>+$0.50</td>
+                            </tr>
+                        </table>
+                        <br>
+                        All bonuses are stackable, allowing players to maximize their rewards by holding multiple qualifying assets and roles!
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What is Legendary Grind (Discord Game)?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🎮 Game Overview:</strong><br>
+                        Legendary Grind is an interactive Discord economy game where you can earn coins and convert them into real crypto rewards!
+                        <br><br>
+                        <strong>Three paths to rewards:</strong>
+                        <ul>
+                            <li>Earn coins ➝ Equip a faction weapon ➝ Buy shards ➝ Forge shards into $ token prizes</li>
+                            <li>Earn coins ➝ Unlock Mystery Boxes & NFT rewards</li>
+                            <li>Earn coins ➝ Unlock Faction Totems (teamwork required 💎)</li>
+                        </ul>
+                        <br>
+                        <strong>💎 Shard Mechanics:</strong>
+                        <ul>
+                            <li><strong>Max earn per user:</strong> 15 shards</li>
+                            <li><strong>Base value:</strong> $1 per shard</li>
+                            <li><strong>Bonuses:</strong> Stackable up to +100% (max $2 per shard)</li>
+                            <li><strong>Claim Points:</strong> At every 3 shards (3, 6, 9, 12, 15) – Open a support ticket</li>
+                            <li><strong>Total Potential:</strong> $15–$30 + NFT rewards + Mystery Boxes</li>
+                        </ul>
+                        <br>
+                        <strong>🛡️ Faction Weapon Requirement:</strong><br>
+                        To convert shards into $ rewards, you MUST hold one of the following weapons:
+                        <table class="faq-table">
+                            <tr>
+                                <th>Weapon</th>
+                                <th>Cost</th>
+                                <th>Reward Token</th>
+                            </tr>
+                            <tr>
+                                <td>Chaos Hammer ⚒️</td>
+                                <td>4,000 coins</td>
+                                <td>$CHAOS</td>
+                            </tr>
+                            <tr>
+                                <td>Guardian Swords ⚔️</td>
+                                <td>4,000 coins</td>
+                                <td>$GUARDIAN</td>
+                            </tr>
+                            <tr>
+                                <td>Trinari Wand 🪄</td>
+                                <td>4,000 coins</td>
+                                <td>$TRI</td>
+                            </tr>
+                        </table>
+                        <strong>⚠️ Important:</strong> Players without a weapon cannot claim shard rewards!
+                        <br><br>
+                        <strong>🎖️ Role Bonus Breakdown (Max +100%):</strong><br>
+                        <em>NFT Holders:</em>
+                        <ul>
+                            <li>Awakened (Required to play): +0%</li>
+                            <li>Awakened +: +10%</li>
+                            <li>Awakened X: +25%</li>
+                        </ul>
+                        <em>Token Holders:</em>
+                        <ul>
+                            <li>CLG Legend 💎: +10%</li>
+                            <li>Trinari 1%: +20%</li>
+                            <li>Chaos Recruit: +5%</li>
+                            <li>Chaos Warrior: +15%</li>
+                            <li>Chaos Overlord: +25%</li>
+                            <li>Guardian Recruit: +5%</li>
+                            <li>Guardian Warrior: +15%</li>
+                            <li>Guardian Overlord: +25%</li>
+                        </ul>
+                        <em>CARA NFT Holders:</em>
+                        <ul>
+                            <li>CARA w/ Crown 👑: +10%</li>
+                            <li>CARA w/ Knife 🔪: +20%</li>
+                        </ul>
+                        <strong>Note:</strong> All bonus roles stack up to a maximum of +100%!
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I play the Discord game? What are the commands?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🕹️ Getting Started:</strong><br>
+                        Type <code style="background: rgba(255,215,0,0.1); padding: 2px 6px; border-radius: 4px;">/</code> in Discord and select Aurix to see available commands. Some commands require specific roles.
+                        <br><br>
+                        <strong>🚀 Essential Commands (Basic Access):</strong>
+                        <ul>
+                            <li><strong>/daily</strong> – Claim daily reward (Requires: Awakened NFT)</li>
+                            <li><strong>/work</strong> – Earn coins through work (Requires: CLG Legend 💎)</li>
+                        </ul>
+                        <br>
+                        <strong>🎲 Gambling Commands (Role-Locked):</strong>
+                        <ul>
+                            <li><strong>/dice</strong> – Throw dice (Chaos Overlord / Guardian Overlord)</li>
+                            <li><strong>/guess</strong> – Number guessing game (Trinari 1%)</li>
+                            <li><strong>/rps</strong> – Rock Paper Scissors (CARA w/ Knife 🔪)</li>
+                            <li><strong>/roulette</strong> – Russian roulette (Awakened X)</li>
+                        </ul>
+                        <br>
+                        <strong>🛍️ General Commands (Open to All):</strong>
+                        <ul>
+                            <li><strong>/buy</strong> – Purchase tools or items from the shop</li>
+                            <li><strong>/coins</strong> – Check your coin balance</li>
+                            <li><strong>/economy-info</strong> – Learn about the economy system</li>
+                            <li><strong>/games</strong> – Get information on available games</li>
+                            <li><strong>/items</strong> – View your purchased items inventory</li>
+                            <li><strong>/richest</strong> – See the top coin holders leaderboard</li>
+                            <li><strong>/shop</strong> – Browse the item shop</li>
+                            <li><strong>/use</strong> – Use items from your inventory</li>
+                        </ul>
+                        <br>
+                        <strong>⚙️ Admin Commands:</strong>
+                        <ul>
+                            <li><strong>/give-coins</strong> – Give coins to users (Admin only)</li>
+                            <li><strong>/remove-coins</strong> – Remove coins from users (Admin only)</li>
+                            <li><strong>/give-item</strong> – Give inventory items to members (Admin only)</li>
+                        </ul>
+                        <br>
+                        <strong>💬 Want to transfer coins?</strong> Contact <strong>Awerghx</strong> in Discord for assistance.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How does the /daily command work?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>📆 Daily Rewards System:</strong><br>
+                        The <code style="background: rgba(255,215,0,0.1); padding: 2px 6px; border-radius: 4px;">/daily</code> command grants <strong>50–120 coins</strong> with a 24-hour cooldown.
+                        <br><br>
+                        <strong>🔥 Streak Bonuses:</strong><br>
+                        Build a 7-day streak for increasing rewards:
+                        <ul>
+                            <li><strong>Day 1:</strong> 50–120 coins (base)</li>
+                            <li><strong>Day 2:</strong> +10% bonus</li>
+                            <li><strong>Day 3:</strong> +20% bonus</li>
+                            <li><strong>Day 4:</strong> +40% bonus</li>
+                            <li><strong>Day 5:</strong> +80% bonus</li>
+                            <li><strong>Day 6:</strong> 2.5× multiplier</li>
+                            <li><strong>Day 7:</strong> 4× multiplier 🎉</li>
+                        </ul>
+                        <br>
+                        <strong>⚡ Economy Boosts:</strong><br>
+                        All rewards scale with any active Economy Boost events, potentially multiplying your earnings significantly!
+                        <br><br>
+                        <strong>🎉 Bonus Events:</strong><br>
+                        Keep an eye out for surprise Bonus Events where coin earnings are boosted by 2×, 3×, or even more. These limited-time windows can greatly accelerate your progress!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMUNITY CATEGORY -->
+        <div class="faq-category" data-category="community">
+            <h2 class="category-title"><span class="category-icon">💬</span>Community & Support</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Where can I join the community?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🌟 Join us and become a Legend:</strong>
+                        <br><br>
+                        <a href="https://discord.gg/cronoslegends" target="_blank" class="link-button">💬 Discord Community</a>
+                        <a href="https://x.com/CronosLegends" target="_blank" class="link-button">🐦 X (Twitter)</a>
+                        <a href="https://cronoslegends.com" target="_blank" class="link-button">🌐 Official Website</a>
+                        <br><br>
+                        Our Discord is the heart of the community, featuring:
+                        <ul>
+                            <li>Daily discussions and updates</li>
+                            <li>Interactive games and competitions</li>
+                            <li>Direct communication with the team</li>
+                            <li>Exclusive announcements and events</li>
+                            <li>Community-driven initiatives</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I get support or ask questions?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🎫 Support Ticket System:</strong><br>
+                        Open a support ticket in our Discord server for:
+                        <ul>
+                            <li>Technical issues or bugs</li>
+                            <li>Claiming shard rewards</li>
+                            <li>Wallet verification for NFT eligibility</li>
+                            <li>General questions and assistance</li>
+                        </ul>
+                        <br>
+                        Our community moderators and team members are active and ready to help!
+                        <br><br>
+                        <strong>💡 Pro Tip:</strong> Before opening a ticket, check this FAQ page and the Discord announcements channel – your question may already be answered!
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How can I contribute to the project?
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <strong>🤝 Ways to Contribute:</strong>
+                        <ul>
+                            <li><strong>Community Engagement:</strong> Be active in Discord, help new members, share ideas</li>
+                            <li><strong>Content Creation:</strong> Create art, memes, guides, or promotional content</li>
+                            <li><strong>Social Media:</strong> Share project updates and spread the word</li>
+                            <li><strong>Feedback:</strong> Provide constructive feedback to help improve the project</li>
+                            <li><strong>Competitions:</strong> Participate in community events and competitions</li>
+                        </ul>
+                        <br>
+                        Active and valuable community members are often recognized with special rewards, roles, and even NFTs! Your contributions matter and help build a stronger Cronos Legends universe.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Toggle FAQ items
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const wasActive = faqItem.classList.contains('active');
+            
+            // Close all other items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!wasActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            const categories = document.querySelectorAll('.faq-category');
+            
+            if (searchTerm === '') {
+                // Show all if search is empty
+                faqItems.forEach(item => item.style.display = 'block');
+                categories.forEach(cat => cat.style.display = 'block');
+                return;
+            }
+            
+            categories.forEach(category => {
+                let hasVisibleItem = false;
+                const items = category.querySelectorAll('.faq-item');
+                
+                items.forEach(item => {
+                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        hasVisibleItem = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Hide category if no items match
+                category.style.display = hasVisibleItem ? 'block' : 'none';
+            });
+        });
+
+        // Category filter
+        function filterCategory(category) {
+            const categories = document.querySelectorAll('.faq-category');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            // Update active tab
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter categories
+            if (category === 'all') {
+                categories.forEach(cat => cat.style.display = 'block');
+            } else {
+                categories.forEach(cat => {
+                    if (cat.dataset.category === category) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Clear search when filtering
+            searchBox.value = '';
+        }
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html><parameter>
