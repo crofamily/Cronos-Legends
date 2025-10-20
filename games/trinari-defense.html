@@ -129,7 +129,6 @@
             cursor: not-allowed; 
         }
 
-        /* Player Name Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -221,7 +220,6 @@
             justify-content: center;
         }
 
-        /* Leaderboard Button */
         .leaderboard-button {
             position: fixed;
             top: 20px;
@@ -243,7 +241,6 @@
             box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
         }
 
-        /* Leaderboard Modal */
         .leaderboard-modal {
             max-width: 800px;
             width: 95%;
@@ -338,16 +335,10 @@
             color: #888;
         }
 
-        /* Mobile Controls */
-        .mobile-controls {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 999;
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #FFD700;
         }
 
         .joystick-area {
@@ -423,7 +414,7 @@
             }
 
             .leaderboard-button {
-                top: 10px;
+                top: 60px;
                 right: 10px;
                 padding: 8px 16px;
                 font-size: 0.85rem;
@@ -431,7 +422,7 @@
 
             h1 {
                 font-size: 1.3rem;
-                margin-top: 50px;
+                margin-top: 100px;
                 margin-bottom: 10px;
             }
 
@@ -476,19 +467,6 @@
             .modal-title {
                 font-size: 1.5rem;
             }
-        }
-
-        @media (max-width: 768px) {
-            .leaderboard-button {
-                top: 60px;
-                right: 10px;
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
 
             .leaderboard-table th,
             .leaderboard-table td {
@@ -497,40 +475,42 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .back-button {
-                top: 10px;
-                left: 10px;
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
+        .firebase-notice {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            color: #FFD700;
+        }
 
-            h1 {
-                font-size: 1.5rem;
-                margin-top: 60px;
-            }
-
-            canvas {
-                max-width: 100%;
-                height: auto;
-            }
+        .firebase-notice strong {
+            display: block;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <a href="../game.html" class="back-button">
-        ← Back to Games
-    </a>
+    <button class="back-button" onclick="window.history.back()">
+        ← Back
+    </button>
 
     <button class="leaderboard-button" onclick="showLeaderboard()">
         🏆 Leaderboard
     </button>
 
+    <!-- Firebase Configuration Notice -->
+    <div class="firebase-notice">
+        <strong>⚠️ Firebase Setup Required</strong>
+        To enable the global leaderboard, you need to configure Firebase. See instructions in the code comments.
+    </div>
+
     <!-- Player Name Modal -->
     <div id="nameModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeNameModal()">✕</button>
-            <img src="../Images/trinari-logo.jpg" alt="Trinari" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin: 0 auto 20px; display: block; border: 3px solid #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);">
+            <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #00FF64, #5a8a4a); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); font-size: 4rem;">🌿</div>
             <h2 class="modal-title">🌿 Welcome, Trinari! 🌿</h2>
             <p class="modal-text">
                 Enter your name to begin your defense of the forest.<br>
@@ -557,12 +537,12 @@
             <h2 class="modal-title">🏆 Hall of Legends 🏆</h2>
             
             <div class="leaderboard-tabs">
-                <button class="tab-button active" onclick="switchTab('kills')">⚔️ Most Kills</button>
-                <button class="tab-button" onclick="switchTab('survival')">⏱️ Longest Survival</button>
+                <button class="tab-button active" onclick="switchTab(event, 'kills')">⚔️ Most Kills</button>
+                <button class="tab-button" onclick="switchTab(event, 'survival')">⏱️ Longest Survival</button>
             </div>
 
             <div class="leaderboard-content" id="leaderboardContent">
-                <!-- Content will be loaded here -->
+                <div class="loading">Loading leaderboard...</div>
             </div>
 
             <div class="modal-buttons" style="margin-top: 30px;">
@@ -615,85 +595,151 @@
         <div class="mobile-ability-btn" id="mobileUlt" ontouchstart="useUltimate()">💥</div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Player name and leaderboard management
-        let playerName = '';
-        let gameStartTime = 0;
-        let currentLeaderboardTab = 'kills';
+    <!-- Firebase SDKs - Updated versions -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-        // Mobile controls
-        let joystickActive = false;
-        let joystickAngle = 0;
-        let joystickDistance = 0;
-        let touchControls = {
-            moveX: 0,
-            moveY: 0,
-            shooting: false,
-            shootX: 0,
-            shootY: 0
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBdfIELtI9MoF6h0xMOEgCnC7_EZlckEz8",
+            authDomain: "cronos-legends.firebaseapp.com",
+            projectId: "cronos-legends",
+            storageBucket: "cronos-legends.firebasestorage.app",
+            messagingSenderId: "454787291077",
+            appId: "1:454787291077:web:e99237983f33edbd6f1dac"
         };
 
-        // Load leaderboard from localStorage
-        function getLeaderboard() {
+        // Initialize Firebase with error handling
+        let db = null;
+        let firebaseEnabled = false;
+
+        // Wait for Firebase to load
+        function initializeFirebase() {
+            try {
+                if (typeof firebase === 'undefined') {
+                    console.error("❌ Firebase SDK not loaded");
+                    return;
+                }
+                
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                firebaseEnabled = true;
+                console.log("✅ Firebase connected successfully!");
+                document.querySelector('.firebase-notice').style.display = 'none';
+            } catch (error) {
+                console.error("❌ Firebase initialization error:", error);
+                console.log("Falling back to localStorage");
+            }
+        }
+
+        // Initialize after page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeFirebase);
+        } else {
+            initializeFirebase();
+        }
+        
+        // ============================================
+        // LEADERBOARD FUNCTIONS
+        // ============================================
+
+        async function getLeaderboard() {
+            if (firebaseEnabled && db) {
+                const leaderboard = { kills: [], survival: [] };
+                
+                try {
+                    // Get kills leaderboard from Firestore
+                    const killsSnapshot = await db.collection('trinari_leaderboard')
+                        .orderBy('kills', 'desc')
+                        .limit(100)
+                        .get();
+                    
+                    killsSnapshot.forEach(doc => {
+                        leaderboard.kills.push(doc.data());
+                    });
+                    
+                    // Get survival leaderboard from Firestore
+                    const survivalSnapshot = await db.collection('trinari_leaderboard')
+                        .orderBy('survivalTime', 'desc')
+                        .limit(100)
+                        .get();
+                    
+                    survivalSnapshot.forEach(doc => {
+                        leaderboard.survival.push(doc.data());
+                    });
+                    
+                    // Sort survival by survivalTime
+                    leaderboard.survival.sort((a, b) => b.survivalTime - a.survivalTime);
+                    
+                    return leaderboard;
+                } catch (error) {
+                    console.error('Error loading leaderboard from Firebase:', error);
+                    // Fallback to localStorage
+                    return getLocalLeaderboard();
+                }
+            } else {
+                // Use localStorage as fallback
+                return getLocalLeaderboard();
+            }
+        }
+
+        function getLocalLeaderboard() {
             const stored = localStorage.getItem('trinariLeaderboard');
             return stored ? JSON.parse(stored) : { kills: [], survival: [] };
         }
 
-        function saveLeaderboard(leaderboard) {
+        async function saveScore(kills, wave, survivalTime) {
+            if (!playerName) return;
+            
+            const entry = {
+                name: playerName,
+                kills: kills,
+                wave: wave,
+                survivalTime: survivalTime,
+                date: new Date().toISOString(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
+            };
+            
+            if (firebaseEnabled && db) {
+                try {
+                    await db.collection('trinari_leaderboard').add(entry);
+                    console.log('✅ Score saved to Firebase!');
+                } catch (error) {
+                    console.error('❌ Error saving score to Firebase:', error);
+                    // Fallback to localStorage
+                    saveLocalScore(entry);
+                }
+            } else {
+                // Use localStorage as fallback
+                saveLocalScore(entry);
+            }
+        }
+
+        function saveLocalScore(entry) {
+            const leaderboard = getLocalLeaderboard();
+            
+            leaderboard.kills.push(entry);
+            leaderboard.kills.sort((a, b) => b.kills - a.kills);
+            leaderboard.kills = leaderboard.kills.slice(0, 100);
+            
+            leaderboard.survival.push(entry);
+            leaderboard.survival.sort((a, b) => b.survivalTime - a.survivalTime);
+            leaderboard.survival = leaderboard.survival.slice(0, 100);
+            
             localStorage.setItem('trinariLeaderboard', JSON.stringify(leaderboard));
+            console.log('💾 Score saved to localStorage');
         }
 
-        function submitName() {
-            const input = document.getElementById('playerNameInput');
-            const name = input.value.trim();
-            
-            if (name === '') {
-                alert('Please enter a name to continue!');
-                return;
-            }
-            
-            playerName = name;
-            document.getElementById('nameModal').classList.add('hidden');
-            
-            // Enable the start button after name is entered
-            document.getElementById('startBtn').disabled = false;
-        }
-
-        function closeNameModal() {
-            // Close modal and navigate back to game hub
-            if (confirm('Are you sure you want to exit? You will return to the game hub.')) {
-                window.location.href = '../game.html';
-            }
-        }
-
-        function showLeaderboard() {
-            document.getElementById('leaderboardModal').classList.remove('hidden');
-            displayLeaderboard(currentLeaderboardTab);
-        }
-
-        function closeLeaderboard() {
-            document.getElementById('leaderboardModal').classList.add('hidden');
-        }
-
-        function switchTab(tab) {
-            currentLeaderboardTab = tab;
-            
-            // Update tab buttons
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            displayLeaderboard(tab);
-        }
-
-        function displayLeaderboard(type) {
-            const leaderboard = getLeaderboard();
-            const data = leaderboard[type] || [];
+        async function displayLeaderboard(type) {
             const content = document.getElementById('leaderboardContent');
+            content.innerHTML = '<div class="loading">Loading leaderboard...</div>';
+            
+            const leaderboard = await getLeaderboard();
+            const data = leaderboard[type] || [];
             
             if (data.length === 0) {
                 content.innerHTML = '<div class="empty-leaderboard">No records yet. Be the first to set a score!</div>';
@@ -744,30 +790,71 @@
             return `${mins}m ${secs}s`;
         }
 
-        function saveScore(kills, wave, survivalTime) {
-            if (!playerName) return;
+        // ============================================
+        // UI FUNCTIONS
+        // ============================================
+
+        let playerName = '';
+        let gameStartTime = 0;
+        let currentLeaderboardTab = 'kills';
+
+        function submitName() {
+            const input = document.getElementById('playerNameInput');
+            const name = input.value.trim();
             
-            const leaderboard = getLeaderboard();
-            const entry = {
-                name: playerName,
-                kills: kills,
-                wave: wave,
-                survivalTime: survivalTime,
-                date: new Date().toISOString()
-            };
+            if (name === '') {
+                alert('Please enter a name to continue!');
+                return;
+            }
             
-            // Add to kills leaderboard
-            leaderboard.kills.push(entry);
-            leaderboard.kills.sort((a, b) => b.kills - a.kills);
-            leaderboard.kills = leaderboard.kills.slice(0, 100); // Keep top 100
-            
-            // Add to survival leaderboard
-            leaderboard.survival.push(entry);
-            leaderboard.survival.sort((a, b) => b.survivalTime - a.survivalTime);
-            leaderboard.survival = leaderboard.survival.slice(0, 100); // Keep top 100
-            
-            saveLeaderboard(leaderboard);
+            playerName = name;
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('startBtn').disabled = false;
         }
+
+        function closeNameModal() {
+            if (confirm('Are you sure you want to exit?')) {
+                window.history.back();
+            }
+        }
+
+        async function showLeaderboard() {
+            document.getElementById('leaderboardModal').classList.remove('hidden');
+            await displayLeaderboard(currentLeaderboardTab);
+        }
+
+        function closeLeaderboard() {
+            document.getElementById('leaderboardModal').classList.add('hidden');
+        }
+
+        async function switchTab(event, tab) {
+            currentLeaderboardTab = tab;
+            
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            await displayLeaderboard(tab);
+        }
+
+        // ============================================
+        // GAME CODE
+        // ============================================
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let joystickActive = false;
+        let joystickAngle = 0;
+        let joystickDistance = 0;
+        let touchControls = {
+            moveX: 0,
+            moveY: 0,
+            shooting: false,
+            shootX: 0,
+            shootY: 0
+        };
         
         let game = {
             running: false,
@@ -1166,13 +1253,11 @@
                 createParticles(game.player.x, game.player.y, '#00FF64', 2);
             }
             
-            // Desktop controls
             if (game.keys.w || game.keys.ArrowUp) game.player.y -= speed;
             if (game.keys.s || game.keys.ArrowDown) game.player.y += speed;
             if (game.keys.a || game.keys.ArrowLeft) game.player.x -= speed;
             if (game.keys.d || game.keys.ArrowRight) game.player.x += speed;
             
-            // Mobile joystick controls
             if (joystickActive) {
                 game.player.x += touchControls.moveX * speed;
                 game.player.y += touchControls.moveY * speed;
@@ -1267,16 +1352,7 @@
                         createParticles(game.player.x, game.player.y, '#FF0000', 10);
                         updateUI();
                         if (game.player.health <= 0) {
-                            // Calculate survival time
-                            const survivalTime = Math.floor((Date.now() - gameStartTime) / 1000);
-                            
-                            // Save score to leaderboard
-                            saveScore(game.kills, game.wave, survivalTime);
-                            
-                            alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score has been saved to the leaderboard!`);
-                            game.running = false;
-                            document.getElementById('startBtn').disabled = false;
-                            ctx.restore();
+                            endGame();
                             return false;
                         }
                     }
@@ -1325,12 +1401,7 @@
                     createParticles(game.player.x, game.player.y, '#FF0000', 10);
                     updateUI();
                     if (game.player.health <= 0) {
-                        const survivalTime = Math.floor((Date.now() - gameStartTime) / 1000);
-                        saveScore(game.kills, game.wave, survivalTime);
-                        alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score has been saved to the leaderboard!`);
-                        game.running = false;
-                        document.getElementById('startBtn').disabled = false;
-                        ctx.restore();
+                        endGame();
                         return false;
                     }
                 }
@@ -1350,11 +1421,7 @@
                     createParticles(game.player.x, game.player.y, '#FF0000', 8);
                     updateUI();
                     if (game.player.health <= 0) {
-                        const survivalTime = Math.floor((Date.now() - gameStartTime) / 1000);
-                        saveScore(game.kills, game.wave, survivalTime);
-                        alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score has been saved to the leaderboard!`);
-                        game.running = false;
-                        document.getElementById('startBtn').disabled = false;
+                        endGame();
                         return false;
                     }
                     return false;
@@ -1477,6 +1544,16 @@
             requestAnimationFrame(gameLoop);
         }
 
+        function endGame() {
+            const survivalTime = Math.floor((Date.now() - gameStartTime) / 1000);
+            
+            saveScore(game.kills, game.wave, survivalTime);
+            
+            alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score has been saved to the leaderboard!`);
+            game.running = false;
+            document.getElementById('startBtn').disabled = false;
+        }
+
         function updateUI() {
             document.getElementById('health').textContent = game.player.health;
             document.getElementById('wave').textContent = game.wave;
@@ -1522,8 +1599,8 @@
             }
         }
 
+        // Event Listeners
         window.addEventListener('keydown', e => {
-            // Don't trigger game controls when typing in input fields
             if (document.activeElement.tagName === 'INPUT') {
                 return;
             }
@@ -1535,7 +1612,6 @@
         });
         
         window.addEventListener('keyup', e => {
-            // Don't affect game state when typing in input fields
             if (document.activeElement.tagName === 'INPUT') {
                 return;
             }
@@ -1657,7 +1733,6 @@
             createParticles(staffX, staffY, game.waveColor, 5);
         }
 
-        // Track mouse/touch position for aiming
         canvas.addEventListener('touchmove', (e) => {
             const touch = e.touches[0];
             const rect = canvas.getBoundingClientRect();
@@ -1668,10 +1743,9 @@
             game.mouseY = (touch.clientY - rect.top) * scaleY;
         }, { passive: true });
 
-        // Disable start button initially
+        // Initialize
         document.getElementById('startBtn').disabled = true;
         
-        // Show name modal on page load
         window.addEventListener('load', () => {
             document.getElementById('playerNameInput').focus();
         });
