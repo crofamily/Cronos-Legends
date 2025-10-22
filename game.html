@@ -345,6 +345,27 @@
                 </div>
             </div>
 
+            <!-- Crow with Knife -->
+            <div class="game-card" onclick="playGame('crow-knife')">
+                <div class="status-badge status-new">New</div>
+                <div class="game-thumbnail" style="background: linear-gradient(135deg, #0a0a14, #1a1a3e);">
+                    🦅🔪
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">Crow with Knife</h3>
+                    <div class="game-project">Partner Project</div>
+                    <p class="game-description">
+                        Play as Magnus the crow on a stealth mission! Steal knives from crime scenes, avoid police detection, and uncover a dark conspiracy across 5 thrilling levels.
+                    </p>
+                    <div class="game-tags">
+                        <span class="tag">Stealth</span>
+                        <span class="tag">3D Flight</span>
+                        <span class="tag">Adventure</span>
+                    </div>
+                    <button class="play-button">▶ Play Now</button>
+                </div>
+            </div>
+
             <!-- Placeholder for Future Game 1 -->
             <div class="game-card coming-soon">
                 <div class="status-badge status-coming-soon">Coming Soon</div>
@@ -444,6 +465,9 @@
                     break;
                 case 'mery-adventure':
                     window.location.href = 'games/mery-adventure.html';
+                    break;
+                case 'crow-knife':
+                    window.location.href = 'games/crow-knife.html';
                     break;
                 // Add more game routes here as you create them
                 default:
