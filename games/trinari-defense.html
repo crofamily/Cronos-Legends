@@ -1716,12 +1716,18 @@
             const targetX = (touch.clientX - rect.left) * scaleX;
             const targetY = (touch.clientY - rect.top) * scaleY;
 
+            // Update aim point to where we tapped
+            game.mouseX = targetX;
+            game.mouseY = targetY;
+
+            // Calculate staff position based on tap location
             const dx = targetX - game.player.x;
             const dy = targetY - game.player.y;
             const angle = Math.atan2(dy, dx);
             const staffX = game.player.x + Math.cos(angle) * 35;
             const staffY = game.player.y + Math.sin(angle) * 35;
 
+            // Shoot from staff toward tap point
             const shootDx = targetX - staffX;
             const shootDy = targetY - staffY;
             const shootDist = Math.sqrt(shootDx * shootDx + shootDy * shootDy);
@@ -1736,15 +1742,8 @@
             createParticles(staffX, staffY, game.waveColor, 5);
         }
 
-        canvas.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            
-            game.mouseX = (touch.clientX - rect.left) * scaleX;
-            game.mouseY = (touch.clientY - rect.top) * scaleY;
-        }, { passive: true });
+        // Touch move on canvas removed - aiming only happens on tap
+        // This prevents the staff from following your finger while using joystick
 
         // Initialize
         document.getElementById('startBtn').disabled = true;
