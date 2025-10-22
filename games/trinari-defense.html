@@ -1036,9 +1036,8 @@
             ctx.fill();
             ctx.shadowBlur = 0;
             
-            // Calculate angle from player to touch point for staff position
-            const dx = targetX - game.player.x;
-            const dy = targetY - game.player.y;
+            const dx = game.mouseX - game.player.x;
+            const dy = game.mouseY - game.player.y;
             const angle = Math.atan2(dy, dx);
             const staffLength = 35;
             const staffX = game.player.x + Math.cos(angle) * staffLength;
@@ -1635,14 +1634,12 @@
             const targetX = e.clientX - rect.left;
             const targetY = e.clientY - rect.top;
             
-            // Calculate angle from player to touch point for staff position
-            const dx = targetX - game.player.x;
-            const dy = targetY - game.player.y;
+            const dx = game.mouseX - game.player.x;
+            const dy = game.mouseY - game.player.y;
             const angle = Math.atan2(dy, dx);
             const staffX = game.player.x + Math.cos(angle) * 35;
             const staffY = game.player.y + Math.sin(angle) * 35;
             
-            // Shoot from staff position toward touch point
             const shootDx = targetX - staffX;
             const shootDy = targetY - staffY;
             const shootDist = Math.sqrt(shootDx * shootDx + shootDy * shootDy);
@@ -1719,14 +1716,12 @@
             const targetX = (touch.clientX - rect.left) * scaleX;
             const targetY = (touch.clientY - rect.top) * scaleY;
 
-            // Calculate angle from player to touch point for staff position
             const dx = targetX - game.player.x;
             const dy = targetY - game.player.y;
             const angle = Math.atan2(dy, dx);
             const staffX = game.player.x + Math.cos(angle) * 35;
             const staffY = game.player.y + Math.sin(angle) * 35;
 
-            // Shoot from staff position toward touch point
             const shootDx = targetX - staffX;
             const shootDy = targetY - staffY;
             const shootDist = Math.sqrt(shootDx * shootDx + shootDy * shootDy);
