@@ -1708,38 +1708,64 @@
             e.preventDefault();
             if (!game.running) return;
 
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            
-            const targetX = (touch.clientX - rect.left) * scaleX;
-            const targetY = (touch.clientY - rect.top) * scaleY;
+            // Check all touches to find one that's NOT on the joystick
+            for (let i = 0; i < e.touches.length; i++) {
+                const touch = e.touches[i];
+                
+                // Check if this touch is within the joystick area
+                // Joystick is at bottom-left: 20px from left, 20px from bottom, 150x150px
+                const isOnJoystick = (
+                    touch.clientX >= 20 && 
+                    touch.clientX <= 170 && 
+                    touch.clientY >= window.innerHeight - 170 && 
+                    touch.clientY <= window.innerHeight - 20
+                );
+                
+                // Also check if touch is on ability buttons (bottom-right)
+                // Ability buttons area: right 20px, bottom 20px, roughly 70px wide, 220px tall
+                const isOnAbilityButtons = (
+                    touch.clientX >= window.innerWidth - 90 &&
+                    touch.clientY >= window.innerHeight - 240
+                );
+                
+                // If touch is NOT on joystick or ability buttons, use it for shooting
+                if (!isOnJoystick && !isOnAbilityButtons) {
+                    const rect = canvas.getBoundingClientRect();
+                    const scaleX = canvas.width / rect.width;
+                    const scaleY = canvas.height / rect.height;
+                    
+                    const targetX = (touch.clientX - rect.left) * scaleX;
+                    const targetY = (touch.clientY - rect.top) * scaleY;
 
-            // Update aim point to where we tapped
-            game.mouseX = targetX;
-            game.mouseY = targetY;
+                    // Update aim point to where we tapped
+                    game.mouseX = targetX;
+                    game.mouseY = targetY;
 
-            // Calculate staff position based on tap location
-            const dx = targetX - game.player.x;
-            const dy = targetY - game.player.y;
-            const angle = Math.atan2(dy, dx);
-            const staffX = game.player.x + Math.cos(angle) * 35;
-            const staffY = game.player.y + Math.sin(angle) * 35;
+                    // Calculate staff position based on tap location
+                    const dx = targetX - game.player.x;
+                    const dy = targetY - game.player.y;
+                    const angle = Math.atan2(dy, dx);
+                    const staffX = game.player.x + Math.cos(angle) * 35;
+                    const staffY = game.player.y + Math.sin(angle) * 35;
 
-            // Shoot from staff toward tap point
-            const shootDx = targetX - staffX;
-            const shootDy = targetY - staffY;
-            const shootDist = Math.sqrt(shootDx * shootDx + shootDy * shootDy);
+                    // Shoot from staff toward tap point
+                    const shootDx = targetX - staffX;
+                    const shootDy = targetY - staffY;
+                    const shootDist = Math.sqrt(shootDx * shootDx + shootDy * shootDy);
 
-            game.projectiles.push({
-                x: staffX, y: staffY,
-                vx: (shootDx / shootDist) * 6,
-                vy: (shootDy / shootDist) * 6,
-                size: 6
-            });
+                    game.projectiles.push({
+                        x: staffX, y: staffY,
+                        vx: (shootDx / shootDist) * 6,
+                        vy: (shootDx / shootDist) * 6,
+                        size: 6
+                    });
 
-            createParticles(staffX, staffY, game.waveColor, 5);
+                    createParticles(staffX, staffY, game.waveColor, 5);
+                    
+                    // Only process one shooting tap per event
+                    break;
+                }
+            }
         }
 
         // Touch move on canvas removed - aiming only happens on tap
