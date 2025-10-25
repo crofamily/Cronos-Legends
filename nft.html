@@ -614,12 +614,6 @@
             overflow: hidden;
         }
 
-        .nft-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .nft-image::before {
             content: '';
             position: absolute;
@@ -717,109 +711,9 @@
         }
 
         @media (max-width: 768px) {
-            .hero {
-                height: auto;
-                min-height: 100vh;
-                padding: 40px 15px;
-            }
-
-            .hero-content {
-                padding: 0 15px;
-            }
-
             .logo {
-                font-size: 2.5rem;
-                letter-spacing: 2px;
-                margin-bottom: 15px;
-                line-height: 1.2;
+                font-size: 3rem;
             }
-
-            .subtitle {
-                font-size: 1rem;
-                letter-spacing: 2px;
-                margin-bottom: 30px;
-            }
-
-            .hero p {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 40px;
-            }
-
-            .countdown-container {
-                padding: 15px 20px;
-                margin: 20px 10px 30px;
-            }
-
-            .countdown-title {
-                font-size: 0.75rem;
-                margin-bottom: 10px;
-            }
-
-            .countdown {
-                gap: 8px;
-            }
-
-            .countdown-item {
-                padding: 10px 15px;
-                min-width: 65px;
-            }
-
-            .countdown-value {
-                font-size: 1.5rem;
-            }
-
-            .countdown-label {
-                font-size: 0.7rem;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 0.85rem;
-            }
-
-            .nft-gallery {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .faction-card {
-                margin-bottom: 30px;
-            }
-
-            .faction-divider-title {
-                font-size: 1.3rem;
-            }
-
-            .faction-divider-icon {
-                font-size: 1.5rem;
-            }
-
-            .story-text {
-                font-size: 1rem;
-            }
-
-            .nft-section {
-                padding: 60px 15px;
-            }
-
-            .story-section {
-                padding: 60px 15px;
-            }
-
-            .footer {
-                padding: 50px 15px 30px;
-            }
-
-            .footer-links {
-                gap: 20px;
-                font-size: 0.85rem;
-            }
-        }
             .subtitle {
                 font-size: 1.2rem;
             }
@@ -853,12 +747,11 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">â˜°</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="game.html">Games</a></li>
-                <li><a href="nft.html">NFTs</a></li>
-                <li><a href="tokens.html">Tokens</a></li>
+                <li><a href="#nft-section">NFT & Tokens</a></li>
                 <li><a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a></li>
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
@@ -868,7 +761,7 @@
     <div class="hero">
         <div class="hero-content">
             <h1 class="logo">CRONOS LEGENDS</h1>
-            <div class="subtitle">⚔️ Legends Awaken II 💎</div>
+            <div class="subtitle">Legends Awaken II</div>
             
             <p class="hero-text">
                 The saga continues. Ancient powers stir, and new forces enter the fray.<br>
@@ -899,83 +792,263 @@
         </div>
     </div>
 
+    
+
     <div class="nft-section" id="nft-section">
         <div class="section">
-            <h2 class="section-title">💎 NFT Collections</h2>
+            <h2 class="section-title">Legends Awaken II NFT Collection</h2>
             <div class="nft-announcement">
-                <div class="nft-date">📅 Legends Awaken II - December 2025</div>
+                <div class="nft-date">December 2025</div>
                 <p>
-                    Discover the complete Cronos Legends NFT collections featuring 17 unique divisions 
-                    across three powerful factions: Cronos Guardians, Chaos Horde, and the mystical Trinari.
+                    The highly anticipated Legends Awaken II NFT collection launches this December. 
+                    Featuring unique characters from all three factions, each NFT grants exclusive access 
+                    to special events, in-game benefits, and community governance.
                 </p>
-                <div style="margin-top: 30px;">
-                    <a href="nft.html" class="btn btn-outline"><span>🔍 Explore NFT Collection</span></a>
-                </div>
             </div>
 
-            <div class="nft-gallery" style="margin-top: 60px;">
+            <!-- Trinari Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon"></span>
+                    <h3 class="faction-divider-title">TRINARI</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
                 <div class="nft-card">
                     <div class="nft-image" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
-                        <img src="Images/LA2/T1.png" alt="Trinari Preview">
+                        <img src="Images/LA2/T1.png" alt="Lumivira" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="nft-info">
-                        <h3 class="nft-title">🌿 Trinari</h3>
-                        <div class="nft-faction">New Faction - 3 DIVISIONS</div>
-                        <p class="nft-desc">Mystical beings of nature, now risen to restore balance through harmony or power.</p>
+                        <h3 class="nft-title">Lumivira</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">The rarest and most radiant of all Trinari â€” ancient beings born of pure essence, guiding light and harmony across the realms.</p>
                     </div>
                 </div>
 
                 <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #0064FF, #001a4d);">
-                        <img src="Images/LA2/G1.webp" alt="Cronos Guardians Preview">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #10b981, #065f46);">
+                        <img src="Images/LA2/T3.png" alt="Mistralis" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="nft-info">
-                        <h3 class="nft-title">⚔️ Cronos Guardians</h3>
-                        <div class="nft-faction">7 Divisions (LA II)</div>
-                        <p class="nft-desc">Noble defenders of order wielding ancient power to protect the realm from chaos.</p>
+                        <h3 class="nft-title">Mistralis</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">Balanced Trinari of growing strength and wisdom, embodying the natural bond between life, energy, and creation.</p>
                     </div>
                 </div>
 
                 <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #FF3232, #4d0000);">
-                        <img src="Images/LA2/C1.webp" alt="Chaos Horde Preview">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #34d399, #047857);">
+                        <img src="Images/LA2/T2.png" alt="Whimkin" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="nft-info">
-                        <h3 class="nft-title">🔥 Chaos Horde</h3>
-                        <div class="nft-faction">7 Divisions (LA II)</div>
-                        <p class="nft-desc">Fierce warriors seeking dominance through raw power and unrelenting fury.</p>
+                        <h3 class="nft-title">Whimkin</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">Common among the Trinari, curious and lively creatures whose playful nature hides untapped power within.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Cronos Guardians Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon"></span>
+                    <h3 class="faction-divider-title">CRONOS GUARDIANS</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #0064FF, #001a4d);">
+                        <img src="Images/LA2/G1.webp" alt="The Ironstride" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Ironstride</h3>
+                        <div class="nft-faction">Ground Warriors</div>
+                        <p class="nft-desc">Elite defenders of Cronos, forged in unbreakable armor and bound by sacred oaths of valor.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #4169E1, #1e3a8a);">
+                        <img src="Images/LA2/G2.webp" alt="Celestial Vanguard" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Celestial Vanguard</h3>
+                        <div class="nft-faction">Cronos Guardians</div>
+                        <p class="nft-desc">Radiant champions who descend from the heavens, guardians of cosmic balance and divine light.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #6366f1, #312e81);">
+                        <img src="Images/LA2/G3.webp" alt="Arcane Enclave" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Arcane Enclave</h3>
+                        <div class="nft-faction">Keepers of Magic</div>
+                        <p class="nft-desc">Masters of ancient spells and forbidden knowledge, protectors of Cronos' most powerful secrets.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                        <img src="Images/LA2/G4.png" alt="Shadowforged" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Shadowforged</h3>
+                        <div class="nft-faction">The Silent Watch</div>
+                        <p class="nft-desc">Former Chaos warriors who turned against the darkness, now silent sentinels sworn to guard the light they once tried to destroy.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #60a5fa, #1e3a8a);">
+                        <img src="Images/LA2/G5.png" alt="Icelyn Frostguard" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Icelyn Frostguard</h3>
+                        <div class="nft-faction">Cronos Guardians</div>
+                        <p class="nft-desc">Cold-hearted protectors from the frozen north, their blades sing with the chill of eternal winter.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #3b82f6, #1e40af);">
+                        <img src="Images/LA2/G6.png" alt="Inkforged Sigilbearers" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Inkforged Sigilbearers</h3>
+                        <div class="nft-faction">Binding Oaths</div>
+                        <p class="nft-desc">Tattooed mystics whose ink holds power older than time, sealing their bodies with runes of strength and fate.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #64748b, #1e293b);">
+                        <img src="Images/LA2/G7.png" alt="Alloyed Core" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Alloyed Core</h3>
+                        <div class="nft-faction">Ancient Biomechanical Guardians</div>
+                        <p class="nft-desc">Ancient machines merged with divine essence, guardians of both metal and spirit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos Horde Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon"></span>
+                    <h3 class="faction-divider-title">CHAOS HORDE</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #7c3aed, #4c1d95);">
+                        <img src="Images/LA2/C3.webp" alt="Nightshade Wardens" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Nightshade Wardens</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Masters of shadow and venom, creeping through darkness to spread the will of Chaos.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #dc2626, #7f1d1d);">
+                        <img src="Images/LA2/C1.webp" alt="The Horned Dimension" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Horned Dimension</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Eldritch beings from realms beyond reason, twisting reality itself in their chaotic image.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #18181b, #000000);">
+                        <img src="Images/LA2/C4.webp" alt="The Shadowborn" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Shadowborn</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Cursed souls reborn in pure darkness, driven by vengeance and an unending hunger for power.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #78350f, #292524);">
+                        <img src="Images/LA2/C5.webp" alt="The Deathforged" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Deathforged</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Souls bound in armor of bone and flame, warriors who find life only in death's embrace.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #b91c1c, #450a0a);">
+                        <img src="Images/LA2/C6.webp" alt="The Blood Eclipse" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Blood Eclipse</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Priests of crimson moons who draw strength from sacrifice, their rituals painting the stars in red.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #312e81, #0c0a09);">
+                        <img src="Images/LA2/C7.webp" alt="The Voidweavers" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Voidweavers</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Cosmic cultists who command the nothingness between worlds, bending space to their will.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #ef4444, #7f1d1d);">
+                        <img src="Images/LA2/C2.webp" alt="Oathbreaker" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Oathbreaker</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Once noble Guardians who betrayed their vows, now corrupted champions of Chaos and sworn enemies of their former kin.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <div class="story-section">
         <div class="story-content">
-            <h2 class="section-title">✨ The Trinari Rise</h2>
+            <h2 class="section-title">The Trinari Rise</h2>
             <p class="story-text">
                 Once ethereal whispers in the forests and winds, the Trinari now take physical form. 
-                They are not born of war, but of harmony – guardians of nature, bound to the very magic 
+                They are not born of war, but of harmony guardians of nature, bound to the very magic 
                 that sustains the world. Each Trinari embodies a primal element, from blazing fire sprites 
                 to shimmering crystal wisps.
             </p>
             <p class="story-text">
-                But don't be fooled by their soft features – the Trinari are powerful and purposeful. 
+                But don't be fooled by their soft features the Trinari are powerful and purposeful. 
                 Their mission is clear: restore the balance broken by war and ambition. 
-                Whether through peace… or power.
+                Whether through peace or power.
             </p>
         </div>
     </div>
 
     <div class="footer">
-        <h2 class="section-title">🔮 Join The Community</h2>
+        <h2 class="section-title">Join The Community</h2>
         <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
             Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
-            this chapter is a defining moment – and the beginning of something far greater.
+            this chapter is a defining moment and the beginning of something far greater.
         </p>
         <div class="social-links">
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>Follow on X</span></a>
         </div>
         
         <div class="footer-links">
@@ -988,7 +1061,7 @@
             <a href="#" onclick="alert('Terms coming soon!')">Terms of Service</a>
         </div>
         
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">2025 Cronos Legends. All rights reserved.</p>
     </div>
 
     <script>
@@ -1016,7 +1089,7 @@
         });
 
         // Countdown Timer
-        const countdownDate = new Date('December 24, 2025 14:00:00 GMT').getTime();
+        const countdownDate = new Date('December 20, 2025 12:00:00 GMT').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronos Legends Tokens - Live Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 80px 20px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.1) 0%,
+                rgba(10, 10, 10, 0.9) 50%,
+                rgba(138, 43, 226, 0.1) 100%
+            );
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-top: 15px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Token Grid - 2x2 Layout */
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1280px) {
+            .tokens-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Token Card */
+        .token-card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.8));
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .token-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .token-card:hover::before {
+            opacity: 0.3;
+        }
+
+        /* Token Header */
+        .token-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .token-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            object-fit: cover;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .token-icon {
+            font-size: 3rem;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            display: none; /* Hidden when logo is present */
+        }
+
+        .token-header-info {
+            flex: 1;
+        }
+
+        .token-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .token-symbol {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFA500;
+            letter-spacing: 2px;
+        }
+
+        .token-tagline {
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Live Data Section */
+        .live-data {
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .live-data-title {
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .loading {
+            color: #999;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .data-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .data-label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .data-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .price-change {
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+
+        .price-change.positive {
+            color: #4ade80;
+        }
+
+        .price-change.negative {
+            color: #f87171;
+        }
+
+        /* Chart Container - EXPANDED */
+        .chart-container {
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-container iframe {
+            width: 100%;
+            height: 400px; /* Increased from 300px */
+            border: none;
+            display: block;
+        }
+
+        /* Lore & Utility */
+        .token-section {
+            margin: 20px 0;
+        }
+
+        .token-section-title {
+            color: #FFD700;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .token-description {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .token-features {
+            display: grid;
+            gap: 10px;
+        }
+
+        .token-feature {
+            color: #aaa;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 3px solid #FFD700;
+            border-radius: 5px;
+        }
+
+        .token-feature::before {
+            content: '✦';
+            color: #FFD700;
+            margin-right: 8px;
+        }
+
+        /* View on DexScreener Button */
+        .dex-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dex-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(20, 20, 20, 0.5);
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: #999;
+            margin-top: 20px;
+        }
+
+        /* Error message styling */
+        .error-msg {
+            color: #f87171;
+            font-size: 0.9rem;
+        }
+
+        .fallback-link {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">CRONOS LEGENDS</div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>🪙 Tokens of Power</h1>
+        <p class="hero-subtitle">
+            Live market data powered by <span style="color: #FFD700;">DexScreener</span>
+        </p>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Tokens Grid -->
+        <div class="tokens-grid">
+            <!-- $CLG Token -->
+            <div class="token-card" data-address="0x80228677d9895934eed4bdb402ac659094903298">
+                <div class="token-header">
+                    <img src="clglogo.png" alt="CLG Logo" class="token-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="token-icon">👑</span>
+                    <div class="token-header-info">
+                        <h3 class="token-name">Cronos Legends Token</h3>
+                        <div class="token-symbol">$CLG</div>
+                        <div class="token-tagline">"Built for the Community. Backed by Trust."</div>
+                    </div>
+                </div>
+
+                <!-- Live Data -->
+                <div class="live-data">
+                    <div class="live-data-title">📊 Live Market Data</div>
+                    <div class="data-content-clg loading">Loading real-time data...</div>
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <iframe src="https://dexscreener.com/cronos/0x80228677d9895934eed4bdb402ac659094903298?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                </div>
+
+                <!-- Lore -->
+                <div class="token-section">
+                    <div class="token-section-title">⚔️ Lore</div>
+                    <p class="token-description">
+                        Forged in the fires of creation, $CLG is the beating heart of Cronos Legends. It is the currency of champions, the voice of the community, and the foundation upon which the entire realm stands. Those who hold $CLG hold the power to shape destiny itself.
+                    </p>
+                </div>
+
+                <!-- Utility -->
+                <div class="token-section">
+                    <div class="token-section-title">🛠️ Utility</div>
+                    <div class="token-features">
+                        <div class="token-feature">Main utility and governance token for the ecosystem</div>
+                        <div class="token-feature">Stake to earn passive rewards and boost faction influence</div>
+                        <div class="token-feature">Required for marketplace transactions with reduced fees</div>
+                        <div class="token-feature">Special access to exclusive events and Battleground tournaments</div>
+                        <div class="token-feature">Voting rights on future development and community proposals</div>
+                    </div>
+                </div>
+
+                <a href="https://dexscreener.com/cronos/0x80228677d9895934eed4bdb402ac659094903298" target="_blank" class="dex-link">View on DexScreener →</a>
+            </div>
+
+            <!-- $TRI Token -->
+            <div class="token-card" data-address="0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9">
+                <div class="token-header">
+                    <img src="trilogo.png" alt="TRI Logo" class="token-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="token-icon">🌿</span>
+                    <div class="token-header-info">
+                        <h3 class="token-name">Trinari Essence</h3>
+                        <div class="token-symbol">$TRI</div>
+                        <div class="token-tagline">"Nature's Whisper"</div>
+                    </div>
+                </div>
+
+                <!-- Live Data -->
+                <div class="live-data">
+                    <div class="live-data-title">📊 Live Market Data</div>
+                    <div class="data-content-tri loading">Loading real-time data...</div>
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <iframe src="https://dexscreener.com/cronos/0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                </div>
+
+                <!-- Lore -->
+                <div class="token-section">
+                    <div class="token-section-title">⚔️ Lore</div>
+                    <p class="token-description">
+                        Born from the ancient forests and crystalline springs, $TRI embodies the elemental energy of the mystical Trinari. It pulses with life magic, harmony, and the raw power of nature itself. Only those attuned to the natural world can truly harness its potential.
+                    </p>
+                </div>
+
+                <!-- Utility -->
+                <div class="token-section">
+                    <div class="token-section-title">🛠️ Utility</div>
+                    <div class="token-features">
+                        <div class="token-feature">Elemental energy token linked to the Trinari species</div>
+                        <div class="token-feature">Used in crafting nature-based items and enchantments</div>
+                        <div class="token-feature">Required for Trinari NFT evolution and ability unlocks</div>
+                        <div class="token-feature">Summoning features for rare Trinari variants</div>
+                        <div class="token-feature">Bonus rewards for Trinari faction activities and quests</div>
+                    </div>
+                </div>
+
+                <a href="https://dexscreener.com/cronos/0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9" target="_blank" class="dex-link">View on DexScreener →</a>
+            </div>
+
+            <!-- $LYRA Token -->
+            <div class="token-card" data-address="0x5295065c2Af4d922d22f37E20916dFec015f64bf">
+                <div class="token-header">
+                    <img src="lyralogo.png" alt="LYRA Logo" class="token-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="token-icon">✨</span>
+                    <div class="token-header-info">
+                        <h3 class="token-name">Celestial Shard</h3>
+                        <div class="token-symbol">$LYRA</div>
+                        <div class="token-tagline">"Stardust of the Ancients"</div>
+                    </div>
+                </div>
+
+                <!-- Live Data -->
+                <div class="live-data">
+                    <div class="live-data-title">📊 Live Market Data</div>
+                    <div class="data-content-lyra loading">Loading real-time data...</div>
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <iframe src="https://dexscreener.com/cronos/0x5295065c2Af4d922d22f37E20916dFec015f64bf?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                </div>
+
+                <!-- Lore -->
+                <div class="token-section">
+                    <div class="token-section-title">⚔️ Lore</div>
+                    <p class="token-description">
+                        Fragments of fallen stars, crystallized into pure magical essence. $LYRA represents the celestial and arcane power wielded by the Cronos Guardians. It shimmers with otherworldly light, a symbol of purity, wisdom, and transcendent power among the Legends.
+                    </p>
+                </div>
+
+                <!-- Utility -->
+                <div class="token-section">
+                    <div class="token-section-title">🛠️ Utility</div>
+                    <div class="token-features">
+                        <div class="token-feature">Token tied to celestial and arcane Guardian events</div>
+                        <div class="token-feature">Access to high-tier NFT upgrades and enchantments</div>
+                        <div class="token-feature">Unlock magic-based rewards and spell crafting</div>
+                        <div class="token-feature">Rare crafting blueprints for legendary items</div>
+                        <div class="token-feature">Special Guardian faction bonuses and prestige perks</div>
+                    </div>
+                </div>
+
+                <a href="https://dexscreener.com/cronos/0x5295065c2Af4d922d22f37E20916dFec015f64bf" target="_blank" class="dex-link">View on DexScreener →</a>
+            </div>
+
+            <!-- $CARA Token -->
+            <div class="token-card" data-address="0x05ba4c5741613894840f7d8d5084cfc22dc3b232">
+                <div class="token-header">
+                    <img src="caralogo.png" alt="CARA Logo" class="token-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <span class="token-icon">⚔️</span>
+                    <div class="token-header-info">
+                        <h3 class="token-name">TitanLord's Will</h3>
+                        <div class="token-symbol">$CARA</div>
+                        <div class="token-tagline">"Legacy of Cara"</div>
+                    </div>
+                </div>
+
+                <!-- Live Data -->
+                <div class="live-data">
+                    <div class="live-data-title">📊 Live Market Data</div>
+                    <div class="data-content-cara loading">Loading real-time data...</div>
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <iframe src="https://dexscreener.com/cronos/0x05ba4c5741613894840f7d8d5084cfc22dc3b232?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                </div>
+
+                <!-- Lore -->
+                <div class="token-section">
+                    <div class="token-section-title">⚔️ Lore</div>
+                    <p class="token-description">
+                        Named after Cara, the legendary Titanlord of the Cronos Guardians, this token embodies unwavering loyalty, strength, and honor. To hold $CARA is to carry the banner of a hero, to stand among the elite, and to command respect across all factions.
+                    </p>
+                </div>
+
+                <!-- Utility -->
+                <div class="token-section">
+                    <div class="token-section-title">🛠️ Utility</div>
+                    <div class="token-features">
+                        <div class="token-feature">Prestige and loyalty token for dedicated community members</div>
+                        <div class="token-feature">Exclusive governance privileges and weighted voting power</div>
+                        <div class="token-feature">Elite-tier rewards and VIP status benefits</div>
+                        <div class="token-feature">Priority early access to all new releases and features</div>
+                        <div class="token-feature">Special Titanlord-themed cosmetics and titles</div>
+                    </div>
+                </div>
+
+                <a href="https://dexscreener.com/cronos/0x05ba4c5741613894840f7d8d5084cfc22dc3b232" target="_blank" class="dex-link">View on DexScreener →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; color: #FFD700;">🔮 Join The Legends</h2>
+        <p>© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Function to format numbers
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return '$' + (num / 1000000).toFixed(2) + 'M';
+            } else if (num >= 1000) {
+                return '$' + (num / 1000).toFixed(2) + 'K';
+            }
+            return '$' + num.toFixed(2);
+        }
+
+        function formatPrice(price) {
+            if (price < 0.000001) {
+                return '$' + price.toExponential(2);
+            } else if (price < 0.01) {
+                return '$' + price.toFixed(6);
+            }
+            return '$' + price.toFixed(4);
+        }
+
+        // Fetch token data from DexScreener API with CORS proxy
+        async function fetchTokenData(address, symbol) {
+            try {
+                // Try direct API call first
+                const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                
+                const data = await response.json();
+                
+                if (data.pairs && data.pairs.length > 0) {
+                    const pair = data.pairs[0];
+                    return {
+                        price: pair.priceUsd,
+                        priceChange24h: pair.priceChange?.h24,
+                        volume24h: pair.volume?.h24,
+                        liquidity: pair.liquidity?.usd,
+                        marketCap: pair.fdv,
+                        txns24h: (pair.txns?.h24?.buys || 0) + (pair.txns?.h24?.sells || 0)
+                    };
+                }
+                return null;
+            } catch (error) {
+                console.error(`Error fetching data for ${symbol}:`, error);
+                return null;
+            }
+        }
+
+        // Update token card with live data
+        async function updateTokenCard(address, symbol) {
+            const container = document.querySelector(`.data-content-${symbol.toLowerCase()}`);
+            
+            const data = await fetchTokenData(address, symbol);
+            
+            if (data) {
+                const priceChangeClass = data.priceChange24h >= 0 ? 'positive' : 'negative';
+                const priceChangeSymbol = data.priceChange24h >= 0 ? '+' : '';
+                
+                container.innerHTML = `
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-label">Price</div>
+                            <div class="data-value">
+                                ${formatPrice(parseFloat(data.price))}
+                                <span class="price-change ${priceChangeClass}">
+                                    ${priceChangeSymbol}${parseFloat(data.priceChange24h).toFixed(2)}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Market Cap</div>
+                            <div class="data-value">${data.marketCap ? formatNumber(parseFloat(data.marketCap)) : 'N/A'}</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">24h Volume</div>
+                            <div class="data-value">${data.volume24h ? formatNumber(parseFloat(data.volume24h)) : 'N/A'}</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Liquidity</div>
+                            <div class="data-value">${data.liquidity ? formatNumber(parseFloat(data.liquidity)) : 'N/A'}</div>
+                        </div>
+                    </div>
+                `;
+                container.classList.remove('loading');
+            } else {
+                container.innerHTML = `
+                    <div class="error-msg">
+                        Unable to load live data due to browser restrictions. 
+                        <a href="https://dexscreener.com/cronos/${address}" target="_blank" class="fallback-link">
+                            View live data on DexScreener →
+                        </a>
+                    </div>
+                `;
+                container.classList.remove('loading');
+            }
+        }
+
+        // Load all token data on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Fixed addresses: CLG and TRI were swapped
+            updateTokenCard('0x80228677d9895934eed4bdb402ac659094903298', 'CLG');
+            updateTokenCard('0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9', 'TRI');
+            updateTokenCard('0x5295065c2Af4d922d22f37E20916dFec015f64bf', 'LYRA');
+            updateTokenCard('0x05ba4c5741613894840f7d8d5084cfc22dc3b232', 'CARA');
+        });
+
+        // Refresh data every 30 seconds
+        setInterval(() => {
+            updateTokenCard('0x80228677d9895934eed4bdb402ac659094903298', 'CLG');
+            updateTokenCard('0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9', 'TRI');
+            updateTokenCard('0x5295065c2Af4d922d22f37E20916dFec015f64bf', 'LYRA');
+            updateTokenCard('0x05ba4c5741613894840f7d8d5084cfc22dc3b232', 'CARA');
+        }, 30000);
+
+        // Smooth scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.token-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
