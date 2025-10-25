@@ -190,69 +190,6 @@
             margin-top: 5px;
         }
 
-        /* Live Data Section */
-        .live-data {
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .live-data-title {
-            color: #FFD700;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .loading {
-            color: #999;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .data-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-        }
-
-        .data-label {
-            font-size: 0.85rem;
-            color: #999;
-            margin-bottom: 5px;
-        }
-
-        .data-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #FFD700;
-        }
-
-        .price-change {
-            font-size: 0.9rem;
-            margin-left: 8px;
-        }
-
-        .price-change.positive {
-            color: #4ade80;
-        }
-
-        .price-change.negative {
-            color: #f87171;
-        }
-
         /* Chart Container - EXPANDED */
         .chart-container {
             margin: 20px 0;
@@ -328,16 +265,6 @@
             box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
         }
 
-        /* Loading Animation */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .loading {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
         /* Footer */
         .footer {
             text-align: center;
@@ -376,7 +303,7 @@
     <div class="hero">
         <h1>🪙 Tokens of Power</h1>
         <p class="hero-subtitle">
-            Live market data powered by <span style="color: #FFD700;">DexScreener</span>
+            PLEASE NOTE, THIS SITE IS DRAFT, WORK IN PROGRESS! Real-time charts powered by <span style="color: #FFD700;">DexScreener</span>
         </p>
     </div>
 
@@ -396,15 +323,12 @@
                     </div>
                 </div>
 
-                <!-- Live Data -->
-                <div class="live-data">
-                    <div class="live-data-title">📊 Live Market Data</div>
-                    <div class="data-content-clg loading">Loading real-time data...</div>
-                </div>
-
                 <!-- Chart -->
+                <div style="color: #999; font-size: 0.85rem; margin: 15px 0 10px 0; font-style: italic;">
+                    💡 Tip: Click the timeframe buttons (1h, 4h, 1d, 1w, etc.) on the chart to change the view
+                </div>
                 <div class="chart-container">
-                    <iframe src="https://dexscreener.com/cronos/0x80228677d9895934eed4bdb402ac659094903298?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                    <iframe src="https://dexscreener.com/cronos/0x80228677d9895934eed4bdb402ac659094903298?embed=1&theme=dark&trades=0&info=0"></iframe>
                 </div>
 
                 <!-- Lore -->
@@ -442,15 +366,12 @@
                     </div>
                 </div>
 
-                <!-- Live Data -->
-                <div class="live-data">
-                    <div class="live-data-title">📊 Live Market Data</div>
-                    <div class="data-content-tri loading">Loading real-time data...</div>
-                </div>
-
                 <!-- Chart -->
+                <div style="color: #999; font-size: 0.85rem; margin: 15px 0 10px 0; font-style: italic;">
+                    💡 Tip: Click the timeframe buttons (1h, 4h, 1d, 1w, etc.) on the chart to change the view
+                </div>
                 <div class="chart-container">
-                    <iframe src="https://dexscreener.com/cronos/0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                    <iframe src="https://dexscreener.com/cronos/0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9?embed=1&theme=dark&trades=0&info=0"></iframe>
                 </div>
 
                 <!-- Lore -->
@@ -488,34 +409,31 @@
                     </div>
                 </div>
 
-                <!-- Live Data -->
-                <div class="live-data">
-                    <div class="live-data-title">📊 Live Market Data</div>
-                    <div class="data-content-lyra loading">Loading real-time data...</div>
-                </div>
-
                 <!-- Chart -->
+                <div style="color: #999; font-size: 0.85rem; margin: 15px 0 10px 0; font-style: italic;">
+                    💡 Tip: Click the timeframe buttons (1h, 4h, 1d, 1w, etc.) on the chart to change the view
+                </div>
                 <div class="chart-container">
-                    <iframe src="https://dexscreener.com/cronos/0x5295065c2Af4d922d22f37E20916dFec015f64bf?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                    <iframe src="https://dexscreener.com/cronos/0x5295065c2Af4d922d22f37E20916dFec015f64bf?embed=1&theme=dark&trades=0&info=0"></iframe>
                 </div>
 
                 <!-- Lore -->
                 <div class="token-section">
-                    <div class="token-section-title">⚔️ Lore</div>
+                    <div class="token-section-title">💀 Lore</div>
                     <p class="token-description">
-                        Fragments of fallen stars, crystallized into pure magical essence. $LYRA represents the celestial and arcane power wielded by the Cronos Guardians. It shimmers with otherworldly light, a symbol of purity, wisdom, and transcendent power among the Legends.
+                    Born from the shattered essence of fallen gods, $LYRA is a fragment of corrupted starlight — the lifeblood of the Chaos Horde’s power. Twisted by void energy and ancient rituals, it radiates an unholy brilliance that bends creation to its will. Once pure, now defiled, $LYRA embodies chaos itself — a symbol of dominance, hunger, and eternal rebirth through destruction.
                     </p>
                 </div>
 
                 <!-- Utility -->
                 <div class="token-section">
-                    <div class="token-section-title">🛠️ Utility</div>
+                    <div class="token-section-title">💀 Utility</div>
                     <div class="token-features">
-                        <div class="token-feature">Token tied to celestial and arcane Guardian events</div>
-                        <div class="token-feature">Access to high-tier NFT upgrades and enchantments</div>
-                        <div class="token-feature">Unlock magic-based rewards and spell crafting</div>
-                        <div class="token-feature">Rare crafting blueprints for legendary items</div>
-                        <div class="token-feature">Special Guardian faction bonuses and prestige perks</div>
+                        <div class="token-feature">Token bound to Chaos Horde conquests and dark rituals</div>
+                        <div class="token-feature">Enables corruption-tier NFT ascensions and forbidden upgrades</div>
+                        <div class="token-feature">Unlocks voidcraft rewards and ritual-based item forging</div>
+                        <div class="token-feature">Access to ancient blueprints of devastation and relic synthesis</div>
+                        <div class="token-feature">Grants Horde-exclusive boons, dominance perks, and dark prestige</div>
                     </div>
                 </div>
 
@@ -534,15 +452,12 @@
                     </div>
                 </div>
 
-                <!-- Live Data -->
-                <div class="live-data">
-                    <div class="live-data-title">📊 Live Market Data</div>
-                    <div class="data-content-cara loading">Loading real-time data...</div>
-                </div>
-
                 <!-- Chart -->
+                <div style="color: #999; font-size: 0.85rem; margin: 15px 0 10px 0; font-style: italic;">
+                    💡 Tip: Click the timeframe buttons (1h, 4h, 1d, 1w, etc.) on the chart to change the view
+                </div>
                 <div class="chart-container">
-                    <iframe src="https://dexscreener.com/cronos/0x05ba4c5741613894840f7d8d5084cfc22dc3b232?embed=1&theme=dark&trades=0&info=0&interval=1w"></iframe>
+                    <iframe src="https://dexscreener.com/cronos/0x05ba4c5741613894840f7d8d5084cfc22dc3b232?embed=1&theme=dark&trades=0&info=0"></iframe>
                 </div>
 
                 <!-- Lore -->
@@ -577,128 +492,12 @@
     </div>
 
     <script>
-        // Function to format numbers
-        function formatNumber(num) {
-            if (num >= 1000000) {
-                return '$' + (num / 1000000).toFixed(2) + 'M';
-            } else if (num >= 1000) {
-                return '$' + (num / 1000).toFixed(2) + 'K';
-            }
-            return '$' + num.toFixed(2);
-        }
-
-        function formatPrice(price) {
-            if (price < 0.000001) {
-                return '$' + price.toExponential(2);
-            } else if (price < 0.01) {
-                return '$' + price.toFixed(6);
-            }
-            return '$' + price.toFixed(4);
-        }
-
-        // Fetch token data from DexScreener API with CORS proxy
-        async function fetchTokenData(address, symbol) {
-            try {
-                // Try direct API call first
-                const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
-                
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-                
-                const data = await response.json();
-                
-                if (data.pairs && data.pairs.length > 0) {
-                    const pair = data.pairs[0];
-                    return {
-                        price: pair.priceUsd,
-                        priceChange24h: pair.priceChange?.h24,
-                        volume24h: pair.volume?.h24,
-                        liquidity: pair.liquidity?.usd,
-                        marketCap: pair.fdv,
-                        txns24h: (pair.txns?.h24?.buys || 0) + (pair.txns?.h24?.sells || 0)
-                    };
-                }
-                return null;
-            } catch (error) {
-                console.error(`Error fetching data for ${symbol}:`, error);
-                return null;
-            }
-        }
-
-        // Update token card with live data
-        async function updateTokenCard(address, symbol) {
-            const container = document.querySelector(`.data-content-${symbol.toLowerCase()}`);
-            
-            const data = await fetchTokenData(address, symbol);
-            
-            if (data) {
-                const priceChangeClass = data.priceChange24h >= 0 ? 'positive' : 'negative';
-                const priceChangeSymbol = data.priceChange24h >= 0 ? '+' : '';
-                
-                container.innerHTML = `
-                    <div class="data-grid">
-                        <div class="data-item">
-                            <div class="data-label">Price</div>
-                            <div class="data-value">
-                                ${formatPrice(parseFloat(data.price))}
-                                <span class="price-change ${priceChangeClass}">
-                                    ${priceChangeSymbol}${parseFloat(data.priceChange24h).toFixed(2)}%
-                                </span>
-                            </div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Market Cap</div>
-                            <div class="data-value">${data.marketCap ? formatNumber(parseFloat(data.marketCap)) : 'N/A'}</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">24h Volume</div>
-                            <div class="data-value">${data.volume24h ? formatNumber(parseFloat(data.volume24h)) : 'N/A'}</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Liquidity</div>
-                            <div class="data-value">${data.liquidity ? formatNumber(parseFloat(data.liquidity)) : 'N/A'}</div>
-                        </div>
-                    </div>
-                `;
-                container.classList.remove('loading');
-            } else {
-                container.innerHTML = `
-                    <div class="error-msg">
-                        Unable to load live data due to browser restrictions. 
-                        <a href="https://dexscreener.com/cronos/${address}" target="_blank" class="fallback-link">
-                            View live data on DexScreener →
-                        </a>
-                    </div>
-                `;
-                container.classList.remove('loading');
-            }
-        }
-
-        // Load all token data on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            // Fixed addresses: CLG and TRI were swapped
-            updateTokenCard('0x80228677d9895934eed4bdb402ac659094903298', 'CLG');
-            updateTokenCard('0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9', 'TRI');
-            updateTokenCard('0x5295065c2Af4d922d22f37E20916dFec015f64bf', 'LYRA');
-            updateTokenCard('0x05ba4c5741613894840f7d8d5084cfc22dc3b232', 'CARA');
-        });
-
-        // Refresh data every 30 seconds
-        setInterval(() => {
-            updateTokenCard('0x80228677d9895934eed4bdb402ac659094903298', 'CLG');
-            updateTokenCard('0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9', 'TRI');
-            updateTokenCard('0x5295065c2Af4d922d22f37E20916dFec015f64bf', 'LYRA');
-            updateTokenCard('0x05ba4c5741613894840f7d8d5084cfc22dc3b232', 'CARA');
-        }, 30000);
-
         // Smooth scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
         };
-
-        const observer = new IntersectionObserver((entries) => {
+lyl {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
