@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronos Legends - Legends Awaken II</title>
+    <title>Cronos Legends - Legends Awaken II Coming Soon</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -66,6 +66,10 @@
             list-style: none;
         }
 
+        .nav-links li {
+            position: relative;
+        }
+
         .nav-links a {
             color: #ccc;
             text-decoration: none;
@@ -75,6 +79,8 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             position: relative;
+            display: block;
+            padding: 10px 0;
         }
 
         .nav-links a::after {
@@ -94,6 +100,87 @@
 
         .nav-links a:hover::after {
             width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .dropdown-submenu {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .dropdown-submenu a {
+            font-size: 0.85rem;
+            color: #999;
+            padding: 8px 25px;
+        }
+
+        .dropdown-submenu a:hover {
+            color: #FFD700;
         }
 
         .mobile-menu-toggle {
@@ -119,6 +206,7 @@
                 gap: 30px;
                 transition: left 0.3s ease;
                 border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
             }
 
             .nav-links.active {
@@ -128,22 +216,56 @@
             .mobile-menu-toggle {
                 display: block;
             }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                border: none;
+                background: transparent;
+                padding: 10px 0 0 20px;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-menu,
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-toggle {
+                width: 100%;
+            }
         }
 
+        /* Hero Section */
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            overflow: hidden;
+            overflow: visible;
             background: linear-gradient(to bottom, 
                 rgba(0, 100, 255, 0.15) 0%,
                 rgba(0, 255, 100, 0.15) 50%,
                 rgba(255, 50, 50, 0.15) 100%
             ), #0a0a0a;
             margin-top: 80px;
+            padding-bottom: 100px;
+            padding-top: 40px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, #0a0a0a);
+            pointer-events: none;
         }
 
         .hero::before {
@@ -165,17 +287,17 @@
             50% { opacity: 1; }
         }
 
-
         .hero-content {
             position: relative;
             z-index: 10;
             max-width: 1200px;
-            padding: 0 20px;
+            padding: 20px;
+            width: 100%;
         }
 
         .logo {
             font-family: 'Cinzel', serif;
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
             background-size: 200% 200%;
@@ -183,7 +305,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientShift 3s ease infinite;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
             letter-spacing: 4px;
         }
@@ -194,476 +316,330 @@
         }
 
         .subtitle {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-bottom: 40px;
-            color: #FFD700;
+            color: #ccc;
             text-transform: uppercase;
             letter-spacing: 3px;
-            font-weight: 600;
-        }
-
-        .countdown-container {
-            display: inline-block;
-            margin: 20px auto 40px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px 30px;
-        }
-
-        .countdown-title {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            background: rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 12px 18px;
-            min-width: 70px;
-            transition: all 0.3s ease;
-        }
-
-        .countdown-item:hover {
-            background: rgba(255, 215, 0, 0.08);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .countdown-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #FFD700;
-            font-family: 'Cinzel', serif;
-        }
-
-        .countdown-label {
-            font-size: 0.7rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 4px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .hero-text {
             font-size: 1.2rem;
             line-height: 1.8;
-            margin-bottom: 40px;
             color: #ccc;
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 40px;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        .btn {
-            padding: 16px 35px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Inter', sans-serif;
+        /* Coming Next Section */
+        .coming-next {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 50px 30px 70px;
+            margin: 30px auto;
+            max-width: 900px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 50px rgba(255, 215, 0, 0.2);
             position: relative;
-            overflow: hidden;
         }
 
-        .btn::before {
+        .coming-next::after {
             content: '';
             position: absolute;
-            top: 50%;
+            bottom: -60px;
             left: 50%;
-            width: 0;
-            height: 0;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.6), transparent);
+            z-index: -1;
+        }
+
+        .coming-next::before {
+            content: '';
+            position: absolute;
+            bottom: -65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 215, 0, 0.8);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn span {
-            position: relative;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
             z-index: 1;
         }
 
-        .btn-game {
-            background: linear-gradient(135deg, #00FF64, #00CC50);
+        .coming-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             color: #000;
-            box-shadow: 0 5px 25px rgba(0, 255, 100, 0.4);
-            border: 2px solid transparent;
-        }
-
-        .btn-game:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(0, 255, 100, 0.6);
-            border-color: #00FF64;
-        }
-
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #4752C4);
-            color: #fff;
-            box-shadow: 0 5px 25px rgba(88, 101, 242, 0.3);
-            border: 2px solid transparent;
-        }
-
-        .btn-discord:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(88, 101, 242, 0.5);
-            border-color: #5865F2;
-        }
-
-        .btn-twitter {
-            background: linear-gradient(135deg, #1DA1F2, #0c85d0);
-            color: #fff;
-            box-shadow: 0 5px 25px rgba(29, 161, 242, 0.3);
-            border: 2px solid transparent;
-        }
-
-        .btn-twitter:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(29, 161, 242, 0.5);
-            border-color: #1DA1F2;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #FFD700;
-            border: 2px solid #FFD700;
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.2);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 35px rgba(255, 215, 0, 0.4);
-        }
-
-        .section {
-            padding: 120px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .coming-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
         }
 
-        .section-subtitle {
+        .coming-subtitle {
+            font-size: 1.1rem;
+            color: #FFD700;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .coming-description {
+            font-size: 1rem;
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* Image Carousel */
+        .preview-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 1 / 1;
+            margin: 30px auto 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 4px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3), 
+                        inset 0 0 30px rgba(0, 0, 0, 0.3);
+            background: #0a0a0a;
+            animation: frameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes frameGlow {
+            0%, 100% {
+                box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(255, 215, 0, 0.5), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+        .carousel-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #FFD700;
+            font-weight: 700;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            display: inline-block;
+            margin: 20px auto 30px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px 30px;
+        }
+
+        .countdown-title {
+            font-size: 0.95rem;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .countdown-item {
             text-align: center;
-            color: #888;
-            font-size: 1.2rem;
-            margin-bottom: 60px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .factions {
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 100px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        /* Faction Preview Grid */
+        .faction-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-top: 60px;
         }
 
         .faction-card {
-            background: rgba(10, 10, 10, 0.8);
-            border: 2px solid transparent;
+            background: rgba(20, 20, 20, 0.8);
             border-radius: 20px;
-            padding: 50px 40px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.1);
             transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .faction-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-image {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
             position: relative;
             overflow: hidden;
         }
 
-        .faction-card::before {
+        .faction-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .faction-image::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.05));
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
         }
 
-        .faction-card:hover::before {
-            opacity: 1;
-        }
-
-        .faction-card.blue {
-            background: linear-gradient(135deg, rgba(0, 100, 255, 0.15), rgba(10, 10, 10, 0.9));
-            border-color: rgba(0, 100, 255, 0.3);
-        }
-
-        .faction-card.blue:hover {
-            border-color: #0064FF;
-            box-shadow: 0 20px 60px rgba(0, 100, 255, 0.3);
-            transform: translateY(-10px);
-        }
-
-        .faction-card.green {
-            background: linear-gradient(135deg, rgba(0, 255, 100, 0.15), rgba(10, 10, 10, 0.9));
-            border-color: rgba(0, 255, 100, 0.3);
-        }
-
-        .faction-card.green:hover {
-            border-color: #00FF64;
-            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.3);
-            transform: translateY(-10px);
-        }
-
-        .faction-card.red {
-            background: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(10, 10, 10, 0.9));
-            border-color: rgba(255, 50, 50, 0.3);
-        }
-
-        .faction-card.red:hover {
-            border-color: #FF3232;
-            box-shadow: 0 20px 60px rgba(255, 50, 50, 0.3);
-            transform: translateY(-10px);
-        }
-
-        .faction-icon {
-            font-size: 5rem;
-            margin-bottom: 25px;
-            display: block;
-        }
-
-        .faction-name {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+        .faction-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            z-index: 2;
         }
 
-        .faction-card.blue .faction-name { color: #0064FF; }
-        .faction-card.green .faction-name { color: #00FF64; }
-        .faction-card.red .faction-name { color: #FF3232; }
-
-        .faction-desc {
-            color: #bbb;
-            line-height: 1.8;
-            font-size: 1.05rem;
+        .new-badge {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
         }
 
-        /* NFT Collection Section */
-        .nft-section {
-            background: linear-gradient(to bottom,
-                rgba(0, 100, 255, 0.05) 0%,
-                rgba(0, 255, 100, 0.05) 50%,
-                rgba(255, 50, 50, 0.05) 100%
-            );
-            padding: 120px 20px;
-        }
-
-        .nft-announcement {
-            text-align: center;
-            margin-bottom: 60px;
+        .faction-info {
             padding: 30px;
-            background: rgba(255, 215, 0, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .nft-date {
+        .faction-title {
             font-family: 'Cinzel', serif;
             font-size: 2rem;
-            color: #FFD700;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .nft-announcement p {
-            font-size: 1.1rem;
-            color: #ccc;
-            line-height: 1.8;
-        }
-
-        .faction-divider {
-            display: flex;
-            align-items: center;
-            margin: 80px 0 60px;
-            gap: 20px;
-        }
-
-        .faction-divider::before,
-        .faction-divider::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 215, 0, 0.3) 20%, 
-                rgba(255, 215, 0, 0.6) 80%, 
-                rgba(255, 215, 0, 0.3) 100%);
-        }
-
-        .faction-divider::before {
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 215, 0, 0.3) 20%, 
-                rgba(255, 215, 0, 0.6) 100%);
-        }
-
-        .faction-divider::after {
-            background: linear-gradient(90deg, 
-                rgba(255, 215, 0, 0.6) 0%, 
-                rgba(255, 215, 0, 0.3) 80%, 
-                transparent 100%);
-        }
-
-        .faction-divider-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            white-space: nowrap;
-        }
-
-        .faction-divider-icon {
-            font-size: 2.5rem;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-        }
-
-        .faction-divider-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 3px;
-        }
-
-        .nft-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .nft-card {
-            background: rgba(10, 10, 10, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .nft-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.6);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
-        }
-
-        .nft-image {
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 6rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nft-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .nft-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .nft-card:hover .nft-image::before {
-            left: 100%;
-        }
-
-        .nft-info {
-            padding: 25px;
-        }
-
-        .nft-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            color: #FFD700;
             margin-bottom: 10px;
-            font-weight: 700;
+            color: #FFD700;
         }
 
-        .nft-faction {
-            font-size: 0.9rem;
-            color: #888;
+        .faction-subtitle {
+            color: #999;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 15px;
         }
 
-        .nft-desc {
-            color: #bbb;
-            line-height: 1.6;
-            font-size: 0.95rem;
+        .faction-desc {
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 1rem;
         }
 
+        /* Story Section */
         .story-section {
-            background: rgba(10, 10, 10, 0.8);
-            padding: 120px 20px;
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.05), rgba(0, 100, 255, 0.05));
+            padding: 100px 20px;
+            position: relative;
         }
 
         .story-content {
@@ -675,32 +651,102 @@
         .story-text {
             font-size: 1.2rem;
             line-height: 2;
-            color: #ccc;
+            color: #ddd;
             margin-bottom: 30px;
         }
 
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #404eed);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-discord:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-twitter:hover {
+            box-shadow: 0 8px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        /* Footer */
         .footer {
-            text-align: center;
+            background: rgba(5, 5, 5, 0.9);
             padding: 80px 20px 40px;
-            background: #000;
+            text-align: center;
             border-top: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
         }
 
         .footer-links {
             display: flex;
             gap: 30px;
             justify-content: center;
+            margin: 40px 0;
             flex-wrap: wrap;
-            margin-top: 30px;
-            margin-bottom: 40px;
         }
 
         .footer-links a {
-            color: #888;
+            color: #999;
             text-decoration: none;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
             transition: color 0.3s ease;
         }
 
@@ -708,158 +754,84 @@
             color: #FFD700;
         }
 
-        .social-links {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
         @media (max-width: 768px) {
-            .hero {
-                height: auto;
-                min-height: 100vh;
-                padding: 40px 15px;
-            }
-
-            .hero-content {
-                padding: 0 15px;
-            }
-
             .logo {
                 font-size: 2.5rem;
-                letter-spacing: 2px;
-                margin-bottom: 15px;
-                line-height: 1.2;
             }
 
-            .subtitle {
-                font-size: 1rem;
-                letter-spacing: 2px;
-                margin-bottom: 30px;
+            .coming-title {
+                font-size: 2rem;
             }
 
-            .hero p {
+            .coming-subtitle {
                 font-size: 0.95rem;
-                line-height: 1.6;
             }
 
             .section-title {
                 font-size: 2rem;
-                margin-bottom: 40px;
-            }
-
-            .countdown-container {
-                padding: 15px 20px;
-                margin: 20px 10px 30px;
-            }
-
-            .countdown-title {
-                font-size: 0.75rem;
-                margin-bottom: 10px;
             }
 
             .countdown {
-                gap: 8px;
-            }
-
-            .countdown-item {
-                padding: 10px 15px;
-                min-width: 65px;
+                gap: 12px;
             }
 
             .countdown-value {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
 
             .countdown-label {
-                font-size: 0.7rem;
+                font-size: 0.75rem;
             }
 
-            .btn {
-                padding: 12px 25px;
-                font-size: 0.85rem;
+            .countdown-container {
+                padding: 20px 20px;
             }
 
-            .nft-gallery {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .faction-card {
-                margin-bottom: 30px;
-            }
-
-            .faction-divider-title {
-                font-size: 1.3rem;
-            }
-
-            .faction-divider-icon {
-                font-size: 1.5rem;
-            }
-
-            .story-text {
-                font-size: 1rem;
-            }
-
-            .nft-section {
-                padding: 60px 15px;
-            }
-
-            .story-section {
-                padding: 60px 15px;
-            }
-
-            .footer {
-                padding: 50px 15px 30px;
-            }
-
-            .footer-links {
-                gap: 20px;
-                font-size: 0.85rem;
-            }
-        }
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            .section-title {
-                font-size: 2.5rem;
-            }
-            .countdown {
-                gap: 15px;
-            }
-            .countdown-item {
-                padding: 20px 25px;
-                min-width: 90px;
-            }
-            .countdown-value {
-                font-size: 2.5rem;
-            }
-            .nft-gallery {
+            .faction-grid {
                 grid-template-columns: 1fr;
             }
-            .faction-divider-title {
-                font-size: 1.5rem;
+
+            .coming-next {
+                padding: 30px 20px 50px;
             }
-            .faction-divider-icon {
-                font-size: 1.8rem;
+
+            .coming-next::after {
+                height: 60px;
+                bottom: -50px;
+            }
+
+            .coming-next::before {
+                bottom: -55px;
+            }
+
+            .preview-carousel {
+                max-width: 100%;
+                aspect-ratio: 1 / 1;
+            }
+
+            .hero {
+                padding-top: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="game.html">Games</a></li>
-                <li><a href="nft.html">NFTs</a></li>
-                <li><a href="tokens.html">Tokens</a></li>
-                <li><a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFTs</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
+                        <li style="margin-top: 10px;"><a href="legends-awaken-1.html">Legends Awaken I</a></li>
+                    </ul>
+                </li>
+                <li><a href="#factions">Factions</a></li>
+                <li><a href="#story">Story</a></li>
+                <li><a href="roadmap.html">Roadmap</a></li>
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
         </div>
@@ -868,107 +840,145 @@
     <div class="hero">
         <div class="hero-content">
             <h1 class="logo">CRONOS LEGENDS</h1>
-            <div class="subtitle">⚔️ Legends Awaken II 💎</div>
-            
-            <p class="hero-text">
-                The saga continues. Ancient powers stir, and new forces enter the fray.<br>
-                The fate of the world rests on more than brute strength.
-            </p>
 
-            <div class="countdown-container">
-                <div class="countdown-title">NFT Launch Dec 2025</div>
-                <div class="countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="days">00</div>
-                        <div class="countdown-label">Days</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="hours">00</div>
-                        <div class="countdown-label">Hours</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="minutes">00</div>
-                        <div class="countdown-label">Minutes</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="seconds">00</div>
-                        <div class="countdown-label">Seconds</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="nft-section" id="nft-section">
-        <div class="section">
-            <h2 class="section-title">💎 NFT Collections</h2>
-            <div class="nft-announcement">
-                <div class="nft-date">📅 Legends Awaken II - December 2025</div>
-                <p>
-                    Discover the complete Cronos Legends NFT collections featuring 17 unique divisions 
-                    across three powerful factions: Cronos Guardians, Chaos Horde, and the mystical Trinari.
+            <div class="coming-next" id="coming-next">
+                <div class="coming-badge">🔥 Coming Next</div>
+                <h2 class="coming-title">LEGENDS AWAKEN II</h2>
+                <p class="coming-subtitle">⚔️ Three Factions • 17 Unique Divisions • 💎 Dec 10, 2025 • 13:00 GMT</p>
+                <p class="coming-description">
+                    The saga continues with an expanded universe. The Cronos Guardians and Chaos Horde return stronger than ever, 
+                    joined by a mysterious new force – the Trinari. Nature's guardians have awakened, bringing balance... or chaos.
                 </p>
-                <div style="margin-top: 30px;">
-                    <a href="nft.html" class="btn btn-outline"><span>🔍 Explore NFT Collection</span></a>
-                </div>
-            </div>
 
-            <div class="nft-gallery" style="margin-top: 60px;">
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
-                        <img src="Images/LA2/T1.png" alt="Trinari Preview">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">🌿 Trinari</h3>
-                        <div class="nft-faction">New Faction - 3 DIVISIONS</div>
-                        <p class="nft-desc">Mystical beings of nature, now risen to restore balance through harmony or power.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #0064FF, #001a4d);">
-                        <img src="Images/LA2/G1.webp" alt="Cronos Guardians Preview">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">⚔️ Cronos Guardians</h3>
-                        <div class="nft-faction">7 Divisions (LA II)</div>
-                        <p class="nft-desc">Noble defenders of order wielding ancient power to protect the realm from chaos.</p>
+                <div class="countdown-container">
+                    <div class="countdown-title">⏰ Launch: December 10, 2025 - 13:00 GMT</div>
+                    <div style="font-size: 0.85rem; color: #999; margin-bottom: 15px;">(15:00 Finland Time)</div>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="days">00</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="hours">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="seconds">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #FF3232, #4d0000);">
-                        <img src="Images/LA2/C1.webp" alt="Chaos Horde Preview">
+                <div class="preview-carousel">
+                    <img src="Images/PreviewLAII/1.jpg" class="carousel-image active" alt="Preview 1">
+                    <img src="Images/PreviewLAII/2.jpg" class="carousel-image" alt="Preview 2">
+                    <img src="Images/PreviewLAII/3.jpg" class="carousel-image" alt="Preview 3">
+                    <img src="Images/PreviewLAII/4.jpg" class="carousel-image" alt="Preview 4">
+                    <img src="Images/PreviewLAII/5.jpg" class="carousel-image" alt="Preview 5">
+                    <img src="Images/PreviewLAII/6.jpg" class="carousel-image" alt="Preview 6">
+                    <img src="Images/PreviewLAII/7.jpg" class="carousel-image" alt="Preview 7">
+                    <img src="Images/PreviewLAII/8.jpg" class="carousel-image" alt="Preview 8">
+                    <img src="Images/PreviewLAII/9.jpg" class="carousel-image" alt="Preview 9">
+                    <img src="Images/PreviewLAII/10.jpg" class="carousel-image" alt="Preview 10">
+                    <img src="Images/PreviewLAII/11.jpg" class="carousel-image" alt="Preview 11">
+                    <img src="Images/PreviewLAII/12.jpg" class="carousel-image" alt="Preview 12">
+                    <img src="Images/PreviewLAII/13.jpg" class="carousel-image" alt="Preview 13">
+                    <img src="Images/PreviewLAII/14.jpg" class="carousel-image" alt="Preview 14">
+                    <img src="Images/PreviewLAII/15.jpg" class="carousel-image" alt="Preview 15">
+                    <div class="carousel-indicator">
+                        <span id="carousel-counter">1 / 15</span>
                     </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">🔥 Chaos Horde</h3>
-                        <div class="nft-faction">7 Divisions (LA II)</div>
-                        <p class="nft-desc">Fierce warriors seeking dominance through raw power and unrelenting fury.</p>
-                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <a href="legends-awaken-2.html" class="btn btn-primary"><span>🔍 More Information</span></a>
+                </div>
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <a href="https://crypto.com/nft/collection/07cb97f43d1b9033d18f8d1d9ba5f453" class="btn btn-outline"><span>⚡ View Legends Awaken I Collection</span></a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="story-section">
+    <div class="section" id="factions">
+        <h2 class="section-title">💎 The Three Factions</h2>
+        <p style="text-align: center; color: #ccc; font-size: 1.1rem; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Discover the complete Cronos Legends NFT collections featuring 17 unique divisions across three powerful factions. Launching December 10, 2025.
+        </p>
+
+        <div class="faction-grid">
+            <div class="faction-card">
+                <div class="faction-image">
+                    <img src="Images/LA2/T1.png" alt="Trinari">
+                    <div class="faction-badge new-badge">✨ NEW FACTION</div>
+                </div>
+                <div class="faction-info">
+                    <h3 class="faction-title">🌿 Trinari</h3>
+                    <div class="faction-subtitle">The Mystic Guardians • 3 Divisions</div>
+                    <p class="faction-desc">
+                        Mystical beings of nature, now risen to restore balance through harmony or power. 
+                        Each Trinari embodies a primal element, from blazing fire sprites to shimmering crystal wisps.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faction-card">
+                <div class="faction-image">
+                    <img src="Images/LA2/G1.webp" alt="Cronos Guardians">
+                    <div class="faction-badge" style="background: rgba(0, 100, 255, 0.9);">⚔️ EXPANDED</div>
+                </div>
+                <div class="faction-info">
+                    <h3 class="faction-title">⚔️ Cronos Guardians</h3>
+                    <div class="faction-subtitle">Defenders of Order • 7 Divisions (LA II)</div>
+                    <p class="faction-desc">
+                        Noble defenders of order wielding ancient power to protect the realm from chaos. 
+                        Their ranks have grown stronger, ready to face new threats.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faction-card">
+                <div class="faction-image">
+                    <img src="Images/LA2/C1.webp" alt="Chaos Horde">
+                    <div class="faction-badge" style="background: rgba(255, 50, 50, 0.9);">🔥 EXPANDED</div>
+                </div>
+                <div class="faction-info">
+                    <h3 class="faction-title">🔥 Chaos Horde</h3>
+                    <div class="faction-subtitle">Forces of Dominance • 7 Divisions (LA II)</div>
+                    <p class="faction-desc">
+                        Fierce warriors seeking dominance through raw power and unrelenting fury. 
+                        Their forces have multiplied, more dangerous than ever before.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="story-section" id="story">
         <div class="story-content">
             <h2 class="section-title">✨ The Trinari Rise</h2>
             <p class="story-text">
                 Once ethereal whispers in the forests and winds, the Trinari now take physical form. 
                 They are not born of war, but of harmony – guardians of nature, bound to the very magic 
-                that sustains the world. Each Trinari embodies a primal element, from blazing fire sprites 
-                to shimmering crystal wisps.
+                that sustains the world.
             </p>
             <p class="story-text">
                 But don't be fooled by their soft features – the Trinari are powerful and purposeful. 
                 Their mission is clear: restore the balance broken by war and ambition. 
                 Whether through peace… or power.
             </p>
+            <p class="story-text" style="color: #FFD700; font-weight: 600;">
+                The fate of the world rests on more than brute strength. Three factions. One destiny.
+            </p>
         </div>
     </div>
 
-    <div class="footer">
-        <h2 class="section-title">🔮 Join The Community</h2>
+    <div class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
         <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
             Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
             this chapter is a defining moment – and the beginning of something far greater.
@@ -980,9 +990,10 @@
         
         <div class="footer-links">
             <a href="#factions">Factions</a>
+            <a href="nft.html">NFT Collection</a>
+            <a href="faq.html">FAQ</a>
             <a href="#" onclick="alert('Whitepaper coming soon!')">Whitepaper</a>
             <a href="#" onclick="alert('Roadmap coming soon!')">Roadmap</a>
-            <a href="faq.html">FAQ</a>
             <a href="#" onclick="alert('Contact info coming soon!')">Contact</a>
             <a href="#" onclick="alert('Privacy policy coming soon!')">Privacy Policy</a>
             <a href="#" onclick="alert('Terms coming soon!')">Terms of Service</a>
@@ -998,11 +1009,24 @@
             navLinks.classList.toggle('active');
         }
 
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
         // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
         });
 
         // Navbar scroll effect
@@ -1015,8 +1039,8 @@
             }
         });
 
-        // Countdown Timer
-        const countdownDate = new Date('December 24, 2025 14:00:00 GMT').getTime();
+        // Countdown Timer to December 10, 2025 3:00 PM Finland Time (1:00 PM GMT)
+        const countdownDate = new Date('December 10, 2025 13:00:00 GMT').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -1033,7 +1057,7 @@
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 
             if (distance < 0) {
-                document.querySelector('.countdown-title').textContent = 'NFTs Launched!';
+                document.querySelector('.countdown-title').textContent = '🎉 Legends Awaken II Launched!';
                 document.getElementById('days').textContent = '00';
                 document.getElementById('hours').textContent = '00';
                 document.getElementById('minutes').textContent = '00';
@@ -1043,6 +1067,29 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Image Carousel Auto-Rotation
+        let currentImageIndex = 0;
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        const totalImages = carouselImages.length;
+        const carouselCounter = document.getElementById('carousel-counter');
+
+        function rotateCarousel() {
+            // Remove active class from current image
+            carouselImages[currentImageIndex].classList.remove('active');
+            
+            // Move to next image
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            
+            // Add active class to new image
+            carouselImages[currentImageIndex].classList.add('active');
+            
+            // Update counter
+            carouselCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+        }
+
+        // Rotate images every 1 second
+        setInterval(rotateCarousel, 2000);
 
         // Smooth interactions for buttons
         document.querySelectorAll('.btn').forEach(button => {
@@ -1069,7 +1116,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.faction-card, .nft-card').forEach(el => {
+        document.querySelectorAll('.faction-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';

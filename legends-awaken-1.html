@@ -802,30 +802,13 @@
             <h1>LEGENDS AWAKEN I</h1>
             <p class="hero-subtitle">
                 The original collection that started it all in Cronos chain. Where the eternal battle<br>
-                between the Cronos Guardians and Chaos Horde first began.CA: 0x68A3192E286AA5C2182D815F5fE796401eCe28bA
+                between the Cronos Guardians and Chaos Horde first began. CA:
+<p> 0x68A3192E286AA5C2182D815F5fE796401eCe28bA</p>
             </p>
         </div>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-value">500</div>
-            <div class="stat-label">Total NFTs</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">2</div>
-            <div class="stat-label">Factions</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">16</div>
-            <div class="stat-label">Divisions</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-value">100%</div>
-            <div class="stat-label">Minted</div>
-        </div>
-    </div>
+  
 
     <!-- NFT Statistics Section -->
     <div class="nft-stats-section">
@@ -836,7 +819,7 @@
             <!-- Total NFTs Card -->
             <div class="nft-stat-card total">
                 <div class="nft-stat-icon">💎</div>
-                <div class="nft-stat-number" id="total-supply">500</div>
+                <div class="nft-stat-number">500</div>
                 <div class="nft-stat-label">Total Supply</div>
                 <p class="nft-stat-description">Original collection size across both factions</p>
             </div>
@@ -844,7 +827,7 @@
             <!-- Burned NFTs Card with Fire Effect -->
             <div class="nft-stat-card burned">
                 <div class="nft-stat-icon">🔥</div>
-                <div class="nft-stat-number" id="burned-count">23</div>
+                <div class="nft-stat-number">23</div>
                 <div class="nft-stat-label">Burned Forever</div>
                 <p class="nft-stat-description">Permanently removed from circulation</p>
                 <div class="fire-container">
@@ -858,7 +841,7 @@
             <!-- Remaining NFTs Card -->
             <div class="nft-stat-card remaining">
                 <div class="nft-stat-icon">✨</div>
-                <div class="nft-stat-number" id="remaining-count">477</div>
+                <div class="nft-stat-number">477</div>
                 <div class="nft-stat-label">In Circulation</div>
                 <p class="nft-stat-description">Available NFTs making each one more valuable</p>
             </div>
@@ -911,7 +894,7 @@
             <div class="achievement-card">
                 <div class="achievement-icon">👥</div>
                 <div class="achievement-title">Unique Holders</div>
-                <div class="achievement-value" id="unique-holders">1,847</div>
+                <div class="achievement-value">1,847</div>
             </div>
 
             <div class="achievement-card">
@@ -1106,354 +1089,5 @@
         </p>
         <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
-    <script>
-        // ========================================
-        // Cronos Legends Awaken I - Live Blockchain Data
-        // ========================================
-        
-        const CONTRACT_ADDRESS = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
-        const DEAD_ADDRESS = '0x000000000000000000000000000000000000dead';
-        const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-        
-        // ⚠️ IMPORTANT: Get your FREE API key from https://cronoscan.com/myapikey
-        // Without an API key, the rate limit is very low (1 request per 5 seconds)
-        const CRONOSCAN_API_KEY = 'hd4K3tXtVAtQLFHBTh1EBAp407xRYu2b'; // Add your API key here
-        
-        const CRONOS_API = 'https://api.cronoscan.com/api';
-        
-        // Debug mode
-        const DEBUG = true;
-        
-        function log(...args) {
-            if (DEBUG) console.log('[Cronos Data]', ...args);
-        }
-        
-        function error(...args) {
-            console.error('[Cronos Data Error]', ...args);
-        }
-
-        // Add styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .loading-pulse {
-                animation: pulse 1.5s ease-in-out infinite;
-            }
-            @keyframes pulse {
-                0%, 100% { opacity: 0.6; }
-                50% { opacity: 1; }
-            }
-            .live-indicator {
-                display: inline-block;
-                width: 10px;
-                height: 10px;
-                background: #00ff00;
-                border-radius: 50%;
-                margin-left: 10px;
-                animation: blink 2s ease-in-out infinite;
-                box-shadow: 0 0 10px #00ff00;
-            }
-            @keyframes blink {
-                0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff00; }
-                50% { opacity: 0.3; box-shadow: 0 0 5px #00ff00; }
-            }
-            .live-indicator.error {
-                background: #ff0000;
-                box-shadow: 0 0 10px #ff0000;
-                animation: none;
-            }
-            .live-indicator.warning {
-                background: #FFA500;
-                box-shadow: 0 0 10px #FFA500;
-            }
-            .debug-panel {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: rgba(0, 0, 0, 0.95);
-                color: #00ff00;
-                padding: 15px;
-                border-radius: 10px;
-                font-family: monospace;
-                font-size: 11px;
-                max-width: 500px;
-                max-height: 400px;
-                overflow-y: auto;
-                z-index: 10000;
-                border: 2px solid #00ff00;
-            }
-            .debug-panel.hidden {
-                display: none;
-            }
-            .debug-log {
-                margin: 5px 0;
-                padding: 5px;
-                border-left: 2px solid #00ff00;
-                padding-left: 10px;
-                font-size: 10px;
-                line-height: 1.4;
-            }
-            .debug-error {
-                border-left-color: #ff0000;
-                color: #ff0000;
-            }
-            .debug-success {
-                border-left-color: #00ff00;
-                color: #00ff00;
-            }
-            .debug-warning {
-                border-left-color: #FFA500;
-                color: #FFA500;
-            }
-            .debug-header {
-                font-weight: bold;
-                margin-bottom: 10px;
-                padding-bottom: 10px;
-                border-bottom: 1px solid #00ff00;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Create debug panel
-        let debugPanel = null;
-        if (DEBUG) {
-            debugPanel = document.createElement('div');
-            debugPanel.className = 'debug-panel';
-            debugPanel.innerHTML = '<div class="debug-header">🔍 Blockchain Data Debug</div>';
-            document.body.appendChild(debugPanel);
-        }
-
-        function debugLog(message, type = 'log') {
-            if (DEBUG && debugPanel) {
-                const logEntry = document.createElement('div');
-                logEntry.className = `debug-log debug-${type}`;
-                logEntry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
-                debugPanel.appendChild(logEntry);
-                debugPanel.scrollTop = debugPanel.scrollHeight;
-                
-                // Keep only last 50 logs
-                const logs = debugPanel.querySelectorAll('.debug-log');
-                if (logs.length > 50) {
-                    logs[0].remove();
-                }
-            }
-        }
-
-        // Add live indicator
-        function addLiveIndicator() {
-            const statsTitle = document.querySelector('.nft-stats-title');
-            if (statsTitle && !statsTitle.querySelector('.live-indicator')) {
-                const indicator = document.createElement('span');
-                indicator.className = 'live-indicator';
-                indicator.id = 'live-indicator';
-                indicator.title = 'Live data from Cronos blockchain';
-                statsTitle.appendChild(indicator);
-                debugLog('Live indicator initialized', 'success');
-            }
-        }
-
-        function setIndicatorStatus(status) {
-            const indicator = document.getElementById('live-indicator');
-            if (indicator) {
-                indicator.className = 'live-indicator';
-                if (status === 'error') {
-                    indicator.classList.add('error');
-                    indicator.title = 'Error fetching blockchain data';
-                } else if (status === 'warning') {
-                    indicator.classList.add('warning');
-                    indicator.title = 'Using cached/estimated data';
-                }
-            }
-        }
-
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-
-        // Build API URL
-        function buildApiUrl(endpoint) {
-            const apiKey = CRONOSCAN_API_KEY ? `&apikey=${CRONOSCAN_API_KEY}` : '';
-            return `${CRONOS_API}${endpoint}${apiKey}`;
-        }
-
-        // Method 1: Try to get NFT transactions
-        async function fetchNFTTransactions() {
-            try {
-                const endpoint = `?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=10000&sort=asc`;
-                const url = buildApiUrl(endpoint);
-                
-                debugLog(`Trying NFT transactions API...`, 'log');
-                
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.status === '1' && data.result && Array.isArray(data.result)) {
-                    debugLog(`✓ Got ${data.result.length} transactions`, 'success');
-                    return { success: true, data: data.result };
-                } else {
-                    debugLog(`✗ NFT transactions failed: ${data.message || 'Unknown error'}`, 'warning');
-                    return { success: false, error: data.message };
-                }
-            } catch (err) {
-                debugLog(`✗ NFT transactions error: ${err.message}`, 'error');
-                return { success: false, error: err.message };
-            }
-        }
-
-        // Method 2: Try to get ERC721 token transfers
-        async function fetchTokenTransfers() {
-            try {
-                const endpoint = `?module=account&action=tokentx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=10000&sort=asc`;
-                const url = buildApiUrl(endpoint);
-                
-                debugLog(`Trying token transfers API...`, 'log');
-                
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.status === '1' && data.result && Array.isArray(data.result)) {
-                    debugLog(`✓ Got ${data.result.length} transfers`, 'success');
-                    return { success: true, data: data.result };
-                } else {
-                    debugLog(`✗ Token transfers failed: ${data.message || 'Unknown error'}`, 'warning');
-                    return { success: false, error: data.message };
-                }
-            } catch (err) {
-                debugLog(`✗ Token transfers error: ${err.message}`, 'error');
-                return { success: false, error: err.message };
-            }
-        }
-
-        // Method 3: Use fallback with manual count
-        async function useFallbackData() {
-            debugLog('Using fallback data...', 'warning');
-            
-            // You can manually update these values or fetch from your own backend
-            return {
-                success: true,
-                data: {
-                    totalSupply: 500,
-                    burnedCount: 0, // Update this manually or fetch from your backend
-                    remainingCount: 500,
-                    uniqueHolders: 0 // Update this manually
-                }
-            };
-        }
-
-        // Process transaction data
-        function processTransactions(transactions) {
-            const tokenIds = new Set();
-            const burnedTokens = new Set();
-            const currentHolders = new Map();
-            
-            transactions.forEach(tx => {
-                const tokenId = tx.tokenID || tx.tokenId;
-                if (!tokenId) return;
-                
-                const toAddress = (tx.to || '').toLowerCase();
-                
-                tokenIds.add(tokenId);
-                
-                if (toAddress === DEAD_ADDRESS.toLowerCase() || toAddress === ZERO_ADDRESS.toLowerCase()) {
-                    burnedTokens.add(tokenId);
-                    currentHolders.delete(tokenId);
-                } else if (toAddress) {
-                    currentHolders.set(tokenId, toAddress);
-                }
-            });
-            
-            const uniqueHolders = new Set(currentHolders.values());
-            
-            return {
-                totalSupply: 500,
-                burnedCount: burnedTokens.size,
-                remainingCount: 500 - burnedTokens.size,
-                uniqueHolders: uniqueHolders.size,
-                transactionCount: transactions.length
-            };
-        }
-
-        // Main fetch function with multiple fallbacks
-        async function fetchTokenData() {
-            try {
-                debugLog('=== Starting data fetch ===', 'log');
-                debugLog(`Contract: ${CONTRACT_ADDRESS}`, 'log');
-                debugLog(`API Key: ${CRONOSCAN_API_KEY ? 'Provided ✓' : 'Not provided (rate limited)'}`, CRONOSCAN_API_KEY ? 'success' : 'warning');
-                
-                // Try Method 1: NFT Transactions
-                let result = await fetchNFTTransactions();
-                
-                // Try Method 2: Token Transfers if Method 1 fails
-                if (!result.success) {
-                    debugLog('Trying alternative method...', 'log');
-                    result = await fetchTokenTransfers();
-                }
-                
-                // Process if we got data
-                if (result.success && result.data) {
-                    const stats = processTransactions(result.data);
-                    debugLog(`📊 Stats: Burned=${stats.burnedCount} | Remaining=${stats.remainingCount} | Holders=${stats.uniqueHolders}`, 'success');
-                    updateStats(stats);
-                    setIndicatorStatus('success');
-                    return stats;
-                }
-                
-                // If both methods fail, show helpful error
-                debugLog('❌ All API methods failed', 'error');
-                
-                if (!CRONOSCAN_API_KEY) {
-                    debugLog('⚠️ TIP: Get a free API key from https://cronoscan.com/myapikey', 'warning');
-                    debugLog('⚠️ Add it to the CRONOSCAN_API_KEY variable in the code', 'warning');
-                }
-                
-                // Use fallback
-                const fallback = await useFallbackData();
-                if (fallback.success) {
-                    updateStats(fallback.data);
-                    setIndicatorStatus('warning');
-                }
-                
-            } catch (err) {
-                error('Fatal error:', err);
-                debugLog(`FATAL: ${err.message}`, 'error');
-                setIndicatorStatus('error');
-            }
-        }
-
-        // Update UI
-        function updateStats(stats) {
-            const elements = {
-                'total-supply': stats.totalSupply,
-                'burned-count': stats.burnedCount,
-                'remaining-count': stats.remainingCount,
-                'unique-holders': stats.uniqueHolders
-            };
-            
-            Object.entries(elements).forEach(([id, value], index) => {
-                const element = document.getElementById(id);
-                if (element && value !== undefined) {
-                    element.classList.add('loading-pulse');
-                    setTimeout(() => {
-                        element.textContent = formatNumber(value);
-                        element.classList.remove('loading-pulse');
-                    }, 300 + (index * 100));
-                }
-            });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            debugLog('=== Initializing ===', 'success');
-            addLiveIndicator();
-            fetchTokenData();
-            
-            // Auto-refresh every 5 minutes
-            setInterval(() => {
-                debugLog('--- Auto-refresh ---', 'log');
-                fetchTokenData();
-            }, 5 * 60 * 1000);
-            
-            debugLog('✓ Ready! Auto-refresh: 5 min', 'success');
-        });
-    </script>
 </body>
 </html>

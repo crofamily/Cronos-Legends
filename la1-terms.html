@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Awaken NFT - Terms & Conditions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #FFD700;
+            margin: 40px 0 20px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin: 30px 0 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #FFA500;
+            margin: 20px 0 10px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 165, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border-left: 4px solid rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+        }
+
+        ul {
+            margin-left: 20px;
+            color: #ccc;
+            list-style-type: none;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        ul li:before {
+            content: "►";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+        }
+
+        .utility-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .utility-item:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .utility-title {
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .restriction {
+            background: rgba(255, 50, 50, 0.12);
+            border: 1px solid rgba(255, 50, 50, 0.4);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .restriction-title {
+            color: #FF6B6B;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .country-tag {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.25);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #FFD700;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .warning {
+            background: rgba(255, 165, 0, 0.12);
+            border: 2px solid rgba(255, 165, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            font-size: 1.3rem;
+            color: #FFA500;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            color: #888;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 10px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .instructions {
+            background: rgba(100, 150, 255, 0.12);
+            border: 1px solid rgba(100, 150, 255, 0.4);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .instructions-title {
+            color: #6BA3FF;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">LEGENDS AWAKEN</div>
+            <div class="subtitle">Terms and Conditions</div>
+        </div>
+
+        <div class="intro">
+            <h1>Introduction</h1>
+            <p>These Terms and Conditions ("Terms") govern the ownership and use of the Legends Awaken NFT ("NFT"). By purchasing, acquiring, or using a Legends Awaken NFT, you ("Holder") agree to be bound by these Terms. These Terms are subject to the local laws of the respective country and will be enforced accordingly.</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Ownership Rights</h2>
+            <p>The Holder of a Legends Awaken NFT has ownership rights to the NFT associated with the project. However, ownership of the NFT does not grant any rights, either express or implied, to the intellectual property or any associated materials of the Legends Awaken NFT project beyond the utilities outlined in these Terms.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Accessing Utilities</h2>
+            <p>To access the utilities provided by Legends Awaken NFT, holders must join our Discord community. This will grant you access to exclusive events, airdrops, and community privileges, including:</p>
+            <ul>
+                <li><strong>50% Royalty Sharing</strong> – For the first two weeks, 50% of the royalties from NFT sales will be distributed among community holders in Discord.</li>
+                <li><strong>Daily claim of $CLG in Discord</strong> – A daily reward system where NFT holders can claim their share from a $500 pool of $CLG tokens.</li>
+                <li><strong>Participation in Battleground competitions</strong> – Engage in community battles and earn rewards from a $500 prize pool in Discord.</li>
+                <li><strong>NFT staking for $CLG, $CHAOS, or $GUARDIAN</strong> – Stake your Legends Awaken NFTs and earn rewards. Staking platform is to be announced as soon as possible after successful sold out of the collection.</li>
+                <li><strong>NFT buybacks for marketing</strong> – A $500 fund dedicated to NFT buybacks to support the ecosystem and marketing initiatives.</li>
+                <li><strong>10x Discord Nitro subscriptions</strong> – 10 lucky community members will receive a 1-month Discord Nitro subscription in Discord competitions within 1 month once NFT's are sold out.</li>
+                <li><strong>Airdrop of $CARA tokens</strong> – A $500 airdrop pool of $CARA tokens exclusively for NFT holders. To be eligble for airdrop, you must transfer your NFT to your decentralized Cronos wallet.</li>
+                <li><strong>Exclusive role & future NFT rewards</strong> – Hold at least 5 Legends Awaken NFTs to earn the Legend Awaken role in Discord and qualify for a free NFT in the next Legends Awaken II collection.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>3. Utilities</h2>
+            <p>The following utilities are granted to Cronos Legends NFT holders. Restrictions or limitations are indicated only for applicable countries using their abbreviations (e.g., UK, US, DE, CN):</p>
+
+            <div class="utility-item">
+                <div class="utility-title">Exclusive Community Access:</div>
+                <p>Holders will have access to private community channels or events related to the Legends Awaken project. There are no global restrictions for this utility.</p>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">Staking and Rewards:</div>
+                <div class="restriction">
+                    <div class="restriction-title">Restrictions:</div>
+                    <div>
+                        <span class="country-tag">UK</span>
+                        <span class="country-tag">US</span>
+                        <span class="country-tag">DE</span>
+                        <span class="country-tag">CN</span>
+                        <span class="country-tag">IT</span>
+                    </div>
+                    <p style="margin-top: 12px;">Restricted. Subject to local financial regulations regarding staking activities. In the US, staking may be considered a financial service and could be subject to SEC regulations. In Germany and Italy, financial authorities may regulate staking. In China, all staking activities are prohibited.</p>
+                </div>
+                <div class="instructions">
+                    <div class="instructions-title">Instructions:</div>
+                    <p>Staking will be conducted on Cronos network DApps. To stake, you must transfer your NFT to your decentralized Cronos wallet.</p>
+                </div>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">In-Game Use:</div>
+                <div class="restriction">
+                    <div class="restriction-title">Restrictions:</div>
+                    <div>
+                        <span class="country-tag">CN</span>
+                    </div>
+                    <p style="margin-top: 12px;">Restricted. Digital assets in games are heavily regulated or prohibited in China.</p>
+                </div>
+                <div class="instructions">
+                    <div class="instructions-title">Instructions:</div>
+                    <p>To participate in any game, you must transfer your NFT to your decentralized Cronos wallet.</p>
+                </div>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">Royalty Share:</div>
+                <div class="restriction">
+                    <div class="restriction-title">Tax Regulations:</div>
+                    <div>
+                        <span class="country-tag">UK</span>
+                        <span class="country-tag">FR</span>
+                        <span class="country-tag">IT</span>
+                        <span class="country-tag">US</span>
+                        <span class="country-tag">JP</span>
+                        <span class="country-tag">AU</span>
+                    </div>
+                    <p style="margin-top: 12px;">Subject to local tax regulations. Royalties must be declared and may be taxed accordingly. In the US, royalty income is taxable and must be reported to the IRS. In Australia, royalty payments may be subject to withholding tax.</p>
+                </div>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">Voting Rights:</div>
+                <div class="restriction">
+                    <div class="restriction-title">Restrictions:</div>
+                    <div>
+                        <span class="country-tag">CN</span>
+                        <span class="country-tag">KR</span>
+                    </div>
+                    <p style="margin-top: 12px;">Restricted. Decentralized voting mechanisms are limited due to local governance regulations.</p>
+                </div>
+                <div class="instructions">
+                    <div class="instructions-title">Instructions:</div>
+                    <p>Voting processes will be conducted via Discord.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Transferability</h2>
+            <p>Legends Awaken NFTs can be transferred to third parties through supported platforms. The Holder acknowledges that any transfer of the NFT will also transfer the associated rights and utilities to the new owner.</p>
+            <div class="restriction">
+                <div class="restriction-title">Transfer Regulations:</div>
+                <div>
+                    <span class="country-tag">US</span>
+                    <span class="country-tag">JP</span>
+                    <span class="country-tag">KR</span>
+                </div>
+                <p style="margin-top: 12px;">Transfer of digital assets may be subject to specific regulations, such as the Financial Services Agency in Japan or the SEC in the US. Holders must comply with local laws.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Disclaimer</h2>
+            <p>The Legends Awaken project, including any associated utilities or rewards, is provided "as is" without warranty of any kind. The project team makes no representations regarding the long-term availability of utilities, rewards, or the Legends Awaken NFT ecosystem.</p>
+            <div class="warning">
+                <div class="warning-title">⚠️ Important Notice</div>
+                <p style="font-weight: 600;">The above utilities and rewards will only take effect once the Legends Awaken NFT collection is fully sold out.</p>
+            </div>
+            <div class="restriction">
+                <div class="restriction-title">Consumer Protection:</div>
+                <div>
+                    <span class="country-tag">US</span>
+                    <span class="country-tag">UK</span>
+                    <span class="country-tag">EU</span>
+                </div>
+                <p style="margin-top: 12px;">Local consumer protection laws may apply, and any warranties or representations could be subject to additional requirements.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Changes to Terms</h2>
+            <p>The project team reserves the right to modify or amend these Terms at any time. Any changes will be communicated to the Holders through official channels.</p>
+            <div class="restriction">
+                <div class="restriction-title">Regulatory Compliance:</div>
+                <div>
+                    <span class="country-tag">US</span>
+                    <span class="country-tag">UK</span>
+                    <span class="country-tag">EU</span>
+                </div>
+                <p style="margin-top: 12px;">Any changes will be made in compliance with local regulations.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Liability</h2>
+            <p>The project team shall not be liable for any damages, including financial losses, resulting from the purchase, use, or transfer of Legends Awaken NFTs.</p>
+            <div class="restriction">
+                <div class="restriction-title">Liability Limitations:</div>
+                <div>
+                    <span class="country-tag">US</span>
+                    <span class="country-tag">JP</span>
+                    <span class="country-tag">EU</span>
+                </div>
+                <p style="margin-top: 12px;">Local laws may impose additional liability limitations, and Holders should be aware of their rights under those jurisdictions.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Governing Law</h2>
+            <p>These Terms will be governed by and construed in accordance with the laws of the applicable jurisdiction.</p>
+            <div class="restriction">
+                <div class="restriction-title">Legal Framework:</div>
+                <div>
+                    <span class="country-tag">UK</span>
+                    <span class="country-tag">US</span>
+                    <span class="country-tag">FR</span>
+                    <span class="country-tag">JP</span>
+                </div>
+                <p style="margin-top: 12px;">Local regulations may impose additional rules or limitations based on the country's legal framework.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Cronos Legends. All rights reserved.</p>
+            <a href="index.html" class="home-link">🏠 Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

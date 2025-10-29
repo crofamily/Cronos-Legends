@@ -51,6 +51,27 @@
             letter-spacing: 2px;
         }
 
+        .back-home-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid #FFD700;
+            border-radius: 50px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            transform: translateX(-5px);
+        }
+
         .hero-section {
             padding: 150px 20px 80px;
             text-align: center;
@@ -322,12 +343,274 @@
                 right: 20px;
             }
         }
+
+        /* Music Control Button */
+        .music-controls {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .music-toggle {
+            width: 60px;
+            height: 60px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-toggle:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .music-toggle::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .music-toggle:hover::before {
+            left: 100%;
+        }
+
+        .music-icon {
+            font-size: 1.5rem;
+            color: #FFD700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .music-toggle.playing .music-icon {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Volume Control */
+        .volume-control {
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 30px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .volume-control.show {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .volume-icon {
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 6px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #FFD700;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 2px 15px rgba(255, 215, 0, 0.8);
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #FFD700;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .volume-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 2px 15px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Music Visualizer */
+        .music-visualizer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% 100%;
+            animation: visualizerFlow 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        .music-visualizer.active {
+            opacity: 0.6;
+        }
+
+        @keyframes visualizerFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        /* Now Playing Info */
+        .now-playing {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .now-playing.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .now-playing-icon {
+            color: #FFD700;
+            font-size: 1.5rem;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .now-playing-text {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .now-playing-title {
+            color: #FFD700;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .music-controls {
+                top: 80px;
+                right: 15px;
+            }
+            
+            .music-toggle {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .volume-control {
+                padding: 10px 15px;
+            }
+            
+            .volume-slider {
+                width: 80px;
+            }
+            
+            .now-playing {
+                left: 10px;
+                bottom: 10px;
+                padding: 10px 15px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="music/fantasy-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <div class="music-toggle" id="musicToggle">
+            <span class="music-icon" id="musicIcon">🎵</span>
+        </div>
+        <div class="volume-control" id="volumeControl">
+            <span class="volume-icon">🔊</span>
+            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+        </div>
+    </div>
+
+    <!-- Music Visualizer -->
+    <div class="music-visualizer" id="musicVisualizer"></div>
+
+    <!-- Now Playing Info -->
+    <div class="now-playing" id="nowPlaying">
+        <div class="now-playing-icon">🎼</div>
+        <div>
+            <div class="now-playing-title">Epic Medieval Expedition</div>
+            <div class="now-playing-text">Fantasy Theme Music</div>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
+            <a href="index.html" class="back-home-btn">← Back to Home</a>
         </div>
     </nav>
 
@@ -709,6 +992,317 @@
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
 
     <script>
+        // ========== FULLY AUTOMATIC SEAMLESS MUSIC SYSTEM ==========
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        const volumeControl = document.getElementById('volumeControl');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const musicVisualizer = document.getElementById('musicVisualizer');
+        const nowPlaying = document.getElementById('nowPlaying');
+        
+        let isPlaying = false;
+        let playAttempts = 0;
+        const maxPlayAttempts = 10;
+        
+        // Load saved preferences and playback position
+        const savedVolume = localStorage.getItem('cronosLegendsMusicVolume') || 50;
+        const savedMusicState = localStorage.getItem('cronosLegendsMusicPlaying');
+        const savedPlaybackTime = parseFloat(localStorage.getItem('cronosLegendsMusicTime')) || 0;
+        
+        console.log('🎵 Music System Loading...');
+        console.log('Saved state:', savedMusicState);
+        console.log('Saved time:', savedPlaybackTime);
+        
+        // Set initial volume
+        bgMusic.volume = savedVolume / 100;
+        volumeSlider.value = savedVolume;
+        
+        // Restore playback position immediately
+        if (savedPlaybackTime > 0 && !isNaN(savedPlaybackTime)) {
+            bgMusic.currentTime = savedPlaybackTime;
+        }
+        
+        // Function to update UI based on playing state
+        function updateUI() {
+            if (isPlaying) {
+                musicToggle.classList.add('playing');
+                musicIcon.textContent = '🎵';
+                musicVisualizer.classList.add('active');
+            } else {
+                musicToggle.classList.remove('playing');
+                musicIcon.textContent = '🔇';
+                musicVisualizer.classList.remove('active');
+                nowPlaying.classList.remove('show');
+            }
+        }
+        
+        // Aggressive play function - tries to play no matter what
+        function attemptPlay() {
+            if (isPlaying) {
+                console.log('✓ Already playing');
+                return Promise.resolve();
+            }
+            
+            playAttempts++;
+            console.log(`Attempt ${playAttempts}: Trying to play music...`);
+            
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                return playPromise.then(() => {
+                    isPlaying = true;
+                    updateUI();
+                    showNowPlaying();
+                    localStorage.setItem('cronosLegendsMusicPlaying', 'true');
+                    console.log('✓ Music playing successfully!');
+                    return true;
+                }).catch(err => {
+                    console.log(`✗ Attempt ${playAttempts} failed:`, err.message);
+                    
+                    // If we haven't reached max attempts, try again with delay
+                    if (playAttempts < maxPlayAttempts) {
+                        const delay = playAttempts * 100; // Increasing delay
+                        console.log(`Retrying in ${delay}ms...`);
+                        setTimeout(() => attemptPlay(), delay);
+                    }
+                    return false;
+                });
+            }
+            return Promise.resolve(false);
+        }
+        
+        // Play music function
+        function playMusic() {
+            return attemptPlay();
+        }
+        
+        // Pause music function
+        function pauseMusic() {
+            bgMusic.pause();
+            isPlaying = false;
+            updateUI();
+            localStorage.setItem('cronosLegendsMusicPlaying', 'false');
+            console.log('⏸ Music paused');
+        }
+        
+        // Toggle music play/pause
+        function toggleMusic() {
+            if (isPlaying) {
+                pauseMusic();
+            } else {
+                playMusic();
+            }
+        }
+        
+        // Assign to button
+        musicToggle.onclick = toggleMusic;
+        
+        // AUTO-RESUME SYSTEM - The magic happens here!
+        function autoResumeMusic() {
+            // If music was playing before, auto-resume it
+            if (savedMusicState === 'true') {
+                console.log('🎵 Auto-resuming music (was playing before)...');
+                attemptPlay();
+            } else {
+                console.log('🔇 Music was paused, staying paused');
+                updateUI();
+            }
+        }
+        
+        // Try multiple autoplay strategies simultaneously
+        function tryAllAutoplayMethods() {
+            // Strategy 1: Immediate attempt
+            autoResumeMusic();
+            
+            // Strategy 2: On metadata loaded
+            bgMusic.addEventListener('loadedmetadata', () => {
+                console.log('Metadata loaded, attempting play...');
+                if (savedMusicState === 'true' && !isPlaying) {
+                    attemptPlay();
+                }
+            }, { once: true });
+            
+            // Strategy 3: On can play
+            bgMusic.addEventListener('canplay', () => {
+                console.log('Can play event, attempting play...');
+                if (savedMusicState === 'true' && !isPlaying) {
+                    attemptPlay();
+                }
+            }, { once: true });
+            
+            // Strategy 4: On can play through
+            bgMusic.addEventListener('canplaythrough', () => {
+                console.log('Can play through, attempting play...');
+                if (savedMusicState === 'true' && !isPlaying) {
+                    attemptPlay();
+                }
+            }, { once: true });
+            
+            // Strategy 5: Delayed attempts (in case browser needs time)
+            [100, 300, 500, 1000, 2000].forEach(delay => {
+                setTimeout(() => {
+                    if (savedMusicState === 'true' && !isPlaying) {
+                        console.log(`Delayed attempt at ${delay}ms...`);
+                        attemptPlay();
+                    }
+                }, delay);
+            });
+        }
+        
+        // Initialize immediately when script loads
+        console.log('Initializing music system...');
+        tryAllAutoplayMethods();
+        
+        // Also try on DOMContentLoaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('DOM loaded, trying autoplay...');
+                if (savedMusicState === 'true' && !isPlaying) {
+                    attemptPlay();
+                }
+            });
+        }
+        
+        // And on window load
+        window.addEventListener('load', () => {
+            console.log('Window loaded, trying autoplay...');
+            if (savedMusicState === 'true' && !isPlaying) {
+                attemptPlay();
+            }
+        });
+        
+        // Fallback: Listen for ANY user interaction (as backup)
+        const interactionEvents = ['click', 'touchstart', 'mousemove', 'keydown', 'scroll'];
+        let interactionHandled = false;
+        
+        function handleInteraction() {
+            if (interactionHandled) return;
+            interactionHandled = true;
+            
+            console.log('User interaction detected, ensuring music plays...');
+            if (savedMusicState === 'true' && !isPlaying) {
+                attemptPlay();
+            }
+            
+            // Remove listeners after first interaction
+            interactionEvents.forEach(event => {
+                document.removeEventListener(event, handleInteraction);
+            });
+        }
+        
+        // Add interaction listeners as fallback
+        interactionEvents.forEach(event => {
+            document.addEventListener(event, handleInteraction, { once: true, passive: true });
+        });
+        
+        // Save playback time periodically
+        setInterval(() => {
+            if (isPlaying && bgMusic.currentTime > 0) {
+                localStorage.setItem('cronosLegendsMusicTime', bgMusic.currentTime);
+            }
+        }, 1000);
+        
+        // Save state before leaving page
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('cronosLegendsMusicTime', bgMusic.currentTime);
+            localStorage.setItem('cronosLegendsMusicPlaying', isPlaying);
+            localStorage.setItem('cronosLegendsMusicVolume', volumeSlider.value);
+            console.log('💾 Saved state before unload');
+        });
+        
+        // Save on visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                localStorage.setItem('cronosLegendsMusicTime', bgMusic.currentTime);
+                localStorage.setItem('cronosLegendsMusicPlaying', isPlaying);
+                console.log('💾 Saved state on visibility change');
+            }
+        });
+        
+        // Volume control
+        volumeSlider.addEventListener('input', function() {
+            const volume = this.value;
+            bgMusic.volume = volume / 100;
+            localStorage.setItem('cronosLegendsMusicVolume', volume);
+            
+            const volumeIcon = document.querySelector('.volume-icon');
+            if (volume == 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (volume < 50) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        });
+        
+        // Show/hide volume control on hover
+        musicToggle.addEventListener('mouseenter', () => {
+            volumeControl.classList.add('show');
+        });
+        
+        const musicControlsContainer = document.querySelector('.music-controls');
+        if (musicControlsContainer) {
+            musicControlsContainer.addEventListener('mouseleave', () => {
+                volumeControl.classList.remove('show');
+            });
+        }
+        
+        // Show now playing info
+        function showNowPlaying() {
+            nowPlaying.classList.add('show');
+            setTimeout(() => {
+                nowPlaying.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'm' || e.key === 'M') {
+                e.preventDefault();
+                toggleMusic();
+            }
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                volumeSlider.value = Math.min(100, parseInt(volumeSlider.value) + 5);
+                volumeSlider.dispatchEvent(new Event('input'));
+            }
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                volumeSlider.value = Math.max(0, parseInt(volumeSlider.value) - 5);
+                volumeSlider.dispatchEvent(new Event('input'));
+            }
+        });
+        
+        // Handle audio errors
+        bgMusic.addEventListener('error', (e) => {
+            console.error('❌ Audio error:', e);
+            isPlaying = false;
+            updateUI();
+        });
+        
+        // Ensure music loops properly
+        bgMusic.addEventListener('ended', () => {
+            console.log('Track ended, looping...');
+            if (isPlaying) {
+                bgMusic.currentTime = 0;
+                playMusic();
+            }
+        });
+        
+        // Show hint animation on page load
+        setTimeout(() => {
+            if (musicToggle) {
+                musicToggle.style.animation = 'musicPulse 1s ease-in-out 3';
+                setTimeout(() => {
+                    musicToggle.style.animation = '';
+                }, 3000);
+            }
+        }, 1000);
+        
+        console.log('🎵 Music system fully initialized!');
+        
+        // ========== END FULLY AUTOMATIC SEAMLESS MUSIC SYSTEM ==========
         // Toggle FAQ items
         function toggleFaq(element) {
             const faqItem = element.parentElement;
