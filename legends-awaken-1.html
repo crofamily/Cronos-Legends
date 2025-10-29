@@ -1115,13 +1115,13 @@
         const DEAD_ADDRESS = '0x000000000000000000000000000000000000dead';
         const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
         
-        // CORS Proxy for local testing (automatically detects if needed)
-        const USE_CORS_PROXY = window.location.protocol === 'file:';
-        const CORS_PROXY = 'https://corsproxy.io/?';
+        // ⚠️ IMPORTANT: Get your FREE API key from https://cronoscan.com/myapikey
+        // Without an API key, the rate limit is very low (1 request per 5 seconds)
+        const CRONOSCAN_API_KEY = 'hd4K3tXtVAtQLFHBTh1EBAp407xRYu2b'; // Add your API key here
         
         const CRONOS_API = 'https://api.cronoscan.com/api';
         
-        // Debug mode - set to false in production
+        // Debug mode
         const DEBUG = true;
         
         function log(...args) {
@@ -1132,7 +1132,7 @@
             console.error('[Cronos Data Error]', ...args);
         }
 
-        // Add styles for live indicator and loading states
+        // Add styles
         const style = document.createElement('style');
         style.textContent = `
             .loading-pulse {
@@ -1161,18 +1161,22 @@
                 box-shadow: 0 0 10px #ff0000;
                 animation: none;
             }
+            .live-indicator.warning {
+                background: #FFA500;
+                box-shadow: 0 0 10px #FFA500;
+            }
             .debug-panel {
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                background: rgba(0, 0, 0, 0.9);
+                background: rgba(0, 0, 0, 0.95);
                 color: #00ff00;
                 padding: 15px;
                 border-radius: 10px;
                 font-family: monospace;
-                font-size: 12px;
-                max-width: 400px;
-                max-height: 300px;
+                font-size: 11px;
+                max-width: 500px;
+                max-height: 400px;
                 overflow-y: auto;
                 z-index: 10000;
                 border: 2px solid #00ff00;
@@ -1185,6 +1189,8 @@
                 padding: 5px;
                 border-left: 2px solid #00ff00;
                 padding-left: 10px;
+                font-size: 10px;
+                line-height: 1.4;
             }
             .debug-error {
                 border-left-color: #ff0000;
@@ -1194,6 +1200,16 @@
                 border-left-color: #00ff00;
                 color: #00ff00;
             }
+            .debug-warning {
+                border-left-color: #FFA500;
+                color: #FFA500;
+            }
+            .debug-header {
+                font-weight: bold;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #00ff00;
+            }
         `;
         document.head.appendChild(style);
 
@@ -1202,7 +1218,7 @@
         if (DEBUG) {
             debugPanel = document.createElement('div');
             debugPanel.className = 'debug-panel';
-            debugPanel.innerHTML = '<div style="font-weight: bold; margin-bottom: 10px;">🔍 Debug Console</div>';
+            debugPanel.innerHTML = '<div class="debug-header">🔍 Blockchain Data Debug</div>';
             document.body.appendChild(debugPanel);
         }
 
@@ -1213,6 +1229,12 @@
                 logEntry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
                 debugPanel.appendChild(logEntry);
                 debugPanel.scrollTop = debugPanel.scrollHeight;
+                
+                // Keep only last 50 logs
+                const logs = debugPanel.querySelectorAll('.debug-log');
+                if (logs.length > 50) {
+                    logs[0].remove();
+                }
             }
         }
 
@@ -1225,16 +1247,21 @@
                 indicator.id = 'live-indicator';
                 indicator.title = 'Live data from Cronos blockchain';
                 statsTitle.appendChild(indicator);
-                log('Live indicator added');
                 debugLog('Live indicator initialized', 'success');
             }
         }
 
-        function setIndicatorError() {
+        function setIndicatorStatus(status) {
             const indicator = document.getElementById('live-indicator');
             if (indicator) {
-                indicator.classList.add('error');
-                indicator.title = 'Error fetching blockchain data';
+                indicator.className = 'live-indicator';
+                if (status === 'error') {
+                    indicator.classList.add('error');
+                    indicator.title = 'Error fetching blockchain data';
+                } else if (status === 'warning') {
+                    indicator.classList.add('warning');
+                    indicator.title = 'Using cached/estimated data';
+                }
             }
         }
 
@@ -1242,118 +1269,157 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        // Build API URL with or without CORS proxy
+        // Build API URL
         function buildApiUrl(endpoint) {
-            const url = `${CRONOS_API}${endpoint}`;
-            return USE_CORS_PROXY ? `${CORS_PROXY}${encodeURIComponent(url)}` : url;
+            const apiKey = CRONOSCAN_API_KEY ? `&apikey=${CRONOSCAN_API_KEY}` : '';
+            return `${CRONOS_API}${endpoint}${apiKey}`;
         }
 
-        // Fetch with timeout and retry
-        async function fetchWithRetry(url, retries = 3) {
-            for (let i = 0; i < retries; i++) {
-                try {
-                    log(`Fetching (attempt ${i + 1}/${retries}):`, url);
-                    debugLog(`API Request attempt ${i + 1}: ${url}`, 'log');
-                    
-                    const controller = new AbortController();
-                    const timeout = setTimeout(() => controller.abort(), 15000); // 15 second timeout
-                    
-                    const response = await fetch(url, { signal: controller.signal });
-                    clearTimeout(timeout);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    const data = await response.json();
-                    log('Response received:', data);
-                    debugLog(`API Success: Received ${data.result?.length || 0} items`, 'success');
-                    return data;
-                } catch (err) {
-                    error(`Attempt ${i + 1} failed:`, err);
-                    debugLog(`API Error (attempt ${i + 1}): ${err.message}`, 'error');
-                    if (i === retries - 1) throw err;
-                    await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // Exponential backoff
-                }
-            }
-        }
-
-        // Main function to fetch token data
-        async function fetchTokenData() {
+        // Method 1: Try to get NFT transactions
+        async function fetchNFTTransactions() {
             try {
-                log('Starting token data fetch...');
-                debugLog('=== Starting blockchain data fetch ===', 'log');
-                debugLog(`Contract: ${CONTRACT_ADDRESS}`, 'log');
-                debugLog(`Using CORS Proxy: ${USE_CORS_PROXY}`, 'log');
-                
-                // Fetch NFT transactions
                 const endpoint = `?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=10000&sort=asc`;
                 const url = buildApiUrl(endpoint);
                 
-                const data = await fetchWithRetry(url);
+                debugLog(`Trying NFT transactions API...`, 'log');
                 
-                if (data.status !== '1' || !data.result) {
-                    throw new Error(data.message || 'Invalid API response');
-                }
+                const response = await fetch(url);
+                const data = await response.json();
                 
-                const transactions = data.result;
-                log(`Processing ${transactions.length} transactions`);
-                debugLog(`Processing ${transactions.length} transactions`, 'success');
-                
-                // Calculate statistics
-                const tokenIds = new Set();
-                const burnedTokens = new Set();
-                const currentHolders = new Map(); // tokenId -> holder address
-                
-                transactions.forEach(tx => {
-                    const tokenId = tx.tokenID;
-                    const toAddress = tx.to.toLowerCase();
-                    const fromAddress = tx.from.toLowerCase();
-                    
-                    tokenIds.add(tokenId);
-                    
-                    // Track current holder
-                    if (toAddress === DEAD_ADDRESS.toLowerCase() || toAddress === ZERO_ADDRESS.toLowerCase()) {
-                        burnedTokens.add(tokenId);
-                        currentHolders.delete(tokenId); // Remove from circulation
-                    } else {
-                        currentHolders.set(tokenId, toAddress);
-                    }
-                });
-                
-                // Count unique holders
-                const uniqueHolders = new Set(currentHolders.values());
-                
-                const stats = {
-                    totalSupply: 500,
-                    burnedCount: burnedTokens.size,
-                    remainingCount: 500 - burnedTokens.size,
-                    uniqueHolders: uniqueHolders.size
-                };
-                
-                log('Calculated stats:', stats);
-                debugLog(`Total: ${stats.totalSupply} | Burned: ${stats.burnedCount} | Remaining: ${stats.remainingCount} | Holders: ${stats.uniqueHolders}`, 'success');
-                
-                // Update UI
-                updateStats(stats);
-                
-                return stats;
-                
-            } catch (err) {
-                error('Failed to fetch token data:', err);
-                debugLog(`FATAL ERROR: ${err.message}`, 'error');
-                setIndicatorError();
-                
-                // Show user-friendly error message
-                if (USE_CORS_PROXY) {
-                    debugLog('Running locally - CORS proxy enabled', 'log');
+                if (data.status === '1' && data.result && Array.isArray(data.result)) {
+                    debugLog(`✓ Got ${data.result.length} transactions`, 'success');
+                    return { success: true, data: data.result };
                 } else {
-                    debugLog('Running on web server', 'log');
+                    debugLog(`✗ NFT transactions failed: ${data.message || 'Unknown error'}`, 'warning');
+                    return { success: false, error: data.message };
                 }
+            } catch (err) {
+                debugLog(`✗ NFT transactions error: ${err.message}`, 'error');
+                return { success: false, error: err.message };
             }
         }
 
-        // Update all stats in the UI
+        // Method 2: Try to get ERC721 token transfers
+        async function fetchTokenTransfers() {
+            try {
+                const endpoint = `?module=account&action=tokentx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=10000&sort=asc`;
+                const url = buildApiUrl(endpoint);
+                
+                debugLog(`Trying token transfers API...`, 'log');
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === '1' && data.result && Array.isArray(data.result)) {
+                    debugLog(`✓ Got ${data.result.length} transfers`, 'success');
+                    return { success: true, data: data.result };
+                } else {
+                    debugLog(`✗ Token transfers failed: ${data.message || 'Unknown error'}`, 'warning');
+                    return { success: false, error: data.message };
+                }
+            } catch (err) {
+                debugLog(`✗ Token transfers error: ${err.message}`, 'error');
+                return { success: false, error: err.message };
+            }
+        }
+
+        // Method 3: Use fallback with manual count
+        async function useFallbackData() {
+            debugLog('Using fallback data...', 'warning');
+            
+            // You can manually update these values or fetch from your own backend
+            return {
+                success: true,
+                data: {
+                    totalSupply: 500,
+                    burnedCount: 0, // Update this manually or fetch from your backend
+                    remainingCount: 500,
+                    uniqueHolders: 0 // Update this manually
+                }
+            };
+        }
+
+        // Process transaction data
+        function processTransactions(transactions) {
+            const tokenIds = new Set();
+            const burnedTokens = new Set();
+            const currentHolders = new Map();
+            
+            transactions.forEach(tx => {
+                const tokenId = tx.tokenID || tx.tokenId;
+                if (!tokenId) return;
+                
+                const toAddress = (tx.to || '').toLowerCase();
+                
+                tokenIds.add(tokenId);
+                
+                if (toAddress === DEAD_ADDRESS.toLowerCase() || toAddress === ZERO_ADDRESS.toLowerCase()) {
+                    burnedTokens.add(tokenId);
+                    currentHolders.delete(tokenId);
+                } else if (toAddress) {
+                    currentHolders.set(tokenId, toAddress);
+                }
+            });
+            
+            const uniqueHolders = new Set(currentHolders.values());
+            
+            return {
+                totalSupply: 500,
+                burnedCount: burnedTokens.size,
+                remainingCount: 500 - burnedTokens.size,
+                uniqueHolders: uniqueHolders.size,
+                transactionCount: transactions.length
+            };
+        }
+
+        // Main fetch function with multiple fallbacks
+        async function fetchTokenData() {
+            try {
+                debugLog('=== Starting data fetch ===', 'log');
+                debugLog(`Contract: ${CONTRACT_ADDRESS}`, 'log');
+                debugLog(`API Key: ${CRONOSCAN_API_KEY ? 'Provided ✓' : 'Not provided (rate limited)'}`, CRONOSCAN_API_KEY ? 'success' : 'warning');
+                
+                // Try Method 1: NFT Transactions
+                let result = await fetchNFTTransactions();
+                
+                // Try Method 2: Token Transfers if Method 1 fails
+                if (!result.success) {
+                    debugLog('Trying alternative method...', 'log');
+                    result = await fetchTokenTransfers();
+                }
+                
+                // Process if we got data
+                if (result.success && result.data) {
+                    const stats = processTransactions(result.data);
+                    debugLog(`📊 Stats: Burned=${stats.burnedCount} | Remaining=${stats.remainingCount} | Holders=${stats.uniqueHolders}`, 'success');
+                    updateStats(stats);
+                    setIndicatorStatus('success');
+                    return stats;
+                }
+                
+                // If both methods fail, show helpful error
+                debugLog('❌ All API methods failed', 'error');
+                
+                if (!CRONOSCAN_API_KEY) {
+                    debugLog('⚠️ TIP: Get a free API key from https://cronoscan.com/myapikey', 'warning');
+                    debugLog('⚠️ Add it to the CRONOSCAN_API_KEY variable in the code', 'warning');
+                }
+                
+                // Use fallback
+                const fallback = await useFallbackData();
+                if (fallback.success) {
+                    updateStats(fallback.data);
+                    setIndicatorStatus('warning');
+                }
+                
+            } catch (err) {
+                error('Fatal error:', err);
+                debugLog(`FATAL: ${err.message}`, 'error');
+                setIndicatorStatus('error');
+            }
+        }
+
+        // Update UI
         function updateStats(stats) {
             const elements = {
                 'total-supply': stats.totalSupply,
@@ -1364,34 +1430,29 @@
             
             Object.entries(elements).forEach(([id, value], index) => {
                 const element = document.getElementById(id);
-                if (element) {
+                if (element && value !== undefined) {
                     element.classList.add('loading-pulse');
                     setTimeout(() => {
                         element.textContent = formatNumber(value);
                         element.classList.remove('loading-pulse');
-                        log(`Updated ${id}:`, value);
                     }, 300 + (index * 100));
                 }
             });
         }
 
-        // Initialize when DOM is ready
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            log('DOM loaded, initializing...');
-            debugLog('=== Initializing Cronos Data Fetcher ===', 'success');
-            
+            debugLog('=== Initializing ===', 'success');
             addLiveIndicator();
             fetchTokenData();
             
             // Auto-refresh every 5 minutes
             setInterval(() => {
-                log('Auto-refreshing data...');
-                debugLog('--- Auto-refresh triggered ---', 'log');
+                debugLog('--- Auto-refresh ---', 'log');
                 fetchTokenData();
             }, 5 * 60 * 1000);
             
-            log('Initialization complete');
-            debugLog('Initialization complete. Auto-refresh: 5 minutes', 'success');
+            debugLog('✓ Ready! Auto-refresh: 5 min', 'success');
         });
     </script>
 </body>
