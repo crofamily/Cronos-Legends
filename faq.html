@@ -51,6 +51,167 @@
             letter-spacing: 2px;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
         .back-home-btn {
             padding: 12px 30px;
             background: transparent;
@@ -576,6 +737,87 @@
                 padding: 10px 15px;
             }
         }
+    
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+
+        .footer .section-title {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            color: #fff;
+            border: 2px solid #5865F2;
+        }
+
+        .btn-discord:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            color: #fff;
+            border: 2px solid #1DA1F2;
+        }
+
+        .btn-twitter:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
@@ -607,10 +849,25 @@
         </div>
     </div>
 
-    <nav class="navbar">
+        <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
-            <a href="index.html" class="back-home-btn">← Back to Home</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
+                        <li><a href="legends-awaken-1.html">Legends Awaken I</a></li>
+                    </ul>
+                </li>
+                <li><a href="tokens.html">Tokens</a></li>
+                <li><a href="game.html">Game</a></li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </div>
     </nav>
 
@@ -992,6 +1249,22 @@
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
 
     <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
         // ========== FULLY AUTOMATIC SEAMLESS MUSIC SYSTEM ==========
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
@@ -1412,5 +1685,33 @@
             });
         });
     </script>
+
+    <!-- Footer -->
+    <div class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
+            this chapter is a defining moment—and the beginning of something far greater.
+        </p>
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="legends-awaken-2.html">Legends Awaken II</a>
+            <a href="legends-awaken-1.html">Legends Awaken I</a>
+            <a href="tokens.html">Tokens</a>
+            <a href="game.html">Game</a>
+            <a href="roadmap.html">Roadmap</a>
+            <a href="faq.html">FAQ</a>
+            <a href="la2-terms.html">LA2 Terms</a>
+            <a href="la1-terms.html">LA1 Terms</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
 </body>
 </html><parameter>

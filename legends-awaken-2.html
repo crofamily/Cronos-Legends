@@ -93,6 +93,167 @@
             letter-spacing: 2px;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -1050,6 +1211,136 @@
             margin-top: var(--spacing-md);
         }
 
+        /* NFT Gallery Styles */
+        .nft-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .nft-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .nft-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .nft-image {
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nft-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .nft-card:hover .nft-image img {
+            transform: scale(1.1);
+        }
+
+        .nft-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nft-card:hover .nft-image::before {
+            left: 100%;
+        }
+
+        .nft-info {
+            padding: 25px;
+        }
+
+        .nft-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .nft-faction {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .nft-desc {
+            color: #bbb;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Faction Divider */
+        .faction-divider {
+            text-align: center;
+            margin: 80px 0 40px;
+            position: relative;
+        }
+
+        .faction-divider::before,
+        .faction-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(255, 215, 0, 0.3), transparent);
+        }
+
+        .faction-divider::before {
+            left: 0;
+        }
+
+        .faction-divider::after {
+            right: 0;
+        }
+
+        .faction-divider-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .faction-divider-icon {
+            font-size: 2rem;
+        }
+
+        .faction-divider-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
@@ -1075,6 +1366,14 @@
             .faction-grid,
             .utility-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .nft-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .faction-divider-title {
+                font-size: 1.5rem;
             }
 
             .btn-group {
@@ -1144,13 +1443,25 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+        <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
-            <a href="index.html" class="back-link">
-                <span>←</span>
-                <span>Back to Home</span>
-            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
+                        <li><a href="legends-awaken-1.html">Legends Awaken I</a></li>
+                    </ul>
+                </li>
+                <li><a href="tokens.html">Tokens</a></li>
+                <li><a href="game.html">Game</a></li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </div>
     </nav>
 
@@ -1317,6 +1628,226 @@
             </div>
         </section>
 
+        <!-- NFT Gallery Section -->
+        <section class="section">
+            <h2 class="section-title">🎨 Featured NFT Characters</h2>
+            <p class="section-subtitle">Explore the heroes, warriors, and creatures of Legends Awaken II</p>
+
+            <!-- Trinari Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon">🌿</span>
+                    <h3 class="faction-divider-title">TRINARI</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                        <img src="Images/LA2/T1.png" alt="Lumivira" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Lumivira</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">The rarest and most radiant of all Trinari – ancient beings born of pure essence, guiding light and harmony across the realms.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #10b981, #065f46);">
+                        <img src="Images/LA2/T3.png" alt="Mistralis" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Mistralis</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">Balanced Trinari of growing strength and wisdom, embodying the natural bond between life, energy, and creation.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #34d399, #047857);">
+                        <img src="Images/LA2/T2.png" alt="Whimkin" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Whimkin</h3>
+                        <div class="nft-faction">Trinari</div>
+                        <p class="nft-desc">Common among the Trinari, curious and lively creatures whose playful nature hides untapped power within.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cronos Guardians Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon">⚔️</span>
+                    <h3 class="faction-divider-title">CRONOS GUARDIANS</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #0064FF, #001a4d);">
+                        <img src="Images/LA2/G1.webp" alt="The Ironstride" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Ironstride</h3>
+                        <div class="nft-faction">Ground Warriors</div>
+                        <p class="nft-desc">Elite defenders of Cronos, forged in unbreakable armor and bound by sacred oaths of valor.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #4169E1, #1e3a8a);">
+                        <img src="Images/LA2/G2.webp" alt="Celestial Vanguard" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Celestial Vanguard</h3>
+                        <div class="nft-faction">Cronos Guardians</div>
+                        <p class="nft-desc">Radiant champions who descend from the heavens, guardians of cosmic balance and divine light.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #6366f1, #312e81);">
+                        <img src="Images/LA2/G3.webp" alt="Arcane Enclave" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Arcane Enclave</h3>
+                        <div class="nft-faction">Keepers of Magic</div>
+                        <p class="nft-desc">Masters of ancient spells and forbidden knowledge, protectors of Cronos' most powerful secrets.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                        <img src="Images/LA2/G4.png" alt="Shadowforged" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Shadowforged</h3>
+                        <div class="nft-faction">The Silent Watch</div>
+                        <p class="nft-desc">Former Chaos warriors who turned against the darkness, now silent sentinels sworn to guard the light they once tried to destroy.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #60a5fa, #1e3a8a);">
+                        <img src="Images/LA2/G5.png" alt="Icelyn Frostguard" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Icelyn Frostguard</h3>
+                        <div class="nft-faction">Cronos Guardians</div>
+                        <p class="nft-desc">Cold-hearted protectors from the frozen north, their blades sing with the chill of eternal winter.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #3b82f6, #1e40af);">
+                        <img src="Images/LA2/G6.png" alt="Inkforged Sigilbearers" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Inkforged Sigilbearers</h3>
+                        <div class="nft-faction">Binding Oaths</div>
+                        <p class="nft-desc">Tattooed mystics whose ink holds power older than time, sealing their bodies with runes of strength and fate.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #64748b, #1e293b);">
+                        <img src="Images/LA2/G7.png" alt="Alloyed Core" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Alloyed Core</h3>
+                        <div class="nft-faction">Ancient Biomechanical Guardians</div>
+                        <p class="nft-desc">Ancient machines merged with divine essence, guardians of both metal and spirit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos Horde Divisions -->
+            <div class="faction-divider" style="margin-top: 80px;">
+                <div class="faction-divider-content">
+                    <span class="faction-divider-icon">🔥</span>
+                    <h3 class="faction-divider-title">CHAOS HORDE</h3>
+                </div>
+            </div>
+            <div class="nft-gallery">
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #7c3aed, #4c1d95);">
+                        <img src="Images/LA2/C3.webp" alt="Nightshade Wardens" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Nightshade Wardens</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Masters of shadow and venom, creeping through darkness to spread the will of Chaos.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #dc2626, #7f1d1d);">
+                        <img src="Images/LA2/C1.webp" alt="The Horned Dimension" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Horned Dimension</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Eldritch beings from realms beyond reason, twisting reality itself in their chaotic image.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #18181b, #000000);">
+                        <img src="Images/LA2/C4.webp" alt="The Shadowborn" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Shadowborn</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Cursed souls reborn in pure darkness, driven by vengeance and an unending hunger for power.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #78350f, #292524);">
+                        <img src="Images/LA2/C5.webp" alt="The Deathforged" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Deathforged</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Souls bound in armor of bone and flame, warriors who find life only in death's embrace.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #b91c1c, #450a0a);">
+                        <img src="Images/LA2/C6.webp" alt="The Blood Eclipse" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Blood Eclipse</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Priests of crimson moons who draw strength from sacrifice, their rituals painting the stars in red.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #312e81, #0c0a09);">
+                        <img src="Images/LA2/C7.webp" alt="The Voidweavers" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">The Voidweavers</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Cosmic cultists who command the nothingness between worlds, bending space to their will.</p>
+                    </div>
+                </div>
+
+                <div class="nft-card">
+                    <div class="nft-image" style="background: linear-gradient(135deg, #ef4444, #7f1d1d);">
+                        <img src="Images/LA2/C2.webp" alt="Oathbreaker" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="nft-info">
+                        <h3 class="nft-title">Oathbreaker</h3>
+                        <div class="nft-faction">Chaos Horde</div>
+                        <p class="nft-desc">Once noble Guardians who betrayed their vows, now corrupted champions of Chaos and sworn enemies of their former kin.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="section">
             <h2 class="section-title">💎 Utility & Benefits</h2>
             <p class="section-subtitle">Your NFT is more than just art — it's a key to exclusive experiences</p>
@@ -1433,5 +1964,94 @@
         </p>
         <p class="footer-copyright">© 2025 Cronos Legends. All rights reserved.</p>
     </footer>
+
+    <!-- Footer -->
+    <div class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
+            this chapter is a defining moment—and the beginning of something far greater.
+        </p>
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="legends-awaken-2.html">Legends Awaken II</a>
+            <a href="legends-awaken-1.html">Legends Awaken I</a>
+            <a href="tokens.html">Tokens</a>
+            <a href="game.html">Game</a>
+            <a href="roadmap.html">Roadmap</a>
+            <a href="faq.html">FAQ</a>
+            <a href="la2-terms.html">LA2 Terms</a>
+            <a href="la1-terms.html">LA1 Terms</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations for NFT cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.nft-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+
 </body>
 </html>
