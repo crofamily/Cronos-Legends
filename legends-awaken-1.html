@@ -659,8 +659,8 @@
         const DEBUG = true;
         const TOTAL_SUPPLY = 500;
         
-        // Block range settings for pagination (Chainstack limit is ~10k blocks)
-        const BLOCK_RANGE_LIMIT = 10000;
+        // Block range settings for pagination (Chainstack free tier limit is ~2k blocks for eth_getLogs)
+        const BLOCK_RANGE_LIMIT = 2000;  // Reduced for Chainstack free tier
         
         // Contract deployment block - IMPORTANT: Find this on Cronoscan!
         // Set to a recent block (e.g., current - 500k) for faster scanning
@@ -830,6 +830,8 @@
             const tokens = new Set();
             const burned = new Set();
             const holders = new Map();
+            const burnedToZero = [];
+            const burnedToDead = [];
             
             logs.forEach(log => {
                 // topics[0] = Transfer signature
@@ -846,21 +848,39 @@
                 tokens.add(tokenId);
                 
                 // Check if burned (sent to dead/zero address)
-                if (to === DEAD_ADDRESS.toLowerCase() || to === ZERO_ADDRESS.toLowerCase()) {
+                if (to === ZERO_ADDRESS.toLowerCase()) {
                     burned.add(tokenId);
+                    burnedToZero.push(tokenId);
                     holders.delete(tokenId);
-                    debugLog(`🔥 Token ${tokenId} burned`, 'warning');
+                    debugLog(`🔥 Token #${tokenId} → 0x0...0 (zero address)`, 'warning');
+                } else if (to === DEAD_ADDRESS.toLowerCase()) {
+                    burned.add(tokenId);
+                    burnedToDead.push(tokenId);
+                    holders.delete(tokenId);
+                    debugLog(`🔥 Token #${tokenId} → 0x0...dEaD (dead address)`, 'warning');
                 } else if (to !== ZERO_ADDRESS.toLowerCase()) {
-                    // Normal transfer (not a mint from zero address, or it is but we track it)
+                    // Normal transfer (not from zero address = not a mint)
                     holders.set(tokenId, to);
                 }
             });
             
             const uniqueHolders = new Set(holders.values()).size;
             
-            debugLog(`📊 Tokens tracked: ${tokens.size}`, 'success');
-            debugLog(`🔥 Burned: ${burned.size}`, 'success');
+            debugLog('─────────────────────────', 'log');
+            debugLog(`📊 Total tokens tracked: ${tokens.size}`, 'success');
+            debugLog(`🔥 Burned to zero address: ${burnedToZero.length}`, burnedToZero.length > 0 ? 'warning' : 'log');
+            debugLog(`🔥 Burned to dead address: ${burnedToDead.length}`, burnedToDead.length > 0 ? 'warning' : 'log');
+            debugLog(`🔥 Total burned: ${burned.size}`, 'success');
+            debugLog(`💎 Still in circulation: ${tokens.size - burned.size}`, 'success');
             debugLog(`👥 Unique holders: ${uniqueHolders}`, 'success');
+            debugLog('─────────────────────────', 'log');
+            
+            if (burnedToZero.length > 0) {
+                debugLog(`Zero burns: ${burnedToZero.join(', ')}`, 'warning');
+            }
+            if (burnedToDead.length > 0) {
+                debugLog(`Dead burns: ${burnedToDead.join(', ')}`, 'warning');
+            }
             
             return {
                 totalSupply: TOTAL_SUPPLY,
@@ -940,6 +960,12 @@
             debugLog('=== Initializing RPC Monitor ===', 'success');
             debugLog(`RPC URL: ${RPC_URL}`, 'log');
             debugLog(`Contract: ${CONTRACT_ADDRESS}`, 'log');
+            debugLog(`Total Supply: ${TOTAL_SUPPLY}`, 'log');
+            debugLog('─────────────────────────', 'log');
+            debugLog('🔥 Tracking burns to:', 'warning');
+            debugLog(`  Zero: ${ZERO_ADDRESS}`, 'warning');
+            debugLog(`  Dead: ${DEAD_ADDRESS}`, 'warning');
+            debugLog('─────────────────────────', 'log');
             
             addLiveIndicator();
             fetchData();
