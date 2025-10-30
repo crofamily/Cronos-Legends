@@ -221,18 +221,13 @@
         .nft-stat-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            padding: 3px;
-            background: linear-gradient(135deg, transparent, transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .nft-stat-card:hover::before {
@@ -240,854 +235,723 @@
         }
 
         .nft-stat-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Total NFTs Card - Blue/Cyan */
-        .nft-stat-card.total {
-            border: 2px solid rgba(0, 200, 255, 0.3);
-            background: radial-gradient(circle at top, rgba(0, 150, 255, 0.15), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.total::before {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-        }
-
-        .nft-stat-card.total .nft-stat-icon {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-        }
-
-        /* Burned NFTs Card - Red/Orange Fire */
-        .nft-stat-card.burned {
-            border: 2px solid rgba(255, 100, 50, 0.4);
-            background: radial-gradient(circle at top, rgba(255, 50, 0, 0.2), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.burned::before {
-            background: linear-gradient(135deg, #ff6b35, #f7931e, #ff4500);
-        }
-
-        .nft-stat-card.burned .nft-stat-icon {
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
-            animation: flameGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes flameGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 107, 53, 0.6),
-                            0 0 40px rgba(255, 69, 0, 0.4),
-                            inset 0 0 20px rgba(255, 165, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(255, 107, 53, 0.9),
-                            0 0 60px rgba(255, 69, 0, 0.6),
-                            inset 0 0 30px rgba(255, 165, 0, 0.5);
-            }
-        }
-
-        /* Remaining NFTs Card - Green/Emerald */
-        .nft-stat-card.remaining {
-            border: 2px solid rgba(46, 213, 115, 0.3);
-            background: radial-gradient(circle at top, rgba(46, 213, 115, 0.15), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.remaining::before {
-            background: linear-gradient(135deg, #2ed573, #26de81);
-        }
-
-        .nft-stat-card.remaining .nft-stat-icon {
-            background: linear-gradient(135deg, #2ed573, #26de81);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
         }
 
         .nft-stat-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
 
-        .nft-stat-card:hover .nft-stat-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .nft-stat-number {
+        .nft-stat-value {
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 10px;
             position: relative;
-        }
-
-        .nft-stat-card.total .nft-stat-number {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stat-card.burned .nft-stat-number {
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stat-card.remaining .nft-stat-number {
-            background: linear-gradient(135deg, #2ed573, #26de81);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            z-index: 1;
         }
 
         .nft-stat-label {
+            color: #ccc;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .nft-stat-card.total .nft-stat-label {
-            color: #00c8ff;
-        }
-
-        .nft-stat-card.burned .nft-stat-label {
-            color: #ff6b35;
-        }
-
-        .nft-stat-card.remaining .nft-stat-label {
-            color: #2ed573;
+            letter-spacing: 1.5px;
         }
 
         .nft-stat-description {
-            color: #999;
+            color: #888;
             font-size: 0.9rem;
+            margin-top: 10px;
             line-height: 1.5;
         }
 
-        /* Animated fire effect for burned card */
-        .fire-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            overflow: hidden;
-            pointer-events: none;
+        /* Gallery Grid */
+        .gallery {
+            max-width: 1400px;
+            margin: 100px auto;
+            padding: 0 20px;
         }
 
-        .fire-particle {
-            position: absolute;
-            bottom: -10px;
-            width: 8px;
-            height: 30px;
-            background: linear-gradient(to top, #ff4500, #ff6b35, transparent);
-            border-radius: 50%;
-            animation: rise 2s ease-in infinite;
-            opacity: 0.7;
-        }
-
-        .fire-particle:nth-child(1) {
-            left: 20%;
-            animation-delay: 0s;
-            animation-duration: 1.8s;
-        }
-
-        .fire-particle:nth-child(2) {
-            left: 40%;
-            animation-delay: 0.3s;
-            animation-duration: 2.2s;
-        }
-
-        .fire-particle:nth-child(3) {
-            left: 60%;
-            animation-delay: 0.6s;
-            animation-duration: 1.5s;
-        }
-
-        .fire-particle:nth-child(4) {
-            left: 80%;
-            animation-delay: 0.9s;
-            animation-duration: 2s;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-50px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* Section */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
         .section-title {
             font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 20px;
+            font-size: 3rem;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 15px;
         }
 
         .section-subtitle {
-            text-align: center;
             color: #999;
-            font-size: 1.1rem;
-            margin-bottom: 50px;
+            font-size: 1.2rem;
         }
 
-        /* Status Banner */
-        .status-banner {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(69, 160, 73, 0.1));
-            border: 2px solid rgba(76, 175, 80, 0.4);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            margin: 60px auto;
-            max-width: 900px;
-        }
-
-        .status-banner h2 {
-            color: #4CAF50;
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .status-banner p {
-            color: #ccc;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        /* Marketplace Section */
-        .marketplace-grid {
+        .nft-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        .marketplace-card {
+        .nft-card {
             background: rgba(20, 20, 20, 0.8);
             border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .marketplace-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-
-        .marketplace-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .marketplace-name {
-            font-size: 1.3rem;
-            color: #FFD700;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .marketplace-description {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-
-        /* Faction Cards */
-        .faction-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .faction-card {
-            background: rgba(20, 20, 20, 0.8);
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .faction-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
-        }
-
-        .faction-header {
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
-        }
-
-        .faction-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .faction-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: #FFD700;
-            margin-bottom: 10px;
-        }
-
-        .faction-count {
-            color: #999;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .faction-body {
-            padding: 30px;
-        }
-
-        .faction-description {
-            color: #ccc;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .division-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .division-item {
-            background: rgba(255, 215, 0, 0.05);
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 3px solid #FFD700;
-            color: #ddd;
-            font-size: 0.95rem;
-        }
-
-        /* Utilities Section */
-        .utility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .utility-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .utility-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(20, 20, 20, 0.8);
-        }
-
-        .utility-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .utility-title {
-            font-size: 1.3rem;
-            color: #FFD700;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .utility-description {
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        .utility-status {
-            display: inline-block;
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .utility-status.upcoming {
-            background: rgba(255, 165, 0, 0.2);
-            color: #FFA500;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            transition: all 0.4s ease;
             cursor: pointer;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        .nft-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
         }
 
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-            transform: translateY(-2px);
+        .nft-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(0, 100, 255, 0.2), rgba(255, 50, 50, 0.2));
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 4px solid #FFD700;
-            padding: 20px 25px;
-            border-radius: 10px;
-            margin: 30px 0;
-        }
-
-        .info-box strong {
-            color: #FFD700;
-        }
-
-        /* Achievement Section */
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .achievement-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(76, 175, 80, 0.3);
-            border-radius: 15px;
+        .nft-info {
             padding: 25px;
-            text-align: center;
         }
 
-        .achievement-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .achievement-title {
-            color: #4CAF50;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .achievement-value {
-            font-size: 2rem;
+        .nft-id {
             color: #FFD700;
-            font-weight: 900;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .nft-name {
             font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .nft-rarity {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #FFD700;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: 60px 20px 40px;
-            text-align: center;
+        footer {
+            background: rgba(15, 15, 15, 0.95);
             border-top: 2px solid rgba(255, 215, 0, 0.2);
-            margin-top: 80px;
+            padding: 60px 20px 30px;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #999;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+            color: #666;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: translateY(-3px);
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
+            h1 { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .nft-grid { grid-template-columns: 1fr; }
+        }
 
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .faction-grid, .utility-grid, .marketplace-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
+        /* Loading and Status Styles */
+        .loading-pulse { 
+            animation: pulse 1.5s ease-in-out infinite; 
+        }
+        
+        @keyframes pulse { 
+            0%, 100% { opacity: 0.6; } 
+            50% { opacity: 1; } 
+        }
+        
+        .live-indicator {
+            display: inline-block; 
+            width: 10px; 
+            height: 10px;
+            background: #00ff00; 
+            border-radius: 50%; 
+            margin-left: 10px;
+            animation: blink 2s ease-in-out infinite;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff00; }
+            50% { opacity: 0.3; }
+        }
+        
+        .live-indicator.error { 
+            background: #ff0000; 
+            box-shadow: 0 0 10px #ff0000; 
+            animation: none; 
+        }
+        
+        .live-indicator.warning { 
+            background: #FFA500; 
+            box-shadow: 0 0 10px #FFA500; 
+        }
+        
+        .debug-panel {
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95); 
+            color: #00ff00;
+            padding: 15px; 
+            border-radius: 10px;
+            font-family: monospace; 
+            font-size: 11px;
+            max-width: 500px; 
+            max-height: 400px;
+            overflow-y: auto; 
+            z-index: 10000;
+            border: 2px solid #00ff00;
+        }
+        
+        .debug-log {
+            margin: 5px 0; 
+            padding: 5px;
+            border-left: 2px solid #00ff00; 
+            padding-left: 10px;
+            font-size: 10px; 
+            line-height: 1.4;
+        }
+        
+        .debug-error { 
+            border-left-color: #ff0000; 
+            color: #ff0000; 
+        }
+        
+        .debug-success { 
+            border-left-color: #00ff00; 
+            color: #00ff00; 
+        }
+        
+        .debug-warning { 
+            border-left-color: #FFA500; 
+            color: #FFA500; 
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
-            <a href="index.html" class="back-link">
-                <span>←</span>
-                <span>Back to Home</span>
+            <a href="#" class="nav-logo">CRONOS LEGENDS</a>
+            <a href="#" class="back-link">
+                ← Back to Collections
             </a>
         </div>
     </nav>
 
-    <div class="hero">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="hero-content">
-            <div class="collection-badge">✅ SOLD OUT - NOW TRADING</div>
-            <h1>LEGENDS AWAKEN I</h1>
+            <span class="collection-badge">Original Collection</span>
+            <h1>Legends Awaken I</h1>
             <p class="hero-subtitle">
-                The original collection that started it all in Cronos chain. Where the eternal battle<br>
-                between the Cronos Guardians and Chaos Horde first began. CA:
-<p> 0x68A3192E286AA5C2182D815F5fE796401eCe28bA</p>
+                The genesis collection that started it all. 500 unique legendary NFTs<br>
+                forged on the Cronos blockchain, each representing a hero of ancient lore.
             </p>
         </div>
-    </div>
+    </section>
 
-  
-
-    <!-- NFT Statistics Section -->
-    <div class="nft-stats-section">
-        <h2 class="nft-stats-title">🔢 Collection Statistics</h2>
-        <p class="nft-stats-subtitle">Track the supply and scarcity of Legends Awaken I</p>
+    <!-- Live Stats Section -->
+    <section class="nft-stats-section">
+        <h2 class="nft-stats-title">Live Collection Stats</h2>
+        <p class="nft-stats-subtitle">Real-time data from the Cronos blockchain</p>
         
         <div class="nft-stats-grid">
-            <!-- Total NFTs Card -->
-            <div class="nft-stat-card total">
-                <div class="nft-stat-icon">💎</div>
-                <div class="nft-stat-number">500</div>
-                <div class="nft-stat-label">Total Supply</div>
-                <p class="nft-stat-description">Original collection size across both factions</p>
+            <div class="nft-stat-card">
+                <div class="nft-stat-icon">📦</div>
+                <div class="nft-stat-value" id="total-supply">500</div>
+                <div class="nft-stat-label">Total Minted</div>
+                <div class="nft-stat-description">Complete collection size</div>
             </div>
 
-            <!-- Burned NFTs Card with Fire Effect -->
-            <div class="nft-stat-card burned">
+            <div class="nft-stat-card">
                 <div class="nft-stat-icon">🔥</div>
-                <div class="nft-stat-number">23</div>
-                <div class="nft-stat-label">Burned Forever</div>
-                <p class="nft-stat-description">Permanently removed from circulation</p>
-                <div class="fire-container">
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
+                <div class="nft-stat-value" id="burned-count">—</div>
+                <div class="nft-stat-label">Burned</div>
+                <div class="nft-stat-description">Permanently removed from circulation</div>
+            </div>
+
+            <div class="nft-stat-card">
+                <div class="nft-stat-icon">💎</div>
+                <div class="nft-stat-value" id="remaining-count">—</div>
+                <div class="nft-stat-label">Remaining</div>
+                <div class="nft-stat-description">Available in circulation</div>
+            </div>
+
+            <div class="nft-stat-card">
+                <div class="nft-stat-icon">👥</div>
+                <div class="nft-stat-value" id="unique-holders">—</div>
+                <div class="nft-stat-label">Unique Holders</div>
+                <div class="nft-stat-description">Community members owning these NFTs</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Info -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">ERC-721</div>
+            <div class="stat-label">Token Standard</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value">Cronos</div>
+            <div class="stat-label">Blockchain</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value">Genesis</div>
+            <div class="stat-label">Collection Type</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-value">2024</div>
+            <div class="stat-label">Launch Year</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Cronos Legends</h3>
+                <p>Building the future of NFT collections on Cronos blockchain.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">💬</a>
+                    <a href="#" class="social-link">📱</a>
                 </div>
             </div>
 
-            <!-- Remaining NFTs Card -->
-            <div class="nft-stat-card remaining">
-                <div class="nft-stat-icon">✨</div>
-                <div class="nft-stat-number">477</div>
-                <div class="nft-stat-label">In Circulation</div>
-                <p class="nft-stat-description">Available NFTs making each one more valuable</p>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">Collections</a>
+                <a href="#">Marketplace</a>
+                <a href="#">About</a>
+                <a href="#">Roadmap</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <a href="#">Documentation</a>
+                <a href="#">Smart Contract</a>
+                <a href="#">Whitepaper</a>
+                <a href="#">Support</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Community</h3>
+                <a href="#">Discord</a>
+                <a href="#">Twitter</a>
+                <a href="#">Telegram</a>
+                <a href="#">Medium</a>
             </div>
         </div>
-    </div>
 
-    <div class="section">
-        <div class="status-banner">
-            <h2>🎉 Collection Sold Out!</h2>
-            <p>
-                Legends Awaken I is fully minted and now available on secondary marketplaces. 
-                Join among the Legends and own a piece of Cronos Legends history. 
-                Browse available listings on the marketplaces below.
-            </p>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cronos Legends. All rights reserved.</p>
         </div>
+    </footer>
 
-        <h2 class="section-title">🛒 Buy on Secondary Markets</h2>
-        <p class="section-subtitle">Legends Awaken I NFTs are now available for purchase on these trusted marketplaces</p>
-
-        <div class="marketplace-grid">
-            <a href="https://crypto.com/nft" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">🏛️</div>
-                <h3 class="marketplace-name">Crypto.com NFT</h3>
-                <p class="marketplace-description">Official launch platform with the largest selection</p>
-            </a>
-
-            <a href="https://minted.network" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">🎨</div>
-                <h3 class="marketplace-name">Minted Network</h3>
-            </a>
-
-            <a href="https://app.ebisusbay.com" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">⛩️</div>
-                <h3 class="marketplace-name">Ebisu's Bay</h3>
-            </a>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">📊 Collection Achievements</h2>
-        <p class="section-subtitle">Milestones reached by the Legends Awaken I community</p>
-
-        <div class="achievement-grid">
-            <div class="achievement-card">
-                <div class="achievement-icon">⚡</div>
-                <div class="achievement-title">Mint Time</div>
-                <div class="achievement-value">4.2h</div>
-            </div>
-
-            <div class="achievement-card">
-                <div class="achievement-icon">👥</div>
-                <div class="achievement-title">Unique Holders</div>
-                <div class="achievement-value">1,847</div>
-            </div>
-
-            <div class="achievement-card">
-                <div class="achievement-icon">💎</div>
-                <div class="achievement-title">Floor Price</div>
-                <div class="achievement-value">2.5 CRO</div>
-            </div>
-
-            <div class="achievement-card">
-                <div class="achievement-icon">📈</div>
-                <div class="achievement-title">Total Volume</div>
-                <div class="achievement-value">45K CRO</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">⚔️ The Two Factions</h2>
-        <p class="section-subtitle">The original forces locked in eternal conflict</p>
-
-        <div class="faction-grid">
-            <div class="faction-card">
-                <div class="faction-header">
-                    <div class="faction-icon">⚔️</div>
-                    <h3 class="faction-name">Cronos Guardians</h3>
-                    <div class="faction-count">8 Divisions • 250 NFTs</div>
-                </div>
-                <div class="faction-body">
-                    <p class="faction-description">
-                        Noble defenders of order wielding ancient power to protect the realm from chaos. 
-                        The original guardians who set the foundation for the epic saga.
-                    </p>
-                    <ul class="division-list">
-                        <li class="division-item">⚔️ Cronos Titans (100 NFTs)</li>
-                        <li class="division-item">⚔️ Celestial Vanguard (30 NFTs)</li>
-                        <li class="division-item">⚔️ Empyrean Ascendants (20 NFTs)</li>
-                        <li class="division-item">⚔️ Celestial Beasts (20 NFTs)</li>
-                        <li class="division-item">⚔️ Icelyn Frostguard (20 NFTs)</li>
-                        <li class="division-item">⚔️ Oceanic Guardians (20 NFTs)</li>
-                        <li class="division-item">⚔️ Verdant Guardians (20 NFTs)</li>
-                        <li class="division-item">⚔️ Solar Vanguard (20 NFTs)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="faction-card">
-                <div class="faction-header">
-                    <div class="faction-icon">🔥</div>
-                    <h3 class="faction-name">Chaos Horde</h3>
-                    <div class="faction-count">8 Divisions • 250 NFTs</div>
-                </div>
-                <div class="faction-body">
-                    <p class="faction-description">
-                        Fierce warriors seeking dominance through raw power and unrelenting fury. 
-                        The original harbingers of chaos who began the eternal war.
-                    </p>
-                    <ul class="division-list">
-                        <li class="division-item">💀 Chaos Legion (100 NFTs)</li>
-                        <li class="division-item">💀 Chaos Vanguard (30 NFTs)</li>
-                        <li class="division-item">💀 Deathsworn (20 NFTs)</li>
-                        <li class="division-item">💀 Horde Creatures (20 NFTs)</li>
-                        <li class="division-item">💀 Frostbound Horde (20 NFTs)</li>
-                        <li class="division-item">💀 Abyss Beasts (20 NFTs)</li>
-                        <li class="division-item">💀 Shadowbark (20 NFTs)</li>
-                        <li class="division-item">💀 Nightshade Wardens (20 NFTs)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">💎 Holder Benefits</h2>
-        <p class="section-subtitle">What you get as a Legends Awaken I owner</p>
-
-        <div class="utility-grid">
-            <div class="utility-card">
-                <div class="utility-icon">🎁</div>
-                <h3 class="utility-title">LA II Priority Access</h3>
-                <p class="utility-description">
-                    Get priority minting access for Legends Awaken II. Existing holders get early access 
-                    before public mint opens.
-                </p>
-                <span class="utility-status">🔜 COMING</span>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">💰</div>
-                <h3 class="utility-title">Staking Rewards</h3>
-                <p class="utility-description">
-                    Stake your LA I NFTs to earn $CLG tokens. Active staking program with competitive APY.
-                </p>
-                <span class="utility-status">✅ ACTIVE</span>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">🏆</div>
-                <h3 class="utility-title">Faction Tournaments</h3>
-                <p class="utility-description">
-                    Participate in exclusive faction battles with real prizes. Prove your faction's dominance.
-                </p>
-                <span class="utility-status">✅ ACTIVE</span>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">🎮</div>
-                <h3 class="utility-title">Game Integration</h3>
-                <p class="utility-description">
-                    Your NFTs will be playable in the upcoming Cronos Legends game. Alpha testing begins Q2 2026.
-                </p>
-                <span class="utility-status upcoming">🔜 COMING</span>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">🗳️</div>
-                <h3 class="utility-title">Governance Votes</h3>
-                <p class="utility-description">
-                    Vote on important project decisions and future direction. Your voice shapes Cronos Legends.
-                </p>
-                <span class="utility-status">✅ ACTIVE</span>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">🎨</div>
-                <h3 class="utility-title">Exclusive Airdrops</h3>
-                <p class="utility-description">
-                    Receive free airdrops of special editions, companion NFTs, and future collection benefits.
-                </p>
-                <span class="utility-status">✅ ACTIVE</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">🚀 What's Next for Holders?</h2>
-        <p class="section-subtitle">Upcoming benefits and features for LA I owners</p>
-
-        <div class="info-box">
-            <strong>Legends Awaken II Priority Access:</strong> All LA I holders will receive a 1-hour early access window 
-            to mint LA II NFTs before public launch on December 10, 2025.
-        </div>
-
-        <div class="utility-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 40px;">
-            <div class="utility-card">
-                <div class="utility-icon">🎯</div>
-                <h3 class="utility-title">Enhanced Staking</h3>
-                <p class="utility-description">
-                    Users who hold both LA I and LA II NFTs will receive bonus multipliers on rewards on certain games. 
-                    Stack your holdings for maximum benefits.
-                </p>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">👑</div>
-                <h3 class="utility-title">Discord Status</h3>
-                <p class="utility-description">
-                    LA I holders receive special Discord roles, exclusive channels, 
-                    and benefits.
-                </p>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">🎁</div>
-                <h3 class="utility-title">TBA</h3>
-                <p class="utility-description">
-                    TBA
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" style="text-align: center;">
-        <h2 class="section-title">⚔️ Join the Original Legend</h2>
-        <p class="section-subtitle">Own a piece of where it all began</p>
+    <script>
+        // ============================================
+        // CONFIGURATION - Update these with your values
+        // ============================================
         
-        <div class="btn-group">
-            <a href="https://crypto.com/nft" target="_blank" class="btn btn-primary">Browse on Crypto.com NFT</a>
-            <a href="la1-terms.html" class="btn btn-outline">Read Terms & Conditions</a>
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-outline">Join Discord</a>
-        </div>
+        // Your NFT contract address
+        const CONTRACT_ADDRESS = '0xE7B5f21D0c1e5cBE9E8fC6E7b7b5b5f5E5f5E5f5';
+        
+        // Your RPC endpoint (Get this from Chainstack, Ankr, or other RPC provider)
+        // Example Chainstack URL: https://cronos-mainnet.chainstacklabs.com/YOUR_API_KEY
+        // Public Cronos RPC (slower): https://evm.cronos.org
+	const RPC_URL = 'https://cronos-mainnet.core.chainstack.com/b7905278090dd5a0cf153613d757310f';
+        
+        // Burn addresses
+        const DEAD_ADDRESS = '0x000000000000000000000000000000000000dEaD';
+        const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+        
+        const DEBUG = true;
+        const TOTAL_SUPPLY = 500;
+        
+        // Block range settings for pagination (Chainstack limit is ~10k blocks)
+        const BLOCK_RANGE_LIMIT = 10000;
+        
+        // Contract deployment block - IMPORTANT: Find this on Cronoscan!
+        // Set to a recent block (e.g., current - 500k) for faster scanning
+        const DEPLOYMENT_BLOCK = null; // Will auto-detect if null
+        
+        // ============================================
+        // DEBUG PANEL SETUP
+        // ============================================
+        
+        let debugPanel = null;
+        if (DEBUG) {
+            debugPanel = document.createElement('div');
+            debugPanel.className = 'debug-panel';
+            debugPanel.innerHTML = '<div style="font-weight:bold;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #00ff00">🔍 RPC Monitor</div>';
+            document.body.appendChild(debugPanel);
+        }
 
-        <div class="info-box" style="max-width: 800px; margin: 40px auto;">
-            <strong>Looking for Legends Awaken II?</strong> The next chapter launches December 10, 2025 with 3 factions 
-            and 17 divisions. <a href="legends-awaken-2.html" style="color: #FFD700;">Learn more →</a>
-        </div>
-    </div>
+        function debugLog(msg, type = 'log') {
+            console.log(`[RPC ${type.toUpperCase()}]`, msg);
+            if (DEBUG && debugPanel) {
+                const entry = document.createElement('div');
+                entry.className = `debug-log debug-${type}`;
+                entry.textContent = `${new Date().toLocaleTimeString()}: ${msg}`;
+                debugPanel.appendChild(entry);
+                debugPanel.scrollTop = debugPanel.scrollHeight;
+                const logs = debugPanel.querySelectorAll('.debug-log');
+                if (logs.length > 50) logs[0].remove();
+            }
+        }
 
-    <div class="footer">
-        <p style="color: #999; font-size: 1.1rem; margin-bottom: 20px;">
-            Questions about LA I? Check our <a href="faq.html" style="color: #FFD700;">FAQ</a> or join 
-            <a href="https://discord.gg/cronoslegends" style="color: #FFD700;">Discord</a>
-        </p>
-        <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
-    </div>
+        // ============================================
+        // UI HELPERS
+        // ============================================
+        
+        function addLiveIndicator() {
+            const title = document.querySelector('.nft-stats-title');
+            if (title && !title.querySelector('.live-indicator')) {
+                const indicator = document.createElement('span');
+                indicator.className = 'live-indicator';
+                indicator.id = 'live-indicator';
+                indicator.title = 'Live blockchain data via RPC';
+                title.appendChild(indicator);
+            }
+        }
+
+        function setIndicator(status) {
+            const ind = document.getElementById('live-indicator');
+            if (ind) {
+                ind.className = 'live-indicator ' + (status === 'error' ? 'error' : status === 'warning' ? 'warning' : '');
+            }
+        }
+
+        function fmt(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function updateStats(stats) {
+            const els = {
+                'total-supply': stats.totalSupply,
+                'burned-count': stats.burnedCount,
+                'remaining-count': stats.remainingCount,
+                'unique-holders': stats.uniqueHolders
+            };
+            
+            Object.entries(els).forEach(([id, val], idx) => {
+                const el = document.getElementById(id);
+                if (el && val !== undefined) {
+                    el.classList.add('loading-pulse');
+                    setTimeout(() => {
+                        el.textContent = fmt(val);
+                        el.classList.remove('loading-pulse');
+                    }, 300 + (idx * 100));
+                }
+            });
+        }
+
+        // ============================================
+        // RPC CALLS
+        // ============================================
+        
+        async function rpcCall(method, params = []) {
+            try {
+                const response = await fetch(RPC_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        jsonrpc: '2.0',
+                        id: 1,
+                        method: method,
+                        params: params
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error.message || 'RPC error');
+                }
+                
+                return data.result;
+            } catch (error) {
+                debugLog(`RPC call failed (${method}): ${error.message}`, 'error');
+                throw error;
+            }
+        }
+
+        // ============================================
+        // EVENT LOG FETCHING WITH PAGINATION
+        // ============================================
+        
+        async function getTransferLogsPaginated(startBlock, endBlock) {
+            const start = typeof startBlock === 'string' ? parseInt(startBlock, 16) : startBlock;
+            const end = typeof endBlock === 'string' ? parseInt(endBlock, 16) : endBlock;
+            const totalBlocks = end - start;
+            
+            debugLog(`Scanning ${totalBlocks.toLocaleString()} blocks (${start} to ${end})`, 'log');
+            
+            const transferTopic = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+            let allLogs = [];
+            
+            // Calculate number of chunks needed
+            const numChunks = Math.ceil(totalBlocks / BLOCK_RANGE_LIMIT);
+            debugLog(`Fetching in ${numChunks} chunks of ${BLOCK_RANGE_LIMIT.toLocaleString()} blocks...`, 'log');
+            
+            for (let i = 0; i < numChunks; i++) {
+                const chunkStart = start + (i * BLOCK_RANGE_LIMIT);
+                const chunkEnd = Math.min(chunkStart + BLOCK_RANGE_LIMIT - 1, end);
+                
+                const fromBlock = '0x' + chunkStart.toString(16);
+                const toBlock = '0x' + chunkEnd.toString(16);
+                
+                debugLog(`Chunk ${i + 1}/${numChunks}: blocks ${chunkStart.toLocaleString()}-${chunkEnd.toLocaleString()}`, 'log');
+                
+                try {
+                    const logs = await rpcCall('eth_getLogs', [{
+                        address: CONTRACT_ADDRESS,
+                        fromBlock: fromBlock,
+                        toBlock: toBlock,
+                        topics: [transferTopic]
+                    }]);
+                    
+                    allLogs = allLogs.concat(logs);
+                    debugLog(`  ✓ ${logs.length} events found (total: ${allLogs.length})`, 'success');
+                    
+                    // Small delay between chunks
+                    if (i < numChunks - 1) {
+                        await new Promise(resolve => setTimeout(resolve, 150));
+                    }
+                } catch (error) {
+                    debugLog(`  ✗ Chunk ${i + 1} failed: ${error.message}`, 'error');
+                }
+            }
+            
+            debugLog(`✓ Total events collected: ${allLogs.length}`, 'success');
+            return allLogs;
+        }
+
+        // ============================================
+        // LOG PROCESSING
+        // ============================================
+        
+        function processLogs(logs) {
+            debugLog('Processing transfer logs...', 'log');
+            
+            const tokens = new Set();
+            const burned = new Set();
+            const holders = new Map();
+            
+            logs.forEach(log => {
+                // topics[0] = Transfer signature
+                // topics[1] = from address (indexed)
+                // topics[2] = to address (indexed)
+                // topics[3] = tokenId (indexed)
+                
+                if (log.topics.length < 4) return;
+                
+                const from = '0x' + log.topics[1].slice(26).toLowerCase();
+                const to = '0x' + log.topics[2].slice(26).toLowerCase();
+                const tokenId = parseInt(log.topics[3], 16);
+                
+                tokens.add(tokenId);
+                
+                // Check if burned (sent to dead/zero address)
+                if (to === DEAD_ADDRESS.toLowerCase() || to === ZERO_ADDRESS.toLowerCase()) {
+                    burned.add(tokenId);
+                    holders.delete(tokenId);
+                    debugLog(`🔥 Token ${tokenId} burned`, 'warning');
+                } else if (to !== ZERO_ADDRESS.toLowerCase()) {
+                    // Normal transfer (not a mint from zero address, or it is but we track it)
+                    holders.set(tokenId, to);
+                }
+            });
+            
+            const uniqueHolders = new Set(holders.values()).size;
+            
+            debugLog(`📊 Tokens tracked: ${tokens.size}`, 'success');
+            debugLog(`🔥 Burned: ${burned.size}`, 'success');
+            debugLog(`👥 Unique holders: ${uniqueHolders}`, 'success');
+            
+            return {
+                totalSupply: TOTAL_SUPPLY,
+                burnedCount: burned.size,
+                remainingCount: TOTAL_SUPPLY - burned.size,
+                uniqueHolders: uniqueHolders
+            };
+        }
+
+        // ============================================
+        // MAIN FETCH FUNCTION
+        // ============================================
+        
+        async function fetchData() {
+            try {
+                debugLog('=== Starting data fetch ===', 'log');
+                setIndicator('warning');
+                
+                // Get current block number
+                const currentBlockHex = await rpcCall('eth_blockNumber');
+                const currentBlock = parseInt(currentBlockHex, 16);
+                debugLog(`Current block: ${currentBlock.toLocaleString()}`, 'log');
+                
+                // Determine start block
+                let startBlock;
+                if (DEPLOYMENT_BLOCK) {
+                    startBlock = DEPLOYMENT_BLOCK;
+                    debugLog(`Using deployment block: ${startBlock.toLocaleString()}`, 'log');
+                } else {
+                    // Scan last 500k blocks (adjust based on your contract age)
+                    startBlock = Math.max(0, currentBlock - 500000);
+                    debugLog(`Auto-scanning from block ${startBlock.toLocaleString()} (last 500k blocks)`, 'warning');
+                    debugLog(`💡 TIP: Set DEPLOYMENT_BLOCK for faster scanning!`, 'warning');
+                }
+                
+                // Fetch all Transfer events with pagination
+                const logs = await getTransferLogsPaginated(startBlock, currentBlock);
+                
+                if (logs.length === 0) {
+                    debugLog('⚠️ No transfer logs found', 'warning');
+                    updateStats({
+                        totalSupply: TOTAL_SUPPLY,
+                        burnedCount: 0,
+                        remainingCount: TOTAL_SUPPLY,
+                        uniqueHolders: 0
+                    });
+                    setIndicator('warning');
+                    return;
+                }
+                
+                // Process the logs
+                const stats = processLogs(logs);
+                updateStats(stats);
+                setIndicator('success');
+                
+                debugLog('=== Fetch complete ===', 'success');
+                
+            } catch (err) {
+                debugLog(`Fatal error: ${err.message}`, 'error');
+                setIndicator('error');
+                
+                // Show fallback data
+                updateStats({
+                    totalSupply: TOTAL_SUPPLY,
+                    burnedCount: 0,
+                    remainingCount: TOTAL_SUPPLY,
+                    uniqueHolders: 0
+                });
+            }
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            debugLog('=== Initializing RPC Monitor ===', 'success');
+            debugLog(`RPC URL: ${RPC_URL}`, 'log');
+            debugLog(`Contract: ${CONTRACT_ADDRESS}`, 'log');
+            
+            addLiveIndicator();
+            fetchData();
+            
+            // Refresh every 2 minutes
+            setInterval(() => {
+                debugLog('--- Auto refresh ---', 'log');
+                fetchData();
+            }, 2 * 60 * 1000);
+            
+            debugLog('✓ Ready (2min auto-refresh)', 'success');
+        });
+    </script>
 </body>
 </html>
