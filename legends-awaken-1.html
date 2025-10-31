@@ -823,6 +823,8 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 215, 0, 0.1);
             transition: all 0.3s ease;
+            overflow: visible;
+            position: relative;
         }
 
         .division-item:hover {
@@ -836,9 +838,20 @@
             height: 80px;
             border-radius: 10px;
             object-fit: cover;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
             border: 2px solid rgba(255, 215, 0, 0.3);
         }
 
+
+        .division-image:hover {
+            transform: scale(3.5);
+            z-index: 100;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
         .division-info {
             flex: 1;
             display: flex;
