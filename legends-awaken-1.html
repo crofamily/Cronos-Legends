@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Cronos Legends</title>
+    <title>Legends Awaken I - Original Collection | Cronos Legends</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,9 +16,10 @@
             font-family: 'Inter', sans-serif;
             background: #0a0a0a;
             color: #fff;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -47,1127 +48,1272 @@
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-decoration: none;
             letter-spacing: 2px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #FFD700;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 0;
-                visibility: hidden;
-                max-height: 0;
-                overflow: hidden;
-                transform: none;
-                transition: all 0.3s ease, max-height 0.3s ease;
-            }
-
-            .dropdown.active .dropdown-menu {
-                opacity: 1;
-                visibility: visible;
-                max-height: 500px;
-                margin-top: 10px;
-            }
-        }
-
-        .back-home-btn {
-            padding: 12px 30px;
-            background: transparent;
-            border: 2px solid #FFD700;
-            border-radius: 50px;
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        .back-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
         }
 
-        .back-home-btn:hover {
+        .back-link:hover {
             background: rgba(255, 215, 0, 0.1);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             transform: translateX(-5px);
         }
 
-        .hero-section {
-            padding: 150px 20px 80px;
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            padding: 80px 20px;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.05), transparent);
+            background: linear-gradient(to bottom, 
+                rgba(0, 100, 255, 0.15) 0%,
+                rgba(255, 50, 50, 0.15) 100%
+            ), #0a0a0a;
+            position: relative;
         }
 
-        .page-title {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 100, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 40%, rgba(255, 50, 50, 0.15) 0%, transparent 40%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .collection-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
             font-family: 'Cinzel', serif;
             font-size: 4rem;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 20px;
-            font-weight: 900;
+            letter-spacing: 3px;
         }
 
-        .page-subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 700px;
-            margin: 0 auto 40px;
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 18px 50px 18px 20px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 50px;
-            color: #fff;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-box:focus {
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.3rem;
-            color: #FFD700;
-        }
-
-        .container {
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        .category-tabs {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 60px;
+            margin: 60px auto;
             padding: 0 20px;
         }
 
-        .tab-btn {
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.05);
+        .stat-card {
+            background: rgba(20, 20, 20, 0.8);
             border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 50px;
-            color: #888;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .tab-btn:hover, .tab-btn.active {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: #FFD700;
-            color: #FFD700;
-        }
-
-        .faq-category {
-            margin-bottom: 60px;
-        }
-
-        .category-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #FFD700;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-        }
-
-        .faq-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.1);
             border-radius: 15px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .faq-question {
-            padding: 25px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            color: #FFD700;
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            color: #FFD700;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 2000px;
-        }
-
-        .faq-answer-content {
-            padding: 0 30px 25px;
-            color: #bbb;
-            line-height: 1.8;
-        }
-
-        .faq-answer-content ul {
-            margin: 15px 0 15px 25px;
-        }
-
-        .faq-answer-content li {
-            margin-bottom: 8px;
-        }
-
-        .faq-answer-content strong {
-            color: #FFD700;
-        }
-
-        .faq-table {
-            width: 100%;
-            margin: 20px 0;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .faq-table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .faq-table td {
-            padding: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .contract-address {
-            background: rgba(255, 215, 0, 0.1);
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            color: #FFD700;
-            word-break: break-all;
-            margin: 10px 0;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            margin: 10px 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .link-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 999;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-        }
-
-        @media (max-width: 768px) {
-            .page-title {
-                font-size: 2.5rem;
-            }
-
-            .category-title {
-                font-size: 1.8rem;
-            }
-
-            .faq-question {
-                padding: 20px;
-                font-size: 1rem;
-            }
-
-            .faq-answer-content {
-                padding: 0 20px 20px;
-            }
-
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-
-
-        /* Footer */
-        .footer {
-            background: rgba(10, 10, 10, 0.9);
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 60px 20px 40px;
+            padding: 30px 20px;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .footer .section-title {
+        .stat-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-value {
             font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        .stat-label {
+            color: #999;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 15px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        /* NFT Stats Section */
+        .nft-stats-section {
+            max-width: 1200px;
+            margin: 80px auto 60px;
+            padding: 0 20px;
+        }
+
+        .nft-stats-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nft-stats-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .nft-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .nft-stat-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+        }
+
+        .nft-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(135deg, transparent, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .nft-stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .nft-stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Total NFTs Card - Blue/Cyan */
+        .nft-stat-card.total {
+            border: 2px solid rgba(0, 200, 255, 0.3);
+            background: radial-gradient(circle at top, rgba(0, 150, 255, 0.15), rgba(20, 20, 20, 0.9));
+        }
+
+        .nft-stat-card.total::before {
+            background: linear-gradient(135deg, #00c8ff, #0080ff);
+        }
+
+        .nft-stat-card.total .nft-stat-icon {
+            background: linear-gradient(135deg, #00c8ff, #0080ff);
+        }
+
+        /* Burned NFTs Card - Red/Orange Fire */
+        .nft-stat-card.burned {
+            border: 2px solid rgba(255, 100, 50, 0.4);
+            background: radial-gradient(circle at top, rgba(255, 50, 0, 0.2), rgba(20, 20, 20, 0.9));
+        }
+
+        .nft-stat-card.burned::before {
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ff4500);
+        }
+
+        .nft-stat-card.burned .nft-stat-icon {
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            animation: flameGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes flameGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.6),
+                            0 0 40px rgba(255, 69, 0, 0.4),
+                            inset 0 0 20px rgba(255, 165, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 107, 53, 0.9),
+                            0 0 60px rgba(255, 69, 0, 0.6),
+                            inset 0 0 30px rgba(255, 165, 0, 0.5);
+            }
+        }
+
+        /* Remaining NFTs Card - Green/Emerald */
+        .nft-stat-card.remaining {
+            border: 2px solid rgba(46, 213, 115, 0.3);
+            background: radial-gradient(circle at top, rgba(46, 213, 115, 0.15), rgba(20, 20, 20, 0.9));
+        }
+
+        .nft-stat-card.remaining::before {
+            background: linear-gradient(135deg, #2ed573, #26de81);
+        }
+
+        .nft-stat-card.remaining .nft-stat-icon {
+            background: linear-gradient(135deg, #2ed573, #26de81);
+        }
+
+        .nft-stat-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nft-stat-card:hover .nft-stat-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .nft-stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .nft-stat-card.total .nft-stat-number {
+            background: linear-gradient(135deg, #00c8ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nft-stat-card.burned .nft-stat-number {
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nft-stat-card.remaining .nft-stat-number {
+            background: linear-gradient(135deg, #2ed573, #26de81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nft-stat-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nft-stat-card.total .nft-stat-label {
+            color: #00c8ff;
+        }
+
+        .nft-stat-card.burned .nft-stat-label {
+            color: #ff6b35;
+        }
+
+        .nft-stat-card.remaining .nft-stat-label {
+            color: #2ed573;
+        }
+
+        .nft-stat-description {
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Animated fire effect for burned card */
+        .fire-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .fire-particle {
+            position: absolute;
+            bottom: -10px;
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(to top, #ff4500, #ff6b35, transparent);
+            border-radius: 50%;
+            animation: rise 2s ease-in infinite;
+            opacity: 0.7;
+        }
+
+        .fire-particle:nth-child(1) {
+            left: 20%;
+            animation-delay: 0s;
+            animation-duration: 1.8s;
+        }
+
+        .fire-particle:nth-child(2) {
+            left: 40%;
+            animation-delay: 0.3s;
+            animation-duration: 2.2s;
+        }
+
+        .fire-particle:nth-child(3) {
+            left: 60%;
+            animation-delay: 0.6s;
+            animation-duration: 1.5s;
+        }
+
+        .fire-particle:nth-child(4) {
+            left: 80%;
+            animation-delay: 0.9s;
+            animation-duration: 2s;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-50px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Section */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+        }
+
+        /* Status Banner */
+        .status-banner {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(69, 160, 73, 0.1));
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px auto;
+            max-width: 900px;
+        }
+
+        .status-banner h2 {
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .status-banner p {
+            color: #ccc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* Marketplace Section */
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .marketplace-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .marketplace-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .marketplace-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .marketplace-name {
+            font-size: 1.3rem;
+            color: #FFD700;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .marketplace-description {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Faction Cards */
+        .faction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .faction-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .faction-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-header {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+        }
+
+        .faction-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .faction-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .faction-count {
+            color: #999;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #4752C4);
-            color: #fff;
-            border: 2px solid #5865F2;
+        .faction-body {
+            padding: 30px;
         }
 
-        .btn-discord:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
+        .faction-description {
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
 
-        .btn-twitter {
-            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
-            color: #fff;
-            border: 2px solid #1DA1F2;
+        .division-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .btn-twitter:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(29, 161, 242, 0.4);
+        .division-item {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #FFD700;
+            color: #ddd;
+            font-size: 0.95rem;
         }
 
-        .footer-links {
-            display: flex;
+        /* Utilities Section */
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            justify-content: center;
             margin-top: 40px;
-            flex-wrap: wrap;
         }
 
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+        .utility-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
         }
 
-        .footer-links a:hover {
+        .utility-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(20, 20, 20, 0.8);
+        }
+
+        .utility-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .utility-title {
+            font-size: 1.3rem;
             color: #FFD700;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .utility-description {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        .utility-status {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .utility-status.upcoming {
+            background: rgba(255, 165, 0, 0.2);
+            color: #FFA500;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #FFD700;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .info-box strong {
+            color: #FFD700;
+        }
+
+        /* Achievement Section */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .achievement-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .achievement-title {
+            color: #4CAF50;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .achievement-value {
+            font-size: 2rem;
+            color: #FFD700;
+            font-weight: 900;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Divisions Section */
+        .divisions-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .factions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 40px;
+        }
+
+        .faction {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-header {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faction-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+
+        .faction-header.light::before {
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.3), rgba(0, 200, 255, 0.3));
+        }
+
+        .faction-header.chaos::before {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(150, 0, 100, 0.3));
+        }
+
+        .faction-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 10px;
+        }
+
+        .faction-title.light {
+            background: linear-gradient(135deg, #00D4FF, #00A8E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-title.chaos {
+            background: linear-gradient(135deg, #FF0000, #CC0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .divisions-list {
+            padding: 20px;
+        }
+
+        .division-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: visible;
+            position: relative;
+        }
+
+        .division-item:hover {
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .division-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            transform-origin: center center;
+            z-index: 1;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+
+        .division-item:hover .division-image {
+            transform: scale(3.5) translate(120%, 0);
+            z-index: 100;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+        .division-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .division-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .division-count {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFD700;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(5, 5, 5, 0.9);
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            margin-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .faction-grid, .utility-grid, .marketplace-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-        <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
-                        <li><a href="legends-awaken-1.html">Legends Awaken I</a></li>
-                    </ul>
-                </li>
-                <li><a href="tokens.html">Tokens</a></li>
-                <li><a href="game.html">Game</a></li>
-                <li><a href="roadmap.html">Roadmap</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <a href="index.html" class="back-link">
+                <span>←</span>
+                <span>Back to Home</span>
+            </a>
         </div>
     </nav>
 
-    <div class="hero-section">
-        <h1 class="page-title">❓ Frequently Asked Questions</h1>
-        <p class="page-subtitle">Find answers to common questions about Cronos Legends, tokens, NFTs, and more</p>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="collection-badge">✅ SOLD OUT - NOW TRADING</div>
+            <h1>LEGENDS AWAKEN I</h1>
+            <p class="hero-subtitle">
+                The original collection that started it all in Cronos chain. Where the eternal battle<br>
+                between the Cronos Guardians and Chaos Horde first began.CA: 0x68A3192E286AA5C2182D815F5fE796401eCe28bA
+            </p>
+        </div>
+    </div>
+
+   
+
+    <!-- NFT Statistics Section -->
+    <div class="nft-stats-section">
+        <h2 class="nft-stats-title">🔢 Collection Statistics</h2>
+        <p class="nft-stats-subtitle">Track the supply and scarcity of Legends Awaken I</p>
         
-        <div class="search-container">
-            <input type="text" class="search-box" id="searchBox" placeholder="Search for answers...">
-            <span class="search-icon">🔍</span>
-        </div>
-    </div>
+        <div class="nft-stats-grid">
+            <!-- Total NFTs Card -->
+            <div class="nft-stat-card total">
+                <div class="nft-stat-icon">💎</div>
+                <div class="nft-stat-number" id="total-supply">500</div>
+                <div class="nft-stat-label">Total Supply</div>
+                <p class="nft-stat-description">Original collection size across both factions</p>
+            </div>
 
-    <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all')">All</button>
-        <button class="tab-btn" onclick="filterCategory('basics')">Basics</button>
-        <button class="tab-btn" onclick="filterCategory('tokens')">Tokens & Trading</button>
-        <button class="tab-btn" onclick="filterCategory('nfts')">NFTs</button>
-        <button class="tab-btn" onclick="filterCategory('gameplay')">Gameplay & Rewards</button>
-        <button class="tab-btn" onclick="filterCategory('community')">Community</button>
-    </div>
-
-    <div class="container">
-        <!-- BASICS CATEGORY -->
-        <div class="faq-category" data-category="basics">
-            <h2 class="category-title"><span class="category-icon">🌟</span>The Basics</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is Cronos Legends?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Cronos Legends is a Web3 ecosystem built on the Cronos blockchain. It features collectible NFTs, immersive lore, and a unique games where players can compete and earn crypto rewards. The project includes multiple tokens and NFTs across three powerful factions: the Chaos Horde, Cronos Guardians, and Trinari.
-                    </div>
+            <!-- Burned NFTs Card with Fire Effect -->
+            <div class="nft-stat-card burned">
+                <div class="nft-stat-icon">🔥</div>
+                <div class="nft-stat-number" id="burned-count">26</div>
+                <div class="nft-stat-label">Burned Forever</div>
+                <p class="nft-stat-description">Permanently removed from circulation</p>
+                <div class="fire-container">
+                    <div class="fire-particle"></div>
+                    <div class="fire-particle"></div>
+                    <div class="fire-particle"></div>
+                    <div class="fire-particle"></div>
                 </div>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are the Factions?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Cronos Legends features three powerful factions, each with unique traits and philosophy:
-                        <ul>
-                            <li><strong>💀 Chaos Horde</strong> – Embodies raw destruction, power, and chaos. Warriors driven by conquest and fury.</li>
-                            <li><strong>⚔️ Cronos Guardians</strong> – Represents order, protection, and celestial might. Noble defenders of tradition and honor.</li>
-                            <li><strong>🌿 Trinari</strong> – Mystical beings of nature embodying balance and ancient wisdom. Elemental spirits risen to restore harmony.</li>
-                        </ul>
-                        Your faction choice may influence your journey and available rewards throughout the Cronos Legends universe.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Is the project safe?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Yes! Cronos Legends is built with transparency and community trust as core principles. All tokenomics are publicly available, the development team is active and accessible, and liquidity pools are visible on-chain for verification. We aim to stand apart from typical short-lived projects by focusing on long-term value and community engagement.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Is there a roadmap?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Yes! Our roadmap outlines the project's development phases, upcoming features, and major milestones. Visit our website or Discord for the latest roadmap updates and announcements.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TOKENS & TRADING CATEGORY -->
-        <div class="faq-category" data-category="tokens">
-            <h2 class="category-title"><span class="category-icon">💰</span>Tokens & Trading</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is the $CLG Token?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        The $CLG token is the core utility and community token of Cronos Legends. It serves multiple purposes within the ecosystem:
-                        <ul>
-                            <li>Access to Battleground competitions and events</li>
-                            <li>Staking and liquidity provision rewards</li>
-                            <li>Special perks and benefits for holders</li>
-                            <li>Required for certain Discord game features</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Where can I buy the tokens?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        You can buy $CLG on VVS Finance or other supported DEXs on the Cronos chain. Always verify you're using the correct contract address:
-                        <div class="contract-address">0x08d9cb5100C306C2909B63415d7ff05268633b41</div>
-                        <strong>Important:</strong> Never buy from unofficial sources and always double-check the contract address to avoid scams.
-                        <br><br>
-                        <a href="https://vvs.finance/?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41" target="_blank" class="link-button">Trade on VVS Finance →</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How can I add liquidity to $CLG?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Step-by-step guide to adding liquidity on VVS Finance:</strong>
-                        <ol style="margin: 15px 0 15px 25px;">
-                            <li>Visit VVS Finance and connect your wallet</li>
-                            <li>Navigate to the "Liquidity" section</li>
-                            <li>Select $CLG and pair it with $CRO or another token</li>
-                            <li>Make sure you select the <strong>V2 pool</strong></li>
-                            <li>Enter the amount of either $CLG or $CRO/$CRONUS you want to add</li>
-                            <li>VVS Finance will automatically calculate the matching amount for the other token</li>
-                            <li>Confirm the transaction in your wallet</li>
-                        </ol>
-                        LP providers may be eligible for future rewards and staking benefits. Always ensure you understand impermanent loss before providing liquidity.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is $CRONUS and how does it relate to Cronos Legends?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        $CRONUS is a partner project token within the Cronos Legends ecosystem. Holders of $CRONUS may receive special bonuses and benefits in Battlegrounds and other events.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NFTS CATEGORY -->
-        <div class="faq-category" data-category="nfts">
-            <h2 class="category-title"><span class="category-icon">🖼️</span>NFTs & Collections</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How to receive free Legends Awaken II NFT?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🎁 Holder Reward Program</strong><br>
-                        Hold 5 or more Legends Awaken I NFTs (in your Crypto.com/NFT account or non-custodial wallet) to be eligible for 1 free Legends Awaken II NFT.
-                        <br><br>
-                        <strong>📅 Snapshot Details:</strong><br>
-                        The snapshot will be taken at a random time closer to the mint date to encourage active holding and prevent gaming the system.
-                        <br><br>
-                        <strong>🎮 Community Engagement:</strong><br>
-                        Stay active in the Cronos Legends Discord! Community members may find additional opportunities to receive Legends Awaken II NFTs through events, competitions, and special activities.
-                        <br><br>
-                        <strong>⚠️ Note:</strong> Faction allocation (Chaos/Guardian/Trinari) may vary and is subject to change based on availability and distribution requirements.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are the different NFT tiers?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Legends Awaken (1st Edition) NFT Tiers:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-				<th>Required amount</th>
-                                <th>Battleground Bonus</th>
-                                <th>Special Benefits</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened X</strong></td>
-				<td>+5</td>
-                                <td>+$2.00</td>
-                                <td>Access to exclusive updates channel in Discord</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened +</strong></td>
-				<td>+3</td>
-                                <td>+$1.00</td>
-                                <td>May receive more rewards such as airdrops than Awakaned</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened</strong></td>
-				<td>1</td>
-                                <td>+$0.50</td>
-                                <td>Standard access</td>
-                            </tr>
-                        </table>
-                        <br>
-                        Each tier provides increasing benefits in Battlegrounds and other ecosystem activities.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- GAMEPLAY & REWARDS CATEGORY -->
-        <div class="faq-category" data-category="gameplay">
-            <h2 class="category-title"><span class="category-icon">🎮</span>Gameplay & Rewards</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How do the Battlegrounds, games, and competitions work?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Battlegrounds Overview:</strong><br>
-                        Battlegrounds are competitive events where $CLG holders and NFT owners can enter and compete for massive prize pools. Winners are determined through various mechanics including skill, strategy, luck, or event-specific challenges.
-                        <br><br>
-                        <strong>📋 Entry Requirements:</strong><br>
-                        To participate in Battlegrounds, you must hold at least 1 $CLG token to receive the "$CLG Holder" role in Discord, making you eligible for participation.
-                        <br><br>
-                        <strong>🎭 Legends Awaken NFT Tier Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened Legend💎</strong></td>
-                                <td>10 NFT</td>
-                                <td>+$3.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened X</strong></td>
-                                <td>5 NFT</td>
-                                <td>+$2.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened +</strong></td>
-                                <td>3 NFT</td>
-                                <td>+$1.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened</strong></td>
-                                <td>1 NFT</td>
-                                <td>+$0.50</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>💎 Token/Coin Holder Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td>CLG Holder </td>
-                                <td>1 $CLG</td>
-                                <td>$0.50</td>
-                            </tr>
-  			      <tr>
-                                <td>CLG Legend 💎</td>
-                                <td>5 $CLG</td>
-                                <td>$1.50</td>
-                            </tr>
-                            <tr>
-                                <td>Trinari 1% Holder</td>
-                                <td>10000000 $TRI</td>
-                                <td>+$1.00</td>
-                            </tr>
-                            <tr>
-                                <td>Trinari 0.5% Holder</td>
-                                <td>5000000 $TRI</td>
-                                <td>+$0.50</td>
-                            </tr>
-                            <tr>
-                                <td>CARA with Knife 🔪</td>
-                                <td>0.01 $CARA</td>
-                                <td>+$1</td>
-                            </tr>
-                            <tr>
-                                <td>CARA with Crown 👑</td>
-                                <td>0.003 $CARA</td>
-                                <td>+$0.50</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>🤝 Partner Project ($CRONUS) Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td>Cronus Overlord</td>
-                                <td>1000000 $CRONUS</td>
-                                <td>+$1.50</td>
-                            </tr>
-                            <tr>
-                                <td>Cronus Warrior</td>
-                                <td>500000 $CRONUS</td>
-                                <td>+$1.00</td>
-                            </tr>
-                        </table>
-                        <br>
-                        All bonuses are stackable, allowing players to maximize their rewards by holding multiple qualifying assets and roles!
-                    </div>
-            </div>
-        </div>
-
-        <!-- COMMUNITY CATEGORY -->
-        <div class="faq-category" data-category="community">
-            <h2 class="category-title"><span class="category-icon">💬</span>Community & Support</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Where can I join the community?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🌟 Join us and become a Legend:</strong>
-                        <br><br>
-                        <a href="https://discord.gg/cronoslegends" target="_blank" class="link-button">💬 Discord Community</a>
-                        <a href="https://x.com/CronosLegends" target="_blank" class="link-button">🐦 X (Twitter)</a>
-                        <a href="https://cronoslegends.com" target="_blank" class="link-button">🌐 Official Website</a>
-                        <br><br>
-                        Our Discord is the heart of the community, featuring:
-                        <ul>
-                            <li>Daily discussions and updates</li>
-                            <li>Interactive games and competitions</li>
-                            <li>Direct communication with the team</li>
-                            <li>Exclusive announcements and events</li>
-                            <li>Community-driven initiatives</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How do I get support or ask questions?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🎫 Support Ticket System:</strong><br>
-                        Open a support ticket in our Discord server for:
-                        <ul>
-                            <li>Technical issues or bugs</li>
-                            <li>Claiming rewards</li>
-                            <li>Manual verification for NFT/Coin eligibility roles</li>
-                            <li>General questions and assistance</li>
-                        </ul>
-                        <br>
-                        Our community moderators and team members are active and ready to help!
-                        <br><br>
-                        <strong>💡 Pro Tip:</strong> Before opening a ticket, check this FAQ page and the Discord announcements channel – your question may already be answered!
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How can I contribute to the project?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🤝 Ways to Contribute:</strong>
-                        <ul>
-                            <li><strong>Community Engagement:</strong> Be active in Discord, help new members, share ideas</li>
-                            <li><strong>Content Creation:</strong> Create art, memes, guides, or promotional content</li>
-                            <li><strong>Social Media:</strong> Share project updates and spread the word</li>
-                            <li><strong>Feedback:</strong> Provide constructive feedback to help improve the project</li>
-                            <li><strong>Competitions:</strong> Participate in community events and competitions</li>
-                        </ul>
-                        <br>
-                        Active and valuable community members are often recognized with special rewards, roles, and even NFTs! Your contributions matter and help build a stronger Cronos Legends universe.
-                    </div>
-                </div>
+            <!-- Remaining NFTs Card -->
+            <div class="nft-stat-card remaining">
+                <div class="nft-stat-icon">✨</div>
+                <div class="nft-stat-number" id="remaining-count">474</div>
+                <div class="nft-stat-label">In Circulation</div>
+                <p class="nft-stat-description">Available NFTs making each one more valuable</p>
             </div>
         </div>
     </div>
 
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+    <div class="section">
+        <div class="status-banner">
+            <h2>🚨 Collection Sold Out!🎉</h2>
+            <p>
+                Legends Awaken I is fully minted and now available on secondary marketplaces. 
+                Join among the Legends and own a piece of Cronos Legends history. 
+                Browse available listings on the marketplaces below.
+            </p>
+        </div>
 
+        <h2 class="section-title">🛒 Buy on Secondary Markets</h2>
+        <p class="section-subtitle">Legends Awaken I NFTs are now available for purchase on these trusted marketplaces</p>
+
+        <div class="marketplace-grid">
+            <a href="https://crypto.com/nft" target="_blank" class="marketplace-card">
+                <div class="marketplace-icon">🏛️</div>
+                <h3 class="marketplace-name">Crypto.com NFT</h3>
+                <p class="marketplace-description">Official launch platform with the largest selection</p>
+            </a>
+
+            <a href="https://minted.network/collections/cronos/0x68a3192e286aa5c2182d815f5fe796401ece28ba" target="_blank" class="marketplace-card">
+                <div class="marketplace-icon">🎨</div>
+                <h3 class="marketplace-name">Minted Network</h3>
+            </a>
+
+            <a href="https://app.ebisusbay.com/collection/cronos/legends-awaken?chain=cronos" target="_blank" class="marketplace-card">
+                <div class="marketplace-icon">⛩️</div>
+                <h3 class="marketplace-name">Ebisu's Bay</h3>
+            </a>
+        </div>
+    </div>
+
+   
+    <div class="section">
+        <h2 class="section-title">⚔️ The Two Factions</h2>
+        <p class="section-subtitle">The original forces locked in eternal conflict</p>
+
+        <!-- Divisions Section -->
+        <div class="factions-grid">
+            <!-- LIGHT FACTION -->
+            <div class="faction">
+                <div class="faction-header light">
+                    <h2 class="faction-title light">Forces of Light</h2>
+                    <p class="faction-count">8 Divisions • 387 NFTs</p>
+                </div>
+                <div class="divisions-list">
+                    <div class="division-item">
+                        <img src="Images/LA1/Cronos Titans (2).jpg" alt="Cronos Titans" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Cronos Titans</span>
+                            <span class="division-count">100</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Celestial Vanguard (2).jpg" alt="Celestial Vanguard" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Celestial Vanguard</span>
+                            <span class="division-count">30</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Oceanic Guardians (1).jpg" alt="Oceanic Guardians" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Oceanic Guardians</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Verdant Guardians (2).jpg" alt="Verdant Guardians" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Verdant Guardians</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Solar Vanguard (2).jpg" alt="Solar Vanguard" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Solar Vanguard</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Icelyn Frostguard (2).jpg" alt="Icelyn Frostguard" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Icelyn Frostguard</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Empyrean Ascendants (1).jpg" alt="Empyrean Ascendants" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Empyrean Ascendants</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Celeastial Beasts (4).jpg" alt="Celestial Beasts" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Celestial Beasts</span>
+                            <span class="division-count">157</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAOS FACTION -->
+            <div class="faction">
+                <div class="faction-header chaos">
+                    <h2 class="faction-title chaos">Forces of Chaos</h2>
+                    <p class="faction-count">8 Divisions • 387 NFTs</p>
+                </div>
+                <div class="divisions-list">
+                    <div class="division-item">
+                        <img src="Images/LA1/Chaos Legion (2).jpg" alt="Chaos Legion" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Chaos Legion</span>
+                            <span class="division-count">99</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Chaos Vanguard (3).jpg" alt="Chaos Vanguard" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Chaos Vanguard</span>
+                            <span class="division-count">30</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Deathsworn (1).jpg" alt="Deathsworn" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Deathsworn</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Shadowbark (1).jpg" alt="Shadowbark" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Shadowbark</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Nightshade Warden (1).jpg" alt="Nightshade Wardens" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Nightshade Wardens</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Horde Creatures (1).jpg" alt="Horde Creatures" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Horde Creatures</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Frostbound Horde (1).jpg" alt="Frostbound Horde" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Frostbound Horde</span>
+                            <span class="division-count">20</span>
+                        </div>
+                    </div>
+
+                    <div class="division-item">
+                        <img src="Images/LA1/Abyss Beasts (1).jpg" alt="Abyss Beasts" class="division-image">
+                        <div class="division-info">
+                            <span class="division-name">Abyss Beasts</span>
+                            <span class="division-count">158</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">💎 Holder Benefits</h2>
+        <p class="section-subtitle">What you get as a Legends Awaken I owner</p>
+
+        <div class="utility-grid">
+            <div class="utility-card">
+                <div class="utility-icon">🎁</div>
+                <h3 class="utility-title">LA II Priority Access</h3>
+                <p class="utility-description">
+                    Existing holders of Legends Awaken I get early access 
+                   to mint Legends Awaken II.
+                </p>
+                <span class="utility-status">🔜 COMING</span>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">💰</div>
+                <h3 class="utility-title">Staking Rewards</h3>
+                <p class="utility-description">
+                    Stake your LA I NFTs to earn $CLG tokens. Active staking program with competitive APY.
+                </p>
+                <span class="utility-status">✅ FINISHED </span>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">🏆</div>
+                <h3 class="utility-title">Faction Tournaments</h3>
+                <p class="utility-description">
+                    Participate in exclusive faction battles with real prizes. Prove your faction's dominance.
+                </p>
+                <span class="utility-status">✅ ACTIVE</span>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">🎮</div>
+                <h3 class="utility-title">Game Integration</h3>
+                <p class="utility-description">
+                    Your NFTs will be playable in the upcoming Cronos Legends game. Alpha testing planned on Q2 2026.
+                </p>
+                <span class="utility-status upcoming">🔜 COMING</span>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">🗳️</div>
+                <h3 class="utility-title">Governance Votes</h3>
+                <p class="utility-description">
+                    Vote on important project decisions and future direction. Your voice shapes Cronos Legends.
+                </p>
+                <span class="utility-status">✅ ACTIVE</span>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">🎨</div>
+                <h3 class="utility-title">Exclusive Airdrops</h3>
+                <p class="utility-description">
+                    Receive free airdrops and other possible rewards.
+                </p>
+                <span class="utility-status">✅ ACTIVE</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">🚀 What's Next for Holders?</h2>
+        <p class="section-subtitle">Upcoming benefits and features for LA I owners</p>
+
+        <div class="info-box">
+            <strong>Legends Awaken II Priority Access:</strong> All LA I holders will receive a 1-hour early access window 
+            to mint LA II NFTs before public launch on December 10, 2025.
+        </div>
+
+        <div class="utility-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 40px;">
+            <div class="utility-card">
+                <div class="utility-icon">🎯</div>
+                <h3 class="utility-title">Enhanced Staking</h3>
+                <p class="utility-description">
+                    Users who hold both LA I and LA II NFTs will receive bonus multipliers on rewards on certain games. 
+                    Stack your holdings for maximum benefits.
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">👑</div>
+                <h3 class="utility-title">Discord Status</h3>
+                <p class="utility-description">
+                    LA I holders receive special Discord roles, exclusive channels, 
+                    and benefits.
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">🎁</div>
+                <h3 class="utility-title">TBA</h3>
+                <p class="utility-description">
+                    TBA
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="text-align: center;">
+        <h2 class="section-title">⚔️ Join the Original Legend</h2>
+        <p class="section-subtitle">Own a piece of where it all began</p>
+        
+        <div class="btn-group">
+            <a href="https://crypto.com/nft" target="_blank" class="btn btn-primary">Browse on Crypto.com NFT</a>
+            <a href="la1-terms.html" class="btn btn-outline">Read Terms & Conditions</a>
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-outline">Join Discord</a>
+        </div>
+
+        <div class="info-box" style="max-width: 800px; margin: 40px auto;">
+            <strong>Looking for Legends Awaken II?</strong> The next chapter launches December 10, 2025 with 3 factions 
+            and 17 divisions. <a href="legends-awaken-2.html" style="color: #FFD700;">Learn more →</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="color: #999; font-size: 1.1rem; margin-bottom: 20px;">
+            Questions about LA I? Check our <a href="faq.html" style="color: #FFD700;">FAQ</a> or join 
+            <a href="https://discord.gg/cronoslegends" style="color: #FFD700;">Discord</a>
+        </p>
+        <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
     <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+        // Static NFT Statistics - No live data
+        function fmt(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
-        // Toggle FAQ items
-        function toggleFaq(element) {
-            const faqItem = element.parentElement;
-            const wasActive = faqItem.classList.contains('active');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Static values
+            const stats = {
+                'total-supply': 500,
+                'burned-count': 26,
+                'remaining-count': 474,
+                'unique-holders': 0
+            };
             
-            // Close all other items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Toggle current item
-            if (!wasActive) {
-                faqItem.classList.add('active');
-            }
-        }
-
-        // Search functionality
-        const searchBox = document.getElementById('searchBox');
-        searchBox.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            const categories = document.querySelectorAll('.faq-category');
-            
-            if (searchTerm === '') {
-                // Show all if search is empty
-                faqItems.forEach(item => item.style.display = 'block');
-                categories.forEach(cat => cat.style.display = 'block');
-                return;
-            }
-            
-            categories.forEach(category => {
-                let hasVisibleItem = false;
-                const items = category.querySelectorAll('.faq-item');
-                
-                items.forEach(item => {
-                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                    const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
-                    
-                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                        item.style.display = 'block';
-                        hasVisibleItem = true;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-                
-                // Hide category if no items match
-                category.style.display = hasVisibleItem ? 'block' : 'none';
-            });
-        });
-
-        // Category filter
-        function filterCategory(category) {
-            const categories = document.querySelectorAll('.faq-category');
-            const tabs = document.querySelectorAll('.tab-btn');
-            
-            // Update active tab
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Filter categories
-            if (category === 'all') {
-                categories.forEach(cat => cat.style.display = 'block');
-            } else {
-                categories.forEach(cat => {
-                    if (cat.dataset.category === category) {
-                        cat.style.display = 'block';
-                    } else {
-                        cat.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Clear search when filtering
-            searchBox.value = '';
-        }
-
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            // Update all stat elements with static values
+            Object.entries(stats).forEach(([id, val]) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.textContent = fmt(val);
                 }
             });
         });
     </script>
-
-    <!-- Footer -->
-    <div class="footer" id="community">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
-            this chapter is a defining moment—and the beginning of something far greater.
-        </p>
-        <div class="social-links">
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
-        </div>
-        
-        <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="legends-awaken-2.html">Legends Awaken II</a>
-            <a href="legends-awaken-1.html">Legends Awaken I</a>
-            <a href="tokens.html">Tokens</a>
-            <a href="game.html">Game</a>
-            <a href="roadmap.html">Roadmap</a>
-            <a href="faq.html">FAQ</a>
-            <a href="la2-terms.html">LA2 Terms</a>
-            <a href="la1-terms.html">LA1 Terms</a>
-        </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
-    </div>
-
 </body>
-</html><parameter>
+</html>
