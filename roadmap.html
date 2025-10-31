@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap - Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(0, 191, 255, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 140px 20px 60px;
+            position: relative;
+        }
+
+        .header-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.3); }
+            50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(138, 43, 226, 0.5); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Promise Banner */
+        .promise-banner {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px 40px;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: pulse-border 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(255, 215, 0, 0.3); box-shadow: 0 0 20px rgba(255, 215, 0, 0.1); }
+            50% { border-color: rgba(255, 215, 0, 0.6); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        }
+
+        .promise-banner h3 {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .promise-banner p {
+            color: #ccc;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        /* Roadmap Section */
+        .roadmap-section {
+            margin-bottom: 80px;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.8), transparent);
+            animation: line-grow 1.5s ease-out forwards;
+        }
+
+        @keyframes line-grow {
+            to { width: 200px; }
+        }
+
+        .completed .section-header { border-color: #4ade80; }
+        .live .section-header { border-color: #22d3ee; }
+        .upcoming .section-header { border-color: #fbbf24; }
+        .future .section-header { border-color: #a78bfa; }
+
+        .section-icon {
+            font-size: 2.5rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .completed .section-title { color: #4ade80; }
+        .live .section-title { color: #22d3ee; }
+        .upcoming .section-title { color: #fbbf24; }
+        .future .section-title { color: #a78bfa; }
+
+        /* Roadmap Items */
+        .roadmap-items {
+            display: grid;
+            gap: 25px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .roadmap-items::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, 
+                rgba(255, 215, 0, 0.5) 0%, 
+                rgba(138, 43, 226, 0.3) 50%, 
+                rgba(255, 215, 0, 0.1) 100%);
+        }
+
+        .roadmap-item {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 25px 30px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid;
+            background: #0a0a0a;
+        }
+
+        .completed .roadmap-item::before { border-color: #4ade80; background: #4ade80; }
+        .live .roadmap-item::before { 
+            border-color: #22d3ee; 
+            background: #22d3ee;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+        }
+
+        .upcoming .roadmap-item::before { border-color: #fbbf24; }
+        .future .roadmap-item::before { border-color: #a78bfa; }
+
+        .roadmap-item:hover {
+            transform: translateX(10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .item-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-description {
+            color: #ccc;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Special Item Styles */
+        .highlight-item {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.12) 0%, rgba(20, 20, 30, 0.6) 100%);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+        }
+
+        .highlight-item:hover {
+            border-color: rgba(138, 43, 226, 0.7);
+            box-shadow: 0 10px 40px rgba(138, 43, 226, 0.2);
+        }
+
+        /* Footer Note */
+        .footer-note {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin-top: 60px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-note h4 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-note p {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.9);
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 60px 20px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer .section-title {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            color: #fff;
+            border: 2px solid #5865F2;
+        }
+
+        .btn-discord:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            color: #fff;
+            border: 2px solid #1DA1F2;
+        }
+
+        .btn-twitter:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        .btn-back {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            border: 2px solid #FFD700;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-icon {
+                font-size: 2rem;
+            }
+
+            .roadmap-items {
+                padding-left: 30px;
+            }
+
+            .roadmap-item {
+                padding: 20px;
+            }
+
+            .item-title {
+                font-size: 1.2rem;
+            }
+
+            .promise-banner {
+                padding: 25px;
+            }
+
+            .promise-banner h3 {
+                font-size: 1.3rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <!-- Navigation Bar -->
+        <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
+                        <li><a href="legends-awaken-1.html">Legends Awaken I</a></li>
+                    </ul>
+                </li>
+                <li><a href="tokens.html">Tokens</a></li>
+                <li><a href="game.html">Game</a></li>
+                <li><a href="roadmap.html">Roadmap</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-icon">⚔️</div>
+        <h1>Official Roadmap</h1>
+        <p class="subtitle">Building a lasting NFT and token ecosystem on Cronos</p>
+        
+        <div class="promise-banner">
+            <h3>💎 Our Philosophy</h3>
+            <p>We believe in <strong>underpromising and overdelivering</strong>. While we outline our vision below, our long-time community knows that Cronos Legends consistently brings more value than expected. We don't chase hype—we build sustainable, rewarding experiences for our holders.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Completed Section -->
+        <section class="roadmap-section completed fade-in">
+            <div class="section-header">
+                <span class="section-icon">✅</span>
+                <h2 class="section-title">Completed</h2>
+            </div>
+            <div class="roadmap-items">
+                <div class="roadmap-item">
+                    <h3 class="item-title">⚔️ Legends Awaken NFT Launch</h3>
+                    <p class="item-description">The original collection that began the Cronos Legends universe. A foundation built on quality art and real utility for our community.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">💰 $500 $CARA Airdrop</h3>
+                    <p class="item-description">Rewarding early community members for their support and belief in our vision from day one.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🎯 NFT Staking Platform</h3>
+                    <p class="item-description">Active staking mechanism allowing all holders to earn rewards passively while supporting the ecosystem.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🎁 Community Giveaways</h3>
+                    <p class="item-description">Over 10x Discord Nitro subscriptions distributed, plus various campaign rewards to engage and appreciate our loyal community.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live & In Progress Section -->
+        <section class="roadmap-section live fade-in">
+            <div class="section-header">
+                <span class="section-icon">🟢</span>
+                <h2 class="section-title">Live & In Progress</h2>
+            </div>
+            <div class="roadmap-items">
+                <div class="roadmap-item highlight-item">
+                    <h3 class="item-title">📈 $CLG Daily Buybacks</h3>
+                    <p class="item-description">Ongoing daily buyback program funded through project-held $CRONUS reserves. This initiative helps stabilize token price, reduce circulating supply, and demonstrate our long-term commitment to $CLG holders.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🎮 Play-to-Win Events</h3>
+                    <p class="item-description">Regular competitive events featuring $500+ prize pools across Cronos Legends mini-games and activities. Skill meets rewards in our growing gaming ecosystem.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🌐 Community & Ecosystem Campaigns</h3>
+                    <p class="item-description">Continuous expansion with enhanced staking incentives, strategic Cronos network collaborations, and innovative initiatives designed to engage and reward our dedicated holders.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Section -->
+        <section class="roadmap-section upcoming fade-in">
+            <div class="section-header">
+                <span class="section-icon">🗓️</span>
+                <h2 class="section-title">Upcoming</h2>
+            </div>
+            <div class="roadmap-items">
+                <div class="roadmap-item highlight-item">
+                    <h3 class="item-title">⚔️ Legends Awaken II — NFT Drop</h3>
+                    <p class="item-description">The next chapter in our collection arrives with new legendary factions, significantly enhanced art quality, and expanded lore. This generation will push the boundaries of what our community expects from Cronos Legends.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">💎 NFT Royalty Share Program</h3>
+                    <p class="item-description">A revolutionary system that redistributes portions of creator royalties back to the community through contests, events, and holder rewards. Your NFT becomes more valuable simply by being part of the ecosystem.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🔥 $CLG Token Burns</h3>
+                    <p class="item-description">Scheduled supply reductions directly tied to ecosystem milestones and buyback cycles. Each burn event will be transparent, verifiable, and designed to benefit long-term holders.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3 class="item-title">🎭 Secret Phases</h3>
+                    <p class="item-description">Future development stages featuring surprise content drops, new game modes, blockchain integrations, and partnerships that will be revealed gradually. We keep some magic under wraps until the perfect moment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2026 Preview Section -->
+        <section class="roadmap-section future fade-in">
+            <div class="section-header">
+                <span class="section-icon">🌟</span>
+                <h2 class="section-title">2026 Preview</h2>
+            </div>
+            <div class="roadmap-items">
+                <div class="roadmap-item highlight-item">
+                    <h3 class="item-title">🖼️ New PFP-Style NFT Collection</h3>
+                    <p class="item-description">A fresh, collector-focused profile-picture series that expands the Cronos Legends universe with an entirely new art direction and exclusive utility features. Designed for mass appeal while maintaining the quality and exclusivity our community deserves. This collection will bridge our existing lore with new opportunities for holders and collectors alike.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Note -->
+        <div class="footer-note fade-in">
+            <h4>📜 Important Note</h4>
+            <p>Roadmap milestones are forward-looking and may evolve based on market conditions, technical development timelines, and partnership opportunities. Cronos Legends remains committed to transparency, creativity, and steady long-term growth. We adapt, we improve, and we always put our community first. While other projects overpromise and underdeliver, we take the opposite approach—building quietly, shipping quality, and surprising our holders with value they didn't expect.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+        <!-- Footer -->
+    <div class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
+            this chapter is a defining moment—and the beginning of something far greater.
+        </p>
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="legends-awaken-2.html">Legends Awaken II</a>
+            <a href="legends-awaken-1.html">Legends Awaken I</a>
+            <a href="tokens.html">Tokens</a>
+            <a href="game.html">Game</a>
+            <a href="roadmap.html">Roadmap</a>
+            <a href="faq.html">FAQ</a>
+            <a href="la2-terms.html">LA2 Terms</a>
+            <a href="la1-terms.html">LA1 Terms</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add stagger effect to roadmap items
+        document.querySelectorAll('.roadmap-section').forEach((section, sectionIndex) => {
+            const items = section.querySelectorAll('.roadmap-item');
+            items.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Smooth button interactions
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
