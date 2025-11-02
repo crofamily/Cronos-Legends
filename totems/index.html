@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cronos Legends Totems - Ancient artifacts granting unique utilities, Battleground perks, and exclusive access across the Cronos Legends ecosystem.">
+    <meta name="keywords" content="Cronos Legends, Totems, NFT, Utility, Battleground, Discord verification, CLG">
+    <title>Totems - Ancient Artifacts | Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-gold: #FFD700;
+            --color-orange: #FFA500;
+            --color-dark: #0a0a0a;
+            --color-dark-alt: #141414;
+            --color-gray-light: #ccc;
+            --color-gray: #999;
+            --color-gray-dark: #666;
+            
+            /* Faction Colors */
+            --guardians-blue: #4DA3FF;
+            --chaos-red: #FF4D4D;
+            --trinari-teal: #30D0AE;
+            
+            /* Rarity Colors */
+            --rarity-mythic: #9D4EDD;
+            --rarity-legendary: #FF6B00;
+            --rarity-rare: #0096FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .dropdown-submenu {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .dropdown-submenu a {
+            font-size: 0.85rem;
+            color: #999;
+            padding: 8px 25px;
+        }
+
+        .dropdown-submenu a:hover {
+            color: #FFD700;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, 
+                rgba(77, 163, 255, 0.1) 0%,
+                rgba(48, 208, 174, 0.1) 50%,
+                rgba(255, 77, 77, 0.1) 100%
+            ), #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(77, 163, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 60%, rgba(48, 208, 174, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 40%, rgba(255, 77, 77, 0.15) 0%, transparent 50%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .collection-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Explainer Section */
+        .explainer {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .explainer h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        .explainer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        /* Totem Grid */
+        .totem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .totem-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .totem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .totem-card.guardians {
+            border-color: rgba(77, 163, 255, 0.3);
+        }
+
+        .totem-card.guardians:hover {
+            border-color: rgba(77, 163, 255, 0.8);
+            box-shadow: 0 20px 50px rgba(77, 163, 255, 0.3);
+        }
+
+        .totem-card.chaos {
+            border-color: rgba(255, 77, 77, 0.3);
+        }
+
+        .totem-card.chaos:hover {
+            border-color: rgba(255, 77, 77, 0.8);
+            box-shadow: 0 20px 50px rgba(255, 77, 77, 0.3);
+        }
+
+        .totem-card.trinari {
+            border-color: rgba(48, 208, 174, 0.3);
+        }
+
+        .totem-card.trinari:hover {
+            border-color: rgba(48, 208, 174, 0.8);
+            box-shadow: 0 20px 50px rgba(48, 208, 174, 0.3);
+        }
+
+        .totem-card.mystery {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, 
+                rgba(77, 163, 255, 0.1),
+                rgba(48, 208, 174, 0.1),
+                rgba(255, 77, 77, 0.1)
+            );
+            position: relative;
+        }
+
+        .totem-card.mystery:hover {
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .totem-card.mystery::before {
+            content: 'COMING SOON';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 10;
+        }
+
+        .mystery-icon {
+            font-size: 8rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: mysteryFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            display: inline-block;
+        }
+
+        @keyframes mysteryFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        .rarity-mystery {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            animation: mysteryPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes mysteryPulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .totem-image {
+            width: 100%;
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(20, 20, 20, 0.95));
+        }
+
+        .totem-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: top center;
+            transition: transform 0.4s ease;
+        }
+
+        .totem-card:hover .totem-image img {
+            transform: scale(1.08);
+        }
+
+        .totem-info {
+            padding: 25px;
+        }
+
+        .totem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .totem-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .totem-faction {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .rarity-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rarity-mythic {
+            background: rgba(157, 78, 221, 0.2);
+            color: #9D4EDD;
+            border: 1px solid #9D4EDD;
+        }
+
+        .rarity-legendary {
+            background: rgba(255, 107, 0, 0.2);
+            color: #FF6B00;
+            border: 1px solid #FF6B00;
+        }
+
+        .rarity-rare {
+            background: rgba(0, 150, 255, 0.2);
+            color: #0096FF;
+            border: 1px solid #0096FF;
+        }
+
+        .totem-flavor {
+            font-style: italic;
+            color: #999;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            border-left: 3px solid rgba(255, 215, 0, 0.3);
+            padding-left: 15px;
+        }
+
+        .totem-utility {
+            margin-top: 15px;
+        }
+
+        .totem-utility h4 {
+            font-size: 0.9rem;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .totem-utility ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .totem-utility li {
+            font-size: 0.9rem;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .totem-utility li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+        }
+
+        /* Utility & Rewards Section */
+        .utility-section {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 80px auto;
+        }
+
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .utility-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .utility-item:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .utility-item h3 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .utility-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .utility-item li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #ccc;
+        }
+
+        .utility-item li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* How to Get Section */
+        .how-to-section {
+            max-width: 900px;
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .step-card h3 {
+            color: #FFD700;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Lore Spotlight */
+        .lore-section {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 80px auto;
+            max-width: 1000px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .lore-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .lore-content.active {
+            opacity: 1;
+        }
+
+        .lore-faction-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+        .lore-faction-badge.guardians {
+            background: rgba(77, 163, 255, 0.2);
+            color: #4DA3FF;
+            border: 1px solid #4DA3FF;
+        }
+
+        .lore-faction-badge.chaos {
+            background: rgba(255, 77, 77, 0.2);
+            color: #FF4D4D;
+            border: 1px solid #FF4D4D;
+        }
+
+        .lore-faction-badge.trinari {
+            background: rgba(48, 208, 174, 0.2);
+            color: #30D0AE;
+            border: 1px solid #30D0AE;
+        }
+
+        .lore-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .lore-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .lore-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lore-dot.active {
+            background: #FFD700;
+            transform: scale(1.3);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 900px;
+            margin: 80px auto;
+        }
+
+        .faq-item {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #FFD700;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 30px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 30px 25px;
+        }
+
+        .faq-answer p {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Disclaimer Section */
+        .disclaimer {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .disclaimer p {
+            color: #999;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .disclaimer strong {
+            color: #FFD700;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, 
+                rgba(255, 215, 0, 0.05) 0%,
+                transparent 100%
+            );
+        }
+
+        .footer-cta h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-cta p {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .verification-note {
+            display: inline-block;
+            background: rgba(77, 163, 255, 0.1);
+            border: 1px solid rgba(77, 163, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-top: 30px;
+            color: #4DA3FF;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.95);
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 40px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .totem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                display: block;
+                margin: 10px auto;
+            }
+
+            .btn-secondary {
+                margin-left: auto;
+            }
+
+            .utility-section,
+            .lore-section {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="collection-badge">⚡ ANCIENT ARTIFACTS</div>
+            <h1>Cronos Legends<br>Totems</h1>
+            <p class="hero-subtitle">
+                Discover ancient artifacts of immense power. Each Totem grants unique utilities across the Cronos Legends ecosystem—from Battleground perks to exclusive Discord access and future collection eligibility.
+            </p>
+            <div style="margin-top: 40px;">
+                <a href="https://discord.gg/cronoslegends" class="btn" target="_blank">Join Discord</a>
+                <a href="#totems" class="btn btn-secondary">View Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Are Totems Section -->
+    <section class="section explainer reveal">
+        <h2>🗿 What Are Totems?</h2>
+        <p>
+            Totems are collectible, lore-rich artifacts that grant tangible utility within the Cronos Legends universe. 
+            Each Totem is aligned with one of the three factions—Cronos Guardians, Chaos Horde, or Trinari—and carries 
+            ancient power that translates into real benefits: Battleground reward multipliers, Discord verification and roles, 
+            priority access to future mints, and snapshot eligibility for potential rewards. These are not mere collectibles; 
+            they are your keys to deeper engagement and exclusive opportunities in the $CLG ecosystem.
+        </p>
+    </section>
+
+    <!-- Totem Types Grid -->
+    <section class="section" id="totems">
+        <h2 class="section-title reveal">✨ The Totems</h2>
+        <p class="section-subtitle reveal">Nine ancient artifacts across three rarities: Rare, Legendary, and Mythic</p>
+        
+        <div class="totem-grid">
+            <!-- Guardians Totems -->
+            <div class="totem-card guardians reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Guardian1.png" alt="Aegis of Eternity" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #4DA3FF;">Aegis of Eternity</h3>
+                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
+                        </div>
+                        <span class="rarity-badge rarity-rare">Rare</span>
+                    </div>
+                    <p class="totem-flavor">"Crafted from the temporal core of Cronos' realm, this rare totem acts as a protective anchor, shielding the Guardians and ensuring their unwavering stand against all threats."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+5% Battleground reward multiplier</li>
+                            <li>Guardian Keeper Discord role</li>
+                            <li>Early event notifications</li>
+                            <li>Community governance vote weight bonus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card guardians reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Guardian2.png" alt="Chronoheart Pillar" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #4DA3FF;">Chronoheart Pillar</h3>
+                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
+                        </div>
+                        <span class="rarity-badge rarity-legendary">Legendary</span>
+                    </div>
+                    <p class="totem-flavor">"Within its crystalline heart beats the rhythm of time itself, anchoring the Guardians to their eternal purpose across all dimensions."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+7% Battleground reward multiplier</li>
+                            <li>Guardian Elite Discord role</li>
+                            <li>Hidden Guardian channels access</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card guardians reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Guardian3.png" alt="Lumenheart Pillar" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #4DA3FF;">Lumenheart Pillar</h3>
+                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
+                        </div>
+                        <span class="rarity-badge rarity-mythic">Mythic</span>
+                    </div>
+                    <p class="totem-flavor">"Born from the crystallized essence of Cronos' eternal light, legends claim that when darkness surges, the Pillar's light intensifies—calling upon the spirits of fallen Guardians to rise once more."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+10% Battleground reward multiplier</li>
+                            <li>Guardian Sentinel Discord role</li>
+                            <li>Priority allowlist for 2026 PFP collection</li>
+                            <li>Access to seasonal trial leaderboards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos Totems -->
+            <div class="totem-card chaos reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Chaos1.png" alt="Flameborne Obelisk" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #FF4D4D;">Flameborne Obelisk</h3>
+                            <div class="totem-faction" style="color: #FF4D4D;">Chaos Horde</div>
+                        </div>
+                        <span class="rarity-badge rarity-rare">Rare</span>
+                    </div>
+                    <p class="totem-flavor">"A towering totem forged in the heart of chaos, its cracked stone veins pulse with molten fire. Born from the wrath of the inferno, those who stand before it feel their fury ignite."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+5% Battleground reward multiplier</li>
+                            <li>Chaos Reaver Discord role</li>
+                            <li>Early event notifications</li>
+                            <li>Community governance vote weight bonus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card chaos reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Chaos2.png" alt="Infernal Bastion" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #FF4D4D;">Infernal Bastion</h3>
+                            <div class="totem-faction" style="color: #FF4D4D;">Chaos Horde</div>
+                        </div>
+                        <span class="rarity-badge rarity-legendary">Legendary</span>
+                    </div>
+                    <p class="totem-flavor">"Forged from obsidian and bone, flames pour from its skull-crowned peak, pulsing with wrath and madness. Warriors who stand before it feel their fury rise—as if the totem itself feeds on rage."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+7% Battleground reward multiplier</li>
+                            <li>Chaos Harbinger Discord role</li>
+                            <li>Hidden Chaos channels access</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card chaos reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Chaos3.png" alt="Abyssal Devourer" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #FF4D4D;">Abyssal Devourer</h3>
+                            <div class="totem-faction" style="color: #FF4D4D;">Chaos Horde</div>
+                        </div>
+                        <span class="rarity-badge rarity-mythic">Mythic</span>
+                    </div>
+                    <p class="totem-flavor">"Carved from blackened brimstone and fed with the souls of fallen gods, its horned visage hungers eternally. Legends claim it feeds not on flesh, but on courage—leaving behind hollow vessels."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+10% Battleground reward multiplier</li>
+                            <li>Chaos Overlord Discord role</li>
+                            <li>Priority allowlist for 2026 PFP collection</li>
+                            <li>Exclusive Chaos Horde strategy sessions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trinari Totems -->
+            <div class="totem-card trinari reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Trinari1.png" alt="The Verdant Spiral" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #30D0AE;">The Verdant Spiral</h3>
+                            <div class="totem-faction" style="color: #30D0AE;">Trinari</div>
+                        </div>
+                        <span class="rarity-badge rarity-rare">Rare</span>
+                    </div>
+                    <p class="totem-flavor">"The Verdant Spiral pulses with ancient, natural energy. Its swirling core channels the cycle of life, death, and rebirth—marking the beginning of nature's return."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+5% Battleground reward multiplier</li>
+                            <li>Trinari Keeper Discord role</li>
+                            <li>Early event notifications</li>
+                            <li>Community governance vote weight bonus</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card trinari reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Trinari2.png" alt="Lifestream Obelisk" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #30D0AE;">Lifestream Obelisk</h3>
+                            <div class="totem-faction" style="color: #30D0AE;">Trinari</div>
+                        </div>
+                        <span class="rarity-badge rarity-legendary">Legendary</span>
+                    </div>
+                    <p class="totem-flavor">"Born of ancient roots, the Lifestream Obelisk glows with primal energy. Vines and crystal veins spiral skyward, channeling life, decay, and rebirth as whispers of Trinari spirits fill the wind."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+7% Battleground reward multiplier</li>
+                            <li>Trinari Sage Discord role</li>
+                            <li>Hidden Trinari channels access</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card trinari reveal">
+                <div class="totem-image">
+                    <img src="Images/Totems/Trinari3.png" alt="Verdant Nexus" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #30D0AE;">Verdant Nexus</h3>
+                            <div class="totem-faction" style="color: #30D0AE;">Trinari</div>
+                        </div>
+                        <span class="rarity-badge rarity-mythic">Mythic</span>
+                    </div>
+                    <p class="totem-flavor">"Rooted in the heart of the world's primal essence, the Verdant Nexus breathes with the rhythm of creation itself—channeling the first spark of life that binds all realms together."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>+10% Battleground reward multiplier</li>
+                            <li>Trinari Elder Discord role</li>
+                            <li>Priority allowlist for 2026 PFP collection</li>
+                            <li>Access to mystic ritual events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special: Totem of Peace (UNICEF) -->
+    <section class="section" style="margin-top: 100px; margin-bottom: 100px;">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <div style="display: inline-block; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; font-weight: 700; font-size: 0.9rem; padding: 10px 25px; border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+                ✨ SPECIAL EDITION
+            </div>
+            <h2 class="section-title reveal">🕊️ Totem of Peace</h2>
+            <p class="section-subtitle reveal" style="max-width: 900px;">
+                A unique artifact created for UNICEF—100% of proceeds support children in need. 
+                Not part of the main collection, but forever part of the Cronos Legends legacy of giving back.
+            </p>
+        </div>
+
+        <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+            <div class="totem-card mystery" style="background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.15),
+                rgba(255, 165, 0, 0.15)
+            ); border: 3px solid rgba(255, 215, 0, 0.5);">
+                <div class="totem-image" style="background: linear-gradient(135deg, 
+                    rgba(255, 215, 0, 0.2),
+                    rgba(255, 165, 0, 0.2)
+                ); height: 400px;">
+                    <div style="font-size: 12rem; animation: mysteryFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5)); display: inline-block;">🕊️</div>
+                </div>
+                <div class="totem-info" style="text-align: center;">
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px;">
+                            Totem of Peace
+                        </h3>
+                        <div style="display: inline-block; background: rgba(255, 215, 0, 0.2); color: #FFD700; border: 2px solid #FFD700; padding: 8px 20px; border-radius: 25px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">
+                            💝 UNICEF Charity Edition
+                        </div>
+                    </div>
+                    
+                    <p style="font-style: italic; color: #ccc; font-size: 1.1rem; margin-bottom: 25px; line-height: 1.8; padding: 0 20px;">
+                        "The Totem of Peace rises as a beacon of hope, glowing with golden light that transforms the land into harmony and growth. 
+                        Children gather in joy beneath its radiance, celebrating the promise of brighter days. Rooted in the Cronos Legends universe, 
+                        this artwork symbolizes unity and the triumph of light over darkness."
+                    </p>
+                    
+                    <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 25px; margin: 25px 0;">
+                        <h4 style="color: #FFD700; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                            💖 Charity Impact
+                        </h4>
+                        <p style="color: #ccc; line-height: 1.8; margin-bottom: 10px;">
+                            <strong style="color: #FFD700;">100% of proceeds</strong> from this special edition totem go directly to UNICEF 
+                            to support children around the world. This is not just an NFT—it's a contribution to a better future.
+                        </p>
+                        <p style="color: #999; font-size: 0.9rem; margin-top: 15px;">
+                            The Totem of Peace stands apart from the main collection as a symbol of our community's commitment 
+                            to making a real-world difference.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
+                        <p style="color: #FFD700; font-weight: 600; margin-bottom: 10px;">
+                            🎁 Holder Benefits
+                        </p>
+                        <ul style="list-style: none; padding: 0; text-align: left; display: inline-block;">
+                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
+                                Exclusive "Peacekeeper" Discord role
+                            </li>
+                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
+                                Access to special UNICEF event channels
+                            </li>
+                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
+                                Priority consideration for future charity initiatives
+                            </li>
+                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
+                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
+                                Eternal recognition as a Cronos Legends humanitarian
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <a href="https://discord.gg/cronoslegends" class="btn" target="_blank" style="display: inline-block; margin: 10px;">💬 Join for Updates</a>
+                        <a href="#" class="btn btn-secondary" style="display: inline-block; margin: 10px;">🕊️ Learn More About UNICEF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; padding: 30px; background: rgba(255, 215, 0, 0.05); border: 2px solid rgba(255, 215, 0, 0.2); border-radius: 15px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <p style="color: #999; font-size: 0.95rem; line-height: 1.8;">
+                <strong style="color: #FFD700;">Note:</strong> The Totem of Peace is a special charity edition and is not included in the main Totems collection utilities. 
+                It exists as a standalone testament to what our community can achieve when we come together for a greater cause.
+            </p>
+        </div>
+    </section>
+
+    <!-- Utility & Rewards Section -->
+    <section class="section utility-section reveal">
+        <h2 class="section-title">⚡ Utility & Rewards</h2>
+        <p class="section-subtitle">
+            Totems aren't just collectibles—they're functional assets that enhance your experience across the Cronos Legends ecosystem
+        </p>
+        
+        <div class="utility-grid">
+            <div class="utility-item">
+                <h3>⚔️ Battleground Perks</h3>
+                <ul>
+                    <li>Reward multipliers based on rarity (5-10%)</li>
+                    <li>Access to exclusive seasonal trials</li>
+                    <li>Leaderboard snapshot eligibility</li>
+                    <li>Enhanced drop rates in special events</li>
+                </ul>
+            </div>
+
+            <div class="utility-item">
+                <h3>💬 Discord Benefits</h3>
+                <ul>
+                    <li>Faction-specific role assignments</li>
+                    <li>Access to hidden strategy channels</li>
+                    <li>Priority support and announcements</li>
+                    <li>Verification required (see FAQ)</li>
+                </ul>
+            </div>
+
+            <div class="utility-item">
+                <h3>🎁 Future Collection Access</h3>
+                <ul>
+                    <li>Priority allowlist for 2026 PFP collection</li>
+                    <li>Snapshot eligibility for surprise airdrops</li>
+                    <li>Early mint opportunities for new releases</li>
+                    <li>Community governance participation bonuses</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.3); border-radius: 10px;">
+            <p style="color: #999; font-size: 0.95rem; line-height: 1.8;">
+                <strong style="color: #FFD700;">Important:</strong> Utilities are subject to change as the ecosystem evolves. 
+                Snapshot eligibility and airdrops are never guaranteed—we design for sustainability, not hype. 
+                However, our track record shows we consistently strive to overdeliver for our community.
+            </p>
+        </div>
+    </section>
+
+    <!-- How to Get One -->
+    <section class="section how-to-section reveal">
+        <h2 class="section-title">🛒 How to Get a Totem</h2>
+        <p class="section-subtitle">Three simple steps to claim your ancient artifact</p>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Purchase or Swap</h3>
+                <p>Acquire Totems through our official marketplace or trusted secondary markets. Always verify contract addresses.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Verify in Discord</h3>
+                <p>Join our Discord and verify your wallet via our bot, or open a manual ticket for assistance. Utilities activate post-verification.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Claim Your Power</h3>
+                <p>Once verified, your faction role and utilities are automatically granted. Access exclusive channels and start earning rewards!</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <a href="https://discord.gg/cronoslegends" class="btn" target="_blank">Join Discord to Verify</a>
+            <a href="#" class="btn btn-secondary">View on Marketplace</a>
+        </div>
+    </section>
+
+    <!-- Lore Spotlight -->
+    <section class="section lore-section reveal" id="lore">
+        <h2 class="section-title" style="margin-bottom: 40px;">📖 Lore Spotlight</h2>
+        
+        <div class="lore-content active" data-faction="guardians">
+            <span class="lore-faction-badge guardians">Cronos Guardians</span>
+            <p class="lore-text">
+                "In the age before memory, when the stars were young, the first Guardians forged their Totems in celestial fires. 
+                Each artifact carries the weight of countless battles, infused with the resolve to protect the innocent and uphold justice. 
+                To wield a Guardian Totem is to carry forward a legacy of honor—a burden as heavy as it is glorious."
+            </p>
+        </div>
+
+        <div class="lore-content" data-faction="chaos">
+            <span class="lore-faction-badge chaos">Chaos Horde</span>
+            <p class="lore-text">
+                "Power is not given—it is taken. The Chaos Totems were born in the crucible of conquest, bathed in the storms of war. 
+                They whisper secrets of dominance to those bold enough to listen, promising strength to crush all opposition. 
+                But beware: such power demands sacrifice, and the Horde never forgets those who falter in their ambition."
+            </p>
+        </div>
+
+        <div class="lore-content" data-faction="trinari">
+            <span class="lore-faction-badge trinari">Trinari</span>
+            <p class="lore-text">
+                "The Trinari existed before words, ancient as the first tree and deep as the oldest ocean. Their Totems are not made—they are grown, 
+                crystallized from the essence of nature itself. To hold a Trinari artifact is to feel the pulse of the world, to understand that 
+                true power comes not from domination, but from harmony with the primal forces that sustain all life."
+            </p>
+        </div>
+
+        <div class="lore-dots">
+            <span class="lore-dot active" data-index="0"></span>
+            <span class="lore-dot" data-index="1"></span>
+            <span class="lore-dot" data-index="2"></span>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section reveal">
+        <h2 class="section-title">❓ Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">
+                Are the utilities guaranteed?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    While we implement all stated utilities at launch, we cannot guarantee they will remain unchanged forever. 
+                    The Cronos Legends ecosystem evolves, and utilities may be adjusted to maintain balance and sustainability. 
+                    However, our community knows we consistently aim to overdeliver—we design for long-term value, not short-term hype.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                How does Discord verification work?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Join our Discord server and use the verification bot to connect your wallet. The bot will detect your Totems 
+                    and automatically assign your faction role and channel access. If you encounter issues, open a manual verification 
+                    ticket and our team will assist you within 24-48 hours. Verification is required to unlock Discord-based utilities.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Do rarities stack if I hold multiple Totems?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Yes! If you hold multiple Totems, their reward multipliers stack additively up to a maximum cap. 
+                    For example, holding one Legendary (+7%) and one Rare (+5%) Totem would give you a combined +12% multiplier. 
+                    However, benefits like Discord roles and channel access do not stack—you'll receive the highest tier role available to you.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                What happens if I sell my Totem?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    All utilities are tied to wallet ownership. If you sell or transfer your Totem, you will immediately lose access 
+                    to associated Discord roles, channels, and Battleground multipliers. The new owner will need to verify their wallet 
+                    to claim the utilities. Think carefully before selling—these artifacts hold more value than their market price suggests.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Can I use Totems across multiple wallets?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    No. Discord verification and utilities are wallet-specific. If you hold Totems across multiple wallets, 
+                    you'll need to choose one primary wallet for verification. We recommend consolidating your Totems for maximum benefit 
+                    and simplified management.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                What about the 2026 PFP collection mentioned in the roadmap?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    We're planning a new PFP-style collection for 2026 that will expand the Cronos Legends universe. 
+                    Totem holders will receive priority allowlist access. However, this is an <strong>ambition, not a promise</strong>. 
+                    We avoid over-promising and prefer to surprise our community with quality over hype. Development timelines may shift 
+                    based on market conditions and community feedback. As always, we strive to overdeliver.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Are snapshots and airdrops guaranteed?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    No. Snapshot eligibility and potential airdrops are bonuses, not guarantees. We design our ecosystem for sustainability 
+                    and fair distribution—not to create artificial scarcity or unrealistic expectations. When we do conduct snapshots or surprise 
+                    rewards, Totem holders will be prioritized, but timing and execution are entirely at the team's discretion.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                What is the Totem of Peace? Is it part of the main collection?
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    The Totem of Peace is a special charity edition created in partnership with UNICEF. <strong>100% of proceeds go to charity.</strong> 
+                    It is NOT part of the main Totems collection and exists as a standalone tribute to our community's commitment to making a real-world 
+                    difference. Holders receive the exclusive "Peacekeeper" Discord role and recognition as humanitarian supporters. This is about 
+                    giving back—not utilities or rewards in the traditional sense. It's about being part of something bigger than the game.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer reveal">
+        <p>
+            <strong>Important Disclaimer:</strong> Totems and their utilities are digital collectibles and should not be considered financial investments. 
+            All stated utilities are subject to change as the Cronos Legends ecosystem evolves. Nothing on this page constitutes financial advice. 
+            Participate responsibly and only invest what you can afford to lose. We strive to overdeliver for our community, but make no guarantees 
+            of future value or returns.
+        </p>
+    </div>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta reveal">
+        <h2>⚡ Join the Legends</h2>
+        <p>
+            Whether you seek the honor of the Guardians, the power of Chaos, or the harmony of the Trinari, 
+            your journey begins with a single Totem. Claim your artifact and unlock the full potential of the Cronos Legends ecosystem.
+        </p>
+        <div>
+            <a href="https://discord.gg/cronoslegends" class="btn" target="_blank">💬 Join Discord</a>
+            <a href="#totems" class="btn btn-secondary">✨ View Collection</a>
+        </div>
+        <div class="verification-note">
+            💡 Remember: Utilities require Discord verification. Join our server and verify your wallet to activate your Totem's power!
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p style="color: #ccc; font-size: 1.1rem; margin-bottom: 20px;">
+            Forge your legend. Choose your faction. Wield your Totem.
+        </p>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/legends-awaken-2">Legends Awaken II</a>
+            <a href="/legends-awaken-1">Legends Awaken I</a>
+            <a href="/totems">Totems</a>
+            <a href="/tokens">Tokens</a>
+            <a href="/game">Game</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+        </div>
+        <p style="color: #666; margin-top: 30px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Lore Spotlight Rotation
+        let currentLoreIndex = 0;
+        const loreContents = document.querySelectorAll('.lore-content');
+        const loreDots = document.querySelectorAll('.lore-dot');
+
+        function rotateLore(index) {
+            loreContents.forEach(content => content.classList.remove('active'));
+            loreDots.forEach(dot => dot.classList.remove('active'));
+            
+            loreContents[index].classList.add('active');
+            loreDots[index].classList.add('active');
+            currentLoreIndex = index;
+        }
+
+        // Auto-rotate every 8 seconds
+        setInterval(() => {
+            currentLoreIndex = (currentLoreIndex + 1) % loreContents.length;
+            rotateLore(currentLoreIndex);
+        }, 8000);
+
+        // Manual navigation
+        loreDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                rotateLore(index);
+            });
+        });
+
+        // Scroll Reveal Animation
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Button click animation
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 100);
+            });
+        });
+
+        // Reduced motion check
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            // Disable auto-rotation for reduced motion users
+            clearInterval();
+        }
+    </script>
+</body>
+</html>
