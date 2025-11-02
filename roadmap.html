@@ -245,88 +245,43 @@
             }
         }
 
-        /* Header */
+        /* Header Section */
         header {
+            padding: 150px 20px 80px;
             text-align: center;
-            padding: 140px 20px 60px;
-            position: relative;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.95));
         }
 
-        .header-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.3); }
-            50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(138, 43, 226, 0.5); }
-        }
-
-        h1 {
+        .page-title {
             font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
+            font-size: 4rem;
+            font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 15px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            animation: fadeInDown 1s ease;
         }
 
-        .subtitle {
+        .page-subtitle {
+            color: #ccc;
             font-size: 1.3rem;
-            color: #ccc;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
-        /* Promise Banner */
-        .promise-banner {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 30px 40px;
             max-width: 900px;
-            margin: 0 auto 60px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            animation: pulse-border 3s ease-in-out infinite;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1s ease 0.2s both;
         }
 
-        @keyframes pulse-border {
-            0%, 100% { border-color: rgba(255, 215, 0, 0.3); box-shadow: 0 0 20px rgba(255, 215, 0, 0.1); }
-            50% { border-color: rgba(255, 215, 0, 0.6); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
-        }
-
-        .promise-banner h3 {
-            color: #FFD700;
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .promise-banner p {
-            color: #ccc;
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px 80px;
-        }
-
-        /* Roadmap Section */
-        .roadmap-section {
-            margin-bottom: 80px;
-            position: relative;
-            animation: fadeInUp 0.8s ease-out;
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
@@ -340,164 +295,261 @@
             }
         }
 
-        .section-header {
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        /* Accordion Section */
+        .roadmap-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .accordion-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item.active {
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .accordion-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid;
+            justify-content: space-between;
+            padding: 25px 35px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(30, 30, 30, 0.6));
+            cursor: pointer;
+            transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
 
-        .section-header::after {
+        .accordion-header::before {
             content: '';
             position: absolute;
-            bottom: -3px;
             left: 0;
+            top: 0;
+            height: 100%;
             width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, rgba(255, 215, 0, 0.8), transparent);
-            animation: line-grow 1.5s ease-out forwards;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            transition: width 0.3s ease;
         }
 
-        @keyframes line-grow {
-            to { width: 200px; }
+        .accordion-header:hover::before {
+            width: 100%;
         }
 
-        .completed .section-header { border-color: #4ade80; }
-        .live .section-header { border-color: #22d3ee; }
-        .upcoming .section-header { border-color: #fbbf24; }
-        .future .section-header { border-color: #a78bfa; }
-
-        .section-icon {
-            font-size: 2.5rem;
+        .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(40, 40, 40, 0.7));
         }
 
-        .section-title {
+        .accordion-item.active .accordion-header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+        }
+
+        .accordion-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .accordion-icon {
+            font-size: 2rem;
+        }
+
+        .accordion-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .accordion-title {
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .completed .section-title { color: #4ade80; }
-        .live .section-title { color: #22d3ee; }
-        .upcoming .section-title { color: #fbbf24; }
-        .future .section-title { color: #a78bfa; }
+        .accordion-date {
+            font-size: 0.95rem;
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .accordion-toggle {
+            font-size: 1.5rem;
+            color: #FFD700;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 10000px;
+        }
+
+        .accordion-body {
+            padding: 40px 35px;
+            background: rgba(0, 0, 0, 0.2);
+        }
 
         /* Roadmap Items */
         .roadmap-items {
             display: grid;
             gap: 25px;
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .roadmap-items::before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, 
-                rgba(255, 215, 0, 0.5) 0%, 
-                rgba(138, 43, 226, 0.3) 50%, 
-                rgba(255, 215, 0, 0.1) 100%);
         }
 
         .roadmap-item {
-            background: rgba(20, 20, 30, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(255, 215, 0, 0.15);
             border-radius: 15px;
-            padding: 25px 30px;
-            position: relative;
-            backdrop-filter: blur(10px);
+            padding: 30px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .roadmap-item::before {
             content: '';
             position: absolute;
-            left: -40px;
-            top: 30px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 3px solid;
-            background: #0a0a0a;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #FFD700, #FFA500);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .completed .roadmap-item::before { border-color: #4ade80; background: #4ade80; }
-        .live .roadmap-item::before { 
-            border-color: #22d3ee; 
-            background: #22d3ee;
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
-        }
-
-        .upcoming .roadmap-item::before { border-color: #fbbf24; }
-        .future .roadmap-item::before { border-color: #a78bfa; }
 
         .roadmap-item:hover {
+            border-color: rgba(255, 215, 0, 0.4);
             transform: translateX(10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .roadmap-item:hover::before {
+            opacity: 1;
         }
 
         .item-title {
             font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 12px;
             color: #FFD700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .item-description {
             color: #ccc;
             font-size: 1.05rem;
-            line-height: 1.7;
+            line-height: 1.8;
+            margin-bottom: 15px;
         }
 
-        /* Special Item Styles */
+        .item-details {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+
+        .item-details li {
+            color: #aaa;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .item-details li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
         .highlight-item {
-            background: linear-gradient(135deg, rgba(138, 43, 226, 0.12) 0%, rgba(20, 20, 30, 0.6) 100%);
-            border: 2px solid rgba(138, 43, 226, 0.4);
+            border-color: rgba(255, 215, 0, 0.4);
+            background: rgba(255, 215, 0, 0.03);
         }
 
-        .highlight-item:hover {
-            border-color: rgba(138, 43, 226, 0.7);
-            box-shadow: 0 10px 40px rgba(138, 43, 226, 0.2);
+        .highlight-item::before {
+            opacity: 0.5;
         }
 
-        /* Footer Note */
-        .footer-note {
-            background: rgba(20, 20, 30, 0.6);
+        /* Stats Box */
+        .stats-box {
+            background: rgba(255, 215, 0, 0.05);
             border: 2px solid rgba(255, 215, 0, 0.2);
             border-radius: 15px;
-            padding: 30px 40px;
-            margin-top: 60px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+            padding: 25px;
+            margin: 30px 0;
         }
 
-        .footer-note h4 {
+        .stats-box h4 {
             color: #FFD700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 15px;
             font-weight: 600;
         }
 
+        .stats-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .stats-box li {
+            padding: 8px 0;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .stats-box strong {
+            color: #FFD700;
+        }
+
+        /* Footer Note */
+        .footer-note {
+            background: rgba(255, 215, 0, 0.03);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-note h4 {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+
         .footer-note p {
             color: #ccc;
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             max-width: 900px;
             margin: 0 auto;
@@ -509,7 +561,6 @@
             border-top: 2px solid rgba(255, 215, 0, 0.2);
             padding: 60px 20px 40px;
             text-align: center;
-            margin-top: 80px;
         }
 
         .footer .section-title {
@@ -566,18 +617,6 @@
             box-shadow: 0 10px 30px rgba(29, 161, 242, 0.4);
         }
 
-        .btn-back {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            border: 2px solid #FFD700;
-        }
-
-        .btn-back:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-        }
-
         .footer-links {
             display: flex;
             gap: 30px;
@@ -597,65 +636,34 @@
             color: #FFD700;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            h1 {
+            .page-title {
                 font-size: 2.5rem;
             }
 
-            .subtitle {
-                font-size: 1.1rem;
+            .accordion-header {
+                padding: 20px 25px;
             }
 
-            .section-title {
-                font-size: 1.8rem;
+            .accordion-title {
+                font-size: 1.4rem;
             }
 
-            .section-icon {
-                font-size: 2rem;
+            .accordion-icon {
+                font-size: 1.5rem;
             }
 
-            .roadmap-items {
-                padding-left: 30px;
+            .accordion-body {
+                padding: 30px 25px;
             }
 
             .roadmap-item {
-                padding: 20px;
+                padding: 25px 20px;
             }
 
             .item-title {
                 font-size: 1.2rem;
             }
-
-            .promise-banner {
-                padding: 25px;
-            }
-
-            .promise-banner h3 {
-                font-size: 1.3rem;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Scroll Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -663,7 +671,6 @@
     <div class="background-animation"></div>
 
     <!-- Navigation Bar -->
-        <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">CRONOS LEGENDS</a>
@@ -674,6 +681,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="legends-awaken-2.html">Legends Awaken II</a></li>
                         <li><a href="legends-awaken-1.html">Legends Awaken I</a></li>
+                        <li><a href="totems.html">Totems</a></li>
                     </ul>
                 </li>
                 <li><a href="tokens.html">Tokens</a></li>
@@ -686,114 +694,438 @@
     </nav>
 
     <header>
-        <div class="header-icon">⚔️</div>
-        <h1>Official Roadmap</h1>
-        <p class="subtitle">Building a lasting NFT and token ecosystem on Cronos</p>
-        
-        <div class="promise-banner">
-            <h3>💎 Our Philosophy</h3>
-            <p>We believe in <strong>underpromising and overdelivering</strong>. While we outline our vision below, our long-time community knows that Cronos Legends consistently brings more value than expected. We don't chase hype—we build sustainable, rewarding experiences for our holders.</p>
-        </div>
+        <h1 class="page-title">🗺️ The Journey</h1>
+        <p class="page-subtitle">From humble beginnings to a thriving ecosystem—discover the evolution of Cronos Legends and the exciting future ahead</p>
     </header>
 
     <div class="container">
-        <!-- Completed Section -->
-        <section class="roadmap-section completed fade-in">
-            <div class="section-header">
-                <span class="section-icon">✅</span>
-                <h2 class="section-title">Completed</h2>
-            </div>
-            <div class="roadmap-items">
-                <div class="roadmap-item">
-                    <h3 class="item-title">⚔️ Legends Awaken NFT Launch</h3>
-                    <p class="item-description">The original collection that began the Cronos Legends universe. A foundation built on quality art and real utility for our community.</p>
+        <div class="roadmap-accordion">
+            <!-- Q4 2024: Foundation -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">🌱</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Q4 2024: Foundation</div>
+                            <div class="accordion-date">November 2024</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
                 </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">💰 $500 $CARA Airdrop</h3>
-                    <p class="item-description">Rewarding early community members for their support and belief in our vision from day one.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🎯 NFT Staking Platform</h3>
-                    <p class="item-description">Active staking mechanism allowing all holders to earn rewards passively while supporting the ecosystem.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🎁 Community Giveaways</h3>
-                    <p class="item-description">Over 10x Discord Nitro subscriptions distributed, plus various campaign rewards to engage and appreciate our loyal community.</p>
-                </div>
-            </div>
-        </section>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">💎 $CLG Token Launch & Ecosystem Genesis</h3>
+                                <p class="item-description">November 2024 marked the birth of Cronos Legends with the launch of $CLG, our core utility and governance token. With an extremely limited supply of just 500 tokens, $CLG established the economic backbone of our entire ecosystem.</p>
+                                <ul class="item-details">
+                                    <li><strong>Total Supply:</strong> 500 tokens (ultra-scarce)</li>
+                                    <li><strong>Liquidity Allocation:</strong> 55% (~275 CLG) to ensure healthy market</li>
+                                    <li><strong>Initial Listings:</strong> VVS Finance, WolfSwap, Obsidian, DooSwap</li>
+                                    <li><strong>Tokenomics Published:</strong> Transparent distribution plan released</li>
+                                    <li><strong>Project Roadmap:</strong> Project roadmap was documented in Discord</li>
+                                </ul>
+                            </div>
 
-        <!-- Live & In Progress Section -->
-        <section class="roadmap-section live fade-in">
-            <div class="section-header">
-                <span class="section-icon">🟢</span>
-                <h2 class="section-title">Live & In Progress</h2>
-            </div>
-            <div class="roadmap-items">
-                <div class="roadmap-item highlight-item">
-                    <h3 class="item-title">📈 $CLG Daily Buybacks</h3>
-                    <p class="item-description">Ongoing daily buyback program funded through project-held $CRONUS reserves. This initiative helps stabilize token price, reduce circulating supply, and demonstrate our long-term commitment to $CLG holders.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🎮 Play-to-Win Events</h3>
-                    <p class="item-description">Regular competitive events featuring $500+ prize pools across Cronos Legends mini-games and activities. Skill meets rewards in our growing gaming ecosystem.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🌐 Community & Ecosystem Campaigns</h3>
-                    <p class="item-description">Continuous expansion with enhanced staking incentives, strategic Cronos network collaborations, and innovative initiatives designed to engage and reward our dedicated holders.</p>
+                            <div class="roadmap-item">
+                                <h3 class="item-title">⚡ $CARA — The Token of the Titanlord</h3>
+                                <p class="item-description">Following the launch of $CLG, $CARA was introduced in November 2024 as a token inspired by Cara, the celestial Titanlord of the Cronos Guardians. Representing strength, balance, and leadership, $CARA extends the spirit of the Guardians into the economic side of the Cronos Legends ecosystem.</p>
+                                <ul class="item-details">
+                                    <li><strong>Purpose:</strong> Companion token to $CLG focused on rewarding loyal supporters</li>
+                                    <li><strong>Focus:</strong> Community rewards and long-term sustainability</li>
+                                    <li><strong>Symbolism:</strong> Embodies the enduring light of Cara herself</li>
+                                    <li><strong>Differentiation:</strong> While $CLG drives utility and growth, $CARA stands as a separate community token</li>
+                                    <li><strong> Later, in 2025, a 1/1 Cara NFT was introduced in the Legends Awaken I collection — a symbolic piece that immortalized the essence of Cara and her role as a guiding force within the Cronos Legends universe.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Upcoming Section -->
-        <section class="roadmap-section upcoming fade-in">
-            <div class="section-header">
-                <span class="section-icon">🗓️</span>
-                <h2 class="section-title">Upcoming</h2>
-            </div>
-            <div class="roadmap-items">
-                <div class="roadmap-item highlight-item">
-                    <h3 class="item-title">⚔️ Legends Awaken II — NFT Drop</h3>
-                    <p class="item-description">The next chapter in our collection arrives with new legendary factions, significantly enhanced art quality, and expanded lore. This generation will push the boundaries of what our community expects from Cronos Legends.</p>
+            <!-- Q1 2025: Community Building -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">👥</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Q1 2025: Community Building</div>
+                            <div class="accordion-date">January - March 2025</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
                 </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">💎 NFT Royalty Share Program</h3>
-                    <p class="item-description">A revolutionary system that redistributes portions of creator royalties back to the community through contests, events, and holder rewards. Your NFT becomes more valuable simply by being part of the ecosystem.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🔥 $CLG Token Burns</h3>
-                    <p class="item-description">Scheduled supply reductions directly tied to ecosystem milestones and buyback cycles. Each burn event will be transparent, verifiable, and designed to benefit long-term holders.</p>
-                </div>
-                <div class="roadmap-item">
-                    <h3 class="item-title">🎭 Secret Phases</h3>
-                    <p class="item-description">Future development stages featuring surprise content drops, new game modes, blockchain integrations, and partnerships that will be revealed gradually. We keep some magic under wraps until the perfect moment.</p>
-                </div>
-            </div>
-        </section>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🤖 Discord Community Infrastructure</h3>
+                                <p class="item-description">Established the foundation for community engagement with automated verification systems, role hierarchies, and faction-based channels.</p>
+                                <ul class="item-details">
+                                    <li>Automated wallet verification bot deployed</li>
+                                    <li>Role system for NFT and token holders established</li>
+                                    <li>Private channels for verified members</li>
+                                    <li>Faction channels (Guardians vs Chaos) created</li>
+                                </ul>
+                            </div>
 
-        <!-- 2026 Preview Section -->
-        <section class="roadmap-section future fade-in">
-            <div class="section-header">
-                <span class="section-icon">🌟</span>
-                <h2 class="section-title">2026 Preview</h2>
-            </div>
-            <div class="roadmap-items">
-                <div class="roadmap-item highlight-item">
-                    <h3 class="item-title">🖼️ New PFP-Style NFT Collection</h3>
-                    <p class="item-description">A fresh, collector-focused profile-picture series that expands the Cronos Legends universe with an entirely new art direction and exclusive utility features. Designed for mass appeal while maintaining the quality and exclusivity our community deserves. This collection will bridge our existing lore with new opportunities for holders and collectors alike.</p>
+                            <div class="roadmap-item">
+                                <h3 class="item-title">⚔️ Original Faction Tokens Launch</h3>
+                                <p class="item-description">Introduced $GUARDIAN and $CHAOS tokens (500 supply each) to kickstart faction loyalty programs and early battleground competitions.</p>
+                                <ul class="item-details">
+                                    <li>$GUARDIAN token for Cronos Guardians faction</li>
+                                    <li>$CHAOS token for Chaos Horde faction</li>
+                                    <li>Paired with $CLG in liquidity pools</li>
+                                    <li>Distributed via giveaways and community events</li>
+                                    <li>Foundation for faction-based gameplay mechanics</li>
+				<br> Please Note: $GUARDIAN and $CHAOS token were removed from ecosystem and holders were airdropped $CLG and $TRI tokens in Q4/2025
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+
+            <!-- Q2 2025: Legends Awaken I -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">🎨</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Q2 2025: Legends Awaken I</div>
+                            <div class="accordion-date">April - June 2025</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">🖼️ Legends Awaken I NFT Collection</h3>
+                                <p class="item-description">April 7, 2025 - The debut NFT drop that launched the Cronos Legends universe. A resounding success that sold out completely, and establishing our reputation for delivering real utility.</p>
+                                <ul class="item-details">
+                                    <li><strong>Supply:</strong> 500 unique NFTs</li>
+                                    <li><strong>Mint Price:</strong> $35 USD each</li>
+                                    <li><strong>Platform:</strong> Crypto.com NFT</li>
+                                    <li><strong>Result:</strong> SOLD OUT</li>
+                                    <li><strong>Factions:</strong> Cronos Guardians & Chaos Horde</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">💰 NFT Utilities Delivered</h3>
+                                <p class="item-description">Immediately activated comprehensive utility features that provide ongoing value to all holders.</p>
+                                <ul class="item-details">
+                                    <li>NFT staking platform for passive income✅</li>
+                                    <li>500$ pool of $CARA aidrop to NFT holders✅</li>
+                                    <li>Shared royalties from secondary sales✅</li>
+                                    <li>Periodic team NFT buybacks for floor support✅</li>
+                                    <li>Special Discord roles and exclusive channels✅</li>
+                                    <li>10x Discord Nitro subscription✅</li>
+                                    <li>50% Roalty sharing to community holders✅</li>
+                                    <li> 500$ Daily $CLG token rewards (Mysterybox campaign)✅</li> 
+                                    <li> Hold 5 pcs of Legends Awaken I NFT and be eligble for free NFT on Legends Awaken II collection(TBA)</li>
+
+                                </ul>
+                            </div>
+
+
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">🌀 $TRI — The Utility Token of Cronos Legends: Trinari</h3>
+                                <p class="item-description">May 2025 - Launched $TRI, representing the heart of the Trinari, a mystical faction within the Cronos Legends universe. A true fair launch powered by community and purpose, $TRI fuels the magical world of Trinari — home to elemental beings, enchanted artifacts, and ancient battlegrounds.</p>
+                                <ul class="item-details">
+                                    <li><strong>Purpose:</strong> More than just a token — unlocks access to NFTs, staking, battleground rewards, and future gameplay features</li>
+                                    <li><strong>Token Allocation:</strong> A Bold Fair Launch</li>
+                                    <li><strong>33% Distribution:</strong> Equally distributed to 33 pre-sale participants (1% each)</li>
+                                    <li><strong>17% Reserved:</strong> Project wallet for LP, marketing, community initiatives & burns</li>
+                                    <li><strong>Special Benefit:</strong> Holders of 1% or more of total supply are eligible to claim a free Legends Awaken II NFT after the drop (T&C apply)</li>
+                                    <li>Represents the mystical Trinari faction's economic foundation</li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 2025: Expansion -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">🚀</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Q3 2025: Ecosystem Expansion</div>
+                            <div class="accordion-date">July - September 2025</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">🌿 $TRI (Trinari Token) Launch</h3>
+                                <p class="item-description">Summer 2025 - Introduced the third faction with $TRI, a launch for the community marking a major expansion of the Cronos Legends universe.</p>
+                                <ul class="item-details">
+                                    <li><strong>Total Supply:</strong> 100,000,000 tokens</li>
+                                    <li><strong>Launched in Wolfstreet🐺 </li>
+                                    <li><strong>Launch Type:</strong> 33% – Equally distributed to 33 pre-sale participants (1% each)</li>
+                                    <li><strong>Special Utility:</strong> 1% holders get free Legends Awaken II NFT</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">💸 $FFS Airdrop</h3>
+                                <p class="item-description">July 2025 - Cronos Legends purchased ForFoxSake projects token $FFS of ~200$ to deliver rewards to our NFT holders.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+
+
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">💰 $CLG Snapshot Airdrop</h3>
+                                <p class="item-description">September 2025 - Surprise bonus airdrop distributing over $1,100 in $CLG value to all Legends Awaken I NFT holders based on their holdings.</p>
+                                <ul class="item-details">
+                                    <li><strong>Total Distributed:</strong> ~$1,100 USD in $CLG</li>
+                                    <li><strong>Distribution:</strong> ~3.9 CLG tokens total</li>
+                                    <li><strong>Tiered Rewards:</strong></li>
+                                    <li>1 NFT → ~$4 in CLG</li>
+                                    <li>2-4 NFTs → ~$10 in CLG</li>
+                                    <li>5-9 NFTs → ~$20 in CLG</li>
+                                    <li>10+ NFTs → Larger proportional shares up to 95$</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🎁 Mystery Box Program Launch</h3>
+                                <p class="item-description">Mid-2025 - Initiated daily Mystery Box rewards program on Discord, gamifying community engagement with surprise prizes.</p>
+                                <ul class="item-details">
+                                    <li>Role-gated to verified NFT holders</li>
+                                    <li>Prizes: Free NFTs and tokens</li>
+                                    <li>Cumulative value: +600$</li>
+                                </ul>
+                            </div>
+                            <div class="roadmap-item">
+                                <h3 class="item-title">💰$TRI Staking Launch</h3>
+                                <p class="item-description">Introduced high-yield staking opportunities in Obsidian Finance to reward long-term holders.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 2025: Major Updates -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">⚡</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Q4 2025: Evolution & LA II</div>
+                            <div class="accordion-date">October - December 2025</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">💀 $LYRA (Chaos Token) Launch & Buyback</h3>
+                                <p class="item-description">October 2025 - Rolled out $LYRA as the dedicated Chaos Horde faction token, followed by a massive 50% supply buyback demonstrating unprecedented team commitment.</p>
+                                <ul class="item-details">
+                                    <li><strong>Total Supply:</strong> 1,000,000,000 tokens</li>
+                                    <li><strong>Lore:</strong> "Corrupted currency born from fallen light"</li>
+                                    <li><strong>Launch Platform:</strong> WolfSafe/WolfStreet</li>
+                                    <li><strong>Trading:</strong> WolfSwap DEX</li>
+                                    <li><strong>Team Buyback:</strong> 500M LYRA (50% of supply)</li>
+                                    <li><strong>Buyback Cost:</strong> ~$4,000 USD investment</li>
+                                    <li>Locked in treasury for ecosystem stability</li>
+                                    <li>Strategic reserves for future rewards</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🔄 Faction Token Consolidation</h3>
+                                <p class="item-description">October 2025 - Strategic simplification of token ecosystem by retiring $CHAOS and $GUARDIAN in favor of $TRI and $LYRA.</p>
+                                <ul class="item-details">
+                                    <li>Removed $CHAOS & $GUARDIAN liquidity pools</li>
+                                    <li>100% compensation to all holders</li>
+                                    <li>Equivalent value airdropped in $TRI and $CLG</li>
+                                    <li>Streamlined ecosystem focus</li>
+                                    <li>Community-driven adjustment</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">🎯 Airdrop Portal Season 1</h3>
+                                <p class="item-description">October 2025 Launch - Introduced structured task-based campaign offering up to $50,000 in $CLG rewards through gamified participation.</p>
+                                <ul class="item-details">
+                                    <li><strong>Total Rewards:</strong> Up to $50,000 USD in $CLG</li>
+                                    <li><strong>Platform:</strong> AirdropAlert integration</li>
+                                    <li>Complete tasks to earn "CLG Power" points</li>
+                                    <li>Tasks: Liquidity provision, holding, referrals, engagement</li>
+                                    <li>Points convert to claimable $CLG</li>
+                                    <li>Democratizes rewards beyond just NFT holders</li>
+                                    <li>Season 2+ planned for 2026</li>
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">⚔️ Legends Awaken II NFT Collection</h3>
+                                <p class="item-description">Late Q4 2025 - The highly anticipated second collection introducing the Trinari faction and expanding the universe with new characters and enhanced utilities.</p>
+                                <ul class="item-details">
+                                    <li><strong>Platform:</strong> Crypto.com NFT</li>
+                                    <li><strong>Expected Supply:</strong> ~750 NFTs</li>
+                                    <li><strong>Three Factions:</strong> Guardians, Chaos, Trinari</li>
+                                    <li>All-new characters and expanded lore</li>
+                                    <li>Enhanced utilities and benefits</li>
+                                    <li>Access to new battleground games</li>
+                                    <li>Deeper lore content per NFT</li>
+                                    <li>Future airdrop entitlements</li>
+                                    <li><strong>Free Mints Available:</strong></li>
+                                    <li>• 5+ LA I holders get 1 free NFT</li>
+                                    <li>• 1% $TRI holders (1M tokens) get 1 free NFT</li>
+                                    <li>Random snapshot timing to prevent gaming</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <h4>📊 2025 Community Rewards Recap:</h4>
+                            <ul>
+                                <li><strong>$CLG Snapshot Airdrop:</strong> $1,100+ distributed</li>
+                                <li><strong>Airdrop Portal Season 1:</strong> $50,000 available</li>
+                                <li><strong>Partner Airdrops:</strong> $300-375 in $FFS</li>
+                                <li><strong>Discord Nitro:</strong> $100 in subscriptions</li>
+                                <li><strong>Mystery Boxes:</strong> Several thousand USD in prizes</li>
+                                <li><strong>Logo Contest:</strong> $30 in CLG</li>
+                                <li><strong>$LYRA Buyback:</strong> $4,000 treasury investment</li>
+                                <li><strong>Token Compensation:</strong> 100% of deprecated token holders covered</li>
+                                <li><strong>TOTAL VALUE:</strong> $55,000+ distributed to community</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2026: Gaming Era -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">🎮</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">2026: Gaming & Metaverse (Planned)</div>
+                            <div class="accordion-date">The Future</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                         
+                                                      <div class="roadmap-item highlight-item">
+                                <h3 class="item-title">🔮 NFT Innovation Features</h3>
+                                <p class="item-description">2026 - Pushing boundaries with new NFT utility concepts to enhance holder value and engagement.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🤝 Strategic Partnerships</h3>
+                                <p class="item-description">2026 - Forming official partnerships across the Cronos ecosystem and beyond to expand reach and utility.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🎁 Continued Airdrop Programs</h3>
+                                <p class="item-description">2026 - Expanding reward mechanisms with new initiatives.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🖼️ Third NFT Collection & Beyond</h3>
+                                <p class="item-description"></p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ongoing Initiatives -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-left">
+                        <span class="accordion-icon">🔄</span>
+                        <div class="accordion-title-group">
+                            <div class="accordion-title">Continuous Initiatives</div>
+                            <div class="accordion-date">Always Active</div>
+                        </div>
+                    </div>
+                    <span class="accordion-toggle">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="roadmap-items">
+                     
+                            <div class="roadmap-item">
+                                <h3 class="item-title">🔥 Token buybacks</h3>
+                                <p class="item-description">Strategic buybacks to boost growth and reward community members.</p>
+                                <ul class="item-details">
+                                </ul>
+                            </div>
+	                            <div class="roadmap-item">
+                                <h3 class="item-title">⚔️ Battleground Competitions</h3>
+                                <p class="item-description">Regular competitive events featuring substantial prize pools.</p>
+                            </div>
+                            <div class="roadmap-item">
+                                <h3 class="item-title">💬 Community Engagement & Support</h3>
+                                <p class="item-description">Continuous community building through active communication and responsive support.</p>
+                                <ul class="item-details">
+                                    <li>Active Discord moderation and support</li>
+                                    <li>Regular social media updates</li>
+                                    <li>Partnership development with Cronos ecosystem</li>
+                                </ul>
+                            </div>
+     				  <div class="roadmap-item">
+                                <h3 class="item-title">📈 Market Management & Liquidity</h3>
+                                <p class="item-description">Ongoing monitoring and strategic intervention to maintain healthy market conditions.</p>
+                                <ul class="item-details">
+                                    <li>NFT floor price support through buybacks and burns</li>
+                                    <li>Dynamic liquidity pool management</li>
+                                </ul>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer Note -->
-        <div class="footer-note fade-in">
-            <h4>📜 Important Note</h4>
-            <p>Roadmap milestones are forward-looking and may evolve based on market conditions, technical development timelines, and partnership opportunities. Cronos Legends remains committed to transparency, creativity, and steady long-term growth. We adapt, we improve, and we always put our community first. While other projects overpromise and underdeliver, we take the opposite approach—building quietly, shipping quality, and surprising our holders with value they didn't expect.</p>
+        <div class="footer-note">
+            <h4>📜 Living Roadmap Philosophy</h4>
+            <p>This roadmap represents our vision and commitment to the Cronos Legends community. We've consistently delivered on our promises—from the sold-out Legends Awaken I collection to high amount of community rewards. We remain flexible and responsive to market conditions, technical developments, and community feedback. Unlike projects that overpromise and underdeliver, we take pride in building quietly, shipping quality, and surprising our holders with value they didn't expect. Our track record speaks for itself: every major milestone achieved, every airdrop delivered, every promise kept. Join us on this journey as we transform Cronos Legends from a collector's project into a comprehensive fantasy franchise on the blockchain.</p>
         </div>
     </div>
 
     <!-- Footer -->
-        <!-- Footer -->
     <div class="footer" id="community">
         <h2 class="section-title">🔮 Join The Legends</h2>
         <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
@@ -821,6 +1153,26 @@
     </div>
 
     <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(accordion => {
+                accordion.classList.remove('active');
+            });
+            
+            // If the clicked item wasn't active, open it
+            if (!wasActive) {
+                item.classList.add('active');
+                
+                // Smooth scroll to the opened section
+                setTimeout(() => {
+                    header.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                }, 300);
+            }
+        }
+
         // Mobile menu toggle
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
@@ -853,42 +1205,6 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
-        });
-
-        // Scroll animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add stagger effect to roadmap items
-        document.querySelectorAll('.roadmap-section').forEach((section, sectionIndex) => {
-            const items = section.querySelectorAll('.roadmap-item');
-            items.forEach((item, index) => {
-                item.style.animationDelay = `${index * 0.1}s`;
-            });
-        });
-
-        // Smooth button interactions
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                button.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    button.style.transform = '';
-                }, 100);
-            });
         });
     </script>
 </body>
