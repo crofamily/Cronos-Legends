@@ -1,1 +1,1017 @@
-TBA
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Awaken II - Terms & Conditions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            line-height: 1.8;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: hidden;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
+
+        .container {
+            max-width: 1000px;
+            margin: 80px auto 0;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #FFD700;
+            margin: 40px 0 20px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin: 30px 0 15px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #FFA500;
+            margin: 20px 0 10px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 165, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border-left: 4px solid rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
+        }
+
+        ul {
+            margin-left: 20px;
+            color: #ccc;
+            list-style-type: none;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        ul li:before {
+            content: "►";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+        }
+
+        .utility-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .utility-item:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .utility-title {
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .restriction {
+            background: rgba(255, 50, 50, 0.12);
+            border: 1px solid rgba(255, 50, 50, 0.4);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .restriction-title {
+            color: #FF6B6B;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .country-tag {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.25);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #FFD700;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .warning {
+            background: rgba(255, 165, 0, 0.12);
+            border: 2px solid rgba(255, 165, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .warning-title {
+            color: #FFA500;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .critical-warning {
+            background: linear-gradient(135deg, rgba(100, 150, 255, 0.08), rgba(150, 200, 255, 0.05));
+            border: 2px solid rgba(100, 150, 255, 0.3);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+            box-shadow: 0 4px 20px rgba(100, 150, 255, 0.1);
+        }
+
+        .critical-warning-title {
+            color: #6BA3FF;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .finland-notice {
+            background: linear-gradient(135deg, rgba(0, 100, 200, 0.15), rgba(0, 150, 255, 0.1));
+            border: 2px solid rgba(0, 150, 255, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .finland-notice-title {
+            color: #4DA6FF;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            color: #888;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .back-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 15px;
+            padding: 14px 35px;
+            background: transparent;
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid #FFD700;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        strong {
+            color: #FFD700;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .back-link, .home-link {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">LEGENDS AWAKEN II</div>
+            <div class="subtitle">Terms & Conditions</div>
+            <div class="last-updated">Last Updated: October 29, 2025</div>
+        </div>
+
+        <div class="intro">
+            <p>
+                These Terms and Conditions ("Terms") govern the ownership and use of the Legends Awaken II NFT ("NFT"). 
+                By purchasing, acquiring, or using a Legends Awaken II NFT, you ("Holder") agree to be bound by these Terms. 
+                These Terms are subject to the local laws of the respective country and will be enforced accordingly.
+            </p>
+            <p style="margin-top: 15px; font-weight: 600; color: #FFD700;">
+                Please read these Terms carefully and ensure you understand all risks before proceeding.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>1. Ownership Rights</h2>
+            <p>
+                The Holder of a Legends Awaken II NFT has ownership rights to the NFT token itself. However, ownership of the NFT does NOT grant:
+            </p>
+            <ul>
+                <li>Intellectual property rights to the artwork, brand, or associated materials</li>
+                <li>Equity, shares, or ownership in Cronos Legends</li>
+                <li>Voting rights in project decisions (except as specified in community governance)</li>
+                <li>Rights to profits, revenue, or future earnings of the project</li>
+                <li>Any commercial exploitation rights beyond personal use</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                The NFT represents a limited license to use the associated digital artwork for personal, non-commercial purposes only.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>2. Accessing Utilities</h2>
+            <p>
+                To access the utilities provided by Legends Awaken II NFT, holders must:
+            </p>
+            <ul>
+                <li>Join our official Discord community</li>
+                <li>Verify ownership of the NFT through wallet connection or manual verification by creating a ticket in Discord</li>
+                <li>Comply with Discord's Terms of Service and community guidelines</li>
+                <li>Maintain ownership of the NFT (utilities transfer with NFT ownership)</li>
+            </ul>
+            <p style="margin-top: 15px; color: #FFA500; font-weight: 600;">
+                The project reserves the right to revoke access for violations of community rules or Terms of Service.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>3. Utilities</h2>
+            <p>
+                The following utilities are granted to Legends Awaken II NFT holders. Restrictions or limitations are 
+                indicated for applicable countries. <strong>All utilities are subject to availability and may be modified or discontinued.</strong>
+            </p>
+
+            <div class="utility-item">
+                <div class="utility-title">Exclusive Community Access</div>
+                <p>
+                    Holders will have access to private community channels and events related to the Cronos Legends project, including:
+                </p>
+                <ul>
+                    <li>Private Discord channels</li>
+                    <li>Exclusive community events</li>
+                    <li>Early announcements and updates</li>
+                    <li>Direct communication with the team</li>
+                </ul>
+                <p style="color: #00FF64; font-weight: 600; margin-top: 15px;">✓ No global restrictions for this utility.</p>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">Rewards and Possible Staking</div>
+                <p><strong>Discord Games:</strong></p>
+                <ul>
+                    <li>Reward system where NFT holders can participate to win from a $1,000 pool of $CLG tokens</li>
+                    <li>Games and competitions hosted in Discord</li>
+                    <li>Rewards distributed based on participation and performance</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; color: #FFA500;">
+                    Note: Future staking mechanisms are under consideration but not guaranteed.
+                </p>
+                <div class="restriction">
+                    <div class="restriction-title">Regulatory Notice:</div>
+                    <p style="margin-top: 10px; font-size: 0.95rem;">
+                        Staking activities may be subject to local financial regulations in certain jurisdictions. 
+                        Please check your local laws before participating in any staking or reward programs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">In-Game Use</div>
+                <p>
+                    Use your NFT characters in future Cronos Legends games and experiences, including:
+                </p>
+                <ul>
+                    <li>Character representation in games</li>
+                    <li>Potential gameplay benefits or features</li>
+                    <li>Integration with future gaming platforms</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; color: #FFA500;">
+                    Note: Game development timelines are subject to change, and gaming aspect is under consideration but not guaranteed. No guarantee of specific game features or release dates. 
+                    Digital assets in games may be restricted in certain jurisdictions.
+                </p>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">NFT Buybacks & Possible Royalty Share</div>
+                <ul>
+                    <li><strong>NFT Buybacks for Marketing:</strong> A $500 fund dedicated to NFT buybacks to support the ecosystem and marketing initiatives</li>
+                    <li><strong>Potential Royalty Share:</strong> NFT holders may receive a share of secondary sales royalties from the collection (subject to implementation)</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; color: #FFA500;">
+                    Disclaimer: Royalty distributions are not guaranteed and depend on project success and market conditions.
+                </p>
+                <div class="restriction">
+                    <div class="restriction-title">Tax Considerations:</div>
+                    <p style="margin-top: 10px; font-size: 0.95rem;">
+                        Royalties and buyback proceeds may be subject to local tax regulations in your jurisdiction. 
+                        Income from NFT sales and rewards may need to be declared and taxed as income or capital gains. 
+                        Please consult a tax professional in your country for guidance.
+                    </p>
+                </div>
+            </div>
+
+            <div class="utility-item">
+                <div class="utility-title">Voting Rights (Community Governance)</div>
+                <p>
+                    Voting processes will be conducted via Discord for community governance decisions, including:
+                </p>
+                <ul>
+                    <li>Community event planning</li>
+                    <li>Feature suggestions and priorities</li>
+                    <li>Discord server modifications</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic; color: #FFA500;">
+                    Note: Voting does not constitute corporate governance or equity ownership. Final decisions remain with the project team. 
+                    Decentralized voting may be restricted in certain jurisdictions.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Transferability</h2>
+            <p>
+                Legends Awaken II NFTs can be transferred to third parties through supported blockchain platforms and marketplaces. 
+                The Holder acknowledges and agrees that:
+            </p>
+            <ul>
+                <li>Any transfer of the NFT will also transfer the associated utilities to the new owner</li>
+                <li>The original owner loses all rights and utilities upon transfer</li>
+                <li>Transfers are subject to blockchain network fees and platform fees</li>
+                <li>We are not responsible for transfers to incorrect addresses or lost NFTs</li>
+                <li>You must comply with all local laws regarding the transfer of digital assets</li>
+            </ul>
+            <div class="restriction">
+                <div class="restriction-title">Transfer Regulations:</div>
+                <p style="margin-top: 10px; font-size: 0.95rem;">
+                    Transfer of digital assets may be subject to specific regulations in your jurisdiction. 
+                    Holders must comply with local laws. Some transfers may trigger tax reporting obligations.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. No Investment or Security</h2>
+            <p style="font-weight: 600; color: #6BA3FF;">
+                The Legends Awaken II NFT is NOT:
+            </p>
+            <ul>
+                <li>An investment contract or security</li>
+                <li>A share or equity in any company</li>
+                <li>A guarantee of profit or financial return</li>
+                <li>Subject to regulation as a financial instrument</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                This NFT is a digital collectible with associated utilities. You should not purchase with the expectation of profit. 
+                The project team makes no promises or guarantees regarding future value.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>6. Disclaimer & Warranty Limitation</h2>
+            <p>
+                The Legends Awaken II project, including any associated utilities or rewards, is provided <strong>"AS IS"</strong> 
+                and <strong>"AS AVAILABLE"</strong> without warranty of any kind, either express or implied, including but not limited to:
+            </p>
+            <ul>
+                <li>Warranties of merchantability</li>
+                <li>Fitness for a particular purpose</li>
+                <li>Non-infringement</li>
+                <li>Uninterrupted or error-free operation</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                The project team makes no representations regarding:
+            </p>
+            <ul>
+                <li>Long-term availability of utilities, rewards, or the ecosystem</li>
+                <li>Future value or market demand for the NFTs</li>
+                <li>Success of any games or projects in development</li>
+                <li>Ability to deliver on proposed roadmap items</li>
+            </ul>
+            <div class="warning">
+                <div class="warning-title">⚠️ Critical Implementation Notice</div>
+                <p style="font-weight: 600;">
+                    The utilities and rewards described in these Terms will only take effect once the Legends Awaken II NFT collection is 
+                    <strong>fully sold out</strong>. There is no guarantee that the collection will sell out or that any utilities will be implemented.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Data Protection & Privacy</h2>
+            <p>
+                We are committed to protecting your personal data in accordance with applicable data protection laws and regulations.
+            </p>
+            <p style="margin-top: 15px;"><strong>Data We Collect:</strong></p>
+            <ul>
+                <li>Blockchain wallet addresses (public information)</li>
+                <li>Discord usernames and IDs (when you join our server)</li>
+                <li>Transaction history (public blockchain data)</li>
+                <li>Communication with our team (support inquiries)</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Your Rights:</strong></p>
+            <ul>
+                <li>Right to access your personal data</li>
+                <li>Right to rectification of inaccurate data</li>
+                <li>Right to request data deletion where applicable</li>
+                <li>Right to data portability</li>
+                <li>Right to object to certain processing</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                <strong>Important:</strong> Blockchain data is immutable and cannot be deleted. Wallet addresses and transaction history remain permanently on the blockchain.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>8. Force Majeure</h2>
+            <p>
+                The project team shall not be liable for any failure to perform its obligations where such failure results from circumstances beyond reasonable control, including but not limited to:
+            </p>
+            <ul>
+                <li>Natural disasters, pandemics, or acts of God</li>
+                <li>War, terrorism, or civil unrest</li>
+                <li>Government actions, laws, or regulations</li>
+                <li>Blockchain network failures or congestion</li>
+                <li>Cyber attacks, hacks, or system failures</li>
+                <li>Market crashes or extreme volatility</li>
+                <li>Exchange or platform shutdowns</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>9. Changes to Terms</h2>
+            <p>
+                The project team reserves the right to modify or amend these Terms at any time for reasons including but not limited to:
+            </p>
+            <ul>
+                <li>Compliance with new laws or regulations</li>
+                <li>Changes to project structure or utilities</li>
+                <li>Security improvements</li>
+                <li>Clarification of existing terms</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                Any material changes will be communicated to Holders through:
+            </p>
+            <ul>
+                <li>Official Discord announcements</li>
+                <li>Project website updates</li>
+                <li>Social media channels</li>
+            </ul>
+            <p style="margin-top: 15px; font-weight: 600; color: #FFA500;">
+                Continued holding of the NFT after changes constitutes acceptance of the new Terms. 
+                If you do not agree with changes, your only remedy is to sell or transfer your NFT.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>10. Limitation of Liability</h2>
+            <p style="font-weight: 600; color: #6BA3FF;">
+                TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+            </p>
+            <p style="margin-top: 15px;">
+                The project team, its founders, developers, advisors, and affiliates shall NOT be liable for any:
+            </p>
+            <ul>
+                <li>Direct, indirect, incidental, or consequential damages</li>
+                <li>Loss of profits, revenue, or business opportunities</li>
+                <li>Loss of data or information</li>
+                <li>Financial losses from NFT value depreciation</li>
+                <li>Inability to access utilities or rewards</li>
+                <li>Smart contract bugs or vulnerabilities</li>
+                <li>Hacks, scams, or fraudulent activities by third parties</li>
+                <li>Market manipulation or price volatility</li>
+                <li>Regulatory actions or legal changes</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                <strong>Maximum Liability:</strong> In no event shall our total aggregate liability exceed the original purchase price 
+                you paid for the NFT.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>11. Indemnification</h2>
+            <p>
+                You agree to indemnify, defend, and hold harmless the project team, its members, and affiliates from any claims, 
+                demands, damages, or expenses (including legal fees) arising from:
+            </p>
+            <ul>
+                <li>Your violation of these Terms</li>
+                <li>Your violation of any applicable laws or regulations</li>
+                <li>Your use or misuse of the NFT</li>
+                <li>Your infringement of third-party rights</li>
+                <li>Any fraudulent or illegal activities</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>12. Dispute Resolution & Governing Law</h2>
+            <h3>12.1 Governing Law</h3>
+            <p>
+                These Terms shall be governed by and construed in accordance with the laws applicable to digital assets 
+                in the jurisdiction where the project is operated, without regard to conflict of law provisions.
+            </p>
+            
+                   </div>
+
+        <div class="section">
+            <h2>13. Prohibited Activities</h2>
+            <p>
+                Holders are strictly prohibited from:
+            </p>
+            <ul>
+                <li>Using the NFT for illegal activities, money laundering, or fraud</li>
+                <li>Misrepresenting the NFT as a financial investment or security</li>
+                <li>Infringing on intellectual property rights</li>
+                <li>Creating derivative works without permission</li>
+                <li>Manipulating markets or engaging in wash trading</li>
+                <li>Violating platform terms of service (Crypto.com/NFT, Discord, etc.)</li>
+                <li>Harassing or threatening other community members</li>
+                <li>Attempting to exploit bugs or vulnerabilities</li>
+            </ul>
+            <p style="margin-top: 15px; font-weight: 600; color: #6BA3FF;">
+                Violation of these prohibitions may result in immediate termination of utilities and potential legal action.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>14. Severability</h2>
+            <p>
+                If any provision of these Terms is found to be invalid or unenforceable under applicable law, 
+                such provision shall be modified to the minimum extent necessary to make it valid and enforceable. 
+                If modification is not possible, the provision shall be severed, and the remaining provisions shall 
+                continue in full force and effect.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>15. Entire Agreement</h2>
+            <p>
+                These Terms constitute the entire agreement between you and Cronos Legends regarding the Legends Awaken II NFT 
+                and supersede all prior agreements, understandings, and representations, whether written or oral.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>16. Contact Information</h2>
+            <p>
+                For questions, concerns, or exercising your data protection rights, please contact us through:
+            </p>
+            <ul>
+                <li>Official Discord server</li>
+                <li>Email: contact@cronoslegends.com </li>
+             </ul>
+
+        </div>
+
+        <div class="critical-warning">
+            <div class="critical-warning-title">📋 Important Information & Risk Disclosure</div>
+            <p style="font-weight: 600; color: #B8D4FF; margin-bottom: 15px;">
+                Please review the following important information regarding your purchase and ownership of Legends Awaken II NFTs:
+            </p>
+            <ul>
+                <li><strong>Educational Purpose:</strong> Nothing in this document constitutes financial, investment, legal, or tax advice. Please consult appropriate professionals.</li>
+                <li><strong>Digital Asset Nature:</strong> NFTs are digital collectibles. Like all digital assets, their value can fluctuate based on market conditions.</li>
+                <li><strong>Utility Implementation:</strong> Future utilities, rewards, or features are subject to successful project development and may evolve over time.</li>
+                <li><strong>Market Dynamics:</strong> The NFT market is dynamic and subject to various factors including technology, regulation, and user adoption.</li>
+                <li><strong>Technical Considerations:</strong> Blockchain technology continues to evolve. We recommend understanding the technology before participating.</li>
+                <li><strong>Regulatory Landscape:</strong> Digital asset regulations vary by jurisdiction and may change over time. Stay informed about your local laws.</li>
+                <li><strong>Age Requirement:</strong> You must be at least 18 years old (or the age of majority in your jurisdiction) to participate.</li>
+                <li><strong>Informed Decision:</strong> We encourage you to research thoroughly and only participate if you understand NFTs and blockchain technology.</li>
+            </ul>
+            <p style="margin-top: 20px; font-weight: 600; color: #6BA3FF;">
+                Our goal is transparency. Please make informed decisions and only invest what you're comfortable with in emerging technologies.
+            </p>
+        </div>
+
+        <div class="warning" style="margin-top: 50px; background: linear-gradient(135deg, rgba(100, 150, 255, 0.08), rgba(150, 200, 255, 0.05)); border: 2px solid rgba(100, 150, 255, 0.3);">
+            <div class="warning-title" style="color: #6BA3FF;">📋 Acceptance of Terms</div>
+            <p style="font-weight: 600;">
+                By purchasing, acquiring, or holding a Legends Awaken II NFT, you acknowledge that you have:
+            </p>
+            <ul style="margin-top: 10px;">
+                <li>Read and understood these Terms in their entirety</li>
+                <li>Understood all risks associated with NFT ownership</li>
+                <li>Confirmed you are of legal age in your jurisdiction</li>
+                <li>Consulted with appropriate advisors (financial, legal, tax) if necessary</li>
+                <li>Agreed to be legally bound by these Terms</li>
+            </ul>
+        </div>
+
+            <!-- Footer -->
+    <div class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
+            this chapter is a defining moment—and the beginning of something far greater.
+        </p>
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/legends-awaken-2">Legends Awaken II</a>
+            <a href="/legends-awaken-1">Legends Awaken I</a>
+            <a href="/tokens">Tokens</a>
+            <a href="/game">Game</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+            <a href="/la2-terms">LA2 Terms</a>
+            <a href="/la1-terms">LA1 Terms</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+    
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+</html>
