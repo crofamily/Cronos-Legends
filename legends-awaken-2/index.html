@@ -705,6 +705,44 @@
             margin-bottom: 12px;
         }
 
+        /* Mint Price Box */
+        .mint-price-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .mint-price-label {
+            font-size: 0.9rem;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .mint-price-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+        }
+
+        .mint-price-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .mint-price-note {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
         /* Section */
         .section {
             max-width: 1200px;
@@ -1341,6 +1379,53 @@
             letter-spacing: 3px;
         }
 
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #404eed);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-discord:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-twitter:hover {
+            box-shadow: 0 8px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FFD700;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
@@ -1439,6 +1524,10 @@
             .platform-title {
                 font-size: 1.8rem;
             }
+
+            .mint-price-value {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -1530,6 +1619,13 @@
                     <p class="platform-description">
                         Legends Awaken II will be exclusively launching on Crypto.com NFT marketplace on <strong>December 10, 2025 at 13:00 GMT (15:00 Finland Time)</strong>. Get ready to secure your legendary NFTs on one of the world's leading NFT platforms.
                     </p>
+
+                    <div class="mint-price-box">
+                        <div class="mint-price-label">💰 Mint Price</div>
+                        <div class="mint-price-value">$35 USD</div>
+                        <div class="mint-price-description">✨ Same price for Whitelist & Public</div>
+                        <div class="mint-price-note">Fair pricing for all collectors</div>
+                    </div>
 
                     <div class="reserved-nfts-list">
                         <p><strong>There are 769 NFTs in total.</strong></p>
