@@ -1074,16 +1074,33 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFTs from blockchain...</p></div>';
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFTs from Cronos blockchain...</p></div>';
             
-            // ERC-721 ABI with Transfer event
+            // Try using Cronoscan-style API first (faster for Cronos)
+            try {
+                await fetchNFTsViaCronoscan();
+            } catch (error) {
+                console.log('Cronoscan method failed, trying blockchain method...', error);
+                await fetchNFTsViaBlockchain(provider);
+            }
+        }
+
+        async function fetchNFTsViaCronoscan() {
+            // For now, let's use the blockchain method with better Cronos support
+            // You can add Cronoscan API key here if available
+            throw new Error('Using blockchain method');
+        }
+
+        async function fetchNFTsViaBlockchain(provider) {
+            const container = document.getElementById('nft-holdings-container');
+            
+            // ERC-721 ABI - minimal for Cronos
             const nftAbi = [
                 "function balanceOf(address owner) view returns (uint256)",
                 "function ownerOf(uint256 tokenId) view returns (address)",
                 "function tokenURI(uint256 tokenId) view returns (string)",
                 "function name() view returns (string)",
-                "function symbol() view returns (string)",
-                "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
+                "function symbol() view returns (string)"
             ];
             
             const allNFTs = [];
@@ -1094,7 +1111,7 @@
                     const balance = await contract.balanceOf(WALLET_ADDRESS);
                     const count = balance.toNumber();
                     
-                    console.log(`Treasury holds ${count} NFTs from ${collectionName}`);
+                    console.log(`Treasury holds ${count} NFTs from ${collectionName} (${contractAddress})`);
                     
                     if (count === 0) continue;
                     
@@ -1104,40 +1121,54 @@
                     try {
                         name = await contract.name();
                         symbol = await contract.symbol();
-                    } catch (e) {}
+                        console.log(`Collection: ${name} (${symbol})`);
+                    } catch (e) {
+                        console.log('Using default collection name');
+                    }
                     
-                    // Query Transfer events TO the treasury wallet
-                    console.log('Fetching Transfer events...');
-                    const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
-                    const events = await contract.queryFilter(filter, 0, 'latest');
+                    // For Cronos, let's try checking token IDs directly
+                    // Most Cronos NFT collections start from token ID 0 or 1
+                    console.log('Scanning for owned tokens...');
                     
-                    console.log(`Found ${events.length} transfer events`);
+                    let foundCount = 0;
+                    const maxTokenId = 10000; // Check first 10000 tokens
                     
-                    // Get unique token IDs from events
-                    const tokenIds = [...new Set(events.map(event => event.args.tokenId.toString()))];
-                    console.log(`Checking ${tokenIds.length} unique token IDs...`);
-                    
-                    // Verify treasury still owns each token
-                    for (const tokenId of tokenIds) {
+                    // Try both starting from 0 and 1
+                    for (let tokenId = 0; tokenId < maxTokenId && foundCount < count; tokenId++) {
                         try {
                             const owner = await contract.ownerOf(tokenId);
                             if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
-                                console.log(`✅ Treasury owns token #${tokenId}`);
-                                const tokenURI = await contract.tokenURI(tokenId);
+                                console.log(`✅ Found owned token #${tokenId}`);
+                                
+                                let tokenURI = '';
+                                try {
+                                    tokenURI = await contract.tokenURI(tokenId);
+                                    console.log(`Token URI: ${tokenURI}`);
+                                } catch (e) {
+                                    console.log(`Could not get tokenURI for #${tokenId}`);
+                                }
+                                
                                 allNFTs.push({
                                     collection: name,
                                     symbol: symbol,
-                                    tokenId: tokenId,
+                                    tokenId: tokenId.toString(),
                                     tokenURI: tokenURI,
                                     contractAddress: contractAddress
                                 });
                                 
-                                if (allNFTs.length >= count) break; // Found all
+                                foundCount++;
                             }
                         } catch (error) {
-                            console.log(`Token ${tokenId} check failed, skipping`);
+                            // Token doesn't exist or error, continue
+                        }
+                        
+                        // Add small delay every 10 checks to avoid rate limiting
+                        if (tokenId % 10 === 0 && tokenId > 0) {
+                            await new Promise(resolve => setTimeout(resolve, 100));
                         }
                     }
+                    
+                    console.log(`Found ${foundCount} out of ${count} NFTs`);
                     
                 } catch (error) {
                     console.error(`Error fetching NFTs for ${collectionName}:`, error);
@@ -1164,8 +1195,11 @@
             } else {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 20px; color: #888;">
-                        <p>No NFTs found in treasury wallet or still loading...</p>
-                        <p style="font-size: 12px; margin-top: 10px;">This may take a moment on first load.</p>
+                        <p>⏳ Scanning blockchain for NFTs...</p>
+                        <p style="font-size: 12px; margin-top: 10px;">This may take 1-2 minutes on first load.</p>
+                        <p style="font-size: 12px; color: #ffa500; margin-top: 10px;">
+                            Checking token IDs 0-10000...
+                        </p>
                     </div>
                 `;
             }
