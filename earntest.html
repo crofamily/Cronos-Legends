@@ -358,6 +358,13 @@
             object-fit: cover;
             background: rgba(0, 0, 0, 0.5);
             image-rendering: -webkit-optimize-contrast;
+            display: block;
+        }
+        
+        .nft-image::before,
+        .nft-image::after {
+            display: none !important;
+            content: none !important;
         }
 
         .nft-info {
@@ -1264,7 +1271,7 @@
                                 imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
                             }
                             
-                            console.log(`✅ #${tokenId}: ${name} - Image: ${imageUrl}`);
+                            console.log(`✅ #${tokenId}: ${name} - Image: ${imageUrl.substring(0, 50)}...`);
                         } catch (e) {
                             console.log(`⚠️ Could not fetch metadata for #${tokenId}:`, e.message);
                             // Use placeholder
@@ -1319,6 +1326,7 @@
             nftCard.innerHTML = `
                 <img src="${imageUrl || fallbackSVG}" 
                      alt="" 
+                     title=""
                      class="nft-image" 
                      loading="lazy"
                      onerror="this.src='${fallbackSVG}'">
