@@ -1063,8 +1063,10 @@
                     "function decimals() view returns (uint8)"
                 ];
                 
-                // Ecosystem tokens
+                // Ecosystem tokens (skip CRO as it's already handled)
                 for (const [symbol, contractAddress] of Object.entries(TOKEN_CONTRACTS)) {
+                    if (contractAddress === 'NATIVE') continue; // Skip CRO, already handled above
+                    
                     try {
                         const contract = new ethers.Contract(contractAddress, abi, provider);
                         let decimals = 18;
@@ -1316,7 +1318,7 @@
             
             nftCard.innerHTML = `
                 <img src="${imageUrl || fallbackSVG}" 
-                     alt="${nft.name}" 
+                     alt="" 
                      class="nft-image" 
                      loading="lazy"
                      onerror="this.src='${fallbackSVG}'">
@@ -1484,6 +1486,9 @@
         }
 
         function formatUSD(value) {
+            if (value === 0 || !value) {
+                return 'N/A';
+            }
             return new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
