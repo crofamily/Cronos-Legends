@@ -589,10 +589,10 @@
             </div>
 
             <!-- NFT Holdings -->
-            <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">Legends Awaken I Collection</h4>
+            <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">🎴 LegendsAwaken Collection</h4>
             <div id="nft-holdings-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>Loading Legends Awaken I NFTs...</p>
+                    <p>Loading LegendsAwaken NFTs...</p>
                 </div>
             </div>
 
@@ -601,6 +601,46 @@
             <div id="other-nft-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
                     <p>Scanning for other NFT collections...</p>
+                </div>
+            </div>
+
+            <!-- Other Token Holdings -->
+            <h4 style="color: #ffa500; font-size: 18px; margin: 30px 0 15px;">Other Token Holdings</h4>
+            <div class="funds-grid" id="other-tokens-grid">
+                <div class="fund-item" data-other="CRONON">
+                    <span class="fund-label">$CRONON</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
+                </div>
+                
+                <div class="fund-item" data-other="WOW">
+                    <span class="fund-label">$WOW</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
+                </div>
+                
+                <div class="fund-item" data-other="FFS">
+                    <span class="fund-label">$FFS</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
+                </div>
+                
+                <div class="fund-item" data-other="DOM">
+                    <span class="fund-label">$DOM</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
+                </div>
+                
+                <div class="fund-item" data-other="MOONR">
+                    <span class="fund-label">$MOONR</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
+                </div>
+                
+                <div class="fund-item" data-other="PAWSFLOW">
+                    <span class="fund-label">$PAWSFLOW</span>
+                    <span class="fund-value">Loading...</span>
+                    <span class="fund-usd">$0.00</span>
                 </div>
             </div>
 
@@ -933,6 +973,16 @@
             BONE: '0x898cD4E6F0a364956e28CB0B51f67a4A0f02589c'
         };
 
+        // Other token contracts held by treasury
+        const OTHER_CONTRACTS = {
+            CRONON: '0x50aa2611004B3252030Cc95E9c5A2a44DFED9983',  // Crononymous
+            WOW: '0xE036fBd7030fCCe540F999b97E60aB16281a6D92',     // wolf of wolf street
+            FFS: '0xcDEaD50e45f45e7f85a2a53c27C9ea364CcE0366',     // For Fox Sake!
+            DOM: '0x0CF46f32Af0bBBd211F513B037b1774A8A2f7b5F',     // Crondom
+            MOONR: '0x303e188d14aD08EB9702b466710686698D10b4e2',   // Rtrd3.0
+            PAWSFLOW: '0xDf50068a8B84028884C5725613132b2c592baa61' // PawsFlow
+        };
+
         // NFT Collection Contracts
         const NFT_CONTRACTS = {
             'Legends Awaken I': '0x68A3192E286AA5C2182D815F5fE796401eCe28bA',
@@ -963,8 +1013,12 @@
                 const croData = await croResponse.json();
                 TOKEN_PRICES['CRO'] = croData['crypto-com-chain']?.usd || 0;
                 
-                // DEXScreener for all tokens
-                const allAddresses = [...Object.values(TOKEN_CONTRACTS), ...Object.values(PARTNER_CONTRACTS)].join(',');
+                // DEXScreener for all tokens (ecosystem, partner, and other)
+                const allAddresses = [
+                    ...Object.values(TOKEN_CONTRACTS), 
+                    ...Object.values(PARTNER_CONTRACTS),
+                    ...Object.values(OTHER_CONTRACTS)
+                ].join(',');
                 const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${allAddresses}`);
                 const data = await response.json();
                 
@@ -973,7 +1027,11 @@
                         if (pair.chainId === 'cronos') {
                             const baseAddr = pair.baseToken?.address?.toLowerCase();
                             
-                            [...Object.entries(TOKEN_CONTRACTS), ...Object.entries(PARTNER_CONTRACTS)].forEach(([symbol, addr]) => {
+                            [
+                                ...Object.entries(TOKEN_CONTRACTS), 
+                                ...Object.entries(PARTNER_CONTRACTS),
+                                ...Object.entries(OTHER_CONTRACTS)
+                            ].forEach(([symbol, addr]) => {
                                 if (baseAddr === addr.toLowerCase()) {
                                     TOKEN_PRICES[symbol] = parseFloat(pair.priceUsd || 0);
                                 }
@@ -1085,7 +1143,33 @@
                 
                 document.getElementById('total-value').textContent = formatUSD(totalUSD);
                 document.getElementById('partner-total-value').textContent = formatUSD(partnerUSD);
-                document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + partnerUSD);
+                
+                // ===========================
+                // FETCH OTHER TOKEN BALANCES
+                // ===========================
+                let otherTotalUSD = 0;
+                
+                for (const [symbol, contractAddress] of Object.entries(OTHER_CONTRACTS)) {
+                    try {
+                        const contract = new ethers.Contract(contractAddress, abi, provider);
+                        let decimals = 18;
+                        try { decimals = await contract.decimals(); } catch (e) {}
+                        
+                        const balance = await contract.balanceOf(WALLET_ADDRESS);
+                        const amount = parseFloat(ethers.utils.formatUnits(balance, decimals));
+                        const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
+                        otherTotalUSD += usdValue;
+                        
+                        updateOtherTokenDisplay(symbol, amount.toFixed(2) + ' $' + symbol, usdValue);
+                    } catch (error) {
+                        console.error(`Error fetching ${symbol}:`, error);
+                        updateOtherTokenDisplay(symbol, 'Error', 0);
+                    }
+                }
+                
+                console.log(`💰 Other tokens total: ${formatUSD(otherTotalUSD)}`);
+                
+                document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + partnerUSD + otherTotalUSD);
                 
                 // Fetch NFT holdings ONLY ONCE on initial load
                 if (!window.nftsLoaded) {
@@ -1118,11 +1202,10 @@
         async function fetchNFTsFromExplorerAPI(provider) {
             const container = document.getElementById('nft-holdings-container');
             
-            // Token IDs visible on Cronos Explorer (manually observed)
-            // Update this list periodically or when NFTs change
-            const knownTokenIds = [271, 79, 280, 140, 299, 265, 378, 316, 304, 394, 341, 10];
+            // All Legends Awaken (LegendsAwaken) token IDs from Cronos Explorer
+            const knownTokenIds = [271, 79, 280, 140, 299, 265, 378, 316, 304, 394, 341, 29];
             
-            console.log(`📦 Loading ${knownTokenIds.length} known NFTs...`);
+            console.log(`📦 Loading ${knownTokenIds.length} Legends Awaken NFTs...`);
             
             const allNFTs = [];
             const contractAddress = Object.values(NFT_CONTRACTS)[0];
@@ -1175,7 +1258,7 @@
                         tokenId: tokenId,
                         name: name,
                         imageUrl: imageUrl,
-                        collection: 'Legends Awaken I'
+                        collection: 'LegendsAwaken'
                     });
                 } catch (e) {
                     console.log(`❌ Error loading token #${tokenId}:`, e.message);
@@ -1187,10 +1270,11 @@
                 container.innerHTML = `
                     <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
                         <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
-                            NFT Collection Holdings: ${allNFTs.length} NFTs
+                            LegendsAwaken: ${allNFTs.length} NFTs
                         </p>
                         <p style="color: #aaa; font-size: 12px; text-align: center; margin-top: 8px;">
-                            To update: Check <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #00d4ff;">Explorer</a> and update token IDs in code
+                            Official LegendsAwaken collection on Cronos • 
+                            <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #00d4ff;">View on Explorer</a>
                         </p>
                     </div>
                     <div class="nft-grid" id="nft-grid"></div>
@@ -1266,36 +1350,38 @@
         async function updateOtherNFTs(provider) {
             const container = document.getElementById('other-nft-container');
             
-            // Known other NFT contracts from explorer
-            const otherNFTContracts = {
-                'Golden Hops': { address: '0x...', ids: [10, 6] }, // Add contract address
-                'BoomerSquad': { address: '0x...', ids: [5697] },
-                'Wolfies': { address: '0x...', ids: [1255] }
-            };
+            // Complete list from Cronos Explorer
+            const otherCollections = [
+                { name: 'Golden Hops', count: 2 },
+                { name: 'Crononymous', count: 5 },
+                { name: 'Wolfies', count: 2 },
+                { name: 'Robin NFT', count: 2 },
+                { name: 'BoomerSquad', count: 1 }
+            ];
             
-            // For now, just show the count from explorer
+            const totalOther = otherCollections.reduce((sum, col) => sum + col.count, 0);
+            
+            const collectionCards = otherCollections.map(col => `
+                <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
+                    <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">${col.name}</p>
+                    <p style="color: #fff; font-size: 20px; margin-top: 5px;">${col.count} NFT${col.count > 1 ? 's' : ''}</p>
+                </div>
+            `).join('');
+            
             container.innerHTML = `
-                <div style="background: rgba(186, 85, 211, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(186, 85, 211, 0.3); text-align: center;">
-                    <p style="color: #BA55D3; font-size: 16px; font-weight: bold; margin-bottom: 15px;">
-                        Additional NFT Holdings
+                <div style="background: rgba(186, 85, 211, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(186, 85, 211, 0.3);">
+                    <p style="color: #BA55D3; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 5px;">
+                        Partner & Community NFT Collections
                     </p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
-                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
-                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">Golden Hops</p>
-                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">2 NFTs</p>
-                        </div>
-                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
-                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">BoomerSquad</p>
-                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">1 NFT</p>
-                        </div>
-                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
-                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">Wolfies</p>
-                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">1 NFT</p>
-                        </div>
+                    <p style="color: #aaa; font-size: 14px; text-align: center; margin-bottom: 20px;">
+                        Total: ${totalOther} NFTs across ${otherCollections.length} collections
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        ${collectionCards}
                     </div>
-                    <p style="color: #888; font-size: 12px; margin-top: 15px;">
-                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #BA55D3;">
-                            View all NFTs on Cronos Explorer →
+                    <p style="color: #888; font-size: 12px; margin-top: 20px; text-align: center;">
+                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #BA55D3; text-decoration: none;">
+                            🔍 View all NFTs on Cronos Explorer →
                         </a>
                     </p>
                 </div>
@@ -1372,6 +1458,14 @@
             const usdEl = document.querySelector(`[data-partner="${token}-usd"]`);
             if (amountEl) amountEl.textContent = value;
             if (usdEl) usdEl.textContent = formatUSD(usdValue);
+        }
+
+        function updateOtherTokenDisplay(token, value, usdValue) {
+            const element = document.querySelector(`[data-other="${token}"]`);
+            if (element) {
+                element.querySelector('.fund-value').textContent = value;
+                element.querySelector('.fund-usd').textContent = formatUSD(usdValue);
+            }
         }
 
         function formatUSD(value) {
