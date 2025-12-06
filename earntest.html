@@ -354,9 +354,10 @@
 
         .nft-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             background: rgba(0, 0, 0, 0.5);
+            image-rendering: -webkit-optimize-contrast;
         }
 
         .nft-info {
@@ -1082,8 +1083,11 @@
                 document.getElementById('partner-total-value').textContent = formatUSD(partnerUSD);
                 document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + partnerUSD);
                 
-                // Fetch NFT holdings
-                await updateNFTHoldings(provider);
+                // Fetch NFT holdings ONLY ONCE on initial load
+                if (!window.nftsLoaded) {
+                    await updateNFTHoldings(provider);
+                    window.nftsLoaded = true;
+                }
                 
             } catch (error) {
                 console.error('Error fetching balances:', error);
@@ -1190,11 +1194,22 @@
             const nftCard = document.createElement('div');
             nftCard.className = 'nft-card';
             
-            const imageUrl = nft.imageUrl || `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="24" text-anchor="middle" dominant-baseline="middle">NFT %23${nft.tokenId}</text></svg>`;
+            // Use smaller image size for faster loading
+            let imageUrl = nft.imageUrl;
+            
+            // If IPFS, use a faster gateway and request smaller size
+            if (imageUrl.includes('ipfs.io')) {
+                imageUrl = imageUrl.replace('ipfs.io', 'cloudflare-ipfs.com');
+            }
+            
+            const fallbackSVG = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="20" text-anchor="middle" dominant-baseline="middle">NFT %23${nft.tokenId}</text></svg>`;
             
             nftCard.innerHTML = `
-                <img src="${imageUrl}" alt="${nft.name}" class="nft-image" 
-                     onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"400\\"><rect width=\\"400\\" height=\\"400\\" fill=\\"%23222\\"/><text x=\\"50%\\" y=\\"50%\\" fill=\\"%23ffd700\\" font-size=\\"20\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">NFT %23${nft.tokenId}</text></svg>'">
+                <img src="${imageUrl || fallbackSVG}" 
+                     alt="${nft.name}" 
+                     class="nft-image" 
+                     loading="lazy"
+                     onerror="this.src='${fallbackSVG}'">
                 <div class="nft-info">
                     <div class="nft-name">${nft.name}</div>
                     <div class="nft-id">Token ID: ${nft.tokenId}</div>
