@@ -512,7 +512,7 @@
                     <div class="total-value" id="total-value">$0.00</div>
                 </div>
                 <div class="total-box" style="border-color: rgba(138, 43, 226, 0.4);">
-                    <div class="total-label">Partner Tokens Holdings</div>
+                    <div class="total-label">Partner Holdings</div>
                     <div class="total-value" id="partner-total-value" style="color: #BA55D3;">$0.00</div>
                 </div>
                 <div class="total-box" style="border-color: rgba(255, 215, 0, 0.4);">
@@ -535,61 +535,66 @@
             <!-- Token Holdings -->
             <h4 style="color: #00d4ff; font-size: 18px; margin-bottom: 15px;">Ecosystem Token Holdings</h4>
             <div class="funds-grid">
-                <div class="fund-item" data-token="CRO">
-                    <span class="fund-label">CRO</span>
+                <div class="fund-item" data-token="CRO" style="border-color: rgba(0, 132, 255, 0.6); background: rgba(0, 132, 255, 0.05);">
+                    <span class="fund-label" style="color: #0084ff;">💎 CRO</span>
                     <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+                    <span class="fund-usd" style="color: #0084ff;">$0.00</span>
                 </div>
                 
-                <div class="fund-item" data-token="CLG">
-                    <span class="fund-label">$CLG</span>
+                <div class="fund-item" data-token="CLG" style="border-color: rgba(255, 215, 0, 0.6); background: rgba(255, 215, 0, 0.05);">
+                    <span class="fund-label" style="color: #ffd700;">💛 $CLG</span>
                     <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+                    <span class="fund-usd" style="color: #ffd700;">$0.00</span>
                 </div>
                 
-                <div class="fund-item" data-token="TRI">
-                    <span class="fund-label">$TRI</span>
+                <div class="fund-item" data-token="TRI" style="border-color: rgba(34, 197, 94, 0.6); background: rgba(34, 197, 94, 0.05);">
+                    <span class="fund-label" style="color: #22c55e;">🌿 $TRI</span>
                     <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+                    <span class="fund-usd" style="color: #22c55e;">$0.00</span>
                 </div>
                 
-                <div class="fund-item" data-token="LYRA">
-                    <span class="fund-label">$LYRA</span>
+                <div class="fund-item" data-token="LYRA" style="border-color: rgba(239, 68, 68, 0.6); background: rgba(239, 68, 68, 0.05);">
+                    <span class="fund-label" style="color: #ef4444;">🩸 $LYRA</span>
                     <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+                    <span class="fund-usd" style="color: #ef4444;">$0.00</span>
                 </div>
                 
-                <div class="fund-item" data-token="CARA">
-                    <span class="fund-label">$CARA</span>
+                <div class="fund-item" data-token="CARA" style="border-color: rgba(236, 72, 153, 0.6); background: rgba(236, 72, 153, 0.05);">
+                    <span class="fund-label" style="color: #ec4899;">🌸 $CARA</span>
                     <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-token="CRONUS">
-                    <span class="fund-label">$CRONUS</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+                    <span class="fund-usd" style="color: #ec4899;">$0.00</span>
                 </div>
             </div>
 
             <!-- Partner Token Holdings -->
-            <h4 style="color: #BA55D3; font-size: 18px; margin: 30px 0 15px;">Partner Token Holdings</h4>
-            <div class="funds-grid">
-                <div class="fund-item" data-partner="CRONUS-item">
-                    <span class="fund-label">$CRONUS</span>
-                    <span class="fund-value" data-partner="CRONUS-amount">Loading...</span>
-                    <span class="fund-usd" data-partner="CRONUS-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-partner="BONE-item">
-                    <span class="fund-label">$BONE</span>
-                    <span class="fund-value" data-partner="BONE-amount">Loading...</span>
-                    <span class="fund-usd" data-partner="BONE-usd">$0.00</span>
+            <h4 style="color: #9333ea; font-size: 18px; margin: 30px 0 15px;">🤝 Partner Token Holdings</h4>
+            <div style="background: rgba(147, 51, 234, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(147, 51, 234, 0.2);">
+                <div class="funds-grid" id="partner-tokens-grid">
+                    <div class="fund-item" data-partner="CRONUS-item" style="border-color: rgba(147, 51, 234, 0.4);">
+                        <span class="fund-label" style="color: #9333ea;">$CRONUS</span>
+                        <span class="fund-value" data-partner="CRONUS-amount">Loading...</span>
+                        <span class="fund-usd" data-partner="CRONUS-usd" style="color: #9333ea;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-partner="BONE-item" style="border-color: rgba(147, 51, 234, 0.4);">
+                        <span class="fund-label" style="color: #9333ea;">$BONE</span>
+                        <span class="fund-value" data-partner="BONE-amount">Loading...</span>
+                        <span class="fund-usd" data-partner="BONE-usd" style="color: #9333ea;">$0.00</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- NFT Holdings -->
-            <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">🎴 LegendsAwaken Collection</h4>
+            <!-- NFT Toggle Button -->
+            <div style="text-align: center; margin: 40px 0 20px;">
+                <button id="toggle-nfts-btn" onclick="toggleNFTs()" class="swap-btn" style="max-width: 400px; margin: 0 auto;">
+                    🎴 Show NFT Collections
+                </button>
+            </div>
+
+            <!-- NFT Sections (Hidden by default) -->
+            <div id="nft-sections" style="display: none;">
+                <!-- LegendsAwaken NFTs -->
+                <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">🎴 LegendsAwaken Collection</h4>
             <div id="nft-holdings-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
                     <p>Loading LegendsAwaken NFTs...</p>
@@ -605,44 +610,48 @@
             </div>
 
             <!-- Other Token Holdings -->
-            <h4 style="color: #ffa500; font-size: 18px; margin: 30px 0 15px;">Other Token Holdings</h4>
-            <div class="funds-grid" id="other-tokens-grid">
-                <div class="fund-item" data-other="CRONON">
-                    <span class="fund-label">$CRONON</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-other="WOW">
-                    <span class="fund-label">$WOW</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-other="FFS">
-                    <span class="fund-label">$FFS</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-other="DOM">
-                    <span class="fund-label">$DOM</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-other="MOONR">
-                    <span class="fund-label">$MOONR</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-other="PAWSFLOW">
-                    <span class="fund-label">$PAWSFLOW</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd">$0.00</span>
+            <h4 style="color: #f59e0b; font-size: 18px; margin: 30px 0 15px;">💫 Other Token Holdings</h4>
+            <div style="background: rgba(245, 158, 11, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                <div class="funds-grid" id="other-tokens-grid">
+                    <div class="fund-item" data-other="CRONON" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$CRONON</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-other="WOW" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$WOW</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-other="FFS" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$FFS</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-other="DOM" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$DOM</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-other="MOONR" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$MOONR</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
+                    
+                    <div class="fund-item" data-other="PAWSFLOW" style="border-color: rgba(245, 158, 11, 0.4);">
+                        <span class="fund-label" style="color: #f59e0b;">$PAWSFLOW</span>
+                        <span class="fund-value">Loading...</span>
+                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
+                    </div>
                 </div>
             </div>
+
+            </div><!-- End NFT Sections -->
 
             <p style="color: #888; font-size: 12px; margin-top: 20px; font-style: italic; text-align: center;">
                 Note: CARA and LYRA prices are manually updated from DEXScreener. Last update: December 6, 2024
@@ -653,8 +662,8 @@
              SWAP SECTION
         ======================================== -->
         <div class="section-header">
-            <h2>💱 Swap NFTs for Tokens</h2>
-            <p>Trade your NFTs for ecosystem tokens through our secure ticket system.</p>
+            <h2>💱 Swap NFTs ⇄ Tokens</h2>
+            <p>Trade your NFTs for ecosystem tokens OR swap tokens for NFTs through our secure ticket system. Two-way swapping enabled!</p>
         </div>
 
         <!-- Active Swap Offers -->
@@ -674,9 +683,16 @@
                     Genesis collection NFT swap for Cronos Legends Gold tokens.
                 </p>
             </div>
+        </div>
 
+        <!-- Coming Soon Swaps -->
+        <h3 style="color: #ffa500; font-size: 24px; margin: 40px 0 20px; padding-left: 10px; border-left: 4px solid #ffa500;">
+            🔜 Coming Soon
+        </h3>
+
+        <div class="swap-grid">
             <!-- Cara Valoria -->
-            <div class="swap-card">
+            <div class="swap-card coming-soon">
                 <h3>
                     <span class="icon">CV</span>
                     Cara Valoria Owner
@@ -688,7 +704,7 @@
             </div>
 
             <!-- Cronus Omni -->
-            <div class="swap-card">
+            <div class="swap-card coming-soon">
                 <h3>
                     <span class="icon">CO</span>
                     Cronus Omni Owner
@@ -700,7 +716,7 @@
             </div>
 
             <!-- Legends Awaken II -->
-            <div class="swap-card">
+            <div class="swap-card coming-soon">
                 <h3>
                     <span class="icon">LA2</span>
                     Legends Awaken II
@@ -712,7 +728,7 @@
             </div>
 
             <!-- Lyra NFT -->
-            <div class="swap-card">
+            <div class="swap-card coming-soon">
                 <h3>
                     <span class="icon">LY</span>
                     Lyra NFT Owner
@@ -724,7 +740,7 @@
             </div>
 
             <!-- Totems of Power -->
-            <div class="swap-card">
+            <div class="swap-card coming-soon">
                 <h3>
                     <span class="icon">⚡</span>
                     Totems of Power
@@ -744,14 +760,7 @@
                     Tiered rewards based on Totem rarity.
                 </p>
             </div>
-        </div>
 
-        <!-- Coming Soon Swaps -->
-        <h3 style="color: #ffa500; font-size: 24px; margin: 40px 0 20px; padding-left: 10px; border-left: 4px solid #ffa500;">
-            🔜 Coming Soon
-        </h3>
-
-        <div class="swap-grid">
             <!-- Trinari Elderborn -->
             <div class="swap-card coming-soon meteor-card">
                 <div class="meteor" style="top: -100px; left: 50%; animation-delay: 0s;"></div>
@@ -962,14 +971,15 @@
         const WALLET_ADDRESS = '0xaf87e4df58d735ec2971d2d8db663b02ca60175d';
         
         const TOKEN_CONTRACTS = {
+            CRO: 'NATIVE',  // Special handling for native CRO
             CLG: '0x08d9cb5100C306C2909B63415d7ff05268633b41',
             TRI: '0xF1F8B074D616796Ae529651a41874246389eC6d3',
             LYRA: '0xb0B1b92e435A00DbB7d486CafFf7C2ba380De9cE',
-            CARA: '0x3Caf0136302440Ebb68f41D6c57b7bEbDE9E12ca',
-            CRONUS: '0x71b60B37f030D0cff949855b9D0405915057B116'
+            CARA: '0x3Caf0136302440Ebb68f41D6c57b7bEbDE9E12ca'
         };
 
         const PARTNER_CONTRACTS = {
+            CRONUS: '0x71b60B37f030D0cff949855b9D0405915057B116',
             BONE: '0x898cD4E6F0a364956e28CB0B51f67a4A0f02589c'
         };
 
@@ -1113,7 +1123,8 @@
                     }
                 }
                 
-                // Partner tokens
+                // Partner tokens - collect data for sorting
+                const partnerTokensData = [];
                 for (const [symbol, contractAddress] of Object.entries(PARTNER_CONTRACTS)) {
                     try {
                         const contract = new ethers.Contract(contractAddress, abi, provider);
@@ -1125,12 +1136,35 @@
                         const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
                         partnerUSD += usdValue;
                         
-                        updatePartnerDisplay(symbol, amount.toFixed(2) + ' $' + symbol, usdValue);
+                        partnerTokensData.push({
+                            symbol: symbol,
+                            amount: amount,
+                            usdValue: usdValue,
+                            displayAmount: amount.toFixed(2) + ' $' + symbol,
+                            displayUSD: formatUSD(usdValue)
+                        });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
-                        updatePartnerDisplay(symbol, 'Error', 0);
                     }
                 }
+                
+                // Sort partner tokens by USD value (highest first)
+                partnerTokensData.sort((a, b) => b.usdValue - a.usdValue);
+                
+                // Display sorted partner tokens
+                const partnerGrid = document.getElementById('partner-tokens-grid');
+                partnerGrid.innerHTML = '';
+                partnerTokensData.forEach(token => {
+                    const item = document.createElement('div');
+                    item.className = 'fund-item';
+                    item.style.borderColor = 'rgba(147, 51, 234, 0.4)';
+                    item.innerHTML = `
+                        <span class="fund-label" style="color: #9333ea;">$${token.symbol}</span>
+                        <span class="fund-value">${token.displayAmount}</span>
+                        <span class="fund-usd" style="color: #9333ea;">${token.displayUSD}</span>
+                    `;
+                    partnerGrid.appendChild(item);
+                });
                 
                 // Add CRONUS to partner total (already counted in ecosystem)
                 const cronusAmount = parseFloat(document.querySelector('[data-token="CRONUS"] .fund-value').textContent.replace(' $CRONUS', ''));
@@ -1148,6 +1182,7 @@
                 // FETCH OTHER TOKEN BALANCES
                 // ===========================
                 let otherTotalUSD = 0;
+                const otherTokensData = [];
                 
                 for (const [symbol, contractAddress] of Object.entries(OTHER_CONTRACTS)) {
                     try {
@@ -1160,12 +1195,35 @@
                         const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
                         otherTotalUSD += usdValue;
                         
-                        updateOtherTokenDisplay(symbol, amount.toFixed(2) + ' $' + symbol, usdValue);
+                        otherTokensData.push({
+                            symbol: symbol,
+                            amount: amount,
+                            usdValue: usdValue,
+                            displayAmount: amount.toFixed(2) + ' $' + symbol,
+                            displayUSD: formatUSD(usdValue)
+                        });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
-                        updateOtherTokenDisplay(symbol, 'Error', 0);
                     }
                 }
+                
+                // Sort other tokens by USD value (highest first)
+                otherTokensData.sort((a, b) => b.usdValue - a.usdValue);
+                
+                // Display sorted other tokens
+                const otherGrid = document.getElementById('other-tokens-grid');
+                otherGrid.innerHTML = '';
+                otherTokensData.forEach(token => {
+                    const item = document.createElement('div');
+                    item.className = 'fund-item';
+                    item.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                    item.innerHTML = `
+                        <span class="fund-label" style="color: #f59e0b;">$${token.symbol}</span>
+                        <span class="fund-value">${token.displayAmount}</span>
+                        <span class="fund-usd" style="color: #f59e0b;">${token.displayUSD}</span>
+                    `;
+                    otherGrid.appendChild(item);
+                });
                 
                 console.log(`💰 Other tokens total: ${formatUSD(otherTotalUSD)}`);
                 
@@ -1508,6 +1566,18 @@
             window.open('https://explorer.cronos.org/address/0xaf87e4df58d735ec2971d2d8db663b02ca60175d', '_blank');
         }
 
+        function toggleNFTs() {
+            const section = document.getElementById('nft-sections');
+            const btn = document.getElementById('toggle-nfts-btn');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                btn.textContent = '🎴 Hide NFT Collections';
+            } else {
+                section.style.display = 'none';
+                btn.textContent = '🎴 Show NFT Collections';
+            }
+        }
+
         // Initialize
         window.addEventListener('load', () => {
             createParticles();
@@ -1517,4 +1587,3 @@
     </script>
 </body>
 </html>
-
