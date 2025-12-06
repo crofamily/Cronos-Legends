@@ -1095,40 +1095,144 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>🔍 Loading NFTs from Cronos Explorer...</p></div>';
+            
+            try {
+                await fetchNFTsFromExplorerAPI(provider);
+            } catch (error) {
+                console.error('Error fetching NFTs:', error);
+                // Fallback to just showing count
+                showNFTCountOnly(provider);
+            }
+        }
+
+        async function fetchNFTsFromExplorerAPI(provider) {
+            const container = document.getElementById('nft-holdings-container');
+            
+            try {
+                // Cronos Explorer API endpoint for NFT holdings
+                const url = `https://explorer-api.cronos.org/mainnet/api/v1/accounts/${WALLET_ADDRESS}/nft-tokens`;
+                
+                console.log('📡 Fetching NFTs from Cronos Explorer API...');
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log('API Response:', data);
+                
+                if (data && data.result && data.result.length > 0) {
+                    const allNFTs = [];
+                    
+                    // Filter for our specific collection
+                    const ourCollection = data.result.filter(item => 
+                        item.token?.contract_address?.toLowerCase() === 
+                        Object.values(NFT_CONTRACTS)[0].toLowerCase()
+                    );
+                    
+                    console.log(`✅ Found ${ourCollection.length} NFTs from Legends Awaken I`);
+                    
+                    for (const nftData of ourCollection) {
+                        const tokenId = nftData.token_id;
+                        const metadata = nftData.metadata;
+                        
+                        let imageUrl = '';
+                        let name = `Legends Awaken I #${tokenId}`;
+                        
+                        if (metadata) {
+                            imageUrl = metadata.image || metadata.image_url || '';
+                            name = metadata.name || name;
+                            
+                            // Handle IPFS URLs
+                            if (imageUrl.startsWith('ipfs://')) {
+                                imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+                            }
+                        }
+                        
+                        allNFTs.push({
+                            tokenId: tokenId,
+                            name: name,
+                            imageUrl: imageUrl,
+                            collection: 'Legends Awaken I'
+                        });
+                        
+                        console.log(`✅ NFT #${tokenId}: ${name}`);
+                    }
+                    
+                    // Display the NFTs
+                    if (allNFTs.length > 0) {
+                        container.innerHTML = `
+                            <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                                <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
+                                    Total NFTs Held: ${allNFTs.length}
+                                </p>
+                            </div>
+                            <div class="nft-grid" id="nft-grid"></div>
+                        `;
+                        
+                        const nftGrid = document.getElementById('nft-grid');
+                        allNFTs.forEach(nft => {
+                            displayNFTCard(nft, nftGrid);
+                        });
+                    } else {
+                        throw new Error('No NFTs found in response');
+                    }
+                } else {
+                    throw new Error('Invalid API response');
+                }
+            } catch (error) {
+                console.error('Explorer API error:', error);
+                throw error;
+            }
+        }
+
+        function displayNFTCard(nft, container) {
+            const nftCard = document.createElement('div');
+            nftCard.className = 'nft-card';
+            
+            const imageUrl = nft.imageUrl || `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="24" text-anchor="middle" dominant-baseline="middle">NFT %23${nft.tokenId}</text></svg>`;
+            
+            nftCard.innerHTML = `
+                <img src="${imageUrl}" alt="${nft.name}" class="nft-image" 
+                     onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"400\\"><rect width=\\"400\\" height=\\"400\\" fill=\\"%23222\\"/><text x=\\"50%\\" y=\\"50%\\" fill=\\"%23ffd700\\" font-size=\\"20\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">NFT %23${nft.tokenId}</text></svg>'">
+                <div class="nft-info">
+                    <div class="nft-name">${nft.name}</div>
+                    <div class="nft-id">Token ID: ${nft.tokenId}</div>
+                    <div class="nft-id">${nft.collection}</div>
+                </div>
+            `;
+            
+            container.appendChild(nftCard);
+        }
+
+        async function showNFTCountOnly(provider) {
+            const container = document.getElementById('nft-holdings-container');
             
             try {
                 const nftAbi = ["function balanceOf(address owner) view returns (uint256)"];
+                const contract = new ethers.Contract(
+                    Object.values(NFT_CONTRACTS)[0], 
+                    nftAbi, 
+                    provider
+                );
+                const balance = await contract.balanceOf(WALLET_ADDRESS);
+                const count = balance.toNumber();
                 
-                for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
-                    const contract = new ethers.Contract(contractAddress, nftAbi, provider);
-                    const balance = await contract.balanceOf(WALLET_ADDRESS);
-                    const count = balance.toNumber();
-                    
-                    console.log(`✅ Treasury holds ${count} ${collectionName} NFTs`);
-                    
-                    container.innerHTML = `
-                        <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3); text-align: center;">
-                            <p style="color: #ffd700; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
-                                📦 ${collectionName}
-                            </p>
-                            <p style="color: #fff; font-size: 32px; font-weight: bold; margin: 15px 0;">
-                                ${count} NFTs
-                            </p>
-                            <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}" target="_blank" 
-                               style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: linear-gradient(135deg, #00d4ff, #00a8cc); 
-                                      border-radius: 8px; color: #fff; text-decoration: none; font-size: 14px; font-weight: bold;">
-                                🔍 View NFTs on Explorer
-                            </a>
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('Error fetching NFT count:', error);
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 20px; color: #888;">
-                        <p>Unable to load NFT data</p>
+                    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3); text-align: center;">
+                        <p style="color: #ffd700; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                            📦 Legends Awaken I
+                        </p>
+                        <p style="color: #fff; font-size: 32px; font-weight: bold; margin: 15px 0;">
+                            ${count} NFTs
+                        </p>
+                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" 
+                           style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: linear-gradient(135deg, #00d4ff, #00a8cc); 
+                                  border-radius: 8px; color: #fff; text-decoration: none; font-size: 14px; font-weight: bold;">
+                            🔍 View NFTs on Explorer
+                        </a>
                     </div>
                 `;
+            } catch (error) {
+                console.error('Error showing NFT count:', error);
             }
         }
 
