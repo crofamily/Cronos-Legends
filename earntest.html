@@ -1137,7 +1137,7 @@
                         try {
                             let metadataURL = tokenURI;
                             if (metadataURL.startsWith('ipfs://')) {
-                                metadataURL = metadataURL.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
+                                metadataURL = metadataURL.replace('ipfs://', 'https://ipfs.io/ipfs/');
                             }
                             
                             console.log(`Fetching metadata from: ${metadataURL}`);
@@ -1156,7 +1156,7 @@
                             name = metadata.name || name;
                             
                             if (imageUrl.startsWith('ipfs://')) {
-                                imageUrl = imageUrl.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
+                                imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
                             }
                             
                             console.log(`✅ #${tokenId}: ${name} - Image: ${imageUrl}`);
@@ -1206,13 +1206,7 @@
             const nftCard = document.createElement('div');
             nftCard.className = 'nft-card';
             
-            // Use smaller image size for faster loading
             let imageUrl = nft.imageUrl;
-            
-            // If IPFS, use a faster gateway and request smaller size
-            if (imageUrl.includes('ipfs.io')) {
-                imageUrl = imageUrl.replace('ipfs.io', 'cloudflare-ipfs.com');
-            }
             
             const fallbackSVG = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="20" text-anchor="middle" dominant-baseline="middle">NFT %23${nft.tokenId}</text></svg>`;
             
