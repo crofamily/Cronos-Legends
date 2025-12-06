@@ -1098,81 +1098,10 @@
             container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>🔍 Searching for NFTs...</p></div>';
             
             try {
-                // Try Covalent API first (best for Cronos NFTs)
-                await fetchNFTsViaCovalent();
+                await fetchNFTsViaBlockchainScan(provider);
             } catch (error) {
-                console.log('Covalent failed, trying blockchain scan...', error);
-                try {
-                    await fetchNFTsViaBlockchainScan(provider);
-                } catch (error2) {
-                    console.error('All methods failed:', error2);
-                    showNFTCount(provider);
-                }
-            }
-        }
-
-        async function fetchNFTsViaCovalent() {
-            const container = document.getElementById('nft-holdings-container');
-            const allNFTs = [];
-            
-            // Covalent API endpoint for Cronos (chainId: 25)
-            // Using public demo key - for production, get your own at covalenthq.com
-            const apiKey = 'cqt_rQd7JMkMcQDdkxYGd9FGwqkYwC3K'; // Public demo key
-            
-            for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
-                try {
-                    const url = `https://api.covalenthq.com/v1/25/address/${WALLET_ADDRESS}/balances_nft/?contract-address=${contractAddress}&key=${apiKey}`;
-                    
-                    console.log(`📡 Fetching NFTs from Covalent API...`);
-                    const response = await fetch(url);
-                    const data = await response.json();
-                    
-                    if (data.data && data.data.items && data.data.items.length > 0) {
-                        const collection = data.data.items[0];
-                        console.log(`✅ Found ${collection.nft_data?.length || 0} NFTs via Covalent`);
-                        
-                        if (collection.nft_data && collection.nft_data.length > 0) {
-                            for (const nft of collection.nft_data) {
-                                const tokenId = nft.token_id;
-                                const metadata = nft.external_data;
-                                
-                                let tokenURI = '';
-                                let imageUrl = '';
-                                let name = `${collectionName} #${tokenId}`;
-                                
-                                if (metadata) {
-                                    imageUrl = metadata.image || metadata.image_url || '';
-                                    name = metadata.name || name;
-                                }
-                                
-                                // Handle IPFS URLs
-                                if (imageUrl.startsWith('ipfs://')) {
-                                    imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                                }
-                                
-                                allNFTs.push({
-                                    collection: collectionName,
-                                    tokenId: tokenId,
-                                    tokenURI: nft.token_url || '',
-                                    imageUrl: imageUrl,
-                                    name: name,
-                                    contractAddress: contractAddress
-                                });
-                                
-                                console.log(`✅ NFT #${tokenId}: ${name}`);
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error(`Error with Covalent for ${collectionName}:`, error);
-                    throw error;
-                }
-            }
-            
-            if (allNFTs.length > 0) {
-                displayNFTsWithImages(allNFTs);
-            } else {
-                throw new Error('No NFTs found via Covalent');
+                console.error('NFT fetching failed:', error);
+                showNFTCount(provider);
             }
         }
 
@@ -1198,20 +1127,43 @@
                     
                     if (count === 0) continue;
                     
-                    // Get transfer events (last 5000 blocks to limit query size)
+                    // Get transfer events in smaller chunks (2000 blocks max)
                     const currentBlock = await provider.getBlockNumber();
-                    const fromBlock = Math.max(0, currentBlock - 5000);
+                    const CHUNK_SIZE = 2000;
+                    const MAX_BLOCKS_TO_SCAN = 50000; // Scan last 50k blocks
                     
-                    console.log(`Querying Transfer events from block ${fromBlock} to ${currentBlock}`);
+                    const startBlock = Math.max(0, currentBlock - MAX_BLOCKS_TO_SCAN);
+                    const tokenIdsSet = new Set();
                     
-                    const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
-                    const events = await contract.queryFilter(filter, fromBlock, 'latest');
+                    console.log(`Scanning from block ${startBlock} to ${currentBlock} in chunks of ${CHUNK_SIZE}`);
                     
-                    console.log(`Found ${events.length} transfer events`);
+                    // Scan in chunks
+                    for (let fromBlock = startBlock; fromBlock < currentBlock && tokenIdsSet.size < count; fromBlock += CHUNK_SIZE) {
+                        const toBlock = Math.min(fromBlock + CHUNK_SIZE - 1, currentBlock);
+                        
+                        try {
+                            console.log(`Checking blocks ${fromBlock} to ${toBlock}...`);
+                            const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
+                            const events = await contract.queryFilter(filter, fromBlock, toBlock);
+                            
+                            events.forEach(e => tokenIdsSet.add(e.args.tokenId.toString()));
+                            console.log(`Found ${tokenIdsSet.size} unique token IDs so far...`);
+                            
+                            // Small delay to avoid rate limiting
+                            await new Promise(resolve => setTimeout(resolve, 200));
+                        } catch (error) {
+                            console.log(`Error scanning blocks ${fromBlock}-${toBlock}:`, error.message);
+                        }
+                        
+                        // Stop if we found enough
+                        if (tokenIdsSet.size >= count) {
+                            console.log(`Found all ${count} tokens!`);
+                            break;
+                        }
+                    }
                     
-                    // Get unique token IDs
-                    const tokenIds = [...new Set(events.map(e => e.args.tokenId.toString()))];
-                    console.log(`Checking ${tokenIds.length} unique tokens...`);
+                    const tokenIds = Array.from(tokenIdsSet);
+                    console.log(`Verifying ownership of ${tokenIds.length} tokens...`);
                     
                     // Verify current ownership
                     for (const tokenId of tokenIds) {
@@ -1230,7 +1182,7 @@
                                 if (allNFTs.length >= count) break;
                             }
                         } catch (e) {
-                            // Token not owned or error
+                            console.log(`Token ${tokenId} not owned anymore`);
                         }
                     }
                 } catch (error) {
@@ -1240,7 +1192,7 @@
             }
             
             if (allNFTs.length > 0) {
-                displayNFTsWithMetadata(allNFTs);
+                await displayNFTsWithMetadata(allNFTs);
             } else {
                 throw new Error('No NFTs found via blockchain scan');
             }
