@@ -1095,191 +1095,41 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>🔍 Searching for NFTs...</p></div>';
             
             try {
-                await fetchNFTsViaBlockchainScan(provider);
-            } catch (error) {
-                console.error('NFT fetching failed:', error);
-                showNFTCount(provider);
-            }
-        }
-
-        async function fetchNFTsViaBlockchainScan(provider) {
-            console.log('🔗 Scanning blockchain for NFT transfers...');
-            const container = document.getElementById('nft-holdings-container');
-            const allNFTs = [];
-            
-            for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
-                try {
-                    const nftAbi = [
-                        "function balanceOf(address owner) view returns (uint256)",
-                        "function ownerOf(uint256 tokenId) view returns (address)",
-                        "function tokenURI(uint256 tokenId) view returns (string)",
-                        "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
-                    ];
-                    
+                const nftAbi = ["function balanceOf(address owner) view returns (uint256)"];
+                
+                for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
                     const contract = new ethers.Contract(contractAddress, nftAbi, provider);
                     const balance = await contract.balanceOf(WALLET_ADDRESS);
                     const count = balance.toNumber();
                     
-                    console.log(`Treasury holds ${count} NFTs`);
+                    console.log(`✅ Treasury holds ${count} ${collectionName} NFTs`);
                     
-                    if (count === 0) continue;
-                    
-                    // Get transfer events in smaller chunks (2000 blocks max)
-                    const currentBlock = await provider.getBlockNumber();
-                    const CHUNK_SIZE = 2000;
-                    const MAX_BLOCKS_TO_SCAN = 50000; // Scan last 50k blocks
-                    
-                    const startBlock = Math.max(0, currentBlock - MAX_BLOCKS_TO_SCAN);
-                    const tokenIdsSet = new Set();
-                    
-                    console.log(`Scanning from block ${startBlock} to ${currentBlock} in chunks of ${CHUNK_SIZE}`);
-                    
-                    // Scan in chunks
-                    for (let fromBlock = startBlock; fromBlock < currentBlock && tokenIdsSet.size < count; fromBlock += CHUNK_SIZE) {
-                        const toBlock = Math.min(fromBlock + CHUNK_SIZE - 1, currentBlock);
-                        
-                        try {
-                            console.log(`Checking blocks ${fromBlock} to ${toBlock}...`);
-                            const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
-                            const events = await contract.queryFilter(filter, fromBlock, toBlock);
-                            
-                            events.forEach(e => tokenIdsSet.add(e.args.tokenId.toString()));
-                            console.log(`Found ${tokenIdsSet.size} unique token IDs so far...`);
-                            
-                            // Small delay to avoid rate limiting
-                            await new Promise(resolve => setTimeout(resolve, 200));
-                        } catch (error) {
-                            console.log(`Error scanning blocks ${fromBlock}-${toBlock}:`, error.message);
-                        }
-                        
-                        // Stop if we found enough
-                        if (tokenIdsSet.size >= count) {
-                            console.log(`Found all ${count} tokens!`);
-                            break;
-                        }
-                    }
-                    
-                    const tokenIds = Array.from(tokenIdsSet);
-                    console.log(`Verifying ownership of ${tokenIds.length} tokens...`);
-                    
-                    // Verify current ownership
-                    for (const tokenId of tokenIds) {
-                        try {
-                            const owner = await contract.ownerOf(tokenId);
-                            if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
-                                const tokenURI = await contract.tokenURI(tokenId);
-                                allNFTs.push({
-                                    collection: collectionName,
-                                    tokenId: tokenId,
-                                    tokenURI: tokenURI,
-                                    contractAddress: contractAddress
-                                });
-                                console.log(`✅ Confirmed ownership of #${tokenId}`);
-                                
-                                if (allNFTs.length >= count) break;
-                            }
-                        } catch (e) {
-                            console.log(`Token ${tokenId} not owned anymore`);
-                        }
-                    }
-                } catch (error) {
-                    console.error(`Error scanning blockchain:`, error);
-                    throw error;
+                    container.innerHTML = `
+                        <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3); text-align: center;">
+                            <p style="color: #ffd700; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
+                                📦 ${collectionName}
+                            </p>
+                            <p style="color: #fff; font-size: 32px; font-weight: bold; margin: 15px 0;">
+                                ${count} NFTs
+                            </p>
+                            <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}" target="_blank" 
+                               style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: linear-gradient(135deg, #00d4ff, #00a8cc); 
+                                      border-radius: 8px; color: #fff; text-decoration: none; font-size: 14px; font-weight: bold;">
+                                🔍 View NFTs on Explorer
+                            </a>
+                        </div>
+                    `;
                 }
-            }
-            
-            if (allNFTs.length > 0) {
-                await displayNFTsWithMetadata(allNFTs);
-            } else {
-                throw new Error('No NFTs found via blockchain scan');
-            }
-        }
-
-        async function showNFTCount(provider) {
-            const container = document.getElementById('nft-holdings-container');
-            
-            try {
-                const nftAbi = ["function balanceOf(address owner) view returns (uint256)"];
-                const contract = new ethers.Contract(
-                    Object.values(NFT_CONTRACTS)[0], 
-                    nftAbi, 
-                    provider
-                );
-                const balance = await contract.balanceOf(WALLET_ADDRESS);
-                const count = balance.toNumber();
-                
+            } catch (error) {
+                console.error('Error fetching NFT count:', error);
                 container.innerHTML = `
-                    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                        <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 10px;">
-                            Legends Awaken I: ${count} NFTs Held
-                        </p>
-                        <p style="color: #aaa; font-size: 13px; text-align: center;">
-                            ℹ️ NFT images are being loaded... Please wait or refresh.
-                        </p>
+                    <div style="text-align: center; padding: 20px; color: #888;">
+                        <p>Unable to load NFT data</p>
                     </div>
                 `;
-            } catch (error) {
-                console.error('Error showing NFT count:', error);
             }
-        }
-
-        function displayNFTsWithImages(allNFTs) {
-            const container = document.getElementById('nft-holdings-container');
-            
-            container.innerHTML = `
-                <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                    <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
-                        Total NFTs Held: ${allNFTs.length}
-                    </p>
-                </div>
-                <div class="nft-grid" id="nft-grid"></div>
-            `;
-            
-            const nftGrid = document.getElementById('nft-grid');
-            
-            for (const nft of allNFTs) {
-                displayNFTDirect(nft, nftGrid);
-            }
-        }
-
-        async function displayNFTsWithMetadata(allNFTs) {
-            const container = document.getElementById('nft-holdings-container');
-            
-            container.innerHTML = `
-                <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                    <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
-                        Total NFTs Held: ${allNFTs.length}
-                    </p>
-                </div>
-                <div class="nft-grid" id="nft-grid"></div>
-            `;
-            
-            const nftGrid = document.getElementById('nft-grid');
-            
-            for (const nft of allNFTs) {
-                await displayNFT(nft, nftGrid);
-            }
-        }
-
-        function displayNFTDirect(nft, container) {
-            const nftCard = document.createElement('div');
-            nftCard.className = 'nft-card';
-            
-            const imageUrl = nft.imageUrl || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="24" text-anchor="middle" dominant-baseline="middle">NFT %23' + nft.tokenId + '</text></svg>';
-            
-            nftCard.innerHTML = `
-                <img src="${imageUrl}" alt="${nft.name}" class="nft-image" onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"400\\"><rect width=\\"400\\" height=\\"400\\" fill=\\"%23222\\"/><text x=\\"50%\\" y=\\"50%\\" fill=\\"%23ffd700\\" font-size=\\"24\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">NFT %23${nft.tokenId}</text></svg>'">
-                <div class="nft-info">
-                    <div class="nft-name">${nft.name}</div>
-                    <div class="nft-id">Token ID: ${nft.tokenId}</div>
-                    <div class="nft-id">${nft.collection}</div>
-                </div>
-            `;
-            
-            container.appendChild(nftCard);
         }
 
         async function displayNFT(nft, container) {
