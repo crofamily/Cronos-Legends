@@ -1132,27 +1132,37 @@
                     let imageUrl = '';
                     let name = `Legends Awaken I #${tokenId}`;
                     
-                    // Fetch metadata
+                    // Fetch metadata with timeout
                     if (tokenURI) {
                         try {
                             let metadataURL = tokenURI;
                             if (metadataURL.startsWith('ipfs://')) {
-                                metadataURL = metadataURL.replace('ipfs://', 'https://ipfs.io/ipfs/');
+                                metadataURL = metadataURL.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
                             }
                             
-                            const metaResponse = await fetch(metadataURL);
+                            console.log(`Fetching metadata from: ${metadataURL}`);
+                            
+                            // Fetch with 5 second timeout
+                            const controller = new AbortController();
+                            const timeoutId = setTimeout(() => controller.abort(), 5000);
+                            
+                            const metaResponse = await fetch(metadataURL, { signal: controller.signal });
+                            clearTimeout(timeoutId);
+                            
                             const metadata = await metaResponse.json();
+                            console.log(`Metadata for #${tokenId}:`, metadata);
                             
                             imageUrl = metadata.image || metadata.image_url || '';
                             name = metadata.name || name;
                             
                             if (imageUrl.startsWith('ipfs://')) {
-                                imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+                                imageUrl = imageUrl.replace('ipfs://', 'https://cloudflare-ipfs.com/ipfs/');
                             }
                             
-                            console.log(`✅ #${tokenId}: ${name}`);
+                            console.log(`✅ #${tokenId}: ${name} - Image: ${imageUrl}`);
                         } catch (e) {
-                            console.log(`Could not fetch metadata for #${tokenId}`);
+                            console.log(`⚠️ Could not fetch metadata for #${tokenId}:`, e.message);
+                            // Use placeholder
                         }
                     }
                     
@@ -1163,11 +1173,11 @@
                         collection: 'Legends Awaken I'
                     });
                 } catch (e) {
-                    console.log(`Error loading token #${tokenId}:`, e);
+                    console.log(`❌ Error loading token #${tokenId}:`, e.message);
                 }
             }
             
-            // Display the NFTs
+            // Display the NFTs immediately as they load
             if (allNFTs.length > 0) {
                 container.innerHTML = `
                     <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
@@ -1185,6 +1195,8 @@
                 allNFTs.forEach(nft => {
                     displayNFTCard(nft, nftGrid);
                 });
+                
+                console.log(`✅ Displayed ${allNFTs.length} NFT cards`);
             } else {
                 throw new Error('No NFTs loaded');
             }
