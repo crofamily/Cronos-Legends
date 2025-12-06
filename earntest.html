@@ -589,14 +589,18 @@
             </div>
 
             <!-- NFT Holdings -->
-            <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">NFT Collection Holdings</h4>
+            <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">Legends Awaken I Collection</h4>
             <div id="nft-holdings-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>Loading NFT collections...</p>
-                    <p style="font-size: 12px; margin-top: 10px; color: #ffa500;">
-                        ⚠️ If NFTs don't load, you may need to host this page on a web server. 
-                        Opening from file:// can cause CORS errors.
-                    </p>
+                    <p>Loading Legends Awaken I NFTs...</p>
+                </div>
+            </div>
+
+            <!-- Other NFTs -->
+            <h4 style="color: #BA55D3; font-size: 18px; margin: 40px 0 15px;">🤝 Other Cronos NFTs & Partner NFTs</h4>
+            <div id="other-nft-container">
+                <div style="text-align: center; padding: 20px; color: #888;">
+                    <p>Scanning for other NFT collections...</p>
                 </div>
             </div>
 
@@ -1086,6 +1090,7 @@
                 // Fetch NFT holdings ONLY ONCE on initial load
                 if (!window.nftsLoaded) {
                     await updateNFTHoldings(provider);
+                    await updateOtherNFTs(provider);
                     window.nftsLoaded = true;
                 }
                 
@@ -1219,7 +1224,6 @@
                 <div class="nft-info">
                     <div class="nft-name">${nft.name}</div>
                     <div class="nft-id">Token ID: ${nft.tokenId}</div>
-                    <div class="nft-id">${nft.collection}</div>
                 </div>
             `;
             
@@ -1257,6 +1261,45 @@
             } catch (error) {
                 console.error('Error showing NFT count:', error);
             }
+        }
+
+        async function updateOtherNFTs(provider) {
+            const container = document.getElementById('other-nft-container');
+            
+            // Known other NFT contracts from explorer
+            const otherNFTContracts = {
+                'Golden Hops': { address: '0x...', ids: [10, 6] }, // Add contract address
+                'BoomerSquad': { address: '0x...', ids: [5697] },
+                'Wolfies': { address: '0x...', ids: [1255] }
+            };
+            
+            // For now, just show the count from explorer
+            container.innerHTML = `
+                <div style="background: rgba(186, 85, 211, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(186, 85, 211, 0.3); text-align: center;">
+                    <p style="color: #BA55D3; font-size: 16px; font-weight: bold; margin-bottom: 15px;">
+                        Additional NFT Holdings
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
+                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">Golden Hops</p>
+                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">2 NFTs</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
+                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">BoomerSquad</p>
+                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">1 NFT</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
+                            <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">Wolfies</p>
+                            <p style="color: #fff; font-size: 20px; margin-top: 5px;">1 NFT</p>
+                        </div>
+                    </div>
+                    <p style="color: #888; font-size: 12px; margin-top: 15px;">
+                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #BA55D3;">
+                            View all NFTs on Cronos Explorer →
+                        </a>
+                    </p>
+                </div>
+            `;
         }
 
         async function displayNFT(nft, container) {
