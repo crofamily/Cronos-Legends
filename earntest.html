@@ -536,7 +536,7 @@
             <h4 style="color: #00d4ff; font-size: 18px; margin-bottom: 15px;">Ecosystem Token Holdings</h4>
             <div class="funds-grid">
                 <div class="fund-item" data-token="CRO" style="border-color: rgba(0, 132, 255, 0.6); background: rgba(0, 132, 255, 0.05);">
-                    <span class="fund-label" style="color: #0084ff;">💎 CRO</span>
+                    <span class="fund-label" style="color: #0084ff;">💎 $CRO</span>
                     <span class="fund-value">Loading...</span>
                     <span class="fund-usd" style="color: #0084ff;">$0.00</span>
                 </div>
@@ -574,6 +574,14 @@
                 </div>
             </div>
 
+            <!-- Other Token Holdings -->
+            <h4 style="color: #f59e0b; font-size: 18px; margin: 30px 0 15px;">💫 Other Token Holdings</h4>
+            <div style="background: rgba(245, 158, 11, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                <div class="funds-grid" id="other-tokens-grid">
+                    <!-- Populated dynamically, sorted by USD value -->
+                </div>
+            </div>
+
             <!-- NFT Toggle Button -->
             <div style="text-align: center; margin: 40px 0 20px;">
                 <button id="toggle-nfts-btn" onclick="toggleNFTs()" class="swap-btn" style="max-width: 400px; margin: 0 auto;">
@@ -596,14 +604,6 @@
             <div id="other-nft-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
                     <p>Scanning for other NFT collections...</p>
-                </div>
-            </div>
-
-            <!-- Other Token Holdings -->
-            <h4 style="color: #f59e0b; font-size: 18px; margin: 30px 0 15px;">💫 Other Token Holdings</h4>
-            <div style="background: rgba(245, 158, 11, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">
-                <div class="funds-grid" id="other-tokens-grid">
-                    <!-- Populated dynamically, sorted by USD value -->
                 </div>
             </div>
 
@@ -984,7 +984,7 @@
                     ...Object.values(TOKEN_CONTRACTS), 
                     ...Object.values(PARTNER_CONTRACTS),
                     ...Object.values(OTHER_CONTRACTS)
-                ].join(',');
+                ].filter(addr => addr !== 'NATIVE').join(',');
                 const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${allAddresses}`);
                 const data = await response.json();
                 
@@ -998,12 +998,15 @@
                                 ...Object.entries(PARTNER_CONTRACTS),
                                 ...Object.entries(OTHER_CONTRACTS)
                             ].forEach(([symbol, addr]) => {
-                                if (baseAddr === addr.toLowerCase()) {
+                                if (addr !== 'NATIVE' && baseAddr === addr.toLowerCase()) {
                                     TOKEN_PRICES[symbol] = parseFloat(pair.priceUsd || 0);
+                                    console.log(`💰 ${symbol} price: $${TOKEN_PRICES[symbol]}`);
                                 }
                             });
                         }
                     });
+                } else {
+                    console.log('⚠️ No pairs found in DEXScreener response');
                 }
                 
                 // Apply manual prices
@@ -1053,7 +1056,7 @@
                 const croAmount = parseFloat(ethers.utils.formatEther(croBalance));
                 const croValue = croAmount * (TOKEN_PRICES['CRO'] || 0);
                 totalUSD += croValue;
-                updateBalanceDisplay('CRO', croAmount.toFixed(2) + ' CRO', croValue);
+                updateBalanceDisplay('CRO', croAmount.toFixed(2) + ' $CRO', croValue);
                 
                 const abi = [
                     "function balanceOf(address owner) view returns (uint256)",
@@ -1144,6 +1147,10 @@
                         const amount = parseFloat(ethers.utils.formatUnits(balance, decimals));
                         const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
                         otherTotalUSD += usdValue;
+                        
+                        if (!TOKEN_PRICES[symbol]) {
+                            console.log(`⚠️ No price data for ${symbol} (${contractAddress})`);
+                        }
                         
                         otherTokensData.push({
                             symbol: symbol,
