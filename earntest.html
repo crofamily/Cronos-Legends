@@ -1095,8 +1095,90 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFT collection...</p></div>';
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>🔍 Searching for NFTs...</p></div>';
             
+            try {
+                // Try Covalent API first (best for Cronos NFTs)
+                await fetchNFTsViaCovalent();
+            } catch (error) {
+                console.log('Covalent failed, trying blockchain scan...', error);
+                try {
+                    await fetchNFTsViaBlockchainScan(provider);
+                } catch (error2) {
+                    console.error('All methods failed:', error2);
+                    showNFTCount(provider);
+                }
+            }
+        }
+
+        async function fetchNFTsViaCovalent() {
+            const container = document.getElementById('nft-holdings-container');
+            const allNFTs = [];
+            
+            // Covalent API endpoint for Cronos (chainId: 25)
+            // Using public demo key - for production, get your own at covalenthq.com
+            const apiKey = 'cqt_rQd7JMkMcQDdkxYGd9FGwqkYwC3K'; // Public demo key
+            
+            for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
+                try {
+                    const url = `https://api.covalenthq.com/v1/25/address/${WALLET_ADDRESS}/balances_nft/?contract-address=${contractAddress}&key=${apiKey}`;
+                    
+                    console.log(`📡 Fetching NFTs from Covalent API...`);
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data.data && data.data.items && data.data.items.length > 0) {
+                        const collection = data.data.items[0];
+                        console.log(`✅ Found ${collection.nft_data?.length || 0} NFTs via Covalent`);
+                        
+                        if (collection.nft_data && collection.nft_data.length > 0) {
+                            for (const nft of collection.nft_data) {
+                                const tokenId = nft.token_id;
+                                const metadata = nft.external_data;
+                                
+                                let tokenURI = '';
+                                let imageUrl = '';
+                                let name = `${collectionName} #${tokenId}`;
+                                
+                                if (metadata) {
+                                    imageUrl = metadata.image || metadata.image_url || '';
+                                    name = metadata.name || name;
+                                }
+                                
+                                // Handle IPFS URLs
+                                if (imageUrl.startsWith('ipfs://')) {
+                                    imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
+                                }
+                                
+                                allNFTs.push({
+                                    collection: collectionName,
+                                    tokenId: tokenId,
+                                    tokenURI: nft.token_url || '',
+                                    imageUrl: imageUrl,
+                                    name: name,
+                                    contractAddress: contractAddress
+                                });
+                                
+                                console.log(`✅ NFT #${tokenId}: ${name}`);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error with Covalent for ${collectionName}:`, error);
+                    throw error;
+                }
+            }
+            
+            if (allNFTs.length > 0) {
+                displayNFTsWithImages(allNFTs);
+            } else {
+                throw new Error('No NFTs found via Covalent');
+            }
+        }
+
+        async function fetchNFTsViaBlockchainScan(provider) {
+            console.log('🔗 Scanning blockchain for NFT transfers...');
+            const container = document.getElementById('nft-holdings-container');
             const allNFTs = [];
             
             for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
@@ -1104,82 +1186,148 @@
                     const nftAbi = [
                         "function balanceOf(address owner) view returns (uint256)",
                         "function ownerOf(uint256 tokenId) view returns (address)",
-                        "function tokenURI(uint256 tokenId) view returns (string)"
+                        "function tokenURI(uint256 tokenId) view returns (string)",
+                        "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
                     ];
                     
                     const contract = new ethers.Contract(contractAddress, nftAbi, provider);
                     const balance = await contract.balanceOf(WALLET_ADDRESS);
                     const count = balance.toNumber();
                     
-                    console.log(`Treasury holds ${count} NFTs from ${collectionName}`);
+                    console.log(`Treasury holds ${count} NFTs`);
                     
                     if (count === 0) continue;
                     
-                    // Check if we have known token IDs for this contract
-                    const knownIds = KNOWN_NFT_IDS[contractAddress] || [];
+                    // Get transfer events (last 5000 blocks to limit query size)
+                    const currentBlock = await provider.getBlockNumber();
+                    const fromBlock = Math.max(0, currentBlock - 5000);
                     
-                    if (knownIds.length > 0) {
-                        console.log(`Using ${knownIds.length} known token IDs`);
-                        // Use known IDs (fastest method)
-                        for (const tokenId of knownIds) {
-                            try {
-                                const owner = await contract.ownerOf(tokenId);
-                                if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
-                                    const tokenURI = await contract.tokenURI(tokenId);
-                                    allNFTs.push({
-                                        collection: collectionName,
-                                        tokenId: tokenId.toString(),
-                                        tokenURI: tokenURI,
-                                        contractAddress: contractAddress
-                                    });
-                                }
-                            } catch (e) {
-                                console.log(`Token ${tokenId} not owned`);
+                    console.log(`Querying Transfer events from block ${fromBlock} to ${currentBlock}`);
+                    
+                    const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
+                    const events = await contract.queryFilter(filter, fromBlock, 'latest');
+                    
+                    console.log(`Found ${events.length} transfer events`);
+                    
+                    // Get unique token IDs
+                    const tokenIds = [...new Set(events.map(e => e.args.tokenId.toString()))];
+                    console.log(`Checking ${tokenIds.length} unique tokens...`);
+                    
+                    // Verify current ownership
+                    for (const tokenId of tokenIds) {
+                        try {
+                            const owner = await contract.ownerOf(tokenId);
+                            if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
+                                const tokenURI = await contract.tokenURI(tokenId);
+                                allNFTs.push({
+                                    collection: collectionName,
+                                    tokenId: tokenId,
+                                    tokenURI: tokenURI,
+                                    contractAddress: contractAddress
+                                });
+                                console.log(`✅ Confirmed ownership of #${tokenId}`);
+                                
+                                if (allNFTs.length >= count) break;
                             }
+                        } catch (e) {
+                            // Token not owned or error
                         }
-                    } else {
-                        // No known IDs - show count only
-                        container.innerHTML = `
-                            <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                                <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 15px;">
-                                    ${collectionName}: ${count} NFTs Held
-                                </p>
-                                <p style="color: #ddd; font-size: 14px; text-align: center;">
-                                    ℹ️ To display NFT images, add token IDs to KNOWN_NFT_IDS in the code.
-                                </p>
-                            </div>
-                        `;
-                        return;
                     }
-                    
                 } catch (error) {
-                    console.error(`Error fetching NFTs for ${collectionName}:`, error);
+                    console.error(`Error scanning blockchain:`, error);
+                    throw error;
                 }
             }
             
-            // Display NFTs
             if (allNFTs.length > 0) {
+                displayNFTsWithMetadata(allNFTs);
+            } else {
+                throw new Error('No NFTs found via blockchain scan');
+            }
+        }
+
+        async function showNFTCount(provider) {
+            const container = document.getElementById('nft-holdings-container');
+            
+            try {
+                const nftAbi = ["function balanceOf(address owner) view returns (uint256)"];
+                const contract = new ethers.Contract(
+                    Object.values(NFT_CONTRACTS)[0], 
+                    nftAbi, 
+                    provider
+                );
+                const balance = await contract.balanceOf(WALLET_ADDRESS);
+                const count = balance.toNumber();
+                
                 container.innerHTML = `
-                    <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                        <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
-                            Total NFTs Held: ${allNFTs.length}
+                    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                        <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 10px;">
+                            Legends Awaken I: ${count} NFTs Held
+                        </p>
+                        <p style="color: #aaa; font-size: 13px; text-align: center;">
+                            ℹ️ NFT images are being loaded... Please wait or refresh.
                         </p>
                     </div>
-                    <div class="nft-grid" id="nft-grid"></div>
                 `;
-                
-                const nftGrid = document.getElementById('nft-grid');
-                
-                for (const nft of allNFTs) {
-                    await displayNFT(nft, nftGrid);
-                }
-            } else if (allNFTs.length === 0 && KNOWN_NFT_IDS[Object.values(NFT_CONTRACTS)[0]]?.length > 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 20px; color: #888;">
-                        <p>No NFTs found with the specified token IDs.</p>
-                    </div>
-                `;
+            } catch (error) {
+                console.error('Error showing NFT count:', error);
             }
+        }
+
+        function displayNFTsWithImages(allNFTs) {
+            const container = document.getElementById('nft-holdings-container');
+            
+            container.innerHTML = `
+                <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                    <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
+                        Total NFTs Held: ${allNFTs.length}
+                    </p>
+                </div>
+                <div class="nft-grid" id="nft-grid"></div>
+            `;
+            
+            const nftGrid = document.getElementById('nft-grid');
+            
+            for (const nft of allNFTs) {
+                displayNFTDirect(nft, nftGrid);
+            }
+        }
+
+        async function displayNFTsWithMetadata(allNFTs) {
+            const container = document.getElementById('nft-holdings-container');
+            
+            container.innerHTML = `
+                <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                    <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
+                        Total NFTs Held: ${allNFTs.length}
+                    </p>
+                </div>
+                <div class="nft-grid" id="nft-grid"></div>
+            `;
+            
+            const nftGrid = document.getElementById('nft-grid');
+            
+            for (const nft of allNFTs) {
+                await displayNFT(nft, nftGrid);
+            }
+        }
+
+        function displayNFTDirect(nft, container) {
+            const nftCard = document.createElement('div');
+            nftCard.className = 'nft-card';
+            
+            const imageUrl = nft.imageUrl || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="24" text-anchor="middle" dominant-baseline="middle">NFT %23' + nft.tokenId + '</text></svg>';
+            
+            nftCard.innerHTML = `
+                <img src="${imageUrl}" alt="${nft.name}" class="nft-image" onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"400\\"><rect width=\\"400\\" height=\\"400\\" fill=\\"%23222\\"/><text x=\\"50%\\" y=\\"50%\\" fill=\\"%23ffd700\\" font-size=\\"24\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">NFT %23${nft.tokenId}</text></svg>'">
+                <div class="nft-info">
+                    <div class="nft-name">${nft.name}</div>
+                    <div class="nft-id">Token ID: ${nft.tokenId}</div>
+                    <div class="nft-id">${nft.collection}</div>
+                </div>
+            `;
+            
+            container.appendChild(nftCard);
         }
 
         async function displayNFT(nft, container) {
