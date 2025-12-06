@@ -592,6 +592,10 @@
             <div id="nft-holdings-container">
                 <div style="text-align: center; padding: 20px; color: #888;">
                     <p>Loading NFT collections...</p>
+                    <p style="font-size: 12px; margin-top: 10px; color: #ffa500;">
+                        ⚠️ If NFTs don't load, you may need to host this page on a web server. 
+                        Opening from file:// can cause CORS errors.
+                    </p>
                 </div>
             </div>
 
@@ -981,7 +985,15 @@
         async function updateAllBalances() {
             await updateTokenPrices();
             
-            const provider = new ethers.providers.JsonRpcProvider('https://evm.cronos.org/');
+            // Use Cronos network with explicit chainId to avoid network detection
+            const provider = new ethers.providers.JsonRpcProvider({
+                url: 'https://evm.cronos.org',
+                timeout: 30000
+            }, {
+                name: 'cronos',
+                chainId: 25
+            });
+            
             let totalUSD = 0;
             let partnerUSD = 0;
             
@@ -1062,15 +1074,16 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFTs...</p></div>';
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFTs from blockchain...</p></div>';
             
-            // Extended ERC-721 ABI
+            // ERC-721 ABI with Transfer event
             const nftAbi = [
                 "function balanceOf(address owner) view returns (uint256)",
-                "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+                "function ownerOf(uint256 tokenId) view returns (address)",
                 "function tokenURI(uint256 tokenId) view returns (string)",
                 "function name() view returns (string)",
-                "function symbol() view returns (string)"
+                "function symbol() view returns (string)",
+                "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
             ];
             
             const allNFTs = [];
@@ -1081,7 +1094,9 @@
                     const balance = await contract.balanceOf(WALLET_ADDRESS);
                     const count = balance.toNumber();
                     
-                    console.log(`Found ${count} NFTs in ${collectionName}`);
+                    console.log(`Treasury holds ${count} NFTs from ${collectionName}`);
+                    
+                    if (count === 0) continue;
                     
                     // Get collection info
                     let name = collectionName;
@@ -1089,25 +1104,38 @@
                     try {
                         name = await contract.name();
                         symbol = await contract.symbol();
-                    } catch (e) {
-                        console.log('Could not fetch name/symbol, using defaults');
-                    }
+                    } catch (e) {}
                     
-                    // Fetch each NFT's details
-                    for (let i = 0; i < count; i++) {
+                    // Query Transfer events TO the treasury wallet
+                    console.log('Fetching Transfer events...');
+                    const filter = contract.filters.Transfer(null, WALLET_ADDRESS);
+                    const events = await contract.queryFilter(filter, 0, 'latest');
+                    
+                    console.log(`Found ${events.length} transfer events`);
+                    
+                    // Get unique token IDs from events
+                    const tokenIds = [...new Set(events.map(event => event.args.tokenId.toString()))];
+                    console.log(`Checking ${tokenIds.length} unique token IDs...`);
+                    
+                    // Verify treasury still owns each token
+                    for (const tokenId of tokenIds) {
                         try {
-                            const tokenId = await contract.tokenOfOwnerByIndex(WALLET_ADDRESS, i);
-                            const tokenURI = await contract.tokenURI(tokenId);
-                            
-                            allNFTs.push({
-                                collection: name,
-                                symbol: symbol,
-                                tokenId: tokenId.toString(),
-                                tokenURI: tokenURI,
-                                contractAddress: contractAddress
-                            });
+                            const owner = await contract.ownerOf(tokenId);
+                            if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
+                                console.log(`✅ Treasury owns token #${tokenId}`);
+                                const tokenURI = await contract.tokenURI(tokenId);
+                                allNFTs.push({
+                                    collection: name,
+                                    symbol: symbol,
+                                    tokenId: tokenId,
+                                    tokenURI: tokenURI,
+                                    contractAddress: contractAddress
+                                });
+                                
+                                if (allNFTs.length >= count) break; // Found all
+                            }
                         } catch (error) {
-                            console.error(`Error fetching NFT ${i}:`, error);
+                            console.log(`Token ${tokenId} check failed, skipping`);
                         }
                     }
                     
@@ -1136,7 +1164,8 @@
             } else {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 20px; color: #888;">
-                        <p>No NFTs found in treasury wallet.</p>
+                        <p>No NFTs found in treasury wallet or still loading...</p>
+                        <p style="font-size: 12px; margin-top: 10px;">This may take a moment on first load.</p>
                     </div>
                 `;
             }
