@@ -570,17 +570,7 @@
             <h4 style="color: #9333ea; font-size: 18px; margin: 30px 0 15px;">🤝 Partner Token Holdings</h4>
             <div style="background: rgba(147, 51, 234, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(147, 51, 234, 0.2);">
                 <div class="funds-grid" id="partner-tokens-grid">
-                    <div class="fund-item" data-partner="CRONUS-item" style="border-color: rgba(147, 51, 234, 0.4);">
-                        <span class="fund-label" style="color: #9333ea;">$CRONUS</span>
-                        <span class="fund-value" data-partner="CRONUS-amount">Loading...</span>
-                        <span class="fund-usd" data-partner="CRONUS-usd" style="color: #9333ea;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-partner="BONE-item" style="border-color: rgba(147, 51, 234, 0.4);">
-                        <span class="fund-label" style="color: #9333ea;">$BONE</span>
-                        <span class="fund-value" data-partner="BONE-amount">Loading...</span>
-                        <span class="fund-usd" data-partner="BONE-usd" style="color: #9333ea;">$0.00</span>
-                    </div>
+                    <!-- Populated dynamically, sorted by USD value -->
                 </div>
             </div>
 
@@ -613,41 +603,7 @@
             <h4 style="color: #f59e0b; font-size: 18px; margin: 30px 0 15px;">💫 Other Token Holdings</h4>
             <div style="background: rgba(245, 158, 11, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">
                 <div class="funds-grid" id="other-tokens-grid">
-                    <div class="fund-item" data-other="CRONON" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$CRONON</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-other="WOW" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$WOW</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-other="FFS" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$FFS</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-other="DOM" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$DOM</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-other="MOONR" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$MOONR</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
-                    
-                    <div class="fund-item" data-other="PAWSFLOW" style="border-color: rgba(245, 158, 11, 0.4);">
-                        <span class="fund-label" style="color: #f59e0b;">$PAWSFLOW</span>
-                        <span class="fund-value">Loading...</span>
-                        <span class="fund-usd" style="color: #f59e0b;">$0.00</span>
-                    </div>
+                    <!-- Populated dynamically, sorted by USD value -->
                 </div>
             </div>
 
@@ -1165,12 +1121,6 @@
                     `;
                     partnerGrid.appendChild(item);
                 });
-                
-                // Add CRONUS to partner total (already counted in ecosystem)
-                const cronusAmount = parseFloat(document.querySelector('[data-token="CRONUS"] .fund-value').textContent.replace(' $CRONUS', ''));
-                const cronusUSD = cronusAmount * (TOKEN_PRICES['CRONUS'] || 0);
-                partnerUSD += cronusUSD;
-                updatePartnerDisplay('CRONUS', cronusAmount.toFixed(2) + ' $CRONUS', cronusUSD);
                 
                 TOTAL_VALUE_USD = totalUSD;
                 PARTNER_TOTAL_USD = partnerUSD;
