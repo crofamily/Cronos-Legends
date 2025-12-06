@@ -991,11 +991,11 @@
         async function updateAllBalances() {
             await updateTokenPrices();
             
-            // Use public Cronos RPC endpoints (trying multiple for reliability)
+            // Use public Cronos RPC endpoints (VVS Finance first as it's most reliable)
             const rpcEndpoints = [
+                'https://rpc.vvs.finance',
                 'https://evm-cronos.crypto.org',
-                'https://cronos-evm.publicnode.com',
-                'https://rpc.vvs.finance'
+                'https://cronos-evm.publicnode.com'
             ];
             
             let provider = null;
