@@ -933,6 +933,12 @@
             'Legends Awaken I': '0x68A3192E286AA5C2182D815F5fE796401eCe28bA',
         };
 
+        // Known token IDs in treasury (update this list manually or leave empty for auto-detection)
+        // This is the fastest method - just list the token IDs you know the treasury holds
+        const KNOWN_NFT_IDS = {
+            '0x68A3192E286AA5C2182D815F5fE796401eCe28bA': [] // Add token IDs here like: [1, 5, 42, 100, 234, 567]
+        };
+
         const TOKEN_PRICES = {};
         const MANUAL_PRICES = {
             CARA: 16081.29,
@@ -985,14 +991,29 @@
         async function updateAllBalances() {
             await updateTokenPrices();
             
-            // Use Cronos network with explicit chainId to avoid network detection
-            const provider = new ethers.providers.JsonRpcProvider({
-                url: 'https://evm.cronos.org',
-                timeout: 30000
-            }, {
-                name: 'cronos',
-                chainId: 25
-            });
+            // Use public Cronos RPC endpoints (trying multiple for reliability)
+            const rpcEndpoints = [
+                'https://evm-cronos.crypto.org',
+                'https://cronos-evm.publicnode.com',
+                'https://rpc.vvs.finance'
+            ];
+            
+            let provider = null;
+            for (const rpc of rpcEndpoints) {
+                try {
+                    provider = new ethers.providers.JsonRpcProvider(rpc);
+                    await provider.getNetwork(); // Test connection
+                    console.log(`✅ Connected to Cronos via: ${rpc}`);
+                    break;
+                } catch (error) {
+                    console.log(`❌ Failed to connect to: ${rpc}`);
+                }
+            }
+            
+            if (!provider) {
+                console.error('Could not connect to any Cronos RPC');
+                return;
+            }
             
             let totalUSD = 0;
             let partnerUSD = 0;
@@ -1074,102 +1095,69 @@
         // ===========================
         async function updateNFTHoldings(provider) {
             const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFTs...</p></div>';
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>Loading NFT collection...</p></div>';
             
-            try {
-                // Try Cronos Explorer API first
-                await fetchNFTsViaCronosAPI();
-            } catch (error) {
-                console.log('Cronos API failed, trying Alchemy method...', error);
-                try {
-                    await fetchNFTsViaAlchemy();
-                } catch (error2) {
-                    console.log('All API methods failed:', error2);
-                    showNFTError();
-                }
-            }
-        }
-
-        async function fetchNFTsViaCronosAPI() {
-            const container = document.getElementById('nft-holdings-container');
             const allNFTs = [];
             
             for (const [collectionName, contractAddress] of Object.entries(NFT_CONTRACTS)) {
                 try {
-                    // Cronos Explorer API endpoint for NFT inventory
-                    const url = `https://cronos.org/explorer/api?module=account&action=tokennfttx&contractaddress=${contractAddress}&address=${WALLET_ADDRESS}&page=1&offset=100&sort=desc`;
+                    const nftAbi = [
+                        "function balanceOf(address owner) view returns (uint256)",
+                        "function ownerOf(uint256 tokenId) view returns (address)",
+                        "function tokenURI(uint256 tokenId) view returns (string)"
+                    ];
                     
-                    console.log(`Fetching from Cronos Explorer API: ${collectionName}`);
-                    const response = await fetch(url);
-                    const data = await response.json();
+                    const contract = new ethers.Contract(contractAddress, nftAbi, provider);
+                    const balance = await contract.balanceOf(WALLET_ADDRESS);
+                    const count = balance.toNumber();
                     
-                    if (data.status === '1' && data.result && data.result.length > 0) {
-                        // Get unique token IDs that were transferred TO our wallet
-                        const tokenIds = new Set();
-                        data.result.forEach(tx => {
-                            if (tx.to.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
-                                tokenIds.add(tx.tokenID);
-                            }
-                        });
-                        
-                        console.log(`Found ${tokenIds.size} potential NFTs from API`);
-                        
-                        // Verify ownership for each token
-                        const provider = new ethers.providers.JsonRpcProvider({
-                            url: 'https://evm.cronos.org',
-                            timeout: 30000
-                        }, { name: 'cronos', chainId: 25 });
-                        
-                        const nftAbi = [
-                            "function ownerOf(uint256 tokenId) view returns (address)",
-                            "function tokenURI(uint256 tokenId) view returns (string)"
-                        ];
-                        const contract = new ethers.Contract(contractAddress, nftAbi, provider);
-                        
-                        for (const tokenId of tokenIds) {
+                    console.log(`Treasury holds ${count} NFTs from ${collectionName}`);
+                    
+                    if (count === 0) continue;
+                    
+                    // Check if we have known token IDs for this contract
+                    const knownIds = KNOWN_NFT_IDS[contractAddress] || [];
+                    
+                    if (knownIds.length > 0) {
+                        console.log(`Using ${knownIds.length} known token IDs`);
+                        // Use known IDs (fastest method)
+                        for (const tokenId of knownIds) {
                             try {
                                 const owner = await contract.ownerOf(tokenId);
                                 if (owner.toLowerCase() === WALLET_ADDRESS.toLowerCase()) {
-                                    console.log(`✅ Confirmed ownership of token #${tokenId}`);
                                     const tokenURI = await contract.tokenURI(tokenId);
                                     allNFTs.push({
                                         collection: collectionName,
-                                        symbol: '',
-                                        tokenId: tokenId,
+                                        tokenId: tokenId.toString(),
                                         tokenURI: tokenURI,
                                         contractAddress: contractAddress
                                     });
                                 }
-                            } catch (error) {
-                                console.log(`Token ${tokenId} no longer owned or error`);
+                            } catch (e) {
+                                console.log(`Token ${tokenId} not owned`);
                             }
                         }
+                    } else {
+                        // No known IDs - show count only
+                        container.innerHTML = `
+                            <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
+                                <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 15px;">
+                                    ${collectionName}: ${count} NFTs Held
+                                </p>
+                                <p style="color: #ddd; font-size: 14px; text-align: center;">
+                                    ℹ️ To display NFT images, add token IDs to KNOWN_NFT_IDS in the code.
+                                </p>
+                            </div>
+                        `;
+                        return;
                     }
+                    
                 } catch (error) {
-                    console.error(`Error fetching from Cronos API for ${collectionName}:`, error);
+                    console.error(`Error fetching NFTs for ${collectionName}:`, error);
                 }
             }
             
-            displayNFTs(allNFTs);
-        }
-
-        async function fetchNFTsViaAlchemy() {
-            // Fallback: Use Alchemy or similar service
-            // For now, show a message
-            const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>⚠️ Unable to fetch NFTs automatically.</p>
-                    <p style="font-size: 12px; margin-top: 10px;">
-                        NFT data may require additional API configuration.
-                    </p>
-                </div>
-            `;
-        }
-
-        async function displayNFTs(allNFTs) {
-            const container = document.getElementById('nft-holdings-container');
-            
+            // Display NFTs
             if (allNFTs.length > 0) {
                 container.innerHTML = `
                     <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
@@ -1185,25 +1173,13 @@
                 for (const nft of allNFTs) {
                     await displayNFT(nft, nftGrid);
                 }
-            } else {
+            } else if (allNFTs.length === 0 && KNOWN_NFT_IDS[Object.values(NFT_CONTRACTS)[0]]?.length > 0) {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 20px; color: #888;">
-                        <p>No NFTs found in treasury wallet.</p>
+                        <p>No NFTs found with the specified token IDs.</p>
                     </div>
                 `;
             }
-        }
-
-        function showNFTError() {
-            const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>⚠️ Unable to load NFTs at this time.</p>
-                    <p style="font-size: 12px; margin-top: 10px;">
-                        Check console for details or try refreshing.
-                    </p>
-                </div>
-            `;
         }
 
         async function displayNFT(nft, container) {
