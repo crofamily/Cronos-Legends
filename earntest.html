@@ -757,55 +757,60 @@
             <p>Multiple opportunities to earn tokens and rewards in the Cronos Legends ecosystem.</p>
         </div>
 
-        <!-- On-going Opportunities -->
-        <h3 style="color: #0f0; font-size: 24px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid #0f0;">
-            🔥 Active Now
-        </h3>
+        <!-- Combined Earn Section with Golden Background -->
+        <div style="background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)); border: 2px solid rgba(255, 215, 0, 0.2); border-radius: 15px; padding: 30px; margin-bottom: 40px;">
+            <!-- On-going Opportunities -->
+            <h3 style="color: #0f0; font-size: 24px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid #0f0;">
+                🔥 Active Now
+            </h3>
 
-        <div class="swap-grid">
-            <div class="swap-card">
-                <h3>
-                    <span class="icon">🎮</span>
-                    Play & Earn Games
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Participate in Cronos Legends Discord games to earn tokens. 
-                </p>
+            <div class="swap-grid">
+                <div class="swap-card">
+                    <h3>
+                        <span class="icon">🎮</span>
+                        Play & Earn Games
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Participate in Cronos Legends Discord games to earn tokens. 
+                    </p>
+                </div>
+
+                <div class="swap-card">
+                    <h3>
+                        <span class="icon">📱</span>
+                        Community Engagement
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Active Discord members, content creators, and community contributors earn rewards. These can be random airdrops given to loyal community members quite randomly, we are constantly watching!
+                    </p>
+                </div>
+
+                <div class="swap-card">
+                    <h3>
+                        <span class="icon">🎨</span>
+                        NFT Staking
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Stake your Cronos Legends NFTs to earn passive token rewards over time.
+                    </p>
+                </div>
             </div>
 
-            <div class="swap-card">
-                <h3>
-                    <span class="icon">📱</span>
-                    Community Engagement
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Active Discord members, content creators, and community contributors earn rewards. These can be random airdrops given to loyal community members quite randomly, we are constantly watching!
-                </p>
-            </div>
+            <!-- On the Roadmap -->
+            <h3 style="color: #ffa500; font-size: 24px; margin: 40px 0 20px; padding-left: 10px; border-left: 4px solid #ffa500;">
+                🗺️ On the Roadmap
+            </h3>
 
-            <div class="swap-card">
-                <h3>
-                    <span class="icon">🎨</span>
-                    NFT Staking
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Stake your Cronos Legends NFTs to earn passive token rewards over time.
-                </p>
-            </div>
-        </div>
-
-        <!-- On the Roadmap -->
-        <h3 style="color: #ffa500; font-size: 24px; margin: 40px 0 20px; padding-left: 10px; border-left: 4px solid #ffa500;">
-            🗺️ On the Roadmap
-        </h3>
-            <div class="swap-card">
-                <h3>
-                    <span class="icon">🎯</span>
-                    Referral Program
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Invite new members and earn commission on their purchases and swaps.
-                </p>
+            <div class="swap-grid">
+                <div class="swap-card">
+                    <h3>
+                        <span class="icon">🎯</span>
+                        Referral Program
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Invite new members and earn commission on their purchases and swaps.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -1089,7 +1094,8 @@
                             displayAmount: amount.toFixed(2) + ' $' + symbol,
                             displayUSD: formatUSD(usdValue),
                             logo: TOKEN_LOGOS[symbol] || null,
-                            isPartner: true
+                            isPartner: true,
+                            hasPrice: TOKEN_PRICES[symbol] > 0
                         });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
@@ -1119,15 +1125,31 @@
                             displayAmount: amount.toFixed(2) + ' $' + symbol,
                             displayUSD: formatUSD(usdValue),
                             logo: null,
-                            isPartner: false
+                            isPartner: false,
+                            hasPrice: TOKEN_PRICES[symbol] > 0
                         });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
                     }
                 }
                 
-                // Sort combined tokens by USD value (highest first)
-                combinedTokensData.sort((a, b) => b.usdValue - a.usdValue);
+                // Custom sort: CRONUS first, BONE second, then by USD value (highest first), N/A tokens last
+                combinedTokensData.sort((a, b) => {
+                    // CRONUS always first
+                    if (a.symbol === 'CRONUS') return -1;
+                    if (b.symbol === 'CRONUS') return 1;
+                    
+                    // BONE always second
+                    if (a.symbol === 'BONE') return -1;
+                    if (b.symbol === 'BONE') return 1;
+                    
+                    // N/A tokens (no price) go to the end
+                    if (!a.hasPrice && b.hasPrice) return 1;
+                    if (a.hasPrice && !b.hasPrice) return -1;
+                    
+                    // Sort by USD value (highest first)
+                    return b.usdValue - a.usdValue;
+                });
                 
                 // Display sorted combined tokens
                 const combinedGrid = document.getElementById('combined-tokens-grid');
