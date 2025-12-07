@@ -322,6 +322,16 @@
             font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .token-logo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .fund-value {
@@ -519,7 +529,7 @@
                     <div class="total-value" id="total-value">$0.00</div>
                 </div>
                 <div class="total-box" style="border-color: rgba(138, 43, 226, 0.4);">
-                    <div class="total-label">Partner Holdings</div>
+                    <div class="total-label">Partner & Other Holdings</div>
                     <div class="total-value" id="partner-total-value" style="color: #BA55D3;">$0.00</div>
                 </div>
                 <div class="total-box" style="border-color: rgba(255, 215, 0, 0.4);">
@@ -573,18 +583,10 @@
                 </div>
             </div>
 
-            <!-- Partner Token Holdings -->
-            <h4 style="color: #9333ea; font-size: 18px; margin: 30px 0 15px;">🤝 Partner Token Holdings</h4>
-            <div style="background: rgba(147, 51, 234, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(147, 51, 234, 0.2);">
-                <div class="funds-grid" id="partner-tokens-grid">
-                    <!-- Populated dynamically, sorted by USD value -->
-                </div>
-            </div>
-
-            <!-- Other Token Holdings -->
-            <h4 style="color: #f59e0b; font-size: 18px; margin: 30px 0 15px;">💫 Other Token Holdings</h4>
-            <div style="background: rgba(245, 158, 11, 0.05); padding: 20px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.2);">
-                <div class="funds-grid" id="other-tokens-grid">
+            <!-- Partner & Other Token Holdings (Combined) -->
+            <h4 style="color: #9333ea; font-size: 18px; margin: 30px 0 15px;">🤝 Partner & Other Token Holdings</h4>
+            <div style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.08), rgba(245, 158, 11, 0.05)); padding: 20px; border-radius: 10px; border: 1px solid rgba(147, 51, 234, 0.3);">
+                <div class="funds-grid" id="combined-tokens-grid">
                     <!-- Populated dynamically, sorted by USD value -->
                 </div>
             </div>
@@ -924,6 +926,12 @@
             PAWSFLOW: '0xDf50068a8B84028884C5725613132b2c592baa61' // PawsFlow
         };
 
+        // Token logos
+        const TOKEN_LOGOS = {
+            CRONUS: 'https://asset-metadata-service-production.s3.amazonaws.com/asset_icons/aa9f655588d549541d8b9a9cf9993cc02ab65f7f35eeb0f9a8d1c0f63b79ae7f.png',
+            BONE: 'https://cdn.dexscreener.com/cms/images/cfb1475025b081ad4815b20f42c9e2ddac64c0a92871ec93fb2bab7e6b6ae3a4?width=64&height=64&fit=crop&quality=95&format=auto'
+        };
+
         // NFT Collection Contracts
         const NFT_CONTRACTS = {
             'Legends Awaken I': '0x68A3192E286AA5C2182D815F5fE796401eCe28bA',
@@ -1023,7 +1031,7 @@
             }
             
             let totalUSD = 0;
-            let partnerUSD = 0;
+            let combinedUSD = 0;  // For partner + other tokens
             
             try {
                 // CRO
@@ -1059,8 +1067,10 @@
                     }
                 }
                 
-                // Partner tokens - collect data for sorting
-                const partnerTokensData = [];
+                // Combined partner + other tokens - collect data for sorting
+                const combinedTokensData = [];
+                
+                // Partner tokens
                 for (const [symbol, contractAddress] of Object.entries(PARTNER_CONTRACTS)) {
                     try {
                         const contract = new ethers.Contract(contractAddress, abi, provider);
@@ -1070,50 +1080,23 @@
                         const balance = await contract.balanceOf(WALLET_ADDRESS);
                         const amount = parseFloat(ethers.utils.formatUnits(balance, decimals));
                         const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
-                        partnerUSD += usdValue;
+                        combinedUSD += usdValue;
                         
-                        partnerTokensData.push({
+                        combinedTokensData.push({
                             symbol: symbol,
                             amount: amount,
                             usdValue: usdValue,
                             displayAmount: amount.toFixed(2) + ' $' + symbol,
-                            displayUSD: formatUSD(usdValue)
+                            displayUSD: formatUSD(usdValue),
+                            logo: TOKEN_LOGOS[symbol] || null,
+                            isPartner: true
                         });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
                     }
                 }
                 
-                // Sort partner tokens by USD value (highest first)
-                partnerTokensData.sort((a, b) => b.usdValue - a.usdValue);
-                
-                // Display sorted partner tokens
-                const partnerGrid = document.getElementById('partner-tokens-grid');
-                partnerGrid.innerHTML = '';
-                partnerTokensData.forEach(token => {
-                    const item = document.createElement('div');
-                    item.className = 'fund-item';
-                    item.style.borderColor = 'rgba(147, 51, 234, 0.4)';
-                    item.innerHTML = `
-                        <span class="fund-label" style="color: #9333ea;">$${token.symbol}</span>
-                        <span class="fund-value">${token.displayAmount}</span>
-                        <span class="fund-usd" style="color: #9333ea;">${token.displayUSD}</span>
-                    `;
-                    partnerGrid.appendChild(item);
-                });
-                
-                TOTAL_VALUE_USD = totalUSD;
-                PARTNER_TOTAL_USD = partnerUSD;
-                
-                document.getElementById('total-value').textContent = formatUSD(totalUSD);
-                document.getElementById('partner-total-value').textContent = formatUSD(partnerUSD);
-                
-                // ===========================
-                // FETCH OTHER TOKEN BALANCES
-                // ===========================
-                let otherTotalUSD = 0;
-                const otherTokensData = [];
-                
+                // Other tokens
                 for (const [symbol, contractAddress] of Object.entries(OTHER_CONTRACTS)) {
                     try {
                         const contract = new ethers.Contract(contractAddress, abi, provider);
@@ -1123,45 +1106,57 @@
                         const balance = await contract.balanceOf(WALLET_ADDRESS);
                         const amount = parseFloat(ethers.utils.formatUnits(balance, decimals));
                         const usdValue = amount * (TOKEN_PRICES[symbol] || 0);
-                        otherTotalUSD += usdValue;
+                        combinedUSD += usdValue;
                         
                         if (!TOKEN_PRICES[symbol]) {
                             console.log(`⚠️ No price data for ${symbol} (${contractAddress})`);
                         }
                         
-                        otherTokensData.push({
+                        combinedTokensData.push({
                             symbol: symbol,
                             amount: amount,
                             usdValue: usdValue,
                             displayAmount: amount.toFixed(2) + ' $' + symbol,
-                            displayUSD: formatUSD(usdValue)
+                            displayUSD: formatUSD(usdValue),
+                            logo: null,
+                            isPartner: false
                         });
                     } catch (error) {
                         console.error(`Error fetching ${symbol}:`, error);
                     }
                 }
                 
-                // Sort other tokens by USD value (highest first)
-                otherTokensData.sort((a, b) => b.usdValue - a.usdValue);
+                // Sort combined tokens by USD value (highest first)
+                combinedTokensData.sort((a, b) => b.usdValue - a.usdValue);
                 
-                // Display sorted other tokens
-                const otherGrid = document.getElementById('other-tokens-grid');
-                otherGrid.innerHTML = '';
-                otherTokensData.forEach(token => {
+                // Display sorted combined tokens
+                const combinedGrid = document.getElementById('combined-tokens-grid');
+                combinedGrid.innerHTML = '';
+                combinedTokensData.forEach(token => {
                     const item = document.createElement('div');
                     item.className = 'fund-item';
-                    item.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                    item.style.borderColor = 'rgba(147, 51, 234, 0.4)';
+                    
+                    const labelContent = token.logo 
+                        ? `<img src="${token.logo}" class="token-logo" alt="${token.symbol}"> $${token.symbol}`
+                        : `$${token.symbol}`;
+                    
                     item.innerHTML = `
-                        <span class="fund-label" style="color: #f59e0b;">$${token.symbol}</span>
+                        <span class="fund-label" style="color: #9333ea;">${labelContent}</span>
                         <span class="fund-value">${token.displayAmount}</span>
-                        <span class="fund-usd" style="color: #f59e0b;">${token.displayUSD}</span>
+                        <span class="fund-usd" style="color: #9333ea;">${token.displayUSD}</span>
                     `;
-                    otherGrid.appendChild(item);
+                    combinedGrid.appendChild(item);
                 });
                 
-                console.log(`💰 Other tokens total: ${formatUSD(otherTotalUSD)}`);
+                TOTAL_VALUE_USD = totalUSD;
+                PARTNER_TOTAL_USD = combinedUSD;
                 
-                document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + partnerUSD + otherTotalUSD);
+                document.getElementById('total-value').textContent = formatUSD(totalUSD);
+                document.getElementById('partner-total-value').textContent = formatUSD(combinedUSD);
+                document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + combinedUSD);
+                
+                console.log(`💰 Combined tokens total: ${formatUSD(combinedUSD)}`);
                 
                 // Fetch NFT holdings ONLY ONCE on initial load
                 if (!window.nftsLoaded) {
@@ -1381,80 +1376,8 @@
             `;
         }
 
-        async function displayNFT(nft, container) {
-            try {
-                // Create NFT card
-                const nftCard = document.createElement('div');
-                nftCard.className = 'nft-card';
-                
-                // Fetch metadata
-                let metadata = null;
-                let imageUrl = '';
-                let nftName = `${nft.symbol} #${nft.tokenId}`;
-                
-                try {
-                    // Handle different metadata URI formats
-                    let metadataURI = nft.tokenURI;
-                    
-                    // If IPFS, convert to HTTP gateway
-                    if (metadataURI.startsWith('ipfs://')) {
-                        metadataURI = metadataURI.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                    }
-                    
-                    // Fetch metadata
-                    const response = await fetch(metadataURI);
-                    metadata = await response.json();
-                    
-                    // Get image URL
-                    imageUrl = metadata.image || metadata.image_url || '';
-                    
-                    // Convert IPFS image URLs
-                    if (imageUrl.startsWith('ipfs://')) {
-                        imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                    }
-                    
-                    // Get NFT name
-                    nftName = metadata.name || `${nft.symbol} #${nft.tokenId}`;
-                    
-                } catch (error) {
-                    console.error(`Error fetching metadata for token ${nft.tokenId}:`, error);
-                    imageUrl = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="24" text-anchor="middle" dominant-baseline="middle">NFT %23' + nft.tokenId + '</text></svg>';
-                }
-                
-                // Build NFT card HTML
-                nftCard.innerHTML = `
-                    <img src="${imageUrl}" alt="${nftName}" class="nft-image" onerror="this.src='data:image/svg+xml,<svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"400\\" height=\\"400\\"><rect width=\\"400\\" height=\\"400\\" fill=\\"%23222\\"/><text x=\\"50%\\" y=\\"50%\\" fill=\\"%23ffd700\\" font-size=\\"24\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">Loading...</text></svg>'">
-                    <div class="nft-info">
-                        <div class="nft-name">${nftName}</div>
-                        <div class="nft-id">Token ID: ${nft.tokenId}</div>
-                        <div class="nft-id">${nft.collection}</div>
-                    </div>
-                `;
-                
-                container.appendChild(nftCard);
-                
-            } catch (error) {
-                console.error('Error displaying NFT:', error);
-            }
-        }
-
         function updateBalanceDisplay(token, value, usdValue) {
             const element = document.querySelector(`[data-token="${token}"]`);
-            if (element) {
-                element.querySelector('.fund-value').textContent = value;
-                element.querySelector('.fund-usd').textContent = formatUSD(usdValue);
-            }
-        }
-
-        function updatePartnerDisplay(token, value, usdValue) {
-            const amountEl = document.querySelector(`[data-partner="${token}-amount"]`);
-            const usdEl = document.querySelector(`[data-partner="${token}-usd"]`);
-            if (amountEl) amountEl.textContent = value;
-            if (usdEl) usdEl.textContent = formatUSD(usdValue);
-        }
-
-        function updateOtherTokenDisplay(token, value, usdValue) {
-            const element = document.querySelector(`[data-other="${token}"]`);
             if (element) {
                 element.querySelector('.fund-value').textContent = value;
                 element.querySelector('.fund-usd').textContent = formatUSD(usdValue);
@@ -1525,4 +1448,3 @@
     </script>
 </body>
 </html>
-
