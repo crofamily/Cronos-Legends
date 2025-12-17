@@ -408,6 +408,67 @@
             color: #FFD700;
         }
 
+        /* Game Section Styles */
+        .game-section {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .game-section:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .game-section-header {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .game-section-header:hover {
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        .game-section-title {
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .game-section-toggle {
+            font-size: 2rem;
+            color: #FFD700;
+            transition: transform 0.3s ease;
+        }
+
+        .game-section.active .game-section-toggle {
+            transform: rotate(180deg);
+        }
+
+        .game-section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .game-section.active .game-section-content {
+            max-height: 10000px;
+        }
+
+        .game-section-inner {
+            padding: 0 30px 30px;
+        }
+
         .faq-table {
             width: 100%;
             margin: 20px 0;
@@ -858,406 +919,475 @@
             </div>
         </div>
 
-        <!-- GAMEPLAY & REWARDS CATEGORY -->
+                <!-- GAMEPLAY & REWARDS CATEGORY -->
         <div class="faq-category" data-category="gameplay">
             <h2 class="category-title"><span class="category-icon">🎮</span>Gameplay & Rewards</h2>
             
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is Legends Arena?
-                    <span class="faq-toggle">▼</span>
+            <!-- LEGENDS ARENA GAME SECTION -->
+            <div class="game-section active">
+                <div class="game-section-header" onclick="toggleGameSection(this)">
+                    <div class="game-section-title">
+                        <span>💎</span>
+                        <span>Legends Arena</span>
+                    </div>
+                    <span class="game-section-toggle">▼</span>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Legends Arena is a Discord-based combat game where players fight to earn 💎 Crystals. The game features NFT-based gameplay with role perks, token holder bonuses, and a reward shop where you can spend your earned Crystals on real crypto rewards!
-                        <br><br>
-                        <strong>🏆 Season 2 Prize Pool:</strong> Minimum of $1,500!
-                        <br><br>
-                        <strong>📅 Season Duration:</strong> The season ending time will be announced later, or ends when the shop runs out of items.
+                <div class="game-section-content">
+                    <div class="game-section-inner">
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What is Legends Arena?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    Legends Arena is a Discord-based combat game where players fight to earn 💎 Crystals. The game features NFT-based gameplay with role perks, token holder bonuses, and a reward shop where you can spend your earned Crystals on real crypto rewards!
+                                    <br><br>
+                                    <strong>🏆 Season 2 Prize Pool:</strong> Minimum of $1,500!
+                                    <br><br>
+                                    <strong>📅 Season Duration:</strong> The season ending time will be announced later, or ends when the shop runs out of items.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                How do I start playing Legends Arena?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>📋 Getting Started (3 Simple Steps):</strong>
+                                    <ol style="margin: 15px 0 15px 25px;">
+                                        <li><strong>Create your profile:</strong> Use the command <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/balance</code> in Discord to initialize your game account</li>
+                                        <li><strong>Set your wallet:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet 0x00000</code> and replace "0x00000" with your actual Cronos wallet address. This is where SHOP rewards will be sent</li>
+                                        <li><strong>Start fighting:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/fight</code> to begin earning 💎 Crystals!</li>
+                                    </ol>
+                                    <br>
+                                    <strong>⚠️ Important Entry Requirement:</strong> You need at least <strong>one Legends Awaken II NFT</strong> to play and earn Crystals.
+                                    <br><br>
+                                    <strong>💡 Pro Tip:</strong> Make sure to set your wallet address correctly before making any SHOP purchases, as rewards cannot be recovered if sent to an incorrect address.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What are the available commands?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>🎮 User Commands:</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Command</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #FFD700;">/balance</code></td>
+                                            <td>Create your profile and check your 💎 Crystal balance</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #FFD700;">/fight</code></td>
+                                            <td>Enter combat to earn 💎 Crystals</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #FFD700;">/shop-view</code></td>
+                                            <td>Browse available items in the reward shop</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #FFD700;">/wallet 0x0</code></td>
+                                            <td>Set your Cronos wallet address for SHOP rewards</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #FFD700;">/leaderboard</code></td>
+                                            <td>View top players and their Crystal earnings</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What are 💎 Crystals and how do I earn them?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>💎 Crystals</strong> are the in-game currency earned through combat in Legends Arena. You can spend Crystals in the SHOP for real crypto rewards!
+                                    <br><br>
+                                    <strong>💰 Base Earnings per Fight:</strong>
+                                    <ul>
+                                        <li><strong>Default Win Chance:</strong> 35%</li>
+                                        <li><strong>Default Cooldown:</strong> 12 hours between fights</li>
+                                    </ul>
+                                    <br>
+                                    Your earnings and cooldowns can be significantly improved through NFT holdings and token bonuses (detailed below).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What are all the Legends Arena perks and bonuses?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>✨ All perks are STACKABLE! Maximize your earnings and minimize cooldowns by holding multiple assets.</strong>
+                                    <br><br>
+                                    
+                                    <!-- Legends Awaken II Perks -->
+                                    <strong>🎭 Legends Awaken II NFT Perks (Crystal Earnings):</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Crystals Earned</th>
+                                            <th>Special Benefit</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened II</strong></td>
+                                            <td>1 💎</td>
+                                            <td>Access to Game (Required to play)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened II+</strong></td>
+                                            <td>3.5 💎</td>
+                                            <td>Enhanced earnings</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened II X</strong></td>
+                                            <td>7 💎</td>
+                                            <td>Elite earnings</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened II Legend 💎</strong></td>
+                                            <td>15 💎</td>
+                                            <td>Maximum earnings</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    
+                                    <!-- Legends Awaken I Perks -->
+                                    <strong>⏰ Legends Awaken I NFT Perks (Cooldown Reduction):</strong><br>
+                                    <em>LA1 NFTs work as boosters to reduce your fight cooldown!</em>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Cooldown Time</th>
+                                            <th>Benefit</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Default</strong></td>
+                                            <td>12 hours ⏳</td>
+                                            <td>Base cooldown</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened</strong></td>
+                                            <td>10 hours ⏳</td>
+                                            <td>-2 hours</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened +</strong></td>
+                                            <td>8 hours ⏳</td>
+                                            <td>-4 hours</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened X</strong></td>
+                                            <td>6 hours ⏳</td>
+                                            <td>-6 hours</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Awakened Legend 💎</strong></td>
+                                            <td>4 hours ⏳</td>
+                                            <td>-8 hours (Fight 3x more often!)</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    
+                                    <!-- CLG Token Perks -->
+                                    <strong>💰 $CLG Token Perks (Win Chance Boost):</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Win Chance</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Default</strong></td>
+                                            <td>35%</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CLG Holder</strong></td>
+                                            <td>+5% = <strong>40%</strong> ⚔️</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CLG +</strong></td>
+                                            <td>+10% = <strong>45%</strong> ⚔️</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CLG X</strong></td>
+                                            <td>+15% = <strong>50%</strong> ⚔️</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CLG Legend 💎</strong></td>
+                                            <td>+25% = <strong>60%</strong> ⚔️</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    
+                                    <!-- CARA Token Perks -->
+                                    <strong>🔪 $CARA Token Perks (Bonus Crystal Earnings):</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Bonus Crystals</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CARA w/ knife 🔪</strong></td>
+                                            <td>+1 💎 (on top of normal earnings)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@$CARA w/crown 👑</strong></td>
+                                            <td>+3 💎 (on top of normal earnings)</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    
+                                    <!-- Trinari Token Perks -->
+                                    <strong>🌿 Trinari Token Perks (Special Abilities):</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Special Ability</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Trinari 0.5%</strong></td>
+                                            <td>5% chance to apply <strong>0 cooldown</strong> ⏳ (fight immediately!)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>@Trinari 1%</strong></td>
+                                            <td>5% chance to get <strong>x2.5 rewards</strong> 💎</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    
+                                    <!-- Example Maximum Setup -->
+                                    <strong>🚀 Example Maximum Setup:</strong>
+                                    <ul>
+                                        <li><strong>@Awakened II Legend 💎</strong> = 15 💎 base earnings</li>
+                                        <li><strong>@Awakened Legend 💎</strong> = 4 hour cooldown</li>
+                                        <li><strong>@$CLG Legend 💎</strong> = 60% win chance</li>
+                                        <li><strong>@$CARA w/crown 👑</strong> = +3 💎 bonus</li>
+                                        <li><strong>@Trinari 1%</strong> = 5% chance for x2.5 rewards</li>
+                                    </ul>
+                                    <strong>Result:</strong> Fight every 4 hours with 60% win chance, earning 18+ 💎 per win, with a chance to hit massive 2.5x multipliers!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What is the SHOP and what rewards can I get?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    The <strong>SHOP</strong> is where you spend your hard-earned 💎 Crystals on real crypto rewards! All rewards are sent directly to the wallet address you set using <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet</code>.
+                                    <br><br>
+                                    <strong>🛒 How to Use the Shop:</strong>
+                                    <ol style="margin: 15px 0 15px 25px;">
+                                        <li>Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/shop-view</code> to browse available items</li>
+                                        <li>Choose your desired reward</li>
+                                        <li>Purchase with your earned 💎 Crystals</li>
+                                        <li>Rewards are automatically sent to your registered wallet</li>
+                                    </ol>
+                                    <br>
+                                    <strong>🏆 Season 2 Details:</strong>
+                                    <ul>
+                                        <li>Prize Pool: <strong>Minimum $1,500</strong></li>
+                                        <li>Season ends when announced OR when shop items run out</li>
+                                        <li>New items and rewards added regularly</li>
+                                    </ul>
+                                    <br>
+                                    <strong>⚠️ Important:</strong> Make sure your wallet address is set correctly before purchasing. Rewards cannot be recovered if sent to wrong addresses!
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How do I start playing Legends Arena?
-                    <span class="faq-toggle">▼</span>
+            <!-- BATTLEGROUND GAME SECTION -->
+            <div class="game-section">
+                <div class="game-section-header" onclick="toggleGameSection(this)">
+                    <div class="game-section-title">
+                        <span>⚔️</span>
+                        <span>Battleground</span>
+                    </div>
+                    <span class="game-section-toggle">▼</span>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>📋 Getting Started (3 Simple Steps):</strong>
-                        <ol style="margin: 15px 0 15px 25px;">
-                            <li><strong>Create your profile:</strong> Use the command <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/balance</code> in Discord to initialize your game account</li>
-                            <li><strong>Set your wallet:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet 0x00000</code> and replace "0x00000" with your actual Cronos wallet address. This is where SHOP rewards will be sent</li>
-                            <li><strong>Start fighting:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/fight</code> to begin earning 💎 Crystals!</li>
-                        </ol>
-                        <br>
-                        <strong>⚠️ Important Entry Requirement:</strong> You need at least <strong>one Legends Awaken II NFT</strong> to play and earn Crystals.
-                        <br><br>
-                        <strong>💡 Pro Tip:</strong> Make sure to set your wallet address correctly before making any SHOP purchases, as rewards cannot be recovered if sent to an incorrect address.
+                <div class="game-section-content">
+                    <div class="game-section-inner">
+                        
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                How does the Battleground game work?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>Battlegrounds Overview:</strong><br>
+                                    Battlegrounds are competitive events where $CLG holders and NFT owners can enter and compete for massive prize pools. Winners are determined through various mechanics including skill, strategy, luck, or event-specific challenges.
+                                    <br><br>
+                                    <strong>📋 Entry Requirements:</strong><br>
+                                    To participate in Battlegrounds, you must hold at least 1 $CLG token or Legends Awaken NFT making you eligible for participation.
+                                    <br><br>
+                                    <strong>🎭 Legends Awaken NFT Tier Bonuses:</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Required Amount</th>
+                                            <th>Battleground Bonus</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Awakened Legend💎</strong></td>
+                                            <td>10 NFT</td>
+                                            <td>+$3.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Awakened X</strong></td>
+                                            <td>5 NFT</td>
+                                            <td>+$2.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Awakened +</strong></td>
+                                            <td>3 NFT</td>
+                                            <td>+$1.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Awakened</strong></td>
+                                            <td>1 NFT</td>
+                                            <td>+$0.50</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <strong>💎 Token/Coin Holder Bonuses:</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Required Amount</th>
+                                            <th>Battleground Bonus</th>
+                                        </tr>
+                                        <tr>
+                                            <td>CLG Holder </td>
+                                            <td>1 $CLG</td>
+                                            <td>$0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CLG Legend 💎</td>
+                                            <td>5 $CLG</td>
+                                            <td>$1.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trinari 1% Holder</td>
+                                            <td>10000000 $TRI</td>
+                                            <td>+$1.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trinari 0.5% Holder</td>
+                                            <td>5000000 $TRI</td>
+                                            <td>+$0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CARA with Knife 🔪</td>
+                                            <td>0.01 $CARA</td>
+                                            <td>+$1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CARA with Crown 👑</td>
+                                            <td>0.003 $CARA</td>
+                                            <td>+$0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lyra 1%</td>
+                                            <td>10000000 $LYRA</td>
+                                            <td>+$1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lyra 0.5%</td>
+                                            <td>5000000 $LYRA</td>
+                                            <td>+$0.50</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <strong>🤝 Partner Project ($CRONUS) Bonuses:</strong>
+                                    <table class="faq-table">
+                                        <tr>
+                                            <th>Discord Role</th>
+                                            <th>Required Amount</th>
+                                            <th>Battleground Bonus</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Cronus Overlord</td>
+                                            <td>1000000 $CRONUS</td>
+                                            <td>+$1.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cronus Warrior</td>
+                                            <td>500000 $CRONUS</td>
+                                            <td>+$1.00</td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    All bonuses are stackable, allowing players to maximize their rewards by holding multiple qualifying assets and roles! Please note, rewards are subject to change.
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are the available commands?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🎮 User Commands:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Command</th>
-                                <th>Description</th>
-                            </tr>
-                            <tr>
-                                <td><code style="color: #FFD700;">/balance</code></td>
-                                <td>Create your profile and check your 💎 Crystal balance</td>
-                            </tr>
-                            <tr>
-                                <td><code style="color: #FFD700;">/fight</code></td>
-                                <td>Enter combat to earn 💎 Crystals</td>
-                            </tr>
-                            <tr>
-                                <td><code style="color: #FFD700;">/shop-view</code></td>
-                                <td>Browse available items in the reward shop</td>
-                            </tr>
-                            <tr>
-                                <td><code style="color: #FFD700;">/wallet 0x0</code></td>
-                                <td>Set your Cronos wallet address for SHOP rewards</td>
-                            </tr>
-                            <tr>
-                                <td><code style="color: #FFD700;">/leaderboard</code></td>
-                                <td>View top players and their Crystal earnings</td>
-                            </tr>
-                        </table>
+            <!-- WEBSITE GAMES SECTION -->
+            <div class="game-section">
+                <div class="game-section-header" onclick="toggleGameSection(this)">
+                    <div class="game-section-title">
+                        <span>🌐</span>
+                        <span>Website Games</span>
                     </div>
+                    <span class="game-section-toggle">▼</span>
                 </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are 💎 Crystals and how do I earn them?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>💎 Crystals</strong> are the in-game currency earned through combat in Legends Arena. You can spend Crystals in the SHOP for real crypto rewards!
-                        <br><br>
-                        <strong>💰 Base Earnings per Fight:</strong>
-                        <ul>
-                            <li><strong>Default Win Chance:</strong> 35%</li>
-                            <li><strong>Default Cooldown:</strong> 12 hours between fights</li>
-                        </ul>
-                        <br>
-                        Your earnings and cooldowns can be significantly improved through NFT holdings and token bonuses (detailed below).
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are all the Legends Arena perks and bonuses?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>✨ All perks are STACKABLE! Maximize your earnings and minimize cooldowns by holding multiple assets.</strong>
-                        <br><br>
+                <div class="game-section-content">
+                    <div class="game-section-inner">
                         
-                        <!-- Legends Awaken II Perks -->
-                        <strong>🎭 Legends Awaken II NFT Perks (Crystal Earnings):</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Crystals Earned</th>
-                                <th>Special Benefit</th>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened II</strong></td>
-                                <td>1 💎</td>
-                                <td>Access to Game (Required to play)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened II+</strong></td>
-                                <td>3.5 💎</td>
-                                <td>Enhanced earnings</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened II X</strong></td>
-                                <td>7 💎</td>
-                                <td>Elite earnings</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened II Legend 💎</strong></td>
-                                <td>15 💎</td>
-                                <td>Maximum earnings</td>
-                            </tr>
-                        </table>
-                        <br>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                What are the Website Games?
+                                <span class="faq-toggle">▼</span>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="faq-answer-content">
+                                    <strong>🚀 Coming Soon!</strong>
+                                    <br><br>
+                                    Website Games are browser-based games that will be accessible directly from the Cronos Legends website. These games will offer additional ways to engage with the ecosystem and earn rewards!
+                                    <br><br>
+                                    <strong>📅 More Information:</strong><br>
+                                    Details about Website Games, including gameplay mechanics, reward structures, and launch dates, will be announced in Discord and on our social media channels. Stay tuned for updates!
+                                    <br><br>
+                                    <strong>💡 Stay Connected:</strong><br>
+                                    Join our <a href="https://discord.gg/cronoslegends" target="_blank" style="color: #FFD700; text-decoration: underline;">Discord</a> and follow us on <a href="https://x.com/CronosLegends" target="_blank" style="color: #FFD700; text-decoration: underline;">X (Twitter)</a> to be the first to know when Website Games launch!
+                                </div>
+                            </div>
+                        </div>
                         
-                        <!-- Legends Awaken I Perks -->
-                        <strong>⏰ Legends Awaken I NFT Perks (Cooldown Reduction):</strong><br>
-                        <em>LA1 NFTs work as boosters to reduce your fight cooldown!</em>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Cooldown Time</th>
-                                <th>Benefit</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Default</strong></td>
-                                <td>12 hours ⏳</td>
-                                <td>Base cooldown</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened</strong></td>
-                                <td>10 hours ⏳</td>
-                                <td>-2 hours</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened +</strong></td>
-                                <td>8 hours ⏳</td>
-                                <td>-4 hours</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened X</strong></td>
-                                <td>6 hours ⏳</td>
-                                <td>-6 hours</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Awakened Legend 💎</strong></td>
-                                <td>4 hours ⏳</td>
-                                <td>-8 hours (Fight 3x more often!)</td>
-                            </tr>
-                        </table>
-                        <br>
-                        
-                        <!-- CLG Token Perks -->
-                        <strong>💰 $CLG Token Perks (Win Chance Boost):</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Win Chance</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Default</strong></td>
-                                <td>35%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CLG Holder</strong></td>
-                                <td>+5% = <strong>40%</strong> ⚔️</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CLG +</strong></td>
-                                <td>+10% = <strong>45%</strong> ⚔️</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CLG X</strong></td>
-                                <td>+15% = <strong>50%</strong> ⚔️</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CLG Legend 💎</strong></td>
-                                <td>+25% = <strong>60%</strong> ⚔️</td>
-                            </tr>
-                        </table>
-                        <br>
-                        
-                        <!-- CARA Token Perks -->
-                        <strong>🔪 $CARA Token Perks (Bonus Crystal Earnings):</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Bonus Crystals</th>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CARA w/ knife 🔪</strong></td>
-                                <td>+1 💎 (on top of normal earnings)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@$CARA w/crown 👑</strong></td>
-                                <td>+3 💎 (on top of normal earnings)</td>
-                            </tr>
-                        </table>
-                        <br>
-                        
-                        <!-- Trinari Token Perks -->
-                        <strong>🌿 Trinari Token Perks (Special Abilities):</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Special Ability</th>
-                            </tr>
-                            <tr>
-                                <td><strong>@Trinari 0.5%</strong></td>
-                                <td>5% chance to apply <strong>0 cooldown</strong> ⏳ (fight immediately!)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>@Trinari 1%</strong></td>
-                                <td>5% chance to get <strong>x2.5 rewards</strong> 💎</td>
-                            </tr>
-                        </table>
-                        <br>
-                        
-                        <!-- Example Maximum Setup -->
-                        <strong>🚀 Example Maximum Setup:</strong>
-                        <ul>
-                            <li><strong>@Awakened II Legend 💎</strong> = 15 💎 base earnings</li>
-                            <li><strong>@Awakened Legend 💎</strong> = 4 hour cooldown</li>
-                            <li><strong>@$CLG Legend 💎</strong> = 60% win chance</li>
-                            <li><strong>@$CARA w/crown 👑</strong> = +3 💎 bonus</li>
-                            <li><strong>@Trinari 1%</strong> = 5% chance for x2.5 rewards</li>
-                        </ul>
-                        <strong>Result:</strong> Fight every 4 hours with 60% win chance, earning 18+ 💎 per win, with a chance to hit massive 2.5x multipliers!
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is the SHOP and what rewards can I get?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        The <strong>SHOP</strong> is where you spend your hard-earned 💎 Crystals on real crypto rewards! All rewards are sent directly to the wallet address you set using <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet</code>.
-                        <br><br>
-                        <strong>🛒 How to Use the Shop:</strong>
-                        <ol style="margin: 15px 0 15px 25px;">
-                            <li>Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/shop-view</code> to browse available items</li>
-                            <li>Choose your desired reward</li>
-                            <li>Purchase with your earned 💎 Crystals</li>
-                            <li>Rewards are automatically sent to your registered wallet</li>
-                        </ol>
-                        <br>
-                        <strong>🏆 Season 2 Details:</strong>
-                        <ul>
-                            <li>Prize Pool: <strong>Minimum $1,500</strong></li>
-                            <li>Season ends when announced OR when shop items run out</li>
-                            <li>New items and rewards added regularly</li>
-                        </ul>
-                        <br>
-                        <strong>⚠️ Important:</strong> Make sure your wallet address is set correctly before purchasing. Rewards cannot be recovered if sent to wrong addresses!
                     </div>
                 </div>
             </div>
             
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How do the Battleground game work?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Battlegrounds Overview:</strong><br>
-                        Battlegrounds are competitive events where $CLG holders and NFT owners can enter and compete for massive prize pools. Winners are determined through various mechanics including skill, strategy, luck, or event-specific challenges.
-                        <br><br>
-                        <strong>📋 Entry Requirements:</strong><br>
-                        To participate in Battlegrounds, you must hold at least 1 $CLG token or Legends Awaken NFT making you eligible for participation.
-                        <br><br>
-                        <strong>🎭 Legends Awaken NFT Tier Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened Legend💎</strong></td>
-                                <td>10 NFT</td>
-                                <td>+$3.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened X</strong></td>
-                                <td>5 NFT</td>
-                                <td>+$2.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened +</strong></td>
-                                <td>3 NFT</td>
-                                <td>+$1.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened</strong></td>
-                                <td>1 NFT</td>
-                                <td>+$0.50</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>💎 Token/Coin Holder Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td>CLG Holder </td>
-                                <td>1 $CLG</td>
-                                <td>$0.50</td>
-                            </tr>
-  			      <tr>
-                                <td>CLG Legend 💎</td>
-                                <td>5 $CLG</td>
-                                <td>$1.50</td>
-                            </tr>
-                            <tr>
-                                <td>Trinari 1% Holder</td>
-                                <td>10000000 $TRI</td>
-                                <td>+$1.00</td>
-                            </tr>
-                            <tr>
-                                <td>Trinari 0.5% Holder</td>
-                                <td>5000000 $TRI</td>
-                                <td>+$0.50</td>
-                            </tr>
-                            <tr>
-                                <td>CARA with Knife 🔪</td>
-                                <td>0.01 $CARA</td>
-                                <td>+$1</td>
-                            </tr>
-                            <tr>
-                                <td>CARA with Crown 👑</td>
-                                <td>0.003 $CARA</td>
-                                <td>+$0.50</td>
-                            </tr>
-                            <tr>
-                                <td>Lyra 1%</td>
-                                <td>10000000 $LYRA</td>
-                                <td>+$1</td>
-                            </tr>
-                            <tr>
-                                <td>Lyra 0.5%</td>
-                                <td>5000000 $LYRA</td>
-                                <td>+$0.50</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>🤝 Partner Project ($CRONUS) Bonuses:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Required Amount</th>
-                                <th>Battleground Bonus</th>
-                            </tr>
-                            <tr>
-                                <td>Cronus Overlord</td>
-                                <td>1000000 $CRONUS</td>
-                                <td>+$1.50</td>
-                            </tr>
-                            <tr>
-                                <td>Cronus Warrior</td>
-                                <td>500000 $CRONUS</td>
-                                <td>+$1.00</td>
-                            </tr>
-                        </table>
-                        <br>
-                        All bonuses are stackable, allowing players to maximize their rewards by holding multiple qualifying assets and roles! Please note, rewards are subject to change.
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- COMMUNITY CATEGORY -->
@@ -1494,6 +1624,12 @@
             if (!wasActive) {
                 faqItem.classList.add('active');
             }
+        }
+
+        // Toggle Game Sections
+        function toggleGameSection(element) {
+            const gameSection = element.parentElement;
+            gameSection.classList.toggle('active');
         }
 
         // Search functionality
