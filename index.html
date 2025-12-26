@@ -306,55 +306,6 @@
             margin-top: 40px;
         }
 
-        /* Stats Section */
-        .stats-section {
-            background: rgba(20, 20, 20, 0.6);
-            padding: 60px 20px;
-            margin: 80px 0;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-
-        .stat-item {
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            border-color: rgba(255, 215, 0, 0.4);
-            transform: translateY(-5px);
-        }
-
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
         /* Section Styles */
         .section {
             max-width: 1400px;
@@ -387,7 +338,7 @@
         /* Collections Grid */
         .collections-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
             margin-top: 60px;
         }
@@ -623,10 +574,6 @@
                 flex-direction: column;
                 align-items: center;
             }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -670,7 +617,6 @@
         </div>
     </div>
 
-
     <!-- Collections Section -->
     <div class="section">
         <h2 class="section-title">💎 NFT Collections</h2>
@@ -698,7 +644,7 @@
 
             <div class="collection-card" onclick="window.location.href='/legends-awaken-1'">
                 <div class="collection-image">
-                    <img src="Images/LA2/G1.webp" alt="Legends Awaken I">
+                    <img src="Images/LA1/LA1-1.png" alt="Legends Awaken I">
                     <div class="collection-badge sold-out-badge">🔥 SOLD OUT</div>
                 </div>
                 <div class="collection-info">
@@ -714,7 +660,7 @@
 
             <div class="collection-card" onclick="window.location.href='/totems'">
                 <div class="collection-image">
-                    <img src="Images/LA2/T1.png" alt="Totems">
+                    <img src="Images/Totem/Totem1.png" alt="Totems">
                 </div>
                 <div class="collection-info">
                     <h3 class="collection-title">Totems</h3>
@@ -724,6 +670,22 @@
                         and enhances your journey through the Cronos Legends universe.
                     </p>
                     <a href="/totems" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Learn More →</a>
+                </div>
+            </div>
+
+            <div class="collection-card" onclick="window.location.href='/trinari-elderborn'">
+                <div class="collection-image">
+                    <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn">
+                    <div class="collection-badge" style="background: linear-gradient(135deg, #00ff64, #00cc50); color: #000;">🌟 COMING SOON</div>
+                </div>
+                <div class="collection-info">
+                    <h3 class="collection-title">Trinari Elderborn</h3>
+                    <div class="collection-subtitle">Next Generation • New Adventures</div>
+                    <p class="collection-desc">
+                        The ancient Trinari lineage continues. Powerful elders emerge 
+                        to guide their mystical faction into a new era of magic and mystery.
+                    </p>
+                    <a href="/trinari-elderborn" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Coming Soon →</a>
                 </div>
             </div>
         </div>
@@ -743,7 +705,7 @@
                     <div class="feature-icon">⚔️</div>
                     <h3 class="feature-title">Legends Arena</h3>
                     <p class="feature-desc">
-                        Battle in Discord game. Your NFT's and tokens works as boosters in the game. Prize pool of +1500$!
+                        Battle in Discord game. Your NFTs and tokens work as boosters in the game. Prize pool of +1500$!
                     </p>
                 </div>
 
@@ -755,6 +717,7 @@
                         Earn through gameplay, staking, and participation.
                     </p>
                 </div>
+
                 <div class="feature-card">
                     <div class="feature-icon">👥</div>
                     <h3 class="feature-title">Strong Community</h3>
@@ -896,7 +859,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.collection-card, .feature-card, .stat-item').forEach(el => {
+        document.querySelectorAll('.collection-card, .feature-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
