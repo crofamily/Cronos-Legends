@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinari Elderborn - Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ff64;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(0, 255, 100, 0.1);
+            color: #00ff64;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #00ff64;
+            color: #00ff64;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(0, 255, 100, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                border: none;
+                background: transparent;
+                padding: 10px 0 0 20px;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-menu,
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: visible;
+            background: linear-gradient(to bottom, 
+                rgba(0, 255, 100, 0.08) 0%,
+                rgba(0, 200, 80, 0.08) 50%,
+                rgba(0, 150, 60, 0.08) 100%
+            ), #0a0a0a;
+            margin-top: 80px;
+            padding-bottom: 100px;
+            padding-top: 40px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, #0a0a0a);
+            pointer-events: none;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 100, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 60%, rgba(0, 200, 80, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 40%, rgba(0, 150, 60, 0.08) 0%, transparent 40%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff64, #00cc50, #00ff64);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 40px rgba(0, 255, 100, 0.6));
+            letter-spacing: 4px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #00ff64;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        /* Coming Soon Badge */
+        .coming-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Main Info Box */
+        .info-box {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.06), rgba(0, 200, 80, 0.03));
+            border: 2px solid rgba(0, 255, 100, 0.25);
+            border-radius: 20px;
+            padding: 50px 30px;
+            margin: 30px auto;
+            max-width: 900px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 50px rgba(0, 255, 100, 0.15);
+        }
+
+        .info-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #00ff64;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .info-text {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            display: inline-block;
+            margin: 30px auto;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 100, 0.3);
+            border-radius: 15px;
+            padding: 25px 30px;
+        }
+
+        .countdown-title {
+            font-size: 0.95rem;
+            color: #00ff64;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff64;
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Image Carousel */
+        .preview-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 1 / 1;
+            margin: 40px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 4px solid rgba(0, 255, 100, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
+                        inset 0 0 30px rgba(0, 0, 0, 0.3);
+            background: #0a0a0a;
+            animation: frameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes frameGlow {
+            0%, 100% {
+                box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 255, 100, 0.35), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+        .carousel-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #00ff64;
+            font-weight: 700;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 100, 0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Free Mint Mechanics */
+        .mint-mechanics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        .mechanic-card {
+            background: rgba(0, 255, 100, 0.03);
+            border: 2px solid rgba(0, 255, 100, 0.15);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .mechanic-card:hover {
+            border-color: rgba(0, 255, 100, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);
+        }
+
+        .mechanic-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .mechanic-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #00ff64;
+            margin-bottom: 15px;
+        }
+
+        .mechanic-desc {
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .highlight {
+            color: #00ff64;
+            font-weight: 700;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.04), rgba(0, 200, 80, 0.03));
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .story-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        /* Utility Cards */
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .utility-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(0, 255, 100, 0.15);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .utility-card:hover {
+            border-color: rgba(0, 255, 100, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .utility-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .utility-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #00ff64;
+            margin-bottom: 15px;
+        }
+
+        .utility-desc {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: rgba(0, 255, 100, 0.05);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .alert-title {
+            font-size: 1.2rem;
+            color: #00ff64;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .alert-text {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(0, 255, 100, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #00ff64;
+            color: #00ff64;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 255, 100, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #404eed);
+            color: #fff;
+        }
+
+        .btn-discord:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(5, 5, 5, 0.9);
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 2px solid rgba(0, 255, 100, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00ff64;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .countdown {
+                gap: 12px;
+            }
+
+            .countdown-value {
+                font-size: 2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.75rem;
+            }
+
+            .countdown-container {
+                padding: 20px 20px;
+            }
+
+            .preview-carousel {
+                max-width: 100%;
+            }
+
+            .info-box {
+                padding: 30px 20px;
+            }
+
+            .info-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                        <li><a href="/trinari-elderborn">Trinari Elderborn</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/Earn/">Earn & Swap</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="coming-badge">🌟 Coming February 2025</div>
+            <h1 class="logo">TRINARI ELDERBORN</h1>
+            <p class="subtitle">🌿 The Ancient Origins • The First Awakening</p>
+
+            <div class="info-box">
+                <h2 class="info-title">The Genesis Collection</h2>
+                <p class="info-text">
+                    212 ultra-exclusive NFTs representing the very first Trinari elders born from the meteor's impact. 
+                    These ancient beings emerged from different elements and materials, marking the beginning of the Trinari lineage.
+                </p>
+
+                <div class="countdown-container">
+                    <div class="countdown-title">🔥 Launch: February 21, 2025 - 21:20 CET</div>
+                    <div style="font-size: 0.85rem; color: #999; margin-bottom: 15px;">(22:20 Finland Time / 20:20 GMT)</div>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="days">00</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="hours">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-value" id="seconds">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-carousel">
+                    <img src="Images/TrinariElderborn/1.png" class="carousel-image active" alt="Preview 1">
+                    <img src="Images/TrinariElderborn/2.png" class="carousel-image" alt="Preview 2">
+                    <img src="Images/TrinariElderborn/3.png" class="carousel-image" alt="Preview 3">
+                    <img src="Images/TrinariElderborn/4.png" class="carousel-image" alt="Preview 4">
+                    <img src="Images/TrinariElderborn/5.png" class="carousel-image" alt="Preview 5">
+                    <div class="carousel-indicator">
+                        <span id="carousel-counter">1 / 5</span>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <div class="alert-title">⚡ Exclusive Limited Supply</div>
+                    <div class="alert-text">
+                        Only 212 Trinari Elderborn will ever exist. Many will be distributed for free to loyal community members. 
+                        This is the most exclusive Cronos Legends collection to date.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Free Mint Mechanics Section -->
+    <div class="section">
+        <h2 class="section-title">🎁 Free Mint Mechanics</h2>
+        <p class="section-subtitle">
+            Rewarding our most dedicated Trinari holders with this exclusive genesis collection.
+        </p>
+
+        <div class="mint-mechanics">
+            <div class="mechanic-card">
+                <div class="mechanic-icon">🌿</div>
+                <h3 class="mechanic-title">1% Trinari Holder</h3>
+                <p class="mechanic-desc">
+                    Hold <span class="highlight">1% of Trinari supply</span> from Legends Awaken II?<br>
+                    Receive <span class="highlight">1 FREE Trinari Elderborn NFT</span>
+                </p>
+            </div>
+
+            <div class="mechanic-card">
+                <div class="mechanic-icon">✨</div>
+                <h3 class="mechanic-title">2% Trinari Holder</h3>
+                <p class="mechanic-desc">
+                    Hold <span class="highlight">2% of Trinari supply</span> from Legends Awaken II?<br>
+                    Receive <span class="highlight">2 FREE Trinari Elderborn NFTs</span>
+                </p>
+            </div>
+
+            <div class="mechanic-card">
+                <div class="mechanic-icon">💎</div>
+                <h3 class="mechanic-title">3 Trinari Bundle</h3>
+                <p class="mechanic-desc">
+                    Hold <span class="highlight">3 Trinari NFTs</span> from Legends Awaken II collection?<br>
+                    Receive <span class="highlight">1 FREE Trinari Elderborn NFT</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="alert-box" style="background: rgba(255, 200, 0, 0.1); border-color: rgba(255, 200, 0, 0.3);">
+            <div class="alert-title" style="color: #ffc800;">📢 Whitelist Details Coming Soon</div>
+            <div class="alert-text">
+                Whitelist pricing and accessibility will be announced closer to launch date. 
+                Stay tuned to our Discord for the latest updates!
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="story-section">
+        <div class="story-content">
+            <h2 class="section-title">✨ The Origin Story</h2>
+            <p class="story-text">
+                Long before the Trinari awakened in the forests and winds, there was the First Impact. 
+                A celestial meteor streaked across the sky, crashing into the realm with earth-shaking force.
+            </p>
+            <p class="story-text">
+                From this cosmic event, the very first Trinari emerged—the <span style="color: #00ff64; font-weight: 700;">Elderborn</span>. 
+                Born from different elements touched by the meteor's magic: fire sprites dancing in eternal flame, 
+                crystal wisps shimmering with otherworldly light, earth guardians carved from ancient stone, 
+                and storm spirits crackling with primal energy.
+            </p>
+            <p class="story-text" style="color: #00ff64; font-weight: 600;">
+                These are not just Trinari. These are the ancestors. The first. The Elderborn.
+            </p>
+        </div>
+    </div>
+
+    <!-- Utilities Section -->
+    <div class="section">
+        <h2 class="section-title">🎮 Utilities & Benefits</h2>
+        <p class="section-subtitle">
+            Trinari Elderborn holders gain exclusive benefits within the Cronos Legends ecosystem.
+        </p>
+
+        <div class="utility-grid">
+            <div class="utility-card">
+                <div class="utility-icon">💰</div>
+                <h3 class="utility-title">$TRI Staking</h3>
+                <p class="utility-desc">
+                    Stake your Trinari Elderborn NFT to earn $TRI tokens from a large reward pool. 
+                    Pool amount to be announced. Passive income for holders!
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">⚔️</div>
+                <h3 class="utility-title">Game Boosts</h3>
+                <p class="utility-desc">
+                    Potential boosters and advantages in Cronos Legends games. 
+                    Eligibility and specifics will be announced as features are developed.
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">👑</div>
+                <h3 class="utility-title">Elite Status</h3>
+                <p class="utility-desc">
+                    As the most exclusive collection, Elderborn holders gain recognition and 
+                    priority access to future Trinari-related events and drops.
+                </p>
+            </div>
+        </div>
+
+        <div class="alert-box" style="margin-top: 60px;">
+            <div class="alert-title">🔗 Blockchain & Marketplace</div>
+            <div class="alert-text">
+                Trinari Elderborn will be minted on the <span class="highlight">Cronos Chain</span>.<br>
+                Minting platform and marketplace details will be announced soon!
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2 class="section-title">🌿 Join The Ancient Awakening</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Don't miss your chance to own one of the rarest pieces in Cronos Legends history. 
+            The Elderborn await. Will you answer the call?
+        </p>
+        
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">💬 Join Discord</a>
+            <a href="/" class="btn btn-outline">🏠 Back to Home</a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/legends-awaken-2">Legends Awaken II</a>
+            <a href="/legends-awaken-1">Legends Awaken I</a>
+            <a href="/totems">Totems</a>
+            <a href="/tokens">Tokens</a>
+            <a href="/game">Game</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Countdown Timer to February 21, 2025 21:20 CET (20:20 GMT)
+        const countdownDate = new Date('February 21, 2025 20:20:00 GMT').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown-title').textContent = '🎉 Trinari Elderborn Launched!';
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Image Carousel Auto-Rotation
+        let currentImageIndex = 0;
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        const totalImages = carouselImages.length;
+        const carouselCounter = document.getElementById('carousel-counter');
+
+        function rotateCarousel() {
+            carouselImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            carouselImages[currentImageIndex].classList.add('active');
+            carouselCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+        }
+
+        setInterval(rotateCarousel, 2000);
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.mechanic-card, .utility-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
