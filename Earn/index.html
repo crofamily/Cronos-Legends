@@ -803,7 +803,7 @@
             </div><!-- End NFT Sections -->
 
             <p style="color: #888; font-size: 12px; margin-top: 20px; font-style: italic; text-align: center;">
-                Note: LYRA price is manually updated from DEXScreener. CARA and other token prices are fetched automatically. Last update: December 21, 2025
+                Note: Token prices are fetched automatically from DEXScreener and CoinGecko. Last update: December 27, 2025
             </p>
         </div>
 
@@ -859,6 +859,70 @@
                     🎫 Create Swap Ticket on Discord
                 </button>
             </div>
+
+            <!-- Cara Valoria -->
+            <div class="swap-card">
+                <h3>
+                    <span class="icon">CV</span>
+                    Cara Valoria Owner
+                </h3>
+                <div class="swap-rate">1 NFT = <span style="color: #ec4899;">0.005</span> <span class="token-badge">$CARA</span></div>
+                <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                    Live USD Value: <span id="cara-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                </div>
+                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                    Exclusive rewards for Cara Valoria holders from Legends Awaken I.
+                </p>
+                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                    🎫 Create Swap Ticket on Discord
+                </button>
+            </div>
+
+            <!-- Lyra NFT Owner -->
+            <div class="swap-card">
+                <h3>
+                    <span class="icon">LY</span>
+                    Lyra NFT Owner
+                </h3>
+                <div class="swap-rate">1 NFT = <span style="color: #ef4444;">5,000,000</span> <span class="token-badge">$LYRA</span></div>
+                <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                    Live USD Value: <span id="lyra-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                </div>
+                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                    Special character token rewards for Lyra holders from Legends Awaken I.
+                </p>
+                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                    🎫 Create Swap Ticket on Discord
+                </button>
+            </div>
+
+            <!-- Totems of Power -->
+            <div class="swap-card">
+                <h3>
+                    <span class="icon">⚡</span>
+                    Totems of Power
+                </h3>
+                <div style="margin-top: 10px;">
+                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                        🔥 Mythic = <span style="color: #ffd700;">1</span> <span class="token-badge">$CLG</span>
+                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="mythic-usd">($0.00)</span>
+                    </div>
+                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                        💜 Epic = <span style="color: #ffd700;">0.5</span> <span class="token-badge">$CLG</span>
+                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="epic-usd">($0.00)</span>
+                    </div>
+                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                        💎 Rare = <span style="color: #ffd700;">0.25</span> <span class="token-badge">$CLG</span>
+                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="rare-usd">($0.00)</span>
+                    </div>
+                </div>
+                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                    Tiered rewards based on Totem rarity from the Totems of Power collection.
+                </p>
+                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                    🎫 Create Swap Ticket on Discord
+                </button>
+            </div>
         </div>
 
         <!-- Coming Soon Swaps -->
@@ -867,18 +931,6 @@
         </h3>
 
         <div class="swap-grid">
-            <!-- Cara Valoria -->
-            <div class="swap-card coming-soon">
-                <h3>
-                    <span class="icon">CV</span>
-                    Cara Valoria Owner
-                </h3>
-                <div class="swap-rate">1 NFT = <span class="tba">X.XX</span> <span class="token-badge">$CARA</span></div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Exclusive rewards for Cara Valoria holders from Legends Awaken I.
-                </p>
-            </div>
-
             <!-- Cronus Omni -->
             <div class="swap-card coming-soon">
                 <h3>
@@ -900,40 +952,6 @@
                 <div class="swap-rate">1 NFT = <span class="tba">XX</span> <span class="token-badge">$CLG</span></div>
                 <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
                     Enhanced rates for second collection holders.
-                </p>
-            </div>
-
-            <!-- Lyra NFT -->
-            <div class="swap-card coming-soon">
-                <h3>
-                    <span class="icon">LY</span>
-                    Lyra NFT Owner
-                </h3>
-                <div class="swap-rate">1 NFT = <span class="tba">XXX</span> <span class="token-badge">$LYRA</span></div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Special character token rewards for Lyra holders.
-                </p>
-            </div>
-
-            <!-- Totems of Power -->
-            <div class="swap-card coming-soon">
-                <h3>
-                    <span class="icon">⚡</span>
-                    Totems of Power
-                </h3>
-                <div style="margin-top: 10px;">
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        🔥 Mythic = <span class="tba">XXX</span> <span class="token-badge">$CLG</span>
-                    </div>
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        💜 Epic = <span class="tba">XX</span> <span class="token-badge">$CLG</span>
-                    </div>
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        💎 Rare = <span class="tba">X</span> <span class="token-badge">$CLG</span>
-                    </div>
-                </div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Tiered rewards based on Totem rarity.
                 </p>
             </div>
 
@@ -1189,9 +1207,7 @@
         };
 
         const TOKEN_PRICES = {};
-        const MANUAL_PRICES = {
-            LYRA: 0.00001932,
-        };
+        const MANUAL_PRICES = {};
 
         let TOTAL_VALUE_USD = 0;
         let PARTNER_TOTAL_USD = 0;
@@ -1234,8 +1250,39 @@
                 
                 Object.assign(TOKEN_PRICES, MANUAL_PRICES);
                 
+                // Update live USD values for swap cards
+                updateSwapCardPrices();
+                
             } catch (error) {
                 console.error('Error fetching prices:', error);
+            }
+        }
+
+        // ===========================
+        // UPDATE SWAP CARD PRICES
+        // ===========================
+        function updateSwapCardPrices() {
+            // Cara Valoria: 0.005 CARA
+            if (TOKEN_PRICES['CARA']) {
+                const caraValue = 0.005 * TOKEN_PRICES['CARA'];
+                document.getElementById('cara-usd-value').textContent = formatUSD(caraValue);
+            }
+            
+            // Lyra: 5,000,000 LYRA
+            if (TOKEN_PRICES['LYRA']) {
+                const lyraValue = 5000000 * TOKEN_PRICES['LYRA'];
+                document.getElementById('lyra-usd-value').textContent = formatUSD(lyraValue);
+            }
+            
+            // Totems: CLG values
+            if (TOKEN_PRICES['CLG']) {
+                const mythicValue = 1 * TOKEN_PRICES['CLG'];
+                const epicValue = 0.5 * TOKEN_PRICES['CLG'];
+                const rareValue = 0.25 * TOKEN_PRICES['CLG'];
+                
+                document.getElementById('mythic-usd').textContent = '(' + formatUSD(mythicValue) + ')';
+                document.getElementById('epic-usd').textContent = '(' + formatUSD(epicValue) + ')';
+                document.getElementById('rare-usd').textContent = '(' + formatUSD(rareValue) + ')';
             }
         }
 
@@ -1673,7 +1720,3 @@
     </script>
 </body>
 </html>
-
-
-
-
