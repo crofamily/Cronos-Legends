@@ -807,32 +807,14 @@
                 </div>
             </div>
 
-            <!-- NFT Toggle Button -->
+            <!-- NFT Status Message -->
             <div style="text-align: center; margin: 40px 0 20px;">
-                <button id="toggle-nfts-btn" onclick="toggleNFTs()" class="swap-btn" style="max-width: 400px; margin: 0 auto;">
-                    🎴 Show NFT Collections
-                </button>
-            </div>
-
-            <!-- NFT Sections (Hidden by default) -->
-            <div id="nft-sections" style="display: none;">
-                <!-- LegendsAwaken NFTs -->
-                <h4 style="color: #00d4ff; font-size: 18px; margin: 30px 0 15px;">🎴 LegendsAwaken Collection</h4>
-            <div id="nft-holdings-container">
-                <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>Loading LegendsAwaken NFTs...</p>
+                <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 25px; max-width: 600px; margin: 0 auto;">
+                    <p style="color: #ffd700; font-size: 18px; font-weight: bold; margin: 0;">
+                        🎴 No Legends Awaken I NFTs currently available for purchase
+                    </p>
                 </div>
             </div>
-
-            <!-- Other NFTs -->
-            <h4 style="color: #BA55D3; font-size: 18px; margin: 40px 0 15px;">🤝 Other Cronos NFTs & Partner NFTs</h4>
-            <div id="other-nft-container">
-                <div style="text-align: center; padding: 20px; color: #888;">
-                    <p>Scanning for other NFT collections...</p>
-                </div>
-            </div>
-
-            </div><!-- End NFT Sections -->
 
             <p style="color: #888; font-size: 12px; margin-top: 20px; font-style: italic; text-align: center;">
                 Note: Token prices are fetched automatically from DEXScreener and CoinGecko. Last update: December 27, 2025
@@ -894,12 +876,12 @@
                 </div>
             </div>
 
-            <!-- Cara Valoria - WITH BACKGROUND IMAGE -->
-            <div class="swap-card">
-                <div class="card-bg-image">
-                    <img src="/Images/cara1.png" alt="">
+            <!-- Cara Valoria - WITH FULL BACKGROUND IMAGE -->
+            <div class="swap-card" style="position: relative; overflow: hidden; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: flex-end;">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
+                    <img src="/Images/cara1.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.85) 60%, transparent 100%); padding: 25px;">
                     <h3>
                         <span class="icon">CV</span>
                         Cara Valoria Owner
@@ -917,12 +899,12 @@
                 </div>
             </div>
 
-            <!-- Lyra NFT Owner - WITH BACKGROUND IMAGE -->
-            <div class="swap-card">
-                <div class="card-bg-image">
-                    <img src="/Images/lyra1.png" alt="">
+            <!-- Lyra NFT Owner - WITH FULL BACKGROUND IMAGE -->
+            <div class="swap-card" style="position: relative; overflow: hidden; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: flex-end;">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
+                    <img src="/Images/lyralogo.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.85) 60%, transparent 100%); padding: 25px;">
                     <h3>
                         <span class="icon">LY</span>
                         Lyra NFT Owner
@@ -978,11 +960,11 @@
 
         <div class="swap-grid">
             <!-- Cronus Omni - WITH FULL BACKGROUND IMAGE -->
-            <div class="swap-card coming-soon" style="position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
+            <div class="swap-card coming-soon" style="position: relative; overflow: hidden; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: flex-end;">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
                     <img src="/Images/CronusOmni.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.85) 60%, transparent 100%); padding: 25px;">
                     <h3>
                         <span class="icon">CO</span>
                         Cronus Omni Owner
@@ -1265,14 +1247,6 @@
             BONE: 'https://cdn.dexscreener.com/cms/images/cfb1475025b081ad4815b20f42c9e2ddac64c0a92871ec93fb2bab7e6b6ae3a4?width=64&height=64&fit=crop&quality=95&format=auto'
         };
 
-        const NFT_CONTRACTS = {
-            'Legends Awaken I': '0x68A3192E286AA5C2182D815F5fE796401eCe28bA',
-        };
-
-        const KNOWN_NFT_IDS = {
-            '0x68A3192E286AA5C2182D815F5fE796401eCe28bA': []
-        };
-
         const TOKEN_PRICES = {};
         const MANUAL_PRICES = {};
 
@@ -1507,212 +1481,9 @@
                 document.getElementById('partner-total-value').textContent = formatUSD(combinedUSD);
                 document.getElementById('grand-total-value').textContent = formatUSD(totalUSD + combinedUSD);
                 
-                if (!window.nftsLoaded) {
-                    await updateNFTHoldings(provider);
-                    await updateOtherNFTs(provider);
-                    window.nftsLoaded = true;
-                }
-                
             } catch (error) {
                 console.error('Error fetching balances:', error);
             }
-        }
-
-        // ===========================
-        // NFT HOLDINGS FETCHING
-        // ===========================
-        async function updateNFTHoldings(provider) {
-            const container = document.getElementById('nft-holdings-container');
-            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;"><p>🔍 Loading NFTs from Cronos Explorer...</p></div>';
-            
-            try {
-                await fetchNFTsFromExplorerAPI(provider);
-            } catch (error) {
-                console.error('Error fetching NFTs:', error);
-                showNFTCountOnly(provider);
-            }
-        }
-
-        async function fetchNFTsFromExplorerAPI(provider) {
-            const container = document.getElementById('nft-holdings-container');
-            const knownTokenIds = [271, 79, 280, 140, 299, 265, 378, 316, 304, 394, 341, 29];
-            
-            console.log(`📦 Loading ${knownTokenIds.length} Legends Awaken NFTs...`);
-            
-            const allNFTs = [];
-            const contractAddress = Object.values(NFT_CONTRACTS)[0];
-            const nftAbi = ["function tokenURI(uint256 tokenId) view returns (string)"];
-            const contract = new ethers.Contract(contractAddress, nftAbi, provider);
-            
-            for (const tokenId of knownTokenIds) {
-                try {
-                    const tokenURI = await contract.tokenURI(tokenId);
-                    console.log(`Token #${tokenId} URI:`, tokenURI);
-                    
-                    let imageUrl = '';
-                    let name = `Legends Awaken I #${tokenId}`;
-                    
-                    if (tokenURI) {
-                        try {
-                            let metadataURL = tokenURI;
-                            if (metadataURL.startsWith('ipfs://')) {
-                                metadataURL = metadataURL.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                            }
-                            
-                            console.log(`Fetching metadata from: ${metadataURL}`);
-                            
-                            const controller = new AbortController();
-                            const timeoutId = setTimeout(() => controller.abort(), 5000);
-                            
-                            const metaResponse = await fetch(metadataURL, { signal: controller.signal });
-                            clearTimeout(timeoutId);
-                            
-                            const metadata = await metaResponse.json();
-                            console.log(`Metadata for #${tokenId}:`, metadata);
-                            
-                            imageUrl = metadata.image || metadata.image_url || '';
-                            name = metadata.name || name;
-                            
-                            if (imageUrl.startsWith('ipfs://')) {
-                                imageUrl = imageUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-                            }
-                            
-                            console.log(`✅ #${tokenId}: ${name} - Image: ${imageUrl.substring(0, 50)}...`);
-                        } catch (e) {
-                            console.log(`⚠️ Could not fetch metadata for #${tokenId}:`, e.message);
-                        }
-                    }
-                    
-                    allNFTs.push({
-                        tokenId: tokenId,
-                        name: name,
-                        imageUrl: imageUrl,
-                        collection: 'LegendsAwaken'
-                    });
-                } catch (e) {
-                    console.log(`❌ Error loading token #${tokenId}:`, e.message);
-                }
-            }
-            
-            if (allNFTs.length > 0) {
-                container.innerHTML = `
-                    <div style="background: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                        <p style="color: #ffd700; font-size: 18px; font-weight: bold; text-align: center; margin: 0;">
-                            LegendsAwaken: ${allNFTs.length} NFTs
-                        </p>
-                        <p style="color: #aaa; font-size: 12px; text-align: center; margin-top: 8px;">
-                            Official LegendsAwaken collection on Cronos • 
-                            <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #00d4ff;">View on Explorer</a>
-                        </p>
-                    </div>
-                    <div class="nft-grid" id="nft-grid"></div>
-                `;
-                
-                const nftGrid = document.getElementById('nft-grid');
-                allNFTs.forEach(nft => {
-                    displayNFTCard(nft, nftGrid);
-                });
-                
-                console.log(`✅ Displayed ${allNFTs.length} NFT cards`);
-            } else {
-                throw new Error('No NFTs loaded');
-            }
-        }
-
-        function displayNFTCard(nft, container) {
-            const nftCard = document.createElement('div');
-            nftCard.className = 'nft-card';
-            
-            let imageUrl = nft.imageUrl;
-            const fallbackSVG = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="%23222"/><text x="50%" y="50%" fill="%23ffd700" font-size="20" text-anchor="middle" dominant-baseline="middle">NFT %23${nft.tokenId}</text></svg>`;
-            
-            nftCard.innerHTML = `
-                <img src="${imageUrl || fallbackSVG}" 
-                     alt="" 
-                     title=""
-                     class="nft-image" 
-                     loading="lazy"
-                     onerror="this.src='${fallbackSVG}'">
-                <div class="nft-info">
-                    <div class="nft-name">${nft.name}</div>
-                    <div class="nft-id">Token ID: ${nft.tokenId}</div>
-                </div>
-            `;
-            
-            container.appendChild(nftCard);
-        }
-
-        async function showNFTCountOnly(provider) {
-            const container = document.getElementById('nft-holdings-container');
-            
-            try {
-                const nftAbi = ["function balanceOf(address owner) view returns (uint256)"];
-                const contract = new ethers.Contract(
-                    Object.values(NFT_CONTRACTS)[0], 
-                    nftAbi, 
-                    provider
-                );
-                const balance = await contract.balanceOf(WALLET_ADDRESS);
-                const count = balance.toNumber();
-                
-                container.innerHTML = `
-                    <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3); text-align: center;">
-                        <p style="color: #ffd700; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
-                            📦 Legends Awaken I
-                        </p>
-                        <p style="color: #fff; font-size: 32px; font-weight: bold; margin: 15px 0;">
-                            ${count} NFTs
-                        </p>
-                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" 
-                           style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: linear-gradient(135deg, #00d4ff, #00a8cc); 
-                                  border-radius: 8px; color: #fff; text-decoration: none; font-size: 14px; font-weight: bold;">
-                            🔍 View NFTs on Explorer
-                        </a>
-                    </div>
-                `;
-            } catch (error) {
-                console.error('Error showing NFT count:', error);
-            }
-        }
-
-        async function updateOtherNFTs(provider) {
-            const container = document.getElementById('other-nft-container');
-            
-            const otherCollections = [
-                { name: 'Golden Hops', count: 2 },
-                { name: 'Crononymous', count: 5 },
-                { name: 'Wolfies', count: 2 },
-                { name: 'Robin NFT', count: 2 },
-                { name: 'BoomerSquad', count: 1 }
-            ];
-            
-            const totalOther = otherCollections.reduce((sum, col) => sum + col.count, 0);
-            
-            const collectionCards = otherCollections.map(col => `
-                <div style="padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(186, 85, 211, 0.3);">
-                    <p style="color: #BA55D3; font-size: 14px; font-weight: bold;">${col.name}</p>
-                    <p style="color: #fff; font-size: 20px; margin-top: 5px;">${col.count} NFT${col.count > 1 ? 's' : ''}</p>
-                </div>
-            `).join('');
-            
-            container.innerHTML = `
-                <div style="background: rgba(186, 85, 211, 0.1); padding: 20px; border-radius: 10px; border: 1px solid rgba(186, 85, 211, 0.3);">
-                    <p style="color: #BA55D3; font-size: 18px; font-weight: bold; text-align: center; margin-bottom: 5px;">
-                        Partner & Community NFT Collections
-                    </p>
-                    <p style="color: #aaa; font-size: 14px; text-align: center; margin-bottom: 20px;">
-                        Total: ${totalOther} NFTs across ${otherCollections.length} collections
-                    </p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-                        ${collectionCards}
-                    </div>
-                    <p style="color: #888; font-size: 12px; margin-top: 20px; text-align: center;">
-                        <a href="https://explorer.cronos.org/address/${WALLET_ADDRESS}#nft-tokens" target="_blank" style="color: #BA55D3; text-decoration: none;">
-                            🔍 View all NFTs on Cronos Explorer →
-                        </a>
-                    </p>
-                </div>
-            `;
         }
 
         function updateBalanceDisplay(token, value, usdValue) {
@@ -1764,18 +1535,6 @@
 
         function viewTreasury() {
             window.open('https://explorer.cronos.org/address/0xaf87e4df58d735ec2971d2d8db663b02ca60175d', '_blank');
-        }
-
-        function toggleNFTs() {
-            const section = document.getElementById('nft-sections');
-            const btn = document.getElementById('toggle-nfts-btn');
-            if (section.style.display === 'none') {
-                section.style.display = 'block';
-                btn.textContent = '🎴 Hide NFT Collections';
-            } else {
-                section.style.display = 'none';
-                btn.textContent = '🎴 Show NFT Collections';
-            }
         }
 
         // Initialize
