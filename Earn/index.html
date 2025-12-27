@@ -415,6 +415,32 @@
             font-weight: bold;
         }
 
+        /* Card background image styling */
+        .card-bg-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 15px;
+        }
+
+        .card-bg-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.3) saturate(1.2);
+            border-radius: 15px;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Treasury Section */
         .treasury-section {
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
@@ -659,6 +685,12 @@
             .total-value {
                 font-size: 24px;
             }
+
+            .card-bg-image {
+                width: 120px;
+                height: 120px;
+                opacity: 0.1;
+            }
         }
     </style>
 </head>
@@ -834,94 +866,108 @@
         <div class="swap-grid">
             <!-- Legends Awaken I -->
             <div class="swap-card">
-                <h3>
-                    <span class="icon">LA1</span>
-                    Legends Awaken I
-                </h3>
-                <div style="margin-top: 10px;">
-                    <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
-                        📅 December 2025: <span style="color: #ffd700;">$35</span> <span class="token-badge">$CLG</span>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">LA1</span>
+                        Legends Awaken I
+                    </h3>
+                    <div style="margin-top: 10px;">
+                        <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
+                            📅 December 2025: <span style="color: #ffd700;">$35</span> <span class="token-badge">$CLG</span>
+                        </div>
+                        <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
+                            📅 January 2026: <span style="color: #ffd700;">$40</span> <span class="token-badge">$CLG</span>
+                        </div>
+                        <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
+                            📅 February 2026: <span style="color: #ffd700;">$45</span> <span class="token-badge">$CLG</span>
+                        </div>
+                        <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
+                            📅 March 2026+: <span style="color: #ffd700;">$50</span> <span class="token-badge">$CLG</span>
+                        </div>
                     </div>
-                    <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
-                        📅 January 2026: <span style="color: #ffd700;">$40</span> <span class="token-badge">$CLG</span>
-                    </div>
-                    <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
-                        📅 February 2026: <span style="color: #ffd700;">$45</span> <span class="token-badge">$CLG</span>
-                    </div>
-                    <div class="swap-rate" style="font-size: 18px; margin: 8px 0;">
-                        📅 March 2026+: <span style="color: #ffd700;">$50</span> <span class="token-badge">$CLG</span>
-                    </div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                        Legends Awaken I collection NFT swap with increasing value over time. Subject to changes; continuation after March to be re-evaluated.
+                    </p>
+                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                        🎫 Create Swap Ticket on Discord
+                    </button>
                 </div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                    Legends Awaken I collection NFT swap with increasing value over time. Subject to changes; continuation after March to be re-evaluated.
-                </p>
-                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                    🎫 Create Swap Ticket on Discord
-                </button>
             </div>
 
-            <!-- Cara Valoria -->
+            <!-- Cara Valoria - WITH BACKGROUND IMAGE -->
             <div class="swap-card">
-                <h3>
-                    <span class="icon">CV</span>
-                    Cara Valoria Owner
-                </h3>
-                <div class="swap-rate">1 NFT = <span style="color: #ec4899;">0.005</span> <span class="token-badge">$CARA</span></div>
-                <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Live USD Value: <span id="cara-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                <div class="card-bg-image">
+                    <img src="/Images/cara1.png" alt="">
                 </div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                    Exclusive offer for Cara Valoria holder from Legends Awaken I.
-                </p>
-                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                    🎫 Create Swap Ticket on Discord
-                </button>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">CV</span>
+                        Cara Valoria Owner
+                    </h3>
+                    <div class="swap-rate">1 NFT = <span style="color: #ec4899;">0.005</span> <span class="token-badge">$CARA</span></div>
+                    <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                        Live USD Value: <span id="cara-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                    </div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                        Exclusive offer for Cara Valoria holder from Legends Awaken I.
+                    </p>
+                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                        🎫 Create Swap Ticket on Discord
+                    </button>
+                </div>
             </div>
 
-            <!-- Lyra NFT Owner -->
+            <!-- Lyra NFT Owner - WITH BACKGROUND IMAGE -->
             <div class="swap-card">
-                <h3>
-                    <span class="icon">LY</span>
-                    Lyra NFT Owner
-                </h3>
-                <div class="swap-rate">1 NFT = <span style="color: #ef4444;">5,000,000</span> <span class="token-badge">$LYRA</span></div>
-                <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Live USD Value: <span id="lyra-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                <div class="card-bg-image">
+                    <img src="/Images/lyra1.png" alt="">
                 </div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                     Exclusive offer for Lyra holder from Legends Awaken II.
-                </p>
-                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                    🎫 Create Swap Ticket on Discord
-                </button>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">LY</span>
+                        Lyra NFT Owner
+                    </h3>
+                    <div class="swap-rate">1 NFT = <span style="color: #ef4444;">5,000,000</span> <span class="token-badge">$LYRA</span></div>
+                    <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                        Live USD Value: <span id="lyra-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
+                    </div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                         Exclusive offer for Lyra holder from Legends Awaken II.
+                    </p>
+                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                        🎫 Create Swap Ticket on Discord
+                    </button>
+                </div>
             </div>
 
             <!-- Totems of Power -->
             <div class="swap-card">
-                <h3>
-                    <span class="icon">⚡</span>
-                    Totems of Power
-                </h3>
-                <div style="margin-top: 10px;">
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        🔥 Mythic = <span style="color: #ffd700;">1</span> <span class="token-badge">$CLG</span>
-                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="mythic-usd">($0.00)</span>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">⚡</span>
+                        Totems of Power
+                    </h3>
+                    <div style="margin-top: 10px;">
+                        <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                            🔥 Mythic = <span style="color: #ffd700;">1</span> <span class="token-badge">$CLG</span>
+                            <span style="color: #888; font-size: 13px; margin-left: 10px;" id="mythic-usd">($0.00)</span>
+                        </div>
+                        <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                            💜 Epic = <span style="color: #ffd700;">0.5</span> <span class="token-badge">$CLG</span>
+                            <span style="color: #888; font-size: 13px; margin-left: 10px;" id="epic-usd">($0.00)</span>
+                        </div>
+                        <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
+                            💎 Rare = <span style="color: #ffd700;">0.25</span> <span class="token-badge">$CLG</span>
+                            <span style="color: #888; font-size: 13px; margin-left: 10px;" id="rare-usd">($0.00)</span>
+                        </div>
                     </div>
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        💜 Epic = <span style="color: #ffd700;">0.5</span> <span class="token-badge">$CLG</span>
-                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="epic-usd">($0.00)</span>
-                    </div>
-                    <div class="swap-rate" style="font-size: 16px; margin: 5px 0;">
-                        💎 Rare = <span style="color: #ffd700;">0.25</span> <span class="token-badge">$CLG</span>
-                        <span style="color: #888; font-size: 13px; margin-left: 10px;" id="rare-usd">($0.00)</span>
-                    </div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
+                        Tiered rewards based on Totem rarity from the Totems of Power collection.
+                    </p>
+                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
+                        🎫 Create Swap Ticket on Discord
+                    </button>
                 </div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                    Tiered rewards based on Totem rarity from the Totems of Power collection.
-                </p>
-                <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                    🎫 Create Swap Ticket on Discord
-                </button>
             </div>
         </div>
 
@@ -931,28 +977,35 @@
         </h3>
 
         <div class="swap-grid">
-            <!-- Cronus Omni -->
+            <!-- Cronus Omni - WITH BACKGROUND IMAGE -->
             <div class="swap-card coming-soon">
-                <h3>
-                    <span class="icon">CO</span>
-                    Cronus Omni Owner
-                </h3>
-                <div class="swap-rate">1 NFT = <span class="tba">X.XX</span> <span class="token-badge">$CRONUS</span></div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Premium rewards for legendary Cronus Omni holders.
-                </p>
+                <div class="card-bg-image">
+                    <img src="/Images/CronusOmni.png" alt="">
+                </div>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">CO</span>
+                        Cronus Omni Owner
+                    </h3>
+                    <div class="swap-rate">1 NFT = <span class="tba">X.XX</span> <span class="token-badge">$CRONUS</span></div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                        Premium rewards for legendary Cronus Omni holders.
+                    </p>
+                </div>
             </div>
 
             <!-- Legends Awaken II -->
             <div class="swap-card coming-soon">
-                <h3>
-                    <span class="icon">LA2</span>
-                    Legends Awaken II
-                </h3>
-                <div class="swap-rate">1 NFT = <span class="tba">XX</span> <span class="token-badge">$CLG</span></div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Enhanced rates for second collection holders.
-                </p>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">LA2</span>
+                        Legends Awaken II
+                    </h3>
+                    <div class="swap-rate">1 NFT = <span class="tba">XX</span> <span class="token-badge">$CLG</span></div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                        Enhanced rates for second collection holders.
+                    </p>
+                </div>
             </div>
 
             <!-- Trinari Elderborn -->
@@ -960,14 +1013,16 @@
                 <div class="meteor" style="top: -100px; left: 50%; animation-delay: 0s;"></div>
                 <div class="meteor" style="top: -100px; left: 30%; animation-delay: 1s;"></div>
                 <div class="meteor" style="top: -100px; left: 70%; animation-delay: 2s;"></div>
-                <h3>
-                    <span class="icon">☄️</span>
-                    Trinari Elderborn
-                </h3>
-                <div class="swap-rate">Rewards <span class="tba">TBA</span> <span class="token-badge">$TRI</span></div>
-                <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                    Born from the meteor strike. The first Trinari, ancient and powerful. Token rates to be announced.
-                </p>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">☄️</span>
+                        Trinari Elderborn
+                    </h3>
+                    <div class="swap-rate">Rewards <span class="tba">TBA</span> <span class="token-badge">$TRI</span></div>
+                    <p style="color: #aaa; font-size: 14px; margin-top: 10px;">
+                        Born from the meteor strike. The first Trinari, ancient and powerful. Token rates to be announced.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -988,23 +1043,27 @@
 
             <div class="swap-grid">
                 <div class="swap-card">
-                    <h3>
-                        <span class="icon">🎮</span>
-                        Play & Earn Games
-                    </h3>
-                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                        Participate in Cronos Legends Discord games to earn tokens. 
-                    </p>
+                    <div class="card-content">
+                        <h3>
+                            <span class="icon">🎮</span>
+                            Play & Earn Games
+                        </h3>
+                        <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                            Participate in Cronos Legends Discord games to earn tokens. 
+                        </p>
+                    </div>
                 </div>
 
                 <div class="swap-card">
-                    <h3>
-                        <span class="icon">📱</span>
-                        Community Engagement
-                    </h3>
-                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                        Active Discord members, content creators, and community contributors earn rewards. These can be random airdrops given to loyal community members quite randomly, we are constantly watching!
-                    </p>
+                    <div class="card-content">
+                        <h3>
+                            <span class="icon">📱</span>
+                            Community Engagement
+                        </h3>
+                        <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                            Active Discord members, content creators, and community contributors earn rewards. These can be random airdrops given to loyal community members quite randomly, we are constantly watching!
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -1015,13 +1074,15 @@
 
             <div class="swap-grid">
                 <div class="swap-card">
-                    <h3>
-                        <span class="icon">🎯</span>
-                        Referral Program
-                    </h3>
-                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                        Invite new members and earn commission on their purchases and swaps.
-                    </p>
+                    <div class="card-content">
+                        <h3>
+                            <span class="icon">🎯</span>
+                            Referral Program
+                        </h3>
+                        <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                            Invite new members and earn commission on their purchases and swaps.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1032,16 +1093,18 @@
         </h3>
 
         <div class="swap-card" style="background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(255, 105, 180, 0.05)); border-color: rgba(255, 105, 180, 0.3);">
-            <h3>
-                <span class="icon">🌟</span>
-                Submit Suggestions
-            </h3>
-            <p style="color: #ddd; font-size: 15px; margin-top: 10px; line-height: 1.6;">
-                The community drives Cronos Legends. Share your ideas for new earning methods, gameplay features, and improvements in our Discord suggestions channel!
-            </p>
-            <button class="swap-btn" onclick="openSuggestions()" style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
-                💬 Share Your Ideas on Discord
-            </button>
+            <div class="card-content">
+                <h3>
+                    <span class="icon">🌟</span>
+                    Submit Suggestions
+                </h3>
+                <p style="color: #ddd; font-size: 15px; margin-top: 10px; line-height: 1.6;">
+                    The community drives Cronos Legends. Share your ideas for new earning methods, gameplay features, and improvements in our Discord suggestions channel!
+                </p>
+                <button class="swap-btn" onclick="openSuggestions()" style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
+                    💬 Share Your Ideas on Discord
+                </button>
+            </div>
         </div>
 
         <!-- Partner Projects -->
@@ -1053,32 +1116,36 @@
         <div class="swap-grid">
             <!-- Cronus Agent -->
             <div class="swap-card partner-card">
-                <h3>
-                    <span class="icon">🤖</span>
-                    Cronus Agent
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Strategic partnership with Cronus Agent on the Cronos blockchain. Building the future together.
-                </p>
-                <button class="swap-btn" onclick="window.open('https://x.com/CronusAgent', '_blank')" 
-                        style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
-                    🐦 Follow @CronusAgent
-                </button>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">🤖</span>
+                        Cronus Agent
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Strategic partnership with Cronus Agent on the Cronos blockchain. Building the future together.
+                    </p>
+                    <button class="swap-btn" onclick="window.open('https://x.com/CronusAgent', '_blank')" 
+                            style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
+                        🐦 Follow @CronusAgent
+                    </button>
+                </div>
             </div>
 
             <!-- CroHound -->
             <div class="swap-card partner-card">
-                <h3>
-                    <span class="icon">🦴</span>
-                    CroHound GODS
-                </h3>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                    Partnership with CroHound GODS ($BONE), supporting the Cronos gaming ecosystem.
-                </p>
-                <button class="swap-btn" onclick="window.open('https://x.com/CroHound_GODS', '_blank')" 
-                        style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
-                    🐦 Follow @CroHound_GODS
-                </button>
+                <div class="card-content">
+                    <h3>
+                        <span class="icon">🦴</span>
+                        CroHound GODS
+                    </h3>
+                    <p style="color: #ddd; font-size: 14px; margin-top: 10px; line-height: 1.6;">
+                        Partnership with CroHound GODS ($BONE), supporting the Cronos gaming ecosystem.
+                    </p>
+                    <button class="swap-btn" onclick="window.open('https://x.com/CroHound_GODS', '_blank')" 
+                            style="background: linear-gradient(135deg, #1DA1F2, #0d8bd9);">
+                        🐦 Follow @CroHound_GODS
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1720,4 +1787,3 @@
     </script>
 </body>
 </html>
-
