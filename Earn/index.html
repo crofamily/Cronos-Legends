@@ -422,7 +422,7 @@
             right: 0;
             width: 180px;
             height: 180px;
-            opacity: 0.12;
+            opacity: 0.20;
             pointer-events: none;
             z-index: 0;
             border-radius: 15px;
@@ -689,7 +689,7 @@
             .card-bg-image {
                 width: 120px;
                 height: 120px;
-                opacity: 0.1;
+                opacity: 0.18;
             }
         }
     </style>
@@ -977,10 +977,10 @@
         </h3>
 
         <div class="swap-grid">
-            <!-- Cronus Omni - WITH BACKGROUND IMAGE -->
-            <div class="swap-card coming-soon">
-                <div class="card-bg-image">
-                    <img src="/Images/CronusOmni.png" alt="">
+            <!-- Cronus Omni - WITH FULL BACKGROUND IMAGE -->
+            <div class="swap-card coming-soon" style="position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
+                    <img src="/Images/CronusOmni.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div class="card-content">
                     <h3>
