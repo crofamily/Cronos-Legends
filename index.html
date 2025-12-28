@@ -306,6 +306,56 @@
             margin-top: 40px;
         }
 
+        /* Project Overview Section */
+        .overview-section {
+            background: linear-gradient(135deg, rgba(10, 10, 30, 0.6), rgba(30, 10, 40, 0.6));
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overview-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 100, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 50, 50, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .overview-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .overview-image-wrapper {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .overview-image-wrapper:hover {
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 25px 80px rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .overview-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+        }
+
         /* Section Styles */
         .section {
             max-width: 1400px;
@@ -574,6 +624,10 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .overview-image-wrapper {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -613,6 +667,21 @@
             </p>
             <div class="hero-buttons">
                 <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">💬 Join Discord</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview Section -->
+    <div class="overview-section">
+        <div class="overview-container">
+            <h2 class="section-title">🌌 Complete Ecosystem Overview</h2>
+            <p class="section-subtitle">
+                Discover the full Cronos Legends universe: three powerful factions, multiple token economies, 
+                extensive NFT collections, and an ever-expanding gaming ecosystem.
+            </p>
+            
+            <div class="overview-image-wrapper">
+                <img src="Images/projectoverviewlowres.png" alt="Cronos Legends Complete Ecosystem Overview" class="overview-image">
             </div>
         </div>
     </div>
@@ -859,7 +928,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.collection-card, .feature-card').forEach(el => {
+        document.querySelectorAll('.collection-card, .feature-card, .overview-image-wrapper').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
