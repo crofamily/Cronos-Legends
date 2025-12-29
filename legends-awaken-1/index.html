@@ -1413,6 +1413,74 @@
         
         const contractAddress = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
 
+        // Burned NFT Image URLs from IPFS
+        const burnedNFTImages = {
+          46: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(46).jpg',
+          49: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(49).jpg',
+          60: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(60).jpg',
+          64: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(64).jpg',
+          67: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(67).jpg',
+          81: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(81).jpg',
+          84: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(84).jpg',
+          88: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(88).jpg',
+          95: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(95).jpg',
+          100: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(100).jpg',
+          158: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(8).jpg',
+          161: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(11).jpg',
+          169: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(19).jpg',
+          200: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Oceanic%20Guardians%20(10).jpg',
+          216: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Verdant%20Guardians%20(6).jpg',
+          275: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(25).jpg',
+          276: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(26).jpg',
+          292: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(42).jpg',
+          306: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(56).jpg',
+          307: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(57).jpg',
+          308: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(58).jpg',
+          310: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(60).jpg',
+          318: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(68).jpg',
+          321: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(71).jpg',
+          322: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(72).jpg',
+          326: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(76).jpg',
+          333: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(83).jpg',
+          336: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(86).jpg',
+          347: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(97).jpg',
+          348: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(98).jpg',
+          361: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(11).jpg',
+          362: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(12).jpg',
+          366: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(16).jpg',
+          371: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(21).jpg',
+          372: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(22).jpg',
+          374: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(24).jpg',
+          385: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(5).jpg',
+          388: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(8).jpg',
+          391: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(11).jpg',
+          396: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(16).jpg',
+          398: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(18).jpg',
+          399: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(19).jpg',
+          400: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(20).jpg',
+          405: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(5).jpg',
+          413: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(13).jpg',
+          419: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(19).jpg',
+          427: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Frostbound%20Horde%20(7).jpg',
+          451: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Abyss%20Beasts%20(11).jpg',
+          495: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Nightshade%20Warden%20(15).jpg',
+          500: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Nightshade%20Warden%20(20).jpg',
+        };
+
+        // NFT Names
+        const burnedNFTNames = {
+          46: 'Sentinel', 49: 'Sentinel', 60: 'Sentinel', 64: 'Sentinel', 67: 'Sentinel',
+          81: 'Sentinel', 84: 'Sentinel', 88: 'Sentinel', 95: 'Sentinel', 100: 'Sentinel',
+          158: 'Guardian', 161: 'Sentinel', 169: 'Sentinel', 200: 'Sentinel', 216: 'Guardian',
+          275: 'Berserker', 276: 'Berserker', 292: 'Raider', 306: 'Raider', 307: 'Raider',
+          308: 'Raider', 310: 'Raider', 318: 'Raider', 321: 'Raider', 322: 'Raider',
+          326: 'Raider', 333: 'Raider', 336: 'Raider', 347: 'Raider', 348: 'Raider',
+          361: 'Raider', 362: 'Raider', 366: 'Raider', 371: 'Raider', 372: 'Raider',
+          374: 'Raider', 385: 'Berserker', 388: 'Berserker', 391: 'Raider', 396: 'Raider',
+          398: 'Raider', 399: 'Raider', 400: 'Raider', 405: 'Berserker', 413: 'Raider',
+          419: 'Raider', 427: 'Berserker', 451: 'Raider', 495: 'Raider', 500: 'Raider'
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             // Update static stats
             const stats = {
@@ -1428,25 +1496,28 @@
                 }
             });
 
-            // Load burned NFTs
+            // Load burned NFTs with IPFS images
             const container = document.getElementById('burned-nfts-container');
             
             burnedTokenIds.forEach(tokenId => {
                 const card = document.createElement('div');
                 card.className = 'burned-nft-card';
                 
-                // Construct the NFT metadata URL
+                // Get IPFS image URL or fallback to Minted CDN
+                const imageUrl = burnedNFTImages[tokenId] || `https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}`;
+                const nftName = burnedNFTNames[tokenId] || 'BURNED';
                 const metadataUrl = `https://nft.minted.network/cronos/${contractAddress}/${tokenId}`;
                 
                 card.innerHTML = `
                     <a href="${metadataUrl}" target="_blank" style="text-decoration: none; color: inherit;">
-                        <img src="https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}" 
+                        <img src="${imageUrl}" 
                              alt="Burned NFT #${tokenId}" 
                              class="burned-nft-image"
-                             loading="lazy">
+                             loading="lazy"
+                             onerror="this.src='https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}'">
                         <div class="burned-nft-info">
                             <div class="burned-nft-id">#${tokenId}</div>
-                            <div class="burned-nft-label">BURNED</div>
+                            <div class="burned-nft-label">${nftName}</div>
                         </div>
                     </a>
                 `;
