@@ -432,6 +432,97 @@
             }
         }
 
+        /* Burned NFTs Gallery Section */
+        .burned-gallery-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .burned-gallery-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .burned-gallery-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .burned-nfts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .burned-nft-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(255, 100, 50, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .burned-nft-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 69, 0, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .burned-nft-card:hover::before {
+            opacity: 1;
+        }
+
+        .burned-nft-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 100, 50, 0.6);
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+        }
+
+        .burned-nft-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .burned-nft-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .burned-nft-id {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff6b35;
+            margin-bottom: 5px;
+        }
+
+        .burned-nft-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Section */
         .section {
             max-width: 1200px;
@@ -750,7 +841,7 @@
 
         .factions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 40px;
         }
 
@@ -883,6 +974,12 @@
             margin-top: 80px;
         }
 
+        @media (max-width: 1200px) {
+            .factions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -914,6 +1011,10 @@
 
             .btn {
                 width: 100%;
+            }
+
+            .burned-nfts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             }
         }
     </style>
@@ -959,7 +1060,7 @@
             <!-- Burned NFTs Card with Fire Effect -->
             <div class="nft-stat-card burned">
                 <div class="nft-stat-icon">🔥</div>
-                <div class="nft-stat-number" id="burned-count">36</div>
+                <div class="nft-stat-number" id="burned-count">50</div>
                 <div class="nft-stat-label">Burned Forever</div>
                 <p class="nft-stat-description">Permanently removed from circulation</p>
                 <div class="fire-container">
@@ -977,6 +1078,16 @@
                 <div class="nft-stat-label">In Circulation</div>
                 <p class="nft-stat-description">Available NFTs making each one more valuable</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Burned NFTs Gallery Section -->
+    <div class="burned-gallery-section">
+        <h2 class="burned-gallery-title">🔥 Burned NFTs Gallery</h2>
+        <p class="burned-gallery-subtitle">These 50 NFTs have been permanently removed from circulation, increasing the rarity of remaining tokens</p>
+        
+        <div class="burned-nfts-grid" id="burned-nfts-container">
+            <!-- NFTs will be dynamically loaded here -->
         </div>
     </div>
 
@@ -1292,26 +1403,55 @@
         <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
     <script>
-        // Static NFT Statistics - No live data
+        // Static NFT Statistics
         function fmt(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
+        // Burned token IDs
+        const burnedTokenIds = [46,49,60,64,67,81,84,88,95,100,158,161,169,200,216,275,276,292,306,307,308,310,318,321,322,326,333,336,347,348,361,362,366,371,372,374,385,388,391,396,398,399,400,405,413,419,427,451,495,500];
+        
+        const contractAddress = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Static values
+            // Update static stats
             const stats = {
                 'total-supply': 500,
-                'burned-count': 50,
-                'remaining-count': 450,
-                'unique-holders': 0
+                'burned-count': burnedTokenIds.length,
+                'remaining-count': 500 - burnedTokenIds.length
             };
             
-            // Update all stat elements with static values
             Object.entries(stats).forEach(([id, val]) => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.textContent = fmt(val);
                 }
+            });
+
+            // Load burned NFTs
+            const container = document.getElementById('burned-nfts-container');
+            
+            burnedTokenIds.forEach(tokenId => {
+                const card = document.createElement('div');
+                card.className = 'burned-nft-card';
+                
+                // Construct the NFT metadata URL
+                const metadataUrl = `https://nft.minted.network/cronos/${contractAddress}/${tokenId}`;
+                
+                card.innerHTML = `
+                    <a href="${metadataUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+                        <img src="https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}" 
+                             alt="Burned NFT #${tokenId}" 
+                             class="burned-nft-image"
+                             loading="lazy">
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">#${tokenId}</div>
+                            <div class="burned-nft-label">BURNED</div>
+                        </div>
+                    </a>
+                `;
+                
+                container.appendChild(card);
             });
         });
     </script>
