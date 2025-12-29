@@ -1516,7 +1516,442 @@
                 </div>
             </div>
         </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Legends Awaken II NFT Collection - 774 unique NFTs across 3 factions launching on Crypto.com NFT marketplace December 10, 2025.">
+    <title>Legends Awaken II - NFT Collection | Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-gold: #FFD700;
+            --color-orange: #FFA500;
+            --color-dark: #0a0a0a;
+            --color-white: #fff;
+            --spacing-sm: 20px;
+            --spacing-md: 30px;
+            --spacing-xl: 60px;
+            --border-radius-md: 15px;
+            --border-radius-lg: 20px;
+            --transition-base: all 0.3s ease;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-dark);
+            color: var(--color-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Burned NFTs Showcase Section */
+        .burned-showcase {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .burned-showcase-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .burned-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: flameGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes flameGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.6),
+                            0 0 40px rgba(255, 69, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 107, 53, 0.9),
+                            0 0 60px rgba(255, 69, 0, 0.6);
+            }
+        }
+
+        .burned-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .burned-subtitle {
+            color: #999;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .burned-nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .burned-nft-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .burned-nft-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 69, 0, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .burned-nft-card:hover::before {
+            opacity: 1;
+        }
+
+        .burned-nft-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 107, 53, 0.7);
+            box-shadow: 0 15px 50px rgba(255, 69, 0, 0.4);
+        }
+
+        .burned-nft-image {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .burned-nft-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: all 0.4s ease;
+        }
+
+        .burned-nft-card:hover .burned-nft-image img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .burn-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 69, 0, 0.9);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .burned-nft-info {
+            padding: 20px;
+        }
+
+        .burned-nft-id {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .burned-nft-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #ff6b35;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .burned-nft-faction {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .burned-nft-division {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        /* Stats update for burned */
+        .nft-stat-number-burned {
+            background: linear-gradient(135deg, #ff6b35, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .burned-title {
+                font-size: 2rem;
+            }
+
+            .burned-nft-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Burned NFTs Showcase Section -->
+    <section class="burned-showcase">
+        <div class="burned-showcase-header">
+            <div class="burned-badge">🔥 PERMANENTLY BURNED</div>
+            <h2 class="burned-title">Burned NFTs Memorial</h2>
+            <p class="burned-subtitle">
+                These 13 Legends have been permanently removed from circulation, making the remaining 761 NFTs even more valuable. Each burn strengthens the collection's scarcity.
+            </p>
+        </div>
+
+        <div class="burned-nft-grid">
+            <!-- Burned NFT #47 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Arc4%20(6).jpg" alt="Burned NFT #47">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #47</div>
+                    <h3 class="burned-nft-title">Arcane Enclave Sentinel</h3>
+                    <div class="burned-nft-faction">Cronos Guardians</div>
+                    <div class="burned-nft-division">Arcane Enclave</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #156 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/CV4%20(3).jpg" alt="Burned NFT #156">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #156</div>
+                    <h3 class="burned-nft-title">Celestial Vanguard Sentinel</h3>
+                    <div class="burned-nft-faction">Cronos Guardians</div>
+                    <div class="burned-nft-division">Celestial Vanguard</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #181 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF3%20(3).jpg" alt="Burned NFT #181">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #181</div>
+                    <h3 class="burned-nft-title">The Deathforged Berserker</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Deathforged</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #210 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF4%20(6).jpg" alt="Burned NFT #210">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #210</div>
+                    <h3 class="burned-nft-title">The Deathforged Raider</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Deathforged</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #263 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(1).jpg" alt="Burned NFT #263">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #263</div>
+                    <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Horned Dimension</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #272 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(10).jpg" alt="Burned NFT #272">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #272</div>
+                    <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Horned Dimension</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #279 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(17).jpg" alt="Burned NFT #279">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #279</div>
+                    <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Horned Dimension</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #356 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron3%20(8).jpg" alt="Burned NFT #356">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #356</div>
+                    <h3 class="burned-nft-title">The Ironstride Guardian</h3>
+                    <div class="burned-nft-faction">Cronos Guardians</div>
+                    <div class="burned-nft-division">The Ironstride</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #390 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron4%20(8).jpg" alt="Burned NFT #390">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #390</div>
+                    <h3 class="burned-nft-title">The Ironstride Sentinel</h3>
+                    <div class="burned-nft-faction">Cronos Guardians</div>
+                    <div class="burned-nft-division">The Ironstride</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #420 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW3%20(2).jpg" alt="Burned NFT #420">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #420</div>
+                    <h3 class="burned-nft-title">Nightshade Wardens Berserker</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">Nightshade Wardens</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #450 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW4%20(8).jpg" alt="Burned NFT #450">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #450</div>
+                    <h3 class="burned-nft-title">Nightshade Wardens Raider</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">Nightshade Wardens</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #559 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Shadow3%20(11).jpg" alt="Burned NFT #559">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #559</div>
+                    <h3 class="burned-nft-title">The Shadowborn Berserker</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Shadowborn</div>
+                </div>
+            </div>
+
+            <!-- Burned NFT #752 -->
+            <div class="burned-nft-card">
+                <div class="burned-nft-image">
+                    <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Void3%20(2).jpg" alt="Burned NFT #752">
+                    <div class="burn-overlay">🔥 BURNED</div>
+                </div>
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">ID #752</div>
+                    <h3 class="burned-nft-title">The Voidweavers Berserker</h3>
+                    <div class="burned-nft-faction">Chaos Horde</div>
+                    <div class="burned-nft-division">The Voidweavers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        document.querySelectorAll('.burned-nft-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
         <!-- Crypto.com Unified Launch Platform Section -->
         <div class="crypto-platform-unified">
             <div class="unified-platform-container">
