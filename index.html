@@ -306,15 +306,15 @@
             margin-top: 40px;
         }
 
-        /* Project Overview Section */
-        .overview-section {
+        /* Ecosystem Overview Section */
+        .ecosystem-section {
             background: linear-gradient(135deg, rgba(10, 10, 30, 0.6), rgba(30, 10, 40, 0.6));
             padding: 100px 20px;
             position: relative;
             overflow: hidden;
         }
 
-        .overview-section::before {
+        .ecosystem-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -327,33 +327,291 @@
             pointer-events: none;
         }
 
-        .overview-container {
+        .ecosystem-container {
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
 
-        .overview-image-wrapper {
+        .ecosystem-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .ecosystem-subtitle {
+            text-align: center;
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 80px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Main Token */
+        .main-token {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .main-token-label {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .main-token-box {
+            display: inline-block;
             background: rgba(20, 20, 20, 0.8);
+            border: 3px solid rgba(255, 215, 0, 0.5);
             border-radius: 20px;
-            padding: 40px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            padding: 30px 60px;
             transition: all 0.3s ease;
         }
 
-        .overview-image-wrapper:hover {
-            border-color: rgba(255, 215, 0, 0.6);
-            box-shadow: 0 25px 80px rgba(255, 215, 0, 0.2);
+        .main-token-box:hover {
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
             transform: translateY(-5px);
         }
 
-        .overview-image {
+        .main-token-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .main-token-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .main-token-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FFD700;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Three Factions */
+        .factions-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            color: #FFD700;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .factions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .faction-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .faction-card.guardians {
+            border-color: rgba(0, 100, 255, 0.3);
+        }
+
+        .faction-card.trinari {
+            border-color: rgba(0, 255, 100, 0.3);
+        }
+
+        .faction-card.horde {
+            border-color: rgba(255, 50, 50, 0.3);
+        }
+
+        .faction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-card.guardians:hover {
+            border-color: rgba(0, 100, 255, 0.6);
+            box-shadow: 0 20px 60px rgba(0, 100, 255, 0.3);
+        }
+
+        .faction-card.trinari:hover {
+            border-color: rgba(0, 255, 100, 0.6);
+            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.3);
+        }
+
+        .faction-card.horde:hover {
+            border-color: rgba(255, 50, 50, 0.6);
+            box-shadow: 0 20px 60px rgba(255, 50, 50, 0.3);
+        }
+
+        .faction-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .faction-card.guardians .faction-name {
+            color: #4d9fff;
+        }
+
+        .faction-card.trinari .faction-name {
+            color: #00ff64;
+        }
+
+        .faction-card.horde .faction-name {
+            color: #ff3232;
+        }
+
+        .faction-token {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faction-token-label {
+            font-size: 0.9rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .faction-token-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .faction-token-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .faction-token-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .faction-image {
             width: 100%;
-            height: auto;
+            height: 250px;
             border-radius: 15px;
-            display: block;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faction-nft-note {
+            font-size: 0.85rem;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* NFT Collections Section */
+        .collections-overview {
+            margin-top: 80px;
+        }
+
+        .collections-category-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            text-align: center;
+            color: #FFD700;
+            margin: 60px 0 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .collections-category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .collections-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .collection-mini-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .collection-mini-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+        }
+
+        .collection-mini-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .collection-mini-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .collection-mini-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .collection-mini-subtitle {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Section Styles */
@@ -383,88 +641,6 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        /* Collections Grid */
-        .collections-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .collection-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .collection-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
-        }
-
-        .collection-image {
-            height: 350px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .collection-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .collection-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            backdrop-filter: blur(10px);
-            z-index: 2;
-        }
-
-        .sold-out-badge {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-        }
-
-        .collection-info {
-            padding: 30px;
-        }
-
-        .collection-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #FFD700;
-        }
-
-        .collection-subtitle {
-            color: #999;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .collection-desc {
-            color: #ccc;
-            line-height: 1.7;
-            font-size: 1rem;
-            margin-bottom: 20px;
         }
 
         /* Features Section */
@@ -611,11 +787,13 @@
                 font-size: 1rem;
             }
 
+            .ecosystem-title,
             .section-title {
                 font-size: 2rem;
             }
 
-            .collections-grid,
+            .factions-grid,
+            .collections-row,
             .features-grid {
                 grid-template-columns: 1fr;
             }
@@ -625,8 +803,12 @@
                 align-items: center;
             }
 
-            .overview-image-wrapper {
-                padding: 20px;
+            .main-token-content {
+                flex-direction: column;
+            }
+
+            .main-token-box {
+                padding: 20px 30px;
             }
         }
     </style>
@@ -671,90 +853,119 @@
         </div>
     </div>
 
-    <!-- Project Overview Section -->
-    <div class="overview-section">
-        <div class="overview-container">
-            <h2 class="section-title">🌌 Complete Ecosystem Overview</h2>
-            <p class="section-subtitle">
-                Discover the full Cronos Legends universe: three powerful factions, multiple token economies, 
-                extensive NFT collections, and an ever-expanding gaming ecosystem.
+    <!-- Ecosystem Overview Section -->
+    <div class="ecosystem-section">
+        <div class="ecosystem-container">
+            <h2 class="ecosystem-title">🌌 Complete Ecosystem Overview</h2>
+            <p class="ecosystem-subtitle">
+                Discover the full Cronos Legends universe: one main token powering three powerful factions, 
+                each with their own token, extensive NFT collections, and an ever-expanding gaming ecosystem.
             </p>
-            
-            <div class="overview-image-wrapper">
-                <img src="Images/projectoverviewlowres.png" alt="Cronos Legends Complete Ecosystem Overview" class="overview-image">
-            </div>
-        </div>
-    </div>
 
-    <!-- Collections Section -->
-    <div class="section">
-        <h2 class="section-title">💎 NFT Collections</h2>
-        <p class="section-subtitle">
-            Discover our complete collection of unique NFTs across multiple series. 
-            Each piece tells a story in the ongoing saga of Cronos Legends.
-        </p>
-
-        <div class="collections-grid">
-            <div class="collection-card" onclick="window.location.href='/legends-awaken-2'">
-                <div class="collection-image">
-                    <img src="Images/PreviewLAII/1.jpg" alt="Legends Awaken II">
-                    <div class="collection-badge sold-out-badge">✨ SOLD OUT</div>
-                </div>
-                <div class="collection-info">
-                    <h3 class="collection-title">Legends Awaken II</h3>
-                    <div class="collection-subtitle">Latest Collection • 17 Divisions</div>
-                    <p class="collection-desc">
-                        The saga expands with three complete factions. The Trinari have risen, 
-                        joining the eternal clash between Guardians and Chaos Horde.
-                    </p>
-                    <a href="/legends-awaken-2" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Learn More →</a>
+            <!-- Main Token -->
+            <div class="main-token">
+                <div class="main-token-label">Main Token</div>
+                <div class="main-token-box">
+                    <div class="main-token-content">
+                        <img src="Images/clg-logo.png" alt="CLG Token" class="main-token-logo">
+                        <div class="main-token-name">$CLG</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="collection-card" onclick="window.location.href='/legends-awaken-1'">
-                <div class="collection-image">
-                    <img src="Images/LA1/Horde Creatures (1).jpg" alt="Legends Awaken I">
-                    <div class="collection-badge sold-out-badge">🔥 SOLD OUT</div>
+            <!-- Three Factions -->
+            <h3 class="factions-title">⚔️ Three Factions</h3>
+            <div class="factions-grid">
+                <!-- Cronos Guardians -->
+                <div class="faction-card guardians">
+                    <h4 class="faction-name">CRONOS GUARDIANS</h4>
+                    <img src="Images/cara1.png" alt="Cronos Guardians Character" class="faction-image">
+                    <div class="faction-token">
+                        <div class="faction-token-label">Faction Token</div>
+                        <div class="faction-token-content">
+                            <img src="Images/cara1.png" alt="CARA Token" class="faction-token-logo">
+                            <div class="faction-token-name">$CARA</div>
+                        </div>
+                        <div class="faction-nft-note">CARA also as NFT in LA1</div>
+                    </div>
                 </div>
-                <div class="collection-info">
-                    <h3 class="collection-title">Legends Awaken I</h3>
-                    <div class="collection-subtitle">Original Collection • 10 Divisions</div>
-                    <p class="collection-desc">
-                        Where it all began. The first clash between order and chaos, 
-                        featuring the original Guardians and Horde warriors.
-                    </p>
-                    <a href="/legends-awaken-1" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Learn More →</a>
+
+                <!-- Trinari -->
+                <div class="faction-card trinari">
+                    <h4 class="faction-name">TRINARI</h4>
+                    <img src="Images/trinari-logo.jpg" alt="Trinari Characters" class="faction-image">
+                    <div class="faction-token">
+                        <div class="faction-token-label">Faction Token</div>
+                        <div class="faction-token-content">
+                            <img src="Images/tri-logo.png" alt="TRI Token" class="faction-token-logo">
+                            <div class="faction-token-name">$TRI</div>
+                        </div>
+                        <div class="faction-nft-note">150 pcs Trinari in LA2</div>
+                    </div>
+                </div>
+
+                <!-- Chaos Horde -->
+                <div class="faction-card horde">
+                    <h4 class="faction-name">CHAOS HORDE</h4>
+                    <img src="Images/Lyra.jpg" alt="Chaos Horde Character" class="faction-image">
+                    <div class="faction-token">
+                        <div class="faction-token-label">Faction Token</div>
+                        <div class="faction-token-content">
+                            <img src="Images/lyralogo.png" alt="LYRA Token" class="faction-token-logo">
+                            <div class="faction-token-name">$LYRA</div>
+                        </div>
+                        <div class="faction-nft-note">LYRA also as NFT in LA2</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="collection-card" onclick="window.location.href='/totems'">
-                <div class="collection-image">
-                    <img src="Images/Totems/CronosLegendsUnicefFinal1MB.jpg" alt="Totems">
-                </div>
-                <div class="collection-info">
-                    <h3 class="collection-title">Totems</h3>
-                    <div class="collection-subtitle">Mystical Artifacts</div>
-                    <p class="collection-desc">
-                        Ancient artifacts of power, each totem grants unique abilities 
-                        and enhances your journey through the Cronos Legends universe.
-                    </p>
-                    <a href="/totems" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Learn More →</a>
-                </div>
-            </div>
+            <!-- NFT Collections -->
+            <div class="collections-overview">
+                <h3 class="collections-category-title">🎨 Main NFT Collections</h3>
+                <div class="collections-row">
+                    <div class="collection-mini-card" onclick="window.location.href='/legends-awaken-1'">
+                        <img src="Images/LA1/Horde Creatures (1).jpg" alt="Legends Awaken I" class="collection-mini-image">
+                        <div class="collection-mini-info">
+                            <h4 class="collection-mini-title">Legends Awaken I</h4>
+                            <p class="collection-mini-subtitle">Original Collection</p>
+                        </div>
+                    </div>
 
-            <div class="collection-card" onclick="window.location.href='/trinari-elderborn'">
-                <div class="collection-image">
-                    <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn">
-                    <div class="collection-badge" style="background: linear-gradient(135deg, #00ff64, #00cc50); color: #000;">🌟 COMING SOON</div>
+                    <div class="collection-mini-card" onclick="window.location.href='/legends-awaken-2'">
+                        <img src="Images/PreviewLAII/1.jpg" alt="Legends Awaken II" class="collection-mini-image">
+                        <div class="collection-mini-info">
+                            <h4 class="collection-mini-title">Legends Awaken II</h4>
+                            <p class="collection-mini-subtitle">Three Factions United</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="collection-info">
-                    <h3 class="collection-title">Trinari Elderborn</h3>
-                    <div class="collection-subtitle">Next Generation • New Adventures</div>
-                    <p class="collection-desc">
-                        The ancient Trinari lineage continues. Powerful elders emerge 
-                        to guide their mystical faction into a new era of magic and mystery.
-                    </p>
-                    <a href="/trinari-elderborn" class="btn btn-outline" style="display: inline-block; margin-top: 10px;">Coming Soon →</a>
+
+                <h3 class="collections-category-title">✨ Exclusive Collections</h3>
+                <div class="collections-row">
+                    <div class="collection-mini-card" onclick="window.location.href='/totems'">
+                        <img src="Images/Totems/CronosLegendsUnicefFinal1MB.jpg" alt="Totems" class="collection-mini-image">
+                        <div class="collection-mini-info">
+                            <h4 class="collection-mini-title">Totems of Power</h4>
+                            <p class="collection-mini-subtitle">Mystical Artifacts</p>
+                        </div>
+                    </div>
+
+                    <div class="collection-mini-card" onclick="window.location.href='/art-of-giving'">
+                        <img src="Images/peace-art.jpg" alt="Art of Giving Collection" class="collection-mini-image">
+                        <div class="collection-mini-info">
+                            <h4 class="collection-mini-title">Art of Giving</h4>
+                            <p class="collection-mini-subtitle">PEACE Collection</p>
+                        </div>
+                    </div>
+
+                    <div class="collection-mini-card" onclick="window.location.href='https://cronoslegends.com/trinari-elderborn/'" style="position: relative;">
+                        <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn Collection" class="collection-mini-image">
+                        <div class="collection-badge" style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #00ff64, #00cc50); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); z-index: 2;">🌟 COMING SOON</div>
+                        <div class="collection-mini-info">
+                            <h4 class="collection-mini-title">Trinari Elderborn</h4>
+                            <p class="collection-mini-subtitle">Next Generation</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -928,7 +1139,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.collection-card, .feature-card, .overview-image-wrapper').forEach(el => {
+        document.querySelectorAll('.faction-card, .collection-mini-card, .feature-card, .main-token-box').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
