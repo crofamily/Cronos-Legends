@@ -819,7 +819,104 @@
         }
 
         /* Lore Spotlight */
-        .lore-section {
+        .lore-section
+        /* ADD THESE CSS RULES to your existing .lore-section styles */
+/* These styles support the totem images in the Lore Spotlight */
+
+        .lore-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .lore-content.active {
+            opacity: 1;
+        }
+
+        .lore-image-container {
+            flex: 0 0 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lore-totem-image {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+        }
+
+        .lore-content.active .lore-totem-image {
+            animation: totemGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes totemGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+            }
+        }
+
+        .lore-content.active .lore-totem-image.guardians {
+            animation: guardianGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes guardianGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(77, 163, 255, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(77, 163, 255, 0.7));
+            }
+        }
+
+        .lore-content.active .lore-totem-image.chaos {
+            animation: chaosGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes chaosGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 77, 77, 0.7));
+            }
+        }
+
+        .lore-content.active .lore-totem-image.trinari {
+            animation: trinariGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes trinariGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(48, 208, 174, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(48, 208, 174, 0.7));
+            }
+        }
+
+        .lore-text-container {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .lore-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .lore-image-container {
+                flex: 0 0 auto;
+            }
+        }{
             background: rgba(20, 20, 20, 0.6);
             border: 2px solid rgba(255, 215, 0, 0.2);
             border-radius: 20px;
@@ -1547,35 +1644,53 @@
         </div>
     </section>
 
+    <!-- This is the UPDATED Lore Spotlight section with totem images integrated -->
+<!-- Replace the existing <!-- Lore Spotlight --> section in your totems.html with this code -->
+
     <!-- Lore Spotlight -->
     <section class="section lore-section reveal" id="lore">
         <h2 class="section-title" style="margin-bottom: 40px;">📖 Lore Spotlight</h2>
         
         <div class="lore-content active" data-faction="guardians">
-            <span class="lore-faction-badge guardians">Cronos Guardians</span>
-            <p class="lore-text">
-                "In the age before memory, when the stars were young, the first Guardians forged their Totems in celestial fires. 
-                Each artifact carries the weight of countless battles, infused with the resolve to protect the innocent and uphold justice. 
-                To wield a Guardian Totem is to carry forward a legacy of honor—a burden as heavy as it is glorious."
-            </p>
+            <div class="lore-image-container">
+                <img src="../Images/guardiant.png" alt="Guardian Totem" class="lore-totem-image guardians">
+            </div>
+            <div class="lore-text-container">
+                <span class="lore-faction-badge guardians">Cronos Guardians</span>
+                <p class="lore-text">
+                    "In the age before memory, when the stars were young, the first Guardians forged their Totems in celestial fires. 
+                    Each artifact carries the weight of countless battles, infused with the resolve to protect the innocent and uphold justice. 
+                    To wield a Guardian Totem is to carry forward a legacy of honor—a burden as heavy as it is glorious."
+                </p>
+            </div>
         </div>
 
         <div class="lore-content" data-faction="chaos">
-            <span class="lore-faction-badge chaos">Chaos Horde</span>
-            <p class="lore-text">
-                "Power is not given—it is taken. The Chaos Totems were born in the crucible of conquest, bathed in the storms of war. 
-                They whisper secrets of dominance to those bold enough to listen, promising strength to crush all opposition. 
-                But beware: such power demands sacrifice, and the Horde never forgets those who falter in their ambition."
-            </p>
+            <div class="lore-image-container">
+                <img src="../Images/chaost.png" alt="Chaos Totem" class="lore-totem-image chaos">
+            </div>
+            <div class="lore-text-container">
+                <span class="lore-faction-badge chaos">Chaos Horde</span>
+                <p class="lore-text">
+                    "Power is not given—it is taken. The Chaos Totems were born in the crucible of conquest, bathed in the storms of war. 
+                    They whisper secrets of dominance to those bold enough to listen, promising strength to crush all opposition. 
+                    But beware: such power demands sacrifice, and the Horde never forgets those who falter in their ambition."
+                </p>
+            </div>
         </div>
 
         <div class="lore-content" data-faction="trinari">
-            <span class="lore-faction-badge trinari">Trinari</span>
-            <p class="lore-text">
-                "The Trinari existed before words, ancient as the first tree and deep as the oldest ocean. Their Totems are not made—they are grown, 
-                crystallized from the essence of nature itself. To hold a Trinari artifact is to feel the pulse of the world, to understand that 
-                true power comes not from domination, but from harmony with the primal forces that sustain all life."
-            </p>
+            <div class="lore-image-container">
+                <img src="../Images/trinarit.png" alt="Trinari Totem" class="lore-totem-image trinari">
+            </div>
+            <div class="lore-text-container">
+                <span class="lore-faction-badge trinari">Trinari</span>
+                <p class="lore-text">
+                    "The Trinari existed before words, ancient as the first tree and deep as the oldest ocean. Their Totems are not made—they are grown, 
+                    crystallized from the essence of nature itself. To hold a Trinari artifact is to feel the pulse of the world, to understand that 
+                    true power comes not from domination, but from harmony with the primal forces that sustain all life."
+                </p>
+            </div>
         </div>
 
         <div class="lore-dots">
