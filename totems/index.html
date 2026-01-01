@@ -395,6 +395,49 @@
             margin-right: auto;
         }
 
+        /* Rarity Section Headers */
+        .rarity-section-header {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.4);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .rarity-section-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .rarity-section-header.rare h3 {
+            background: linear-gradient(135deg, #0096FF, #00C9FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rarity-section-header.legendary h3 {
+            background: linear-gradient(135deg, #FF6B00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rarity-section-header.mythic h3 {
+            background: linear-gradient(135deg, #9D4EDD, #C77DFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rarity-section-header p {
+            color: #999;
+            font-size: 1rem;
+        }
+
         /* Explainer Section */
         .explainer {
             max-width: 900px;
@@ -484,11 +527,11 @@
         }
 
         .totem-card.mystery::before {
-            content: 'COMING SOON';
+            content: 'LIVE NOW';
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+            background: linear-gradient(135deg, #00FF00, #00CC00);
             color: #000;
             padding: 5px 15px;
             border-radius: 20px;
@@ -496,6 +539,16 @@
             font-weight: 700;
             letter-spacing: 1px;
             z-index: 10;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            }
         }
 
         .mystery-icon {
@@ -1099,13 +1152,18 @@
         </p>
     </section>
 
-    <!-- Totem Types Grid -->
+    <!-- Totem Types Grid - ORGANIZED BY RARITY -->
     <section class="section" id="totems">
         <h2 class="section-title reveal">✨ The Totems</h2>
-        <p class="section-subtitle reveal">Nine ancient artifacts across three rarities: Rare, Legendary, and Mythic</p>
+        <p class="section-subtitle reveal">Nine ancient artifacts across three rarities and three factions</p>
+        
+        <!-- RARE TOTEMS -->
+        <div class="rarity-section-header rare reveal">
+            <h3>💎 RARE TOTEMS</h3>
+            <p>The foundation artifacts—granting essential utilities and faction allegiance</p>
+        </div>
         
         <div class="totem-grid">
-            <!-- Guardians Totems -->
             <div class="totem-card guardians reveal">
                 <div class="totem-image">
                     <img src="../Images/Totems/Guardian1.png" alt="Aegis of Eternity" loading="lazy">
@@ -1130,55 +1188,6 @@
                 </div>
             </div>
 
-            <div class="totem-card guardians reveal">
-                <div class="totem-image">
-                    <img src="../Images/Totems/Guardian2.png" alt="Chronoheart Pillar" loading="lazy">
-                </div>
-                <div class="totem-info">
-                    <div class="totem-header">
-                        <div>
-                            <h3 class="totem-name" style="color: #4DA3FF;">Chronoheart Pillar</h3>
-                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
-                        </div>
-                        <span class="rarity-badge rarity-legendary">Legendary</span>
-                    </div>
-                    <p class="totem-flavor">"Within its crystalline heart beats the rhythm of time itself, anchoring the Guardians to their eternal purpose across all dimensions."</p>
-                    <div class="totem-utility">
-                        <h4>Utilities:</h4>
-                        <ul>
-                            <li>Battleground reward (TBA)</li>
-                            <li>Special Discord role</li>
-                            <li>Snapshot eligibility for surprise drops</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="totem-card guardians reveal">
-                <div class="totem-image">
-                    <img src="../Images/Totems/Guardian3.png" alt="Lumenheart Pillar" loading="lazy">
-                </div>
-                <div class="totem-info">
-                    <div class="totem-header">
-                        <div>
-                            <h3 class="totem-name" style="color: #4DA3FF;">Lumenheart Pillar</h3>
-                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
-                        </div>
-                        <span class="rarity-badge rarity-mythic">Mythic</span>
-                    </div>
-                    <p class="totem-flavor">"Born from the crystallized essence of Cronos' eternal light, legends claim that when darkness surges, the Pillar's light intensifies—calling upon the spirits of fallen Guardians to rise once more."</p>
-                    <div class="totem-utility">
-                        <h4>Utilities:</h4>
-                        <ul>
-                            <li>Battleground reward (TBA)</li>
-                            <li>Special Discord role</li>
-                            <li>Snapshot eligibility for surprise drops</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chaos Totems -->
             <div class="totem-card chaos reveal">
                 <div class="totem-image">
                     <img src="../Images/Totems/Chaos1.png" alt="Flameborne Obelisk" loading="lazy">
@@ -1192,6 +1201,62 @@
                         <span class="rarity-badge rarity-rare">Rare</span>
                     </div>
                     <p class="totem-flavor">"A towering totem forged in the heart of chaos, its cracked stone veins pulse with molten fire. Born from the wrath of the inferno, those who stand before it feel their fury ignite."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>Battleground reward (TBA)</li>
+                            <li>Special Discord role</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card trinari reveal">
+                <div class="totem-image">
+                    <img src="../Images/Totems/Trinari1.png" alt="The Verdant Spiral" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #30D0AE;">The Verdant Spiral</h3>
+                            <div class="totem-faction" style="color: #30D0AE;">Trinari</div>
+                        </div>
+                        <span class="rarity-badge rarity-rare">Rare</span>
+                    </div>
+                    <p class="totem-flavor">"The Verdant Spiral pulses with ancient, natural energy. Its swirling core channels the cycle of life, death, and rebirth—marking the beginning of nature's return."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>Battleground reward (TBA)</li>
+                            <li>Special Discord role</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEGENDARY TOTEMS -->
+        <div class="rarity-section-header legendary reveal">
+            <h3>🔥 LEGENDARY TOTEMS</h3>
+            <p>Powerful relics of greater influence and enhanced rewards</p>
+        </div>
+        
+        <div class="totem-grid">
+            <div class="totem-card guardians reveal">
+                <div class="totem-image">
+                    <img src="../Images/Totems/Guardian2.png" alt="Chronoheart Pillar" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #4DA3FF;">Chronoheart Pillar</h3>
+                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
+                        </div>
+                        <span class="rarity-badge rarity-legendary">Legendary</span>
+                    </div>
+                    <p class="totem-flavor">"Within its crystalline heart beats the rhythm of time itself, anchoring the Guardians to their eternal purpose across all dimensions."</p>
                     <div class="totem-utility">
                         <h4>Utilities:</h4>
                         <ul>
@@ -1227,55 +1292,6 @@
                 </div>
             </div>
 
-            <div class="totem-card chaos reveal">
-                <div class="totem-image">
-                    <img src="../Images/Totems/Chaos3.png" alt="Abyssal Devourer" loading="lazy">
-                </div>
-                <div class="totem-info">
-                    <div class="totem-header">
-                        <div>
-                            <h3 class="totem-name" style="color: #FF4D4D;">Abyssal Devourer</h3>
-                            <div class="totem-faction" style="color: #FF4D4D;">Chaos Horde</div>
-                        </div>
-                        <span class="rarity-badge rarity-mythic">Mythic</span>
-                    </div>
-                    <p class="totem-flavor">"Carved from blackened brimstone and fed with the souls of fallen gods, its horned visage hungers eternally. Legends claim it feeds not on flesh, but on courage—leaving behind hollow vessels."</p>
-                    <div class="totem-utility">
-                        <h4>Utilities:</h4>
-                        <ul>
-                            <li>Battleground reward (TBA)</li>
-                            <li>Special Discord role</li>
-                            <li>Snapshot eligibility for surprise drops</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trinari Totems -->
-            <div class="totem-card trinari reveal">
-                <div class="totem-image">
-                    <img src="../Images/Totems/Trinari1.png" alt="The Verdant Spiral" loading="lazy">
-                </div>
-                <div class="totem-info">
-                    <div class="totem-header">
-                        <div>
-                            <h3 class="totem-name" style="color: #30D0AE;">The Verdant Spiral</h3>
-                            <div class="totem-faction" style="color: #30D0AE;">Trinari</div>
-                        </div>
-                        <span class="rarity-badge rarity-rare">Rare</span>
-                    </div>
-                    <p class="totem-flavor">"The Verdant Spiral pulses with ancient, natural energy. Its swirling core channels the cycle of life, death, and rebirth—marking the beginning of nature's return."</p>
-                    <div class="totem-utility">
-                        <h4>Utilities:</h4>
-                        <ul>
-                            <li>Battleground reward (TBA)</li>
-                            <li>Special Discord role</li>
-                            <li>Snapshot eligibility for surprise drops</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <div class="totem-card trinari reveal">
                 <div class="totem-image">
                     <img src="../Images/Totems/Trinari2.png" alt="Lifestream Obelisk" loading="lazy">
@@ -1289,6 +1305,62 @@
                         <span class="rarity-badge rarity-legendary">Legendary</span>
                     </div>
                     <p class="totem-flavor">"Born of ancient roots, the Lifestream Obelisk glows with primal energy. Vines and crystal veins spiral skyward, channeling life, decay, and rebirth as whispers of Trinari spirits fill the wind."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>Battleground reward (TBA)</li>
+                            <li>Special Discord role</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MYTHIC TOTEMS -->
+        <div class="rarity-section-header mythic reveal">
+            <h3>⚡ MYTHIC TOTEMS</h3>
+            <p>The ultimate artifacts—legendary power for true champions</p>
+        </div>
+        
+        <div class="totem-grid">
+            <div class="totem-card guardians reveal">
+                <div class="totem-image">
+                    <img src="../Images/Totems/Guardian3.png" alt="Lumenheart Pillar" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #4DA3FF;">Lumenheart Pillar</h3>
+                            <div class="totem-faction" style="color: #4DA3FF;">Cronos Guardians</div>
+                        </div>
+                        <span class="rarity-badge rarity-mythic">Mythic</span>
+                    </div>
+                    <p class="totem-flavor">"Born from the crystallized essence of Cronos' eternal light, legends claim that when darkness surges, the Pillar's light intensifies—calling upon the spirits of fallen Guardians to rise once more."</p>
+                    <div class="totem-utility">
+                        <h4>Utilities:</h4>
+                        <ul>
+                            <li>Battleground reward (TBA)</li>
+                            <li>Special Discord role</li>
+                            <li>Snapshot eligibility for surprise drops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totem-card chaos reveal">
+                <div class="totem-image">
+                    <img src="../Images/Totems/Chaos3.png" alt="Abyssal Devourer" loading="lazy">
+                </div>
+                <div class="totem-info">
+                    <div class="totem-header">
+                        <div>
+                            <h3 class="totem-name" style="color: #FF4D4D;">Abyssal Devourer</h3>
+                            <div class="totem-faction" style="color: #FF4D4D;">Chaos Horde</div>
+                        </div>
+                        <span class="rarity-badge rarity-mythic">Mythic</span>
+                    </div>
+                    <p class="totem-flavor">"Carved from blackened brimstone and fed with the souls of fallen gods, its horned visage hungers eternally. Legends claim it feeds not on flesh, but on courage—leaving behind hollow vessels."</p>
                     <div class="totem-utility">
                         <h4>Utilities:</h4>
                         <ul>
@@ -1329,8 +1401,8 @@
     <!-- Special: Totem of Peace (UNICEF) -->
     <section class="section" style="margin-top: 100px; margin-bottom: 100px;">
         <div style="text-align: center; margin-bottom: 50px;">
-            <div style="display: inline-block; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; font-weight: 700; font-size: 0.9rem; padding: 10px 25px; border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
-                ✨ SPECIAL EDITION
+            <div style="display: inline-block; background: linear-gradient(135deg, #00FF00, #00CC00); color: #000; font-weight: 700; font-size: 0.9rem; padding: 10px 25px; border-radius: 50px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+                ✨ LIVE NOW - SPECIAL EDITION
             </div>
             <h2 class="section-title reveal">🕊️ Totem of Peace</h2>
             <p class="section-subtitle reveal" style="max-width: 900px;">
@@ -1371,7 +1443,7 @@
                             💖 Charity Impact
                         </h4>
                         <p style="color: #ccc; line-height: 1.8; margin-bottom: 10px;">
-                            <strong style="color: #FFD700;">100% of proceeds</strong> from this special edition totem go directly to UNICEF 
+                            <strong style="color: #FFD700;">100% of proceeds</strong> from this special edition totem went directly to UNICEF 
                             to support children around the world. This is not just an NFT—it's a contribution to a better future.
                         </p>
                         <p style="color: #999; font-size: 0.9rem; margin-top: 15px;">
@@ -1391,22 +1463,18 @@
                             </li>
                             <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
                                 <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
-                                Access to special UNICEF event channels
-                            </li>
-                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
-                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
-                                Priority consideration for future charity initiatives
-                            </li>
-                            <li style="color: #ccc; padding: 5px 0; padding-left: 25px; position: relative;">
-                                <span style="position: absolute; left: 0; color: #FFD700;">✓</span>
                                 Eternal recognition as a Cronos Legends humanitarian
+                            </li>
+                            <li style="color: #999; padding: 5px 0; padding-left: 25px; position: relative; font-style: italic;">
+                                <span style="position: absolute; left: 0; color: #999;">※</span>
+                                Any future utilities are not promised
                             </li>
                         </ul>
                     </div>
 
                     <div style="margin-top: 30px;">
-                        <a href="https://discord.gg/cronoslegends" class="btn" target="_blank" style="display: inline-block; margin: 10px;">💬 Join for Updates</a>
-                        <a href="#" class="btn btn-secondary" style="display: inline-block; margin: 10px;">🕊️ Learn More About UNICEF</a>
+                        <a href="https://crypto.com/nft/collection/533c2cea6dbf51ff05c6ebfc079f5b05?tab=items" class="btn" target="_blank">🕊️ View on Crypto.com</a>
+                        <a href="https://discord.gg/cronoslegends" class="btn btn-secondary" target="_blank" style="margin-left: 10px;">💬 Join Discord</a>
                     </div>
                 </div>
             </div>
@@ -1427,7 +1495,7 @@
             Totems aren't just collectibles—they're functional assets that enhance your experience across the Cronos Legends ecosystem
         </p>
         
-
+        <div class="utility-grid">
             <div class="utility-item">
                 <h3>🎁 Future Collection Access</h3>
                 <ul>
@@ -1549,7 +1617,6 @@
             </div>
         </div>
 
-        
         <div class="faq-item">
             <div class="faq-question">
                 What happens if I sell my Totem?
@@ -1585,10 +1652,10 @@
             </div>
             <div class="faq-answer">
                 <p>
-                    The Totem of Peace is a special charity edition created in partnership with UNICEF. <strong>100% of proceeds go to charity.</strong> 
+                    The Totem of Peace is a special charity edition created in partnership with UNICEF. <strong>100% of proceeds went to charity.</strong> 
                     It is NOT part of the main Totems collection and exists as a standalone tribute to our community's commitment to making a real-world 
-                    difference. Holders receive the exclusive "Peacekeeper" Discord role and recognition as humanitarian supporters. This is about 
-                    giving back—not utilities or rewards in the traditional sense. It's about being part of something bigger than the game.
+                    difference. Holders receive the exclusive "Peacekeeper" Discord role and eternal recognition as humanitarian supporters. 
+                    Any future utilities are not promised—this is about giving back and being part of something bigger than the game.
                 </p>
             </div>
         </div>
