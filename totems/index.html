@@ -819,104 +819,186 @@
         }
 
         /* Lore Spotlight */
-        .lore-section
-        /* ADD THESE CSS RULES to your existing .lore-section styles */
-/* These styles support the totem images in the Lore Spotlight */
+/* UPDATED Lore Spotlight CSS - Fixed visibility and transitions */
 
-        .lore-content {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
+.lore-section {
+    background: rgba(20, 20, 20, 0.6);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 20px;
+    padding: 50px 40px;
+    margin: 80px auto;
+    max-width: 1000px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
 
-        .lore-content.active {
-            opacity: 1;
-        }
+.lore-content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    width: calc(100% - 80px);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    pointer-events: none;
+}
 
-        .lore-image-container {
-            flex: 0 0 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.lore-content.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    pointer-events: auto;
+}
 
-        .lore-totem-image {
-            width: 200px;
-            height: auto;
-            border-radius: 15px;
-            transition: all 0.4s ease;
-        }
+.lore-image-container {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .lore-content.active .lore-totem-image {
-            animation: totemGlow 3s ease-in-out infinite;
-        }
+.lore-totem-image {
+    width: 200px;
+    height: auto;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+}
 
-        @keyframes totemGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
-            }
-            50% {
-                filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
-            }
-        }
+.lore-content.active .lore-totem-image {
+    animation: totemGlow 3s ease-in-out infinite;
+}
 
-        .lore-content.active .lore-totem-image.guardians {
-            animation: guardianGlow 3s ease-in-out infinite;
-        }
+@keyframes totemGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
+    }
+}
 
-        @keyframes guardianGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(77, 163, 255, 0.4));
-            }
-            50% {
-                filter: drop-shadow(0 0 40px rgba(77, 163, 255, 0.7));
-            }
-        }
+.lore-content.active .lore-totem-image.guardians {
+    animation: guardianGlow 3s ease-in-out infinite;
+}
 
-        .lore-content.active .lore-totem-image.chaos {
-            animation: chaosGlow 3s ease-in-out infinite;
-        }
+@keyframes guardianGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(77, 163, 255, 0.4));
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(77, 163, 255, 0.7));
+    }
+}
 
-        @keyframes chaosGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.4));
-            }
-            50% {
-                filter: drop-shadow(0 0 40px rgba(255, 77, 77, 0.7));
-            }
-        }
+.lore-content.active .lore-totem-image.chaos {
+    animation: chaosGlow 3s ease-in-out infinite;
+}
 
-        .lore-content.active .lore-totem-image.trinari {
-            animation: trinariGlow 3s ease-in-out infinite;
-        }
+@keyframes chaosGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(255, 77, 77, 0.4));
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(255, 77, 77, 0.7));
+    }
+}
 
-        @keyframes trinariGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(48, 208, 174, 0.4));
-            }
-            50% {
-                filter: drop-shadow(0 0 40px rgba(48, 208, 174, 0.7));
-            }
-        }
+.lore-content.active .lore-totem-image.trinari {
+    animation: trinariGlow 3s ease-in-out infinite;
+}
 
-        .lore-text-container {
-            flex: 1;
-            min-width: 0;
-        }
+@keyframes trinariGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px rgba(48, 208, 174, 0.4));
+    }
+    50% {
+        filter: drop-shadow(0 0 40px rgba(48, 208, 174, 0.7));
+    }
+}
 
-        /* Responsive adjustments for mobile */
-        @media (max-width: 768px) {
-            .lore-content {
-                flex-direction: column;
-                text-align: center;
-            }
+.lore-text-container {
+    flex: 1;
+    min-width: 0;
+}
 
-            .lore-image-container {
-                flex: 0 0 auto;
-            }
-        }{
+.lore-faction-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+}
+
+.lore-faction-badge.guardians {
+    background: rgba(77, 163, 255, 0.2);
+    color: #4DA3FF;
+    border: 1px solid #4DA3FF;
+}
+
+.lore-faction-badge.chaos {
+    background: rgba(255, 77, 77, 0.2);
+    color: #FF4D4D;
+    border: 1px solid #FF4D4D;
+}
+
+.lore-faction-badge.trinari {
+    background: rgba(48, 208, 174, 0.2);
+    color: #30D0AE;
+    border: 1px solid #30D0AE;
+}
+
+.lore-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ccc;
+    font-style: italic;
+}
+
+.lore-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.lore-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lore-dot.active {
+    background: #FFD700;
+    transform: scale(1.3);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .lore-section {
+        padding: 30px 20px;
+        min-height: 500px;
+    }
+
+    .lore-content {
+        flex-direction: column;
+        text-align: center;
+        width: calc(100% - 40px);
+    }
+
+    .lore-image-container {
+        flex: 0 0 auto;
+    }
+}{
             background: rgba(20, 20, 20, 0.6);
             border: 2px solid rgba(255, 215, 0, 0.2);
             border-radius: 20px;
