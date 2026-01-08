@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Epic Story of Cronos Legends - Follow the journey from the Fall of the Old World through the awakening of the Trinari">
+    <meta name="keywords" content="Cronos Legends, NFT Story, Lore, Chaos Horde, Cronos Guardians, Trinari, Epic Fantasy">
+    <title>The Story of Cronos Legends | Epic Fantasy Lore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette */
+            --color-gold: #FFD700;
+            --color-orange: #FFA500;
+            --color-blue: #0064FF;
+            --color-dark: #0a0a0a;
+            --color-dark-alt: #141414;
+            --color-gray-light: #ccc;
+            --color-gray: #999;
+            --color-gray-dark: #666;
+            --color-white: #fff;
+            
+            /* Spacing */
+            --spacing-xs: 10px;
+            --spacing-sm: 20px;
+            --spacing-md: 30px;
+            --spacing-lg: 40px;
+            --spacing-xl: 60px;
+            --spacing-xxl: 80px;
+            
+            /* Borders */
+            --border-radius-sm: 8px;
+            --border-radius-md: 15px;
+            --border-radius-lg: 20px;
+            --border-radius-pill: 50px;
+            
+            /* Transitions */
+            --transition-base: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-dark);
+            color: var(--color-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding: var(--spacing-sm) 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                overflow: hidden;
+                transform: none;
+                transition: all 0.3s ease, max-height 0.3s ease;
+            }
+
+            .dropdown.active .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 500px;
+                margin-top: 10px;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            padding: var(--spacing-xxl) var(--spacing-sm);
+            text-align: center;
+            background: linear-gradient(to bottom, 
+                rgba(0, 100, 255, 0.1) 0%,
+                rgba(0, 255, 100, 0.1) 50%,
+                rgba(255, 50, 50, 0.1) 100%
+            ), var(--color-dark);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 100, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 60%, rgba(0, 255, 100, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 40%, rgba(255, 50, 50, 0.1) 0%, transparent 40%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .collection-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: var(--spacing-xs) 25px;
+            border-radius: var(--border-radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--color-gray-light);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        /* Episode Section */
+        .episode-section {
+            max-width: 1200px;
+            margin: var(--spacing-xxl) auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        .episode-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: var(--border-radius-lg);
+            margin-bottom: var(--spacing-xl);
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+
+        .episode-card:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        }
+
+        .episode-header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+            padding: var(--spacing-lg);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .episode-number {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .episode-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--color-white);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .episode-subtitle {
+            color: var(--color-gray);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .episode-content {
+            padding: var(--spacing-lg);
+        }
+
+        .episode-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .episode-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .episode-card:hover .episode-image img {
+            transform: scale(1.05);
+        }
+
+        .episode-text {
+            color: var(--color-gray-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .episode-text strong {
+            color: var(--color-gold);
+        }
+
+        /* Timeline Connector */
+        .timeline-connector {
+            text-align: center;
+            margin: var(--spacing-lg) 0;
+            position: relative;
+        }
+
+        .timeline-connector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--color-gold), transparent);
+        }
+
+        .timeline-icon {
+            display: inline-block;
+            font-size: 2rem;
+            background: var(--color-dark);
+            padding: var(--spacing-sm);
+            border-radius: 50%;
+            border: 2px solid var(--color-gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(5, 5, 5, 0.9);
+            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-lg);
+            text-align: center;
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            margin-top: var(--spacing-xxl);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin: var(--spacing-lg) 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px var(--spacing-lg);
+            border-radius: var(--border-radius-pill);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: var(--transition-base);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: #fff;
+        }
+
+        .btn-discord:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-twitter {
+            background: #1DA1F2;
+            color: #fff;
+        }
+
+        .btn-twitter:hover {
+            background: #1A8CD8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .footer-links a {
+            color: var(--color-gray);
+            text-decoration: none;
+            transition: var(--transition-base);
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-gold);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .episode-title {
+                font-size: 1.8rem;
+            }
+
+            .episode-text {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="collection-badge">📖 THE EPIC SAGA</div>
+                <h1>THE STORY OF CRONOS LEGENDS</h1>
+                <p class="hero-subtitle">
+                    Journey through the ages, from the fall of the old world to the awakening of the Trinari.<br>
+                    Experience the epic tale of war, balance, and destiny.
+                </p>
+            </div>
+        </section>
+
+        <!-- Episode 1 -->
+        <section class="episode-section">
+            <article class="episode-card fade-in">
+                <div class="episode-header">
+                    <div class="episode-number">⚔️ Episode 1</div>
+                    <h2 class="episode-title">The Fall of the Old World</h2>
+                    <p class="episode-subtitle">Past History</p>
+                </div>
+                <div class="episode-content">
+                    <div class="episode-image">
+                        <img src="/Images/episode1.jpg" alt="The Fall of the Old World">
+                    </div>
+                    <p class="episode-text">
+                        Long ago, the world thrived under the guidance of the <strong>Cronos Guardians</strong> — noble protectors who upheld order and peace. At the heart of their realm stood a powerful <strong>Totem</strong>, pulsing with ancient energy — a symbol of balance and strength.
+                    </p>
+                    <p class="episode-text">
+                        But from the shadows, the <strong>Chaos Horde</strong> emerged. Twisted by fury and hunger, they sought to corrupt the Totem and claim its power for themselves. War erupted.
+                    </p>
+                    <p class="episode-text">
+                        As the battlefield burned and the Totem trembled under the strain of clashing forces… the sky cracked open. A blazing meteor tore through the heavens, crashing into the land. Both sides fell silent, forced to retreat — to recover, regroup, and prepare for the war to continue.
+                    </p>
+                </div>
+            </article>
+
+            <div class="timeline-connector">
+                <span class="timeline-icon">⬇️</span>
+            </div>
+
+            <!-- Episode 2 -->
+            <article class="episode-card fade-in">
+                <div class="episode-header">
+                    <div class="episode-number">⚔️ Episode 2</div>
+                    <h2 class="episode-title">Legends Awaken</h2>
+                    <p class="episode-subtitle">The Rise of Warriors</p>
+                </div>
+                <div class="episode-content">
+                    <div class="episode-image">
+                        <img src="/Images/episode2.jpg" alt="Legends Awaken">
+                    </div>
+                    <p class="episode-text">
+                        When the meteor struck, the sacred Totems shattered. The powers of both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> waned—fractured, fading.
+                    </p>
+                    <p class="episode-text">
+                        Yet one Totem stood untouched. Ancient. Unclaimed. It belonged to neither side… and its silence echoed louder than the roar of war.
+                    </p>
+                    <p class="episode-text">
+                        From the smoldering ruins, the <strong>Chaos Horde</strong> rose—<strong>250 fierce warriors</strong> twisted by fury and forged in chaos.
+                    </p>
+                    <p class="episode-text">
+                        Across the land, the light answered. The <strong>Cronos Guardians</strong> emerged—<strong>250 strong</strong>, unyielding, forged in duty and hope.
+                    </p>
+                    <p class="episode-text">
+                        With the mysterious Totem's energy awakening, neither side hesitated. Battle cries rang out. Blades were drawn.
+                    </p>
+                    <p class="episode-text">
+                        The two armies charged—flame against light, wrath against will.
+                    </p>
+                </div>
+            </article>
+
+            <div class="timeline-connector">
+                <span class="timeline-icon">⬇️</span>
+            </div>
+
+            <!-- Episode 3 -->
+            <article class="episode-card fade-in">
+                <div class="episode-header">
+                    <div class="episode-number">⚔️ Episode 3</div>
+                    <h2 class="episode-title">The Birth of the Trinari</h2>
+                    <p class="episode-subtitle">A New Hope Emerges</p>
+                </div>
+                <div class="episode-content">
+                    <div class="episode-image">
+                        <img src="/Images/episode3.jpg" alt="The Birth of the Trinari">
+                    </div>
+                    <p class="episode-text">
+                        The war raged on. Steel clashed with fury, and light met shadow. Both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> suffered great losses. Their once-mighty Totems — fractured, dimmed, and fading — no longer fueled the strength they once held.
+                    </p>
+                    <p class="episode-text">
+                        Yet one Totem remained.
+                    </p>
+                    <p class="episode-text">
+                        Unclaimed. Undisturbed. And now, pulsing stronger than ever.
+                    </p>
+                    <p class="episode-text">
+                        The <strong>Trinari Totem</strong> — born of earth, flame, light, and shadow — awakened.
+                    </p>
+                    <p class="episode-text">
+                        From the very crater where the meteor had struck, the <strong>Trinari</strong> emerged.
+                    </p>
+                    <p class="episode-text">
+                        Mystical, radiant beings—neither Horde nor Guardian. Shaped by the natural world, forged in the impact of celestial fire, and woven with the essence of both rival factions. They carried the glow of balance, the calm of the forest, the fury of storms, and the memory of war.
+                    </p>
+                    <p class="episode-text">
+                        Though some bore the mark of Chaos… and others carried the light of the Guardians… they were something new.
+                    </p>
+                    <p class="episode-text">
+                        Something united. The Trinari did not come to conquer. They came to restore.
+                    </p>
+                    <p class="episode-text">
+                        Peace is their purpose. Healing, their strength. And though the scars of war run deep, the Trinari believe in what others have forgotten:
+                    </p>
+                    <p class="episode-text">
+                        That peace is still possible.<br>
+                        That even broken things can be made whole.
+                    </p>
+                    <p class="episode-text">
+                        Now, as Chaos and Guardians prepare for another clash…<br>
+                        The Trinari rise — not to fight, but to stand between.
+                    </p>
+                    <p class="episode-text">
+                        To offer a new path.
+                    </p>
+                </div>
+            </article>
+
+            <div class="timeline-connector">
+                <span class="timeline-icon">⬇️</span>
+            </div>
+
+            <!-- Episode 4 -->
+            <article class="episode-card fade-in">
+                <div class="episode-header">
+                    <div class="episode-number">⚔️ Episode 4</div>
+                    <h2 class="episode-title">The Turning of the Totems</h2>
+                    <p class="episode-subtitle">Balance on the Edge</p>
+                </div>
+                <div class="episode-content">
+                    <div class="episode-image">
+                        <img src="/Images/episode4.jpg" alt="The Turning of the Totems">
+                    </div>
+                    <p class="episode-text">
+                        The age of war had scarred the world.
+                    </p>
+                    <p class="episode-text">
+                        The <strong>Chaos Horde</strong> burned with restless fury, and the <strong>Cronos Guardians</strong> stood weary beneath the weight of endless battle. Both sides had fought for honor, for survival — yet the light of their Totems had dimmed, no longer shining with the same might as before.
+                    </p>
+                    <p class="episode-text">
+                        Then came the tremor.
+                    </p>
+                    <p class="episode-text">
+                        The <strong>Trinari Totem</strong>, the brightest of all, began to pulse — its radiance spilling across the land like a heartbeat from the earth itself. The air shimmered, and the balance of power began to shift.
+                    </p>
+                    <p class="episode-text">
+                        The <strong>Totem of Chaos</strong> still burned, but its flame flickered uncertainly.<br>
+                        The <strong>Totem of Guardians</strong> still glowed, but its calm light quivered with unease.
+                    </p>
+                    <p class="episode-text">
+                        Something deeper than allegiance was stirring.
+                    </p>
+                    <p class="episode-text">
+                        Across the lands, Guardians and Chaos warriors alike began to change. Some Guardians felt a pull toward the unknown light of the Trinari, their loyalty shaken by visions of unity. Others within the Chaos ranks found their rage softening, their hearts caught between shadow and peace.
+                    </p>
+                    <p class="episode-text">
+                        The balance itself trembled — not broken, but unstable. The world felt it in every breath, every whisper of the wind.
+                    </p>
+                    <p class="episode-text">
+                        Is the power of the Trinari Totem truly strong enough to bring peace?<br>
+                        Or will its light only deepen the cracks between order and chaos?
+                    </p>
+                    <p class="episode-text">
+                        The Totems still stand. Their power still flows.<br>
+                        <strong>Trinari</strong> — the brightest of them all.
+                    </p>
+                    <p class="episode-text" style="margin-top: var(--spacing-lg); font-size: 1.3rem; color: var(--color-gold); text-align: center;">
+                        ⚔️ <strong>Legends Awaken II</strong> – Launched November 2025
+                    </p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="community">
+        <h2 class="section-title">🔮 Join The Legends</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Become part of the epic saga. Join our community and help shape the future of Cronos Legends.
+        </p>
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
+            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/legends-awaken-2">Legends Awaken II</a>
+            <a href="/legends-awaken-1">Legends Awaken I</a>
+            <a href="/tokens">Tokens</a>
+            <a href="/game">Game</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+            <a href="/la2-terms">LA2 Terms</a>
+            <a href="/la1-terms">LA1 Terms</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
