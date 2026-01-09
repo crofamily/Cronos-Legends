@@ -1367,8 +1367,19 @@
         <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
 
-    <!-- Ethers.js Library -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <!-- Ethers.js Library - Multiple CDN fallbacks -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <script>
+        // Check if ethers loaded, if not try alternate CDN
+        if (typeof ethers === 'undefined') {
+            console.error('Primary ethers CDN failed, loading backup...');
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js';
+            script.async = false;
+            document.head.appendChild(script);
+        }
+    </script>
     
     <script>
         // Mobile menu toggle
@@ -1477,6 +1488,21 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
+            // Check if ethers is loaded
+            if (typeof ethers === 'undefined') {
+                console.error('Ethers.js library failed to load');
+                showTxStatus('Error: Web3 library not loaded. Please refresh the page.', 'error');
+                
+                // Wait a bit and try again
+                setTimeout(() => {
+                    if (typeof ethers === 'undefined') {
+                        const mintBtn = document.getElementById('mint-btn');
+                        mintBtn.disabled = true;
+                        mintBtn.textContent = 'Library Loading Error - Refresh Page';
+                    }
+                }, 2000);
+            }
+            
             await loadWhitelist();
             updateCountdown();
             setInterval(updateCountdown, 1000);
@@ -1624,6 +1650,12 @@
         // Connect Wallet
         async function connectWallet() {
             try {
+                // Check if ethers is loaded
+                if (typeof ethers === 'undefined') {
+                    alert('Web3 library not loaded. Please refresh the page and try again.');
+                    return false;
+                }
+                
                 if (typeof window.ethereum === 'undefined') {
                     alert('Please install MetaMask or another Web3 wallet!');
                     return false;
@@ -1638,7 +1670,11 @@
                 signer = provider.getSigner();
                 
                 await switchToCronosNetwork();
-                contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                
+                // Only initialize contract if address is set
+                if (CONFIG.CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                    contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                }
                 
                 updateWalletUI();
                 await checkWhitelistStatus();
