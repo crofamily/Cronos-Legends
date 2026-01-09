@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinari Elderborn - Mint Now | Cronos Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 255, 100, 0.2);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ff64;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+        }
+
+        .dropdown-toggle::before {
+            content: '▼';
+            font-size: 0.7rem;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle::before {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 10px;
+            padding: 15px 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            list-style: none;
+        }
+
+        .dropdown-menu a {
+            padding: 12px 25px;
+            color: #ccc;
+            display: block;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a::after {
+            display: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(0, 255, 100, 0.1);
+            color: #00ff64;
+            padding-left: 30px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #00ff64;
+            color: #00ff64;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: visible;
+            background: linear-gradient(to bottom, 
+                rgba(0, 255, 100, 0.08) 0%,
+                rgba(0, 200, 80, 0.08) 50%,
+                rgba(0, 150, 60, 0.08) 100%
+            ), #0a0a0a;
+            margin-top: 80px;
+            padding-bottom: 100px;
+            padding-top: 40px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, #0a0a0a);
+            pointer-events: none;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 100, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 60%, rgba(0, 200, 80, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 40%, rgba(0, 150, 60, 0.08) 0%, transparent 40%);
+            animation: pulseGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .coming-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 255, 100, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 40px rgba(0, 255, 100, 0.8);
+            }
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff64, #00cc50, #00ff64);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 40px rgba(0, 255, 100, 0.6));
+            letter-spacing: 4px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #00ff64;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        /* Image Carousel */
+        .preview-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 1 / 1;
+            margin: 40px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 4px solid rgba(0, 255, 100, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
+                        inset 0 0 30px rgba(0, 0, 0, 0.3);
+            background: #0a0a0a;
+            animation: frameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes frameGlow {
+            0%, 100% {
+                box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 255, 100, 0.35), 
+                            inset 0 0 30px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+        .carousel-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #00ff64;
+            font-weight: 700;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 100, 0.3);
+        }
+
+        /* Phase Indicator */
+        .phase-indicator {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .phase-card {
+            background: rgba(0, 255, 100, 0.05);
+            border: 3px solid rgba(0, 255, 100, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 255, 100, 0.2);
+        }
+
+        .phase-card.whitelist {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .phase-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .phase-card.whitelist .phase-title {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .phase-subtitle {
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .phase-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .phase-detail {
+            text-align: center;
+        }
+
+        .phase-detail-label {
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .phase-detail-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00ff64;
+        }
+
+        .phase-card.whitelist .phase-detail-value {
+            color: #FFD700;
+        }
+
+        /* Countdown Timer */
+        .countdown-section {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .countdown-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .countdown-timer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .countdown-item {
+            background: rgba(0, 255, 100, 0.05);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            border-color: rgba(0, 255, 100, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);
+        }
+
+        .countdown-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .countdown-label {
+            color: #999;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .launch-dates {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .launch-date {
+            color: #00ff64;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .launch-date.whitelist {
+            color: #FFD700;
+        }
+
+        .date-notice {
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Whitelist Status Banner */
+        .whitelist-status {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .status-banner {
+            background: rgba(0, 255, 100, 0.03);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 20px;
+            padding: 25px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .status-banner.whitelisted {
+            border-color: rgba(76, 175, 80, 0.5);
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(0, 255, 100, 0.05));
+        }
+
+        .status-banner.not-whitelisted {
+            border-color: rgba(255, 152, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(0, 255, 100, 0.03));
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .status-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .status-banner.whitelisted .status-title {
+            color: #00ff64;
+        }
+
+        .status-banner.not-whitelisted .status-title {
+            color: #FF9800;
+        }
+
+        .status-description {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Mint Section */
+        .mint-section {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .mint-card {
+            background: rgba(0, 255, 100, 0.03);
+            border: 2px solid rgba(0, 255, 100, 0.25);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.15);
+        }
+
+        .mint-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mint-info {
+            background: rgba(0, 255, 100, 0.05);
+            border-left: 4px solid #00ff64;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .mint-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 255, 100, 0.1);
+        }
+
+        .mint-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .mint-info-label {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .mint-info-value {
+            color: #00ff64;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        .mint-controls {
+            margin: 30px 0;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .quantity-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(0, 255, 100, 0.4);
+            background: rgba(0, 255, 100, 0.05);
+            color: #00ff64;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover:not(:disabled) {
+            background: rgba(0, 255, 100, 0.15);
+            transform: scale(1.1);
+        }
+
+        .quantity-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .quantity-display {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .total-price {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .total-price-label {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .total-price-value {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mint-button {
+            width: 100%;
+            padding: 25px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            color: #000;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.3);
+        }
+
+        .mint-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 100, 0.5);
+        }
+
+        .mint-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .wallet-connect-button {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+        }
+
+        .wallet-connect-button:hover:not(:disabled) {
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        .wallet-status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 255, 100, 0.05);
+            border-radius: 10px;
+            color: #00ff64;
+            font-size: 0.9rem;
+        }
+
+        .tx-status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 255, 100, 0.05);
+            border: 1px solid rgba(0, 255, 100, 0.2);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .tx-status.success {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: rgba(76, 175, 80, 0.3);
+            color: #4CAF50;
+        }
+
+        .tx-status.error {
+            background: rgba(244, 67, 54, 0.1);
+            border-color: rgba(244, 67, 54, 0.3);
+            color: #f44336;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 100, 0.03);
+            border: 2px solid rgba(0, 255, 100, 0.15);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(0, 255, 100, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Section */
+        .section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Alert/Info Box */
+        .alert-box {
+            background: rgba(0, 255, 100, 0.05);
+            border: 2px solid rgba(0, 255, 100, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .alert-title {
+            font-size: 1.2rem;
+            color: #00ff64;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .alert-text {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: #00ff64;
+            font-weight: 700;
+        }
+
+        /* Utility Grid */
+        .utility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .utility-card {
+            background: rgba(0, 255, 100, 0.03);
+            border: 2px solid rgba(0, 255, 100, 0.15);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .utility-card:hover {
+            border-color: rgba(0, 255, 100, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .utility-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .utility-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #00ff64;
+            margin-bottom: 15px;
+        }
+
+        .utility-desc {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.04), rgba(0, 200, 80, 0.03));
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .story-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff64, #00cc50);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(0, 255, 100, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #00ff64;
+            color: #00ff64;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 255, 100, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background: linear-gradient(135deg, #5865F2, #404eed);
+            color: #fff;
+        }
+
+        .btn-discord:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(5, 5, 5, 0.9);
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 2px solid rgba(0, 255, 100, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00ff64;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 40px 20px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                border-bottom: 2px solid rgba(0, 255, 100, 0.2);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                border: none;
+                background: transparent;
+                padding: 10px 0 0 20px;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-menu,
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .countdown-timer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+
+            .mint-card {
+                padding: 40px 30px;
+            }
+
+            .quantity-display {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .phase-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .preview-carousel {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                        <li><a href="/trinari-elderborn">Trinari Elderborn</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/Earn/">Earn & Swap</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="coming-badge">🌟 MINTING OPENS FEBRUARY 2026</div>
+            <h1 class="logo">TRINARI ELDERBORN</h1>
+            <p class="subtitle">🌿 The Ancient Origins • The First Awakening</p>
+
+            <!-- Image Carousel -->
+            <div class="preview-carousel">
+                <img src="../Images/TrinariElderborn/1.png" class="carousel-image active" alt="Preview 1">
+                <img src="../Images/TrinariElderborn/2.png" class="carousel-image" alt="Preview 2">
+                <img src="../Images/TrinariElderborn/3.png" class="carousel-image" alt="Preview 3">
+                <img src="../Images/TrinariElderborn/4.png" class="carousel-image" alt="Preview 4">
+                <img src="../Images/TrinariElderborn/5.png" class="carousel-image" alt="Preview 5">
+                <div class="carousel-indicator">
+                    <span id="carousel-counter">1 / 5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase Indicator -->
+    <div class="phase-indicator">
+        <div class="phase-card" id="phase-card">
+            <div class="phase-title" id="phase-title">⏳ Minting Not Started</div>
+            <div class="phase-subtitle" id="phase-subtitle">Prepare your wallet for the upcoming mint</div>
+            <div class="phase-info" id="phase-info">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Countdown Section -->
+    <div class="countdown-section">
+        <h2 class="countdown-title" id="countdown-title">⏰ Whitelist Mint Countdown</h2>
+        <div class="countdown-timer">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+        <div class="launch-dates">
+            <div class="launch-date whitelist">⭐ Whitelist: February 21, 2026 at 20:51 CET</div>
+            <div class="launch-date">🚀 Public: February 21, 2026 at 21:21 CET</div>
+        </div>
+        <div class="date-notice">* Subject to changes - Follow our Discord for updates</div>
+    </div>
+
+    <!-- Whitelist Status -->
+    <div class="whitelist-status" id="whitelist-status" style="display: none;">
+        <div class="status-banner" id="status-banner">
+            <div class="status-icon" id="status-icon">🔍</div>
+            <div class="status-title" id="status-title">Connect Wallet to Check Status</div>
+            <div class="status-description" id="status-description">
+                Connect your wallet to see if you're on the whitelist
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🔮</div>
+            <div class="stat-value">212</div>
+            <div class="stat-label">Total Supply</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-value" id="airdrop-reserved">~64</div>
+            <div class="stat-label">Reserved Airdrops</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🛒</div>
+            <div class="stat-value" id="available-mint">~148</div>
+            <div class="stat-label">Available to Mint</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✨</div>
+            <div class="stat-value" id="minted-count">0</div>
+            <div class="stat-label">Minted</div>
+        </div>
+    </div>
+
+    <!-- Mint Section -->
+    <div class="mint-section">
+        <div class="mint-card">
+            <h2 class="mint-title">Mint Your Elderborn</h2>
+            
+            <div class="mint-info">
+                <div class="mint-info-row">
+                    <span class="mint-info-label">Your Price</span>
+                    <span class="mint-info-value" id="display-price">
+                        Connect Wallet
+                        <span id="discount-indicator"></span>
+                    </span>
+                </div>
+                <div class="mint-info-row">
+                    <span class="mint-info-label">Available Supply</span>
+                    <span class="mint-info-value" id="supply-remaining">~148</span>
+                </div>
+                <div class="mint-info-row">
+                    <span class="mint-info-label">Max per Tx</span>
+                    <span class="mint-info-value" id="max-per-tx">-</span>
+                </div>
+                <div class="mint-info-row">
+                    <span class="mint-info-label">Your Minted</span>
+                    <span class="mint-info-value" id="user-minted">0</span>
+                </div>
+            </div>
+
+            <div class="mint-controls">
+                <div class="quantity-selector">
+                    <button class="quantity-btn" id="decrease" onclick="changeQuantity(-1)">−</button>
+                    <div class="quantity-display" id="quantity">1</div>
+                    <button class="quantity-btn" id="increase" onclick="changeQuantity(1)">+</button>
+                </div>
+
+                <div class="total-price">
+                    <div class="total-price-label">Total Price</div>
+                    <div class="total-price-value" id="total-price">Connect Wallet</div>
+                </div>
+
+                <button class="mint-button wallet-connect-button" id="mint-btn" onclick="handleMintAction()">
+                    Connect Wallet
+                </button>
+
+                <div class="wallet-status" id="wallet-status" style="display: none;">
+                    Connected: <span id="wallet-address"></span>
+                </div>
+
+                <div class="tx-status" id="tx-status" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="section">
+        <div class="alert-box">
+            <div class="alert-title">📋 Minting Schedule & Limits</div>
+            <div class="alert-text" style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <p style="margin: 10px 0;">⭐ <strong>Whitelist Phase:</strong> Feb 21, 20:51 CET - Max 3 per wallet - 15% discount</p>
+                <p style="margin: 10px 0;">🚀 <strong>Public First Hour:</strong> Feb 21, 21:21 - 22:21 CET - Max 5 per wallet - Full price</p>
+                <p style="margin: 10px 0;">♾️ <strong>Unlimited Phase:</strong> After 22:21 CET - No limits - Full price</p>
+                <p style="margin: 10px 0;">🎁 <strong>Free Airdrops:</strong> ~30% of supply (~64 NFTs) reserved for loyal holders</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="story-section">
+        <div class="story-content">
+            <h2 class="section-title">✨ The Origin Story</h2>
+            <p class="story-text">
+                Long before the Trinari awakened in the forests and winds, there was the First Impact. 
+                A celestial meteor streaked across the sky, crashing into the realm with earth-shaking force.
+            </p>
+            <p class="story-text">
+                From this cosmic event, the very first Trinari emerged—the <span class="highlight">Elderborn</span>. 
+                Born from different elements touched by the meteor's magic: fire sprites dancing in eternal flame, 
+                crystal wisps shimmering with otherworldly light, earth guardians carved from ancient stone, 
+                and storm spirits crackling with primal energy.
+            </p>
+            <p class="story-text" style="color: #00ff64; font-weight: 600;">
+                These are not just Trinari. These are the ancestors. The first. The Elderborn.
+            </p>
+        </div>
+    </div>
+
+    <!-- Utilities Section -->
+    <div class="section">
+        <h2 class="section-title">🎮 Utilities & Benefits</h2>
+        <p class="section-subtitle">
+            Trinari Elderborn holders gain exclusive benefits within the Cronos Legends ecosystem.
+        </p>
+
+        <div class="utility-grid">
+            <div class="utility-card">
+                <div class="utility-icon">💰</div>
+                <h3 class="utility-title">$TRI Staking</h3>
+                <p class="utility-desc">
+                    Stake your Trinari Elderborn NFT to earn $TRI tokens from a large reward pool. 
+                    Pool amount to be announced. Passive income for holders!
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">⚔️</div>
+                <h3 class="utility-title">Game Boosts</h3>
+                <p class="utility-desc">
+                    Potential boosters and advantages in Cronos Legends games. 
+                    Eligibility and specifics will be announced as features are developed.
+                </p>
+            </div>
+
+            <div class="utility-card">
+                <div class="utility-icon">👑</div>
+                <h3 class="utility-title">Elite Status</h3>
+                <p class="utility-desc">
+                    As the most exclusive collection, Elderborn holders gain recognition and 
+                    priority access to future Trinari-related events and drops.
+                </p>
+            </div>
+        </div>
+
+        <div class="alert-box" style="margin-top: 60px;">
+            <div class="alert-title">🌟 Community First Approach</div>
+            <div class="alert-text">
+                Many Trinari Elderborn NFTs will be airdropped FREE to our most loyal community holders. 
+                100% of mint funds go directly to project development - ZERO team allocation. 
+                We're building this together with our community!
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2 class="section-title">🌿 Join The Ancient Awakening</h2>
+        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Don't miss your chance to own one of the rarest pieces in Cronos Legends history. 
+            The Elderborn await. Will you answer the call?
+        </p>
+        
+        <div class="social-links">
+            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">💬 Join Discord</a>
+            <a href="/" class="btn btn-outline">🏠 Back to Home</a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/legends-awaken-2">Legends Awaken II</a>
+            <a href="/legends-awaken-1">Legends Awaken I</a>
+            <a href="/totems">Totems</a>
+            <a href="/tokens">Tokens</a>
+            <a href="/game">Game</a>
+            <a href="/roadmap">Roadmap</a>
+            <a href="/faq">FAQ</a>
+        </div>
+        
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    </div>
+
+    <!-- Ethers.js Library -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Mobile dropdown toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Image Carousel Auto-Rotation
+        let currentImageIndex = 0;
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        const totalImages = carouselImages.length;
+        const carouselCounter = document.getElementById('carousel-counter');
+
+        function rotateCarousel() {
+            carouselImages[currentImageIndex].classList.remove('active');
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            carouselImages[currentImageIndex].classList.add('active');
+            carouselCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+        }
+
+        setInterval(rotateCarousel, 2000);
+
+        // Configuration
+        const CONFIG = {
+            // Contract address - UPDATE THIS after deployment
+            CONTRACT_ADDRESS: '0x0000000000000000000000000000000000000000', // REPLACE WITH YOUR DEPLOYED CONTRACT
+            
+            // Cronos Mainnet Chain ID
+            CHAIN_ID: '0x19', // 25 in decimal
+            CHAIN_NAME: 'Cronos Mainnet',
+            RPC_URL: 'https://evm.cronos.org',
+            BLOCK_EXPLORER: 'https://cronoscan.com',
+            CURRENCY: {
+                name: 'Cronos',
+                symbol: 'CRO',
+                decimals: 18
+            },
+            
+            // Mint dates (CET timezone)
+            WHITELIST_START: new Date('2026-02-21T20:51:00+01:00').getTime(),
+            PUBLIC_START: new Date('2026-02-21T21:21:00+01:00').getTime(),
+            FIRST_HOUR_END: new Date('2026-02-21T22:21:00+01:00').getTime(),
+            
+            // Supply info
+            TOTAL_SUPPLY: 212,
+            AIRDROP_RESERVED: 64, // ~30%
+            
+            // Whitelist file path
+            WHITELIST_URL: './whitelist.json'
+        };
+
+        // Contract ABI - Minimal interface needed for minting
+        const CONTRACT_ABI = [
+            "function whitelistMint(uint256 quantity) payable",
+            "function publicMint(uint256 quantity) payable",
+            "function isWhitelisted(address account) view returns (bool)",
+            "function whitelistPrice() view returns (uint256)",
+            "function publicPrice() view returns (uint256)",
+            "function totalSupply() view returns (uint256)",
+            "function numberMinted(address owner) view returns (uint256)",
+            "function MAX_SUPPLY() view returns (uint256)",
+            "function WHITELIST_MAX_PER_WALLET() view returns (uint256)",
+            "function PUBLIC_FIRST_HOUR_MAX() view returns (uint256)"
+        ];
+
+        // State
+        let provider = null;
+        let signer = null;
+        let contract = null;
+        let userAddress = null;
+        let isWhitelisted = false;
+        let whitelistData = [];
+        let quantity = 1;
+        let currentPhase = 'NOT_STARTED'; // NOT_STARTED, WHITELIST, PUBLIC, PUBLIC_UNLIMITED
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadWhitelist();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            updatePhaseDisplay();
+        });
+
+        // Load whitelist from JSON file
+        async function loadWhitelist() {
+            try {
+                const response = await fetch(CONFIG.WHITELIST_URL);
+                if (response.ok) {
+                    const data = await response.json();
+                    whitelistData = data.addresses.map(addr => addr.toLowerCase());
+                    console.log(`Loaded ${whitelistData.length} whitelisted addresses`);
+                }
+            } catch (error) {
+                console.warn('Whitelist file not found or error loading:', error);
+                whitelistData = [];
+            }
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            let targetDate;
+            let titleText;
+
+            if (now < CONFIG.WHITELIST_START) {
+                targetDate = CONFIG.WHITELIST_START;
+                titleText = '⏰ Whitelist Mint Countdown';
+                currentPhase = 'NOT_STARTED';
+            } else if (now < CONFIG.PUBLIC_START) {
+                targetDate = CONFIG.PUBLIC_START;
+                titleText = '⏰ Public Mint Countdown';
+                currentPhase = 'WHITELIST';
+            } else if (now < CONFIG.FIRST_HOUR_END) {
+                targetDate = CONFIG.FIRST_HOUR_END;
+                titleText = '⏰ Unlimited Phase Countdown';
+                currentPhase = 'PUBLIC';
+            } else {
+                currentPhase = 'PUBLIC_UNLIMITED';
+                document.getElementById('countdown-title').textContent = '🎉 Minting is Live - Unlimited!';
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                updatePhaseDisplay();
+                return;
+            }
+
+            document.getElementById('countdown-title').textContent = titleText;
+
+            const distance = targetDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            updatePhaseDisplay();
+        }
+
+        // Update phase display
+        function updatePhaseDisplay() {
+            const phaseCard = document.getElementById('phase-card');
+            const phaseTitle = document.getElementById('phase-title');
+            const phaseSubtitle = document.getElementById('phase-subtitle');
+            const phaseInfo = document.getElementById('phase-info');
+
+            let maxPerTx = '-';
+            let phaseText = '';
+            let subtitleText = '';
+            let infoHTML = '';
+
+            switch(currentPhase) {
+                case 'NOT_STARTED':
+                    phaseCard.classList.remove('whitelist');
+                    phaseText = '⏳ Minting Not Started';
+                    subtitleText = 'Prepare your wallet for the upcoming mint';
+                    infoHTML = '';
+                    break;
+                    
+                case 'WHITELIST':
+                    phaseCard.classList.add('whitelist');
+                    phaseText = '⭐ WHITELIST PHASE ACTIVE';
+                    subtitleText = 'Exclusive early access for whitelisted addresses';
+                    maxPerTx = '3';
+                    infoHTML = `
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Max per Wallet</div>
+                            <div class="phase-detail-value">3 NFTs</div>
+                        </div>
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Discount</div>
+                            <div class="phase-detail-value">15% OFF</div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'PUBLIC':
+                    phaseCard.classList.remove('whitelist');
+                    phaseText = '🚀 PUBLIC MINT - FIRST HOUR';
+                    subtitleText = 'Limited to 5 per wallet for the first hour';
+                    maxPerTx = '5';
+                    infoHTML = `
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Max per Wallet</div>
+                            <div class="phase-detail-value">5 NFTs</div>
+                        </div>
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Phase</div>
+                            <div class="phase-detail-value">First Hour</div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'PUBLIC_UNLIMITED':
+                    phaseCard.classList.remove('whitelist');
+                    phaseText = '♾️ UNLIMITED MINTING';
+                    subtitleText = 'No limits - Mint as many as you want!';
+                    maxPerTx = 'Unlimited';
+                    infoHTML = `
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Max per Wallet</div>
+                            <div class="phase-detail-value">No Limit</div>
+                        </div>
+                        <div class="phase-detail">
+                            <div class="phase-detail-label">Phase</div>
+                            <div class="phase-detail-value">Final</div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            phaseTitle.textContent = phaseText;
+            phaseSubtitle.textContent = subtitleText;
+            phaseInfo.innerHTML = infoHTML;
+            document.getElementById('max-per-tx').textContent = maxPerTx;
+        }
+
+        // Connect Wallet
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    alert('Please install MetaMask or another Web3 wallet!');
+                    return false;
+                }
+
+                const accounts = await window.ethereum.request({ 
+                    method: 'eth_requestAccounts' 
+                });
+                
+                userAddress = accounts[0];
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                
+                await switchToCronosNetwork();
+                contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                
+                updateWalletUI();
+                await checkWhitelistStatus();
+                await loadContractData();
+                
+                return true;
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                showTxStatus('Error connecting wallet: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Switch to Cronos network
+        async function switchToCronosNetwork() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: CONFIG.CHAIN_ID }],
+                });
+            } catch (switchError) {
+                if (switchError.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: CONFIG.CHAIN_ID,
+                                chainName: CONFIG.CHAIN_NAME,
+                                nativeCurrency: CONFIG.CURRENCY,
+                                rpcUrls: [CONFIG.RPC_URL],
+                                blockExplorerUrls: [CONFIG.BLOCK_EXPLORER]
+                            }]
+                        });
+                    } catch (addError) {
+                        throw new Error('Failed to add Cronos network');
+                    }
+                } else {
+                    throw switchError;
+                }
+            }
+        }
+
+        // Update wallet UI
+        function updateWalletUI() {
+            const shortAddress = `${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
+            document.getElementById('wallet-address').textContent = shortAddress;
+            document.getElementById('wallet-status').style.display = 'block';
+            document.getElementById('mint-btn').classList.remove('wallet-connect-button');
+            document.getElementById('whitelist-status').style.display = 'block';
+        }
+
+        // Check whitelist status
+        async function checkWhitelistStatus() {
+            const statusBanner = document.getElementById('status-banner');
+            const statusIcon = document.getElementById('status-icon');
+            const statusTitle = document.getElementById('status-title');
+            const statusDescription = document.getElementById('status-description');
+            
+            const isLocalWhitelisted = whitelistData.includes(userAddress.toLowerCase());
+            
+            let isContractWhitelisted = false;
+            if (contract && CONFIG.CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                try {
+                    isContractWhitelisted = await contract.isWhitelisted(userAddress);
+                } catch (error) {
+                    console.warn('Could not check contract whitelist:', error);
+                }
+            }
+            
+            isWhitelisted = isLocalWhitelisted || isContractWhitelisted;
+            
+            if (isWhitelisted) {
+                statusBanner.classList.add('whitelisted');
+                statusBanner.classList.remove('not-whitelisted');
+                statusIcon.textContent = '✅';
+                statusTitle.textContent = 'You\'re Whitelisted!';
+                statusDescription.textContent = 'You have early access to mint at a 15% discount during the whitelist phase.';
+            } else {
+                statusBanner.classList.add('not-whitelisted');
+                statusBanner.classList.remove('whitelisted');
+                statusIcon.textContent = '⚠️';
+                statusTitle.textContent = 'Not Whitelisted';
+                statusDescription.textContent = 'You can still mint during the public phase starting at 21:21 CET.';
+            }
+            
+            updatePriceDisplay();
+        }
+
+        // Load contract data
+        async function loadContractData() {
+            if (!contract || CONFIG.CONTRACT_ADDRESS === '0x0000000000000000000000000000000000000000') {
+                return;
+            }
+            
+            try {
+                const totalMinted = await contract.totalSupply();
+                document.getElementById('minted-count').textContent = totalMinted.toString();
+                
+                const available = CONFIG.TOTAL_SUPPLY - CONFIG.AIRDROP_RESERVED;
+                const remaining = available - totalMinted.toNumber();
+                document.getElementById('supply-remaining').textContent = remaining;
+                
+                if (userAddress) {
+                    const userMinted = await contract.numberMinted(userAddress);
+                    document.getElementById('user-minted').textContent = userMinted.toString();
+                }
+                
+                await updatePriceDisplay();
+                
+            } catch (error) {
+                console.error('Error loading contract data:', error);
+            }
+        }
+
+        // Update price display
+        async function updatePriceDisplay() {
+            let priceText = 'TBA';
+            let totalPriceText = 'TBA';
+            let discountHTML = '';
+            
+            if (contract && CONFIG.CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                try {
+                    let price;
+                    
+                    if (currentPhase === 'WHITELIST' && isWhitelisted) {
+                        price = await contract.whitelistPrice();
+                        discountHTML = '<span class="discount-badge">-15% WL</span>';
+                    } else {
+                        price = await contract.publicPrice();
+                    }
+                    
+                    const priceInCro = ethers.utils.formatEther(price);
+                    priceText = `${priceInCro} CRO`;
+                    
+                    const total = price.mul(quantity);
+                    const totalInCro = ethers.utils.formatEther(total);
+                    totalPriceText = `${totalInCro} CRO`;
+                    
+                } catch (error) {
+                    console.warn('Could not fetch prices:', error);
+                }
+            }
+            
+            document.getElementById('display-price').innerHTML = priceText + discountHTML;
+            document.getElementById('total-price').textContent = totalPriceText;
+            document.getElementById('discount-indicator').innerHTML = discountHTML;
+        }
+
+        // Change quantity
+        function changeQuantity(change) {
+            const newQuantity = quantity + change;
+            
+            let maxQuantity = 1;
+            if (currentPhase === 'WHITELIST' && isWhitelisted) {
+                maxQuantity = 3;
+            } else if (currentPhase === 'PUBLIC') {
+                maxQuantity = 5;
+            } else if (currentPhase === 'PUBLIC_UNLIMITED') {
+                maxQuantity = 20;
+            }
+            
+            if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+                quantity = newQuantity;
+                document.getElementById('quantity').textContent = quantity;
+                updatePriceDisplay();
+            }
+        }
+
+        // Handle mint action
+        async function handleMintAction() {
+            if (!userAddress) {
+                await connectWallet();
+                if (userAddress) {
+                    document.getElementById('mint-btn').textContent = 'Mint Now';
+                }
+            } else {
+                await mint();
+            }
+        }
+
+        // Mint function
+        async function mint() {
+            if (!contract || !userAddress) {
+                showTxStatus('Please connect your wallet first', 'error');
+                return;
+            }
+            
+            if (currentPhase === 'NOT_STARTED') {
+                showTxStatus('Minting has not started yet!', 'error');
+                return;
+            }
+            
+            if (currentPhase === 'WHITELIST' && !isWhitelisted) {
+                showTxStatus('Whitelist phase is active. Public mint starts at 21:21 CET.', 'error');
+                return;
+            }
+            
+            try {
+                const mintBtn = document.getElementById('mint-btn');
+                mintBtn.disabled = true;
+                mintBtn.textContent = 'Minting...';
+                
+                let tx;
+                let price;
+                
+                if (currentPhase === 'WHITELIST' && isWhitelisted) {
+                    price = await contract.whitelistPrice();
+                    const totalPrice = price.mul(quantity);
+                    showTxStatus('Whitelist minting in progress...', '');
+                    tx = await contract.whitelistMint(quantity, { value: totalPrice });
+                } else {
+                    price = await contract.publicPrice();
+                    const totalPrice = price.mul(quantity);
+                    showTxStatus('Public minting in progress...', '');
+                    tx = await contract.publicMint(quantity, { value: totalPrice });
+                }
+                
+                showTxStatus(`Transaction submitted! Hash: ${tx.hash.substring(0, 10)}...`, '');
+                
+                const receipt = await tx.wait();
+                
+                showTxStatus(`Success! Minted ${quantity} Trinari Elderborn NFT${quantity > 1 ? 's' : ''}! 🎉`, 'success');
+                
+                await loadContractData();
+                
+                quantity = 1;
+                document.getElementById('quantity').textContent = '1';
+                
+                mintBtn.disabled = false;
+                mintBtn.textContent = 'Mint Again';
+                
+            } catch (error) {
+                console.error('Mint error:', error);
+                let errorMsg = 'Minting failed: ';
+                
+                if (error.code === 4001) {
+                    errorMsg += 'Transaction rejected by user';
+                } else if (error.message) {
+                    errorMsg += error.message;
+                } else {
+                    errorMsg += 'Unknown error';
+                }
+                
+                showTxStatus(errorMsg, 'error');
+                
+                const mintBtn = document.getElementById('mint-btn');
+                mintBtn.disabled = false;
+                mintBtn.textContent = 'Mint Now';
+            }
+        }
+
+        // Show transaction status
+        function showTxStatus(message, type) {
+            const statusEl = document.getElementById('tx-status');
+            statusEl.textContent = message;
+            statusEl.className = 'tx-status';
+            if (type) {
+                statusEl.classList.add(type);
+            }
+            statusEl.style.display = 'block';
+            
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 10000);
+            }
+        }
+
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', async (accounts) => {
+                if (accounts.length === 0) {
+                    userAddress = null;
+                    document.getElementById('wallet-status').style.display = 'none';
+                    document.getElementById('whitelist-status').style.display = 'none';
+                    document.getElementById('mint-btn').textContent = 'Connect Wallet';
+                    document.getElementById('mint-btn').classList.add('wallet-connect-button');
+                } else {
+                    userAddress = accounts[0];
+                    updateWalletUI();
+                    await checkWhitelistStatus();
+                    await loadContractData();
+                }
+            });
+            
+            window.ethereum.on('chainChanged', () => {
+                window.location.reload();
+            });
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .utility-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
