@@ -1252,6 +1252,10 @@
                     Connect Wallet
                 </button>
 
+                <div style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: #666;">
+                    Supports: MetaMask & Crypto.com Onchain Wallet
+                </div>
+
                 <div class="wallet-status" id="wallet-status" style="display: none;">
                     Connected: <span id="wallet-address"></span>
                 </div>
@@ -1367,18 +1371,32 @@
         <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
     </div>
 
-    <!-- Ethers.js Library - Multiple CDN fallbacks -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    
+    <!-- Load Ethers.js from multiple sources for reliability -->
     <script>
-        // Check if ethers loaded, if not try alternate CDN
-        if (typeof ethers === 'undefined') {
-            console.error('Primary ethers CDN failed, loading backup...');
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js';
-            script.async = false;
-            document.head.appendChild(script);
-        }
+        // Load ethers.js dynamically with fallback
+        (function() {
+            const loadEthers = (src, callback) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = callback;
+                script.onerror = () => {
+                    console.error('Failed to load from:', src);
+                    if (src.includes('jsdelivr')) {
+                        console.log('Trying unpkg...');
+                        loadEthers('https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js', callback);
+                    } else if (src.includes('unpkg')) {
+                        console.log('Trying cdnjs...');
+                        loadEthers('https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js', callback);
+                    }
+                };
+                document.head.appendChild(script);
+            };
+            
+            loadEthers('https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js', () => {
+                console.log('Ethers.js loaded successfully');
+                window.ethersLoaded = true;
+            });
+        })();
     </script>
     
     <script>
@@ -1488,25 +1506,42 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
-            // Check if ethers is loaded
+            console.log('Page loaded, initializing...');
+            
+            // Wait for ethers to load
+            let ethersCheckAttempts = 0;
+            while (typeof ethers === 'undefined' && ethersCheckAttempts < 30) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                ethersCheckAttempts++;
+            }
+            
             if (typeof ethers === 'undefined') {
-                console.error('Ethers.js library failed to load');
+                console.error('Ethers.js library failed to load after 3 seconds');
                 showTxStatus('Error: Web3 library not loaded. Please refresh the page.', 'error');
-                
-                // Wait a bit and try again
-                setTimeout(() => {
-                    if (typeof ethers === 'undefined') {
-                        const mintBtn = document.getElementById('mint-btn');
-                        mintBtn.disabled = true;
-                        mintBtn.textContent = 'Library Loading Error - Refresh Page';
-                    }
-                }, 2000);
+                const mintBtn = document.getElementById('mint-btn');
+                mintBtn.disabled = true;
+                mintBtn.textContent = 'Library Error - Refresh Page';
+            } else {
+                console.log('Ethers.js loaded successfully');
             }
             
             await loadWhitelist();
             updateCountdown();
             setInterval(updateCountdown, 1000);
             updatePhaseDisplay();
+            
+            // Auto-connect if previously connected
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts && accounts.length > 0) {
+                        console.log('Auto-connecting to previously connected wallet...');
+                        await connectWallet();
+                    }
+                } catch (error) {
+                    console.log('Auto-connect not available:', error);
+                }
+            }
         });
 
         // Load whitelist from JSON file
@@ -1650,40 +1685,87 @@
         // Connect Wallet
         async function connectWallet() {
             try {
-                // Check if ethers is loaded
+                // Wait for ethers to load if needed
                 if (typeof ethers === 'undefined') {
-                    alert('Web3 library not loaded. Please refresh the page and try again.');
-                    return false;
+                    showTxStatus('Loading Web3 library...', '');
+                    let attempts = 0;
+                    while (typeof ethers === 'undefined' && attempts < 20) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        attempts++;
+                    }
+                    if (typeof ethers === 'undefined') {
+                        alert('Web3 library failed to load. Please refresh the page.');
+                        return false;
+                    }
                 }
                 
                 if (typeof window.ethereum === 'undefined') {
-                    alert('Please install MetaMask or another Web3 wallet!');
+                    alert('Please install a Web3 wallet!\n\n' +
+                          '• MetaMask: https://metamask.io\n' +
+                          '• Crypto.com Onchain Wallet: Available in Crypto.com App');
                     return false;
                 }
 
+                showTxStatus('Requesting account access...', '');
+                
                 const accounts = await window.ethereum.request({ 
                     method: 'eth_requestAccounts' 
                 });
                 
+                if (!accounts || accounts.length === 0) {
+                    showTxStatus('No accounts found', 'error');
+                    return false;
+                }
+                
                 userAddress = accounts[0];
-                provider = new ethers.providers.Web3Provider(window.ethereum);
+                console.log('Connected address:', userAddress);
+                
+                // Create provider with proper error handling
+                try {
+                    provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+                } catch (e) {
+                    console.error('Provider creation error:', e);
+                    // Try alternative initialization
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                }
+                
                 signer = provider.getSigner();
                 
+                showTxStatus('Switching to Cronos network...', '');
                 await switchToCronosNetwork();
                 
                 // Only initialize contract if address is set
                 if (CONFIG.CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000') {
-                    contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                    try {
+                        contract = new ethers.Contract(CONFIG.CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                        console.log('Contract initialized');
+                    } catch (e) {
+                        console.warn('Contract initialization failed (expected if not deployed yet):', e);
+                    }
                 }
                 
                 updateWalletUI();
                 await checkWhitelistStatus();
                 await loadContractData();
                 
+                // Clear status message
+                setTimeout(() => {
+                    const statusEl = document.getElementById('tx-status');
+                    if (statusEl && !statusEl.classList.contains('error')) {
+                        statusEl.style.display = 'none';
+                    }
+                }, 2000);
+                
                 return true;
             } catch (error) {
                 console.error('Error connecting wallet:', error);
-                showTxStatus('Error connecting wallet: ' + error.message, 'error');
+                let errorMsg = 'Error connecting wallet';
+                if (error.code === 4001) {
+                    errorMsg = 'Connection rejected by user';
+                } else if (error.message) {
+                    errorMsg = error.message;
+                }
+                showTxStatus(errorMsg, 'error');
                 return false;
             }
         }
@@ -1845,10 +1927,21 @@
 
         // Handle mint action
         async function handleMintAction() {
+            const mintBtn = document.getElementById('mint-btn');
+            
             if (!userAddress) {
-                await connectWallet();
-                if (userAddress) {
-                    document.getElementById('mint-btn').textContent = 'Mint Now';
+                const connected = await connectWallet();
+                if (connected && userAddress) {
+                    mintBtn.classList.remove('wallet-connect-button');
+                    
+                    // Update button based on phase
+                    if (currentPhase === 'NOT_STARTED') {
+                        mintBtn.textContent = 'Minting Not Started';
+                        mintBtn.disabled = true;
+                    } else {
+                        mintBtn.textContent = 'Mint Now';
+                        mintBtn.disabled = false;
+                    }
                 }
             } else {
                 await mint();
