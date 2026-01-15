@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Color Palette */
             --color-gold: #FFD700;
             --color-orange: #FFA500;
             --color-blue: #0064FF;
@@ -19,29 +18,21 @@
             --color-gray: #999;
             --color-gray-dark: #666;
             --color-white: #fff;
-            
-            /* Rarity Colors */
             --rarity-mythic: #FF1493;
             --rarity-legendary: #FF6B00;
             --rarity-epic: #9D4EDD;
             --rarity-rare: #0096FF;
             --rarity-common: #999;
-            
-            /* Spacing */
             --spacing-xs: 10px;
             --spacing-sm: 20px;
             --spacing-md: 30px;
             --spacing-lg: 40px;
             --spacing-xl: 60px;
             --spacing-xxl: 80px;
-            
-            /* Borders */
             --border-radius-sm: 8px;
             --border-radius-md: 15px;
             --border-radius-lg: 20px;
             --border-radius-pill: 50px;
-            
-            /* Transitions */
             --transition-base: all 0.3s ease;
         }
 
@@ -59,7 +50,6 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -136,7 +126,6 @@
             width: 100%;
         }
 
-        /* Dropdown Menu */
         .dropdown {
             position: relative;
         }
@@ -254,25 +243,6 @@
             }
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            color: var(--color-gold);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-base);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: var(--spacing-xs);
-        }
-
-        .back-link:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateX(-5px);
-        }
-
-        /* Hero Section */
         .hero {
             margin-top: 100px;
             padding: var(--spacing-xxl) var(--spacing-sm);
@@ -336,52 +306,6 @@
             line-height: 1.6;
         }
 
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            max-width: 1200px;
-            margin: var(--spacing-xl) auto;
-            padding: 0 var(--spacing-sm);
-        }
-
-        .stat-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: var(--border-radius-md);
-            padding: var(--spacing-md) var(--spacing-sm);
-            text-align: center;
-            transition: var(--transition-base);
-        }
-
-        .stat-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-
-        .stat-value {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .stat-label {
-            color: var(--color-gray);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-
-        /* NFT Stats Section */
         .nft-stats-section {
             max-width: 1200px;
             margin: 80px auto 60px;
@@ -631,928 +555,114 @@
                 opacity: 0;
             }
         }
-        /* Crypto.com Integrated Platform Section */
-        .crypto-platform-unified {
-            max-width: 1200px;
-            margin: var(--spacing-xxl) auto;
-            padding: 0 var(--spacing-sm);
-        }
 
-        .unified-platform-container {
-            background: transparent;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            position: relative;
-        }
-
-        /* Subtle background glow effect */
-        .unified-platform-container::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(
-                ellipse at center,
-                rgba(0, 100, 255, 0.08) 0%,
-                transparent 70%
-            );
-            z-index: -1;
-            border-radius: 30px;
-        }
-
-        .platform-logo-wrapper {
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 100, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 220px;
-            transition: var(--transition-base);
-        }
-
-        .platform-logo-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 100, 255, 0.3);
-        }
-
-        .platform-logo-wrapper img {
-            max-width: 200px;
-            height: auto;
-            filter: drop-shadow(0 2px 8px rgba(0, 50, 150, 0.15));
-        }
-
-        .platform-content-wrapper {
-            flex: 1;
-        }
-
-        .platform-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 8px 18px;
-            border-radius: var(--border-radius-pill);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-        }
-
-        /* Section */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing-xxl) var(--spacing-sm);
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: var(--spacing-sm);
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--color-gray);
-            font-size: 1.1rem;
-            margin-bottom: 50px;
-        }
-
-        /* Platform Info */
-        .platform-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .platform-description {
-            color: var(--color-gray-light);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .platform-description strong {
-            color: var(--color-white);
-        }
-
-        .reserved-nfts-list {
-            background: rgba(0, 100, 255, 0.05);
-            border: 1px solid rgba(0, 100, 255, 0.2);
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin: 18px 0;
-            border-left: 3px solid rgba(0, 100, 255, 0.5);
-        }
-
-        .reserved-nfts-list p {
-            margin: 8px 0;
-            color: var(--color-gray-light);
-        }
-
-        .reserved-nfts-list p:first-child {
-            color: var(--color-white);
-        }
-
-        .reserved-nfts-list ul {
-            list-style: none;
-            padding-left: var(--spacing-sm);
-            margin: var(--spacing-xs) 0;
-        }
-
-        .reserved-nfts-list li {
-            padding: 5px 0;
-            color: var(--color-gray-light);
-        }
-
-        .reserved-nfts-list li::before {
-            content: "•";
-            color: var(--color-gold);
-            font-weight: bold;
-            display: inline-block;
-            width: 1.2em;
-            margin-left: -1.2em;
-        }
-
-        .mint-details {
-            margin-top: 15px;
-        }
-
-        .mint-details p {
-            margin: 8px 0;
-            color: var(--color-gray-light);
-            font-size: 0.95rem;
-        }
-
-        .mint-details strong {
-            color: var(--color-white);
-        }
-
-        .info-box {
-            background: rgba(255, 215, 0, 0.08);
-            border-left: 3px solid var(--color-gold);
-            padding: 18px 20px;
-            border-radius: 8px;
-            margin: var(--spacing-sm) 0;
-            font-size: 0.95rem;
-        }
-
-        .unified-cta-wrapper {
-            margin-top: var(--spacing-sm);
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .unified-cta-wrapper .btn {
-            padding: 15px 32px;
-            font-size: 0.85rem;
-        }
-
-        /* Faction Cards */
-        .faction-grid {
+        /* Faction Burn Stats */
+        .faction-burn-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-lg);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
         }
 
-        .faction-card {
+        .faction-burn-card {
             background: rgba(20, 20, 20, 0.8);
-            border-radius: var(--border-radius-lg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: var(--transition-base);
         }
 
-        .faction-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
+        .faction-burn-card.light {
+            border: 2px solid rgba(0, 150, 255, 0.4);
         }
 
-        .faction-header {
-            padding: var(--spacing-md);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+        .faction-burn-card.chaos {
+            border: 2px solid rgba(255, 50, 50, 0.4);
         }
 
-        .faction-icon {
+        .faction-burn-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .faction-burn-icon {
             font-size: 3rem;
             margin-bottom: 15px;
         }
 
-        .faction-name {
+        .faction-burn-title {
             font-family: 'Cinzel', serif;
             font-size: 1.8rem;
-            color: var(--color-gold);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .faction-count {
-            color: var(--color-gray);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .faction-body {
-            padding: var(--spacing-md);
-        }
-
-        .faction-description {
-            color: var(--color-gray-light);
-            line-height: 1.7;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .division-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .division-item {
-            background: rgba(255, 215, 0, 0.05);
-            padding: var(--spacing-xs) 15px;
-            margin-bottom: var(--spacing-xs);
-            border-radius: var(--border-radius-sm);
-            border-left: 3px solid var(--color-gold);
-            color: #ddd;
-            font-size: 0.95rem;
-        }
-
-        /* Utilities Section */
-        .utility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-lg);
-        }
-
-        .utility-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: var(--border-radius-md);
-            padding: var(--spacing-md);
-            transition: var(--transition-base);
-        }
-
-        .utility-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(20, 20, 20, 0.8);
-        }
-
-        .utility-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .utility-title {
-            font-size: 1.3rem;
-            color: var(--color-gold);
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .utility-description {
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        /* Rarity Section */
-        .rarity-table {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: var(--border-radius-md);
-            padding: var(--spacing-lg);
-            margin-top: var(--spacing-lg);
-        }
-
-        .rarity-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 25px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition-base);
-            border: 1px solid transparent;
-        }
-
-        .rarity-row:hover {
-            transform: translateX(5px);
-            border-color: currentColor;
-        }
-
-        .rarity-row::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.15;
-            z-index: 0;
-        }
-
-        .rarity-row:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Mythic - Diamond Crystal Effect */
-        .rarity-row:has(.rarity-mythic) {
-            background: linear-gradient(135deg, 
-                rgba(255, 20, 147, 0.2) 0%, 
-                rgba(138, 43, 226, 0.15) 50%,
-                rgba(75, 0, 130, 0.2) 100%
-            );
-            border-color: rgba(255, 20, 147, 0.3);
-        }
-
-        .rarity-row:has(.rarity-mythic)::before {
-            background: 
-                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),
-                linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),
-                radial-gradient(circle at 30% 30%, rgba(255, 20, 147, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 70% 70%, rgba(138, 43, 226, 0.3) 0%, transparent 60%);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        /* Legendary - Purple Flame Effect */
-        .rarity-row:has(.rarity-legendary) {
-            background: linear-gradient(135deg, 
-                rgba(138, 43, 226, 0.2) 0%, 
-                rgba(255, 107, 0, 0.15) 50%,
-                rgba(148, 0, 211, 0.2) 100%
-            );
-            border-color: rgba(138, 43, 226, 0.3);
-        }
-
-        .rarity-row:has(.rarity-legendary)::before {
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(138, 43, 226, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(255, 107, 0, 0.4) 0%, transparent 50%);
-            opacity: 0.2;
-        }
-
-        /* Epic - Golden Glow Effect */
-        .rarity-row:has(.rarity-epic) {
-            background: linear-gradient(135deg, 
-                rgba(255, 215, 0, 0.15) 0%, 
-                rgba(255, 165, 0, 0.12) 50%,
-                rgba(218, 165, 32, 0.15) 100%
-            );
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .rarity-row:has(.rarity-epic)::before {
-            background: 
-                radial-gradient(circle at 30% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 70% 50%, rgba(255, 165, 0, 0.3) 0%, transparent 60%);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Rare - Blue Crystal Effect */
-        .rarity-row:has(.rarity-rare) {
-            background: linear-gradient(135deg, 
-                rgba(0, 150, 255, 0.15) 0%, 
-                rgba(0, 191, 255, 0.12) 50%,
-                rgba(30, 144, 255, 0.15) 100%
-            );
-            border-color: rgba(0, 150, 255, 0.3);
-        }
-
-        .rarity-row:has(.rarity-rare)::before {
-            background: 
-                linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 191, 255, 0.3) 0%, transparent 70%);
-            opacity: 0.2;
-        }
-
-        /* Common - Silver/Gray Effect */
-        .rarity-row:has(.rarity-common) {
-            background: linear-gradient(135deg, 
-                rgba(169, 169, 169, 0.1) 0%, 
-                rgba(128, 128, 128, 0.08) 50%,
-                rgba(192, 192, 192, 0.1) 100%
-            );
-            border-color: rgba(169, 169, 169, 0.2);
-        }
-
-        .rarity-row:has(.rarity-common)::before {
-            background: 
-                linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
-            opacity: 0.15;
-        }
-
-        .rarity-tier {
-            font-weight: 700;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .rarity-mythic { 
-            color: #FF1493;
-            filter: drop-shadow(0 0 8px rgba(255, 20, 147, 0.6));
-        }
-        
-        .rarity-legendary { 
-            color: #FF6B00;
-            filter: drop-shadow(0 0 6px rgba(255, 107, 0, 0.5));
-        }
-        
-        .rarity-epic { 
-            color: #FFD700;
-            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
-        }
-        
-        .rarity-rare { 
-            color: #00BFFF;
-            filter: drop-shadow(0 0 6px rgba(0, 191, 255, 0.4));
-        }
-        
-        .rarity-common { 
-            color: #C0C0C0;
-        }
-
-        .rarity-percentage {
-            font-size: 1.3rem;
-            color: var(--color-gold);
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Animations */
-        @keyframes shimmer {
-            0%, 100% {
-                opacity: 0.15;
-            }
-            50% {
-                opacity: 0.25;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 0.35;
-            }
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 18px var(--spacing-lg);
-            border-radius: var(--border-radius-pill);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: var(--transition-base);
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            color: #000;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--color-gold);
-            color: var(--color-gold);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: var(--spacing-lg);
-        }
-
-        /* Info Box */
-        .info-box {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 4px solid var(--color-gold);
-            padding: var(--spacing-sm) 25px;
-            border-radius: var(--spacing-xs);
-            margin: var(--spacing-md) 0;
-        }
-
-        .info-box strong {
-            color: var(--color-gold);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-lg);
-            text-align: center;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            margin-top: var(--spacing-xxl);
-        }
-
-        .footer a {
-            color: var(--color-gold);
-            text-decoration: none;
-            transition: var(--transition-base);
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-note {
-            color: var(--color-gray);
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .footer-copyright {
-            color: var(--color-gray-dark);
-            margin-top: var(--spacing-md);
-        }
-
-        /* NFT Gallery Styles */
-        .nft-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .nft-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .nft-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
-        }
-
-        .nft-image {
-            height: 350px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nft-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .nft-card:hover .nft-image img {
-            transform: scale(1.1);
-        }
-
-        .nft-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .nft-card:hover .nft-image::before {
-            left: 100%;
-        }
-
-        .nft-info {
-            padding: 25px;
-        }
-
-        .nft-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            color: #FFD700;
             margin-bottom: 10px;
             font-weight: 700;
         }
 
-        .nft-faction {
-            font-size: 0.9rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .nft-desc {
-            color: #bbb;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Faction Divider */
-        .faction-divider {
-            text-align: center;
-            margin: 80px 0 40px;
-            position: relative;
-        }
-
-        .faction-divider::before,
-        .faction-divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, rgba(255, 215, 0, 0.3), transparent);
-        }
-
-        .faction-divider::before {
-            left: 0;
-        }
-
-        .faction-divider::after {
-            right: 0;
-        }
-
-        .faction-divider-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .faction-divider-icon {
-            font-size: 2rem;
-        }
-
-        .faction-divider-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+        .faction-burn-card.light .faction-burn-title {
+            background: linear-gradient(135deg, #00D4FF, #00A8E8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 3px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .faction-grid,
-            .utility-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nft-gallery {
-                grid-template-columns: 1fr;
-            }
-
-            .faction-divider-title {
-                font-size: 1.5rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .rarity-row {
-                flex-direction: column;
-                gap: var(--spacing-xs);
-                text-align: center;
-                padding: 18px 20px;
-            }
-
-            .rarity-row:hover {
-                transform: translateY(-3px);
-            }
-
-            .rarity-tier {
-                font-size: 1.2rem;
-            }
-
-            .rarity-percentage {
-                font-size: 1.4rem;
-            }
-
-            /* Unified Platform Section - Mobile */
-            .unified-platform-container {
-                flex-direction: column;
-                text-align: center;
-                gap: 30px;
-            }
-
-            .unified-platform-container::before {
-                top: -10px;
-                left: -10px;
-                right: -10px;
-                bottom: -10px;
-            }
-
-            .platform-logo-wrapper {
-                min-width: unset;
-                width: 100%;
-                max-width: 250px;
-                padding: 30px;
-            }
-
-            .platform-content-wrapper {
-                width: 100%;
-            }
-
-            .unified-cta-wrapper {
-                justify-content: center;
-            }
-
-            .unified-cta-wrapper .btn {
-                width: 100%;
-            }
-
-            .platform-title {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
-</head>
-<body>
-        <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
-    </nav>
-
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <div class="collection-badge">🔥 LAUNCHED DEC 10, 2025, CA: 0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d</div>
-                <h1>LEGENDS AWAKEN II</h1>
-                <p class="hero-subtitle">
-                    The journey continues with 17 unique divisions across three powerful factions.<br>
-                    Trinari has awakened to restore balance to the realm.
-                </p>
-            </div>
-        </section>
-
-
-        <!-- NFT Statistics Section -->
-        <div class="nft-stats-section">
-            <h2 class="nft-stats-title">🔢 Collection Statistics</h2>
-            <p class="nft-stats-subtitle">Track the supply and scarcity of Legends Awaken II</p>
-            
-            <div class="nft-stats-grid">
-                <!-- Total NFTs Card -->
-                <div class="nft-stat-card total">
-                    <div class="nft-stat-icon">💎</div>
-                    <div class="nft-stat-number">769</div>
-                    <div class="nft-stat-label">Total Supply</div>
-                    <p class="nft-stat-description">Original collection size across all three factions</p>
-                </div>
-
-                <!-- Burned NFTs Card with Fire Effect -->
-                <div class="nft-stat-card burned">
-                    <div class="nft-stat-icon">🔥</div>
-                    <div class="nft-stat-number">13</div>
-                    <div class="nft-stat-label">Burned Forever</div>
-                    <p class="nft-stat-description">Permanently removed from circulation</p>
-                    <div class="fire-container">
-                        <div class="fire-particle"></div>
-                        <div class="fire-particle"></div>
-                        <div class="fire-particle"></div>
-                        <div class="fire-particle"></div>
-                    </div>
-                </div>
-
-                <!-- Remaining NFTs Card -->
-                <div class="nft-stat-card remaining">
-                    <div class="nft-stat-icon">✨</div>
-                    <div class="nft-stat-number">756</div>
-                    <div class="nft-stat-label">In Circulation</div>
-                    <p class="nft-stat-description">Available NFTs making each one more valuable</p>
-                </div>
-            </div>
-        </div>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Legends Awaken II NFT Collection - 769 unique NFTs across 3 factions that launched on Crypto.com NFT marketplace on December 10, 2025.">
-    <title>Legends Awaken II - NFT Collection | Cronos Legends</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-gold: #FFD700;
-            --color-orange: #FFA500;
-            --color-dark: #0a0a0a;
-            --color-white: #fff;
-            --spacing-sm: 20px;
-            --spacing-md: 30px;
-            --spacing-xl: 60px;
-            --border-radius-md: 15px;
-            --border-radius-lg: 20px;
-            --transition-base: all 0.3s ease;
+        .faction-burn-card.chaos .faction-burn-title {
+            background: linear-gradient(135deg, #FF0000, #CC0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .faction-burn-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 20px 0;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--color-dark);
-            color: var(--color-white);
-            overflow-x: hidden;
-            line-height: 1.6;
+        .faction-burn-card.light .faction-burn-number {
+            color: #00D4FF;
         }
 
-        /* Burned NFTs Showcase Section */
+        .faction-burn-card.chaos .faction-burn-number {
+            color: #FF3333;
+        }
+
+        .faction-burn-percentage {
+            font-size: 1.1rem;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .faction-burn-details {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .burn-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .burn-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .burn-detail-label {
+            color: #999;
+        }
+
+        .burn-detail-value {
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        /* Burned NFTs Showcase */
         .burned-showcase {
             max-width: 1400px;
             margin: 80px auto;
@@ -1575,10 +685,10 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 20px;
-            animation: flameGlow 2s ease-in-out infinite;
+            animation: flameBadgeGlow 2s ease-in-out infinite;
         }
 
-        @keyframes flameGlow {
+        @keyframes flameBadgeGlow {
             0%, 100% {
                 box-shadow: 0 0 20px rgba(255, 107, 53, 0.6),
                             0 0 40px rgba(255, 69, 0, 0.4);
@@ -1604,6 +714,56 @@
             font-size: 1.1rem;
             max-width: 700px;
             margin: 0 auto;
+        }
+
+        .faction-burned-section {
+            margin-bottom: 60px;
+        }
+
+        .faction-burned-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-burned-header.light {
+            border-bottom-color: rgba(0, 150, 255, 0.4);
+        }
+
+        .faction-burned-header.chaos {
+            border-bottom-color: rgba(255, 50, 50, 0.4);
+        }
+
+        .faction-burned-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .faction-burned-header.light h3 {
+            background: linear-gradient(135deg, #00D4FF, #00A8E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burned-header.chaos h3 {
+            background: linear-gradient(135deg, #FF0000, #CC0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burned-count {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .burned-nft-grid {
@@ -1713,16 +873,94 @@
             color: #bbb;
         }
 
-        /* Stats update for burned */
-        .nft-stat-number-burned {
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
+        /* Continue with other styles... */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xxl) var(--spacing-sm);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Responsive */
+        .section-subtitle {
+            text-align: center;
+            color: var(--color-gray);
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px var(--spacing-lg);
+            border-radius: var(--border-radius-pill);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            transition: var(--transition-base);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
+            color: #000;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--color-gold);
+            color: var(--color-gold);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: rgba(5, 5, 5, 0.9);
+            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-lg);
+            text-align: center;
+            border-top: 2px solid rgba(255, 215, 0, 0.2);
+            margin-top: var(--spacing-xxl);
+        }
+
+        .footer a {
+            color: var(--color-gold);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
             .burned-title {
                 font-size: 2rem;
             }
@@ -1734,205 +972,376 @@
     </style>
 </head>
 <body>
-    <!-- Burned NFTs Showcase Section -->
-    <section class="burned-showcase">
-        <div class="burned-showcase-header">
-            <div class="burned-badge">🔥 PERMANENTLY BURNED</div>
-            <h2 class="burned-title">Burned NFTs Memorial</h2>
-            <p class="burned-subtitle">
-                These 13 Legends have been permanently removed from circulation, making the remaining 761 NFTs even more valuable. Each burn strengthens the collection's scarcity.
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
+                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
+                        <li><a href="/totems">Totems</a></li>
+                    </ul>
+                </li>
+                <li><a href="/tokens">Tokens</a></li>
+                <li><a href="/game">Game</a></li>
+                <li><a href="/roadmap">Roadmap</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="collection-badge">🔥 LAUNCHED DEC 10, 2025, CA: 0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d</div>
+                <h1>LEGENDS AWAKEN II</h1>
+                <p class="hero-subtitle">
+                    The journey continues with 17 unique divisions across three powerful factions.<br>
+                    Trinari has awakened to restore balance to the realm.
+                </p>
+            </div>
+        </section>
+
+        <div class="nft-stats-section">
+            <h2 class="nft-stats-title">🔢 Collection Statistics</h2>
+            <p class="nft-stats-subtitle">Track the supply and scarcity of Legends Awaken II</p>
+            
+            <div class="nft-stats-grid">
+                <div class="nft-stat-card total">
+                    <div class="nft-stat-icon">💎</div>
+                    <div class="nft-stat-number">769</div>
+                    <div class="nft-stat-label">Total Supply</div>
+                    <p class="nft-stat-description">Original collection size across all three factions</p>
+                </div>
+
+                <div class="nft-stat-card burned">
+                    <div class="nft-stat-icon">🔥</div>
+                    <div class="nft-stat-number">13</div>
+                    <div class="nft-stat-label">Burned Forever</div>
+                    <p class="nft-stat-description">Permanently removed from circulation</p>
+                    <div class="fire-container">
+                        <div class="fire-particle"></div>
+                        <div class="fire-particle"></div>
+                        <div class="fire-particle"></div>
+                        <div class="fire-particle"></div>
+                    </div>
+                </div>
+
+                <div class="nft-stat-card remaining">
+                    <div class="nft-stat-icon">✨</div>
+                    <div class="nft-stat-number">756</div>
+                    <div class="nft-stat-label">In Circulation</div>
+                    <p class="nft-stat-description">Available NFTs making each one more valuable</p>
+                </div>
+            </div>
+
+            <!-- Faction Burn Statistics -->
+            <div class="faction-burn-stats">
+                <div class="faction-burn-card light">
+                    <div class="faction-burn-icon">⚔️</div>
+                    <h3 class="faction-burn-title">Cronos Guardians</h3>
+                    <div class="faction-burn-number">4</div>
+                    <div class="faction-burn-percentage">31% of total burns</div>
+                    <div class="faction-burn-details">
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">Arcane Enclave</span>
+                            <span class="burn-detail-value">1 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">Celestial Vanguard</span>
+                            <span class="burn-detail-value">1 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">The Ironstride</span>
+                            <span class="burn-detail-value">2 burned</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faction-burn-card chaos">
+                    <div class="faction-burn-icon">💀</div>
+                    <h3 class="faction-burn-title">Chaos Horde</h3>
+                    <div class="faction-burn-number">9</div>
+                    <div class="faction-burn-percentage">69% of total burns</div>
+                    <div class="faction-burn-details">
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">The Deathforged</span>
+                            <span class="burn-detail-value">2 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">The Horned Dimension</span>
+                            <span class="burn-detail-value">3 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">Nightshade Wardens</span>
+                            <span class="burn-detail-value">2 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">The Shadowborn</span>
+                            <span class="burn-detail-value">1 burned</span>
+                        </div>
+                        <div class="burn-detail-item">
+                            <span class="burn-detail-label">The Voidweavers</span>
+                            <span class="burn-detail-value">1 burned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Burned NFTs Showcase Section -->
+        <section class="burned-showcase">
+            <div class="burned-showcase-header">
+                <div class="burned-badge">🔥 PERMANENTLY BURNED</div>
+                <h2 class="burned-title">Burned NFTs Memorial</h2>
+                <p class="burned-subtitle">
+                    These 13 Legends have been permanently removed from circulation, making the remaining 756 NFTs even more valuable. Each burn strengthens the collection's scarcity.
+                </p>
+            </div>
+
+            <!-- Cronos Guardians Burned NFTs -->
+            <div class="faction-burned-section">
+                <div class="faction-burned-header light">
+                    <h3>⚔️ Cronos Guardians</h3>
+                    <span class="faction-burned-count">4 Burned</span>
+                </div>
+
+                <div class="burned-nft-grid">
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Arc4%20(6).jpg" alt="Burned NFT #47">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #47</div>
+                            <h3 class="burned-nft-title">Arcane Enclave Sentinel</h3>
+                            <div class="burned-nft-faction">Cronos Guardians</div>
+                            <div class="burned-nft-division">Arcane Enclave</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/CV4%20(12).jpg" alt="Burned NFT #156">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #156</div>
+                            <h3 class="burned-nft-title">Celestial Vanguard Sentinel</h3>
+                            <div class="burned-nft-faction">Cronos Guardians</div>
+                            <div class="burned-nft-division">Celestial Vanguard</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron3%20(16).jpg" alt="Burned NFT #356">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #356</div>
+                            <h3 class="burned-nft-title">The Ironstride Guardian</h3>
+                            <div class="burned-nft-faction">Cronos Guardians</div>
+                            <div class="burned-nft-division">The Ironstride</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron4%20(16).jpg" alt="Burned NFT #390">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #390</div>
+                            <h3 class="burned-nft-title">The Ironstride Sentinel</h3>
+                            <div class="burned-nft-faction">Cronos Guardians</div>
+                            <div class="burned-nft-division">The Ironstride</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos Horde Burned NFTs -->
+            <div class="faction-burned-section">
+                <div class="faction-burned-header chaos">
+                    <h3>💀 Chaos Horde</h3>
+                    <span class="faction-burned-count">9 Burned</span>
+                </div>
+
+                <div class="burned-nft-grid">
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF3%20(11).jpg" alt="Burned NFT #181">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #181</div>
+                            <h3 class="burned-nft-title">The Deathforged Berserker</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Deathforged</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF4%20(14).jpg" alt="Burned NFT #210">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #210</div>
+                            <h3 class="burned-nft-title">The Deathforged Raider</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Deathforged</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(1).jpg" alt="Burned NFT #263">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #263</div>
+                            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Horned Dimension</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(18).jpg" alt="Burned NFT #272">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #272</div>
+                            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Horned Dimension</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(6).jpg" alt="Burned NFT #279">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #279</div>
+                            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Horned Dimension</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW3%20(2).jpg" alt="Burned NFT #420">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #420</div>
+                            <h3 class="burned-nft-title">Nightshade Wardens Berserker</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">Nightshade Wardens</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW4%20(16).jpg" alt="Burned NFT #450">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #450</div>
+                            <h3 class="burned-nft-title">Nightshade Wardens Raider</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">Nightshade Wardens</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Shadow3%20(19).jpg" alt="Burned NFT #559">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #559</div>
+                            <h3 class="burned-nft-title">The Shadowborn Berserker</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Shadowborn</div>
+                        </div>
+                    </div>
+
+                    <div class="burned-nft-card">
+                        <div class="burned-nft-image">
+                            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Void3%20(10).jpg" alt="Burned NFT #752">
+                            <div class="burn-overlay">🔥 BURNED</div>
+                        </div>
+                        <div class="burned-nft-info">
+                            <div class="burned-nft-id">ID #752</div>
+                            <h3 class="burned-nft-title">The Voidweavers Berserker</h3>
+                            <div class="burned-nft-faction">Chaos Horde</div>
+                            <div class="burned-nft-division">The Voidweavers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <p style="text-align: center; color: #ccc; font-size: 1.1rem;">
+                Legends Awaken II continues to evolve with community-driven burns increasing scarcity.<br>
+                <a href="https://crypto.com/nft/collection/9f55d1e8edf7e18ff79941cc14ee7e0a" style="color: #FFD700;">Browse the collection on Crypto.com NFT →</a>
             </p>
-        </div>
-<!-- ALL 13 BURNED NFTs - CORRECTED VERSION -->
-<!-- Replace the entire burned-nft-grid section with this -->
+        </section>
+    </main>
 
-<div class="burned-nft-grid">
-    <!-- Burned NFT #47 -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Arc4%20(6).jpg" alt="Burned NFT #47">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #47</div>
-            <h3 class="burned-nft-title">Arcane Enclave Sentinel</h3>
-            <div class="burned-nft-faction">Cronos Guardians</div>
-            <div class="burned-nft-division">Arcane Enclave</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #156 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/CV4%20(12).jpg" alt="Burned NFT #156">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #156</div>
-            <h3 class="burned-nft-title">Celestial Vanguard Sentinel</h3>
-            <div class="burned-nft-faction">Cronos Guardians</div>
-            <div class="burned-nft-division">Celestial Vanguard</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #181 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF3%20(11).jpg" alt="Burned NFT #181">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #181</div>
-            <h3 class="burned-nft-title">The Deathforged Berserker</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Deathforged</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #210 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/DF4%20(14).jpg" alt="Burned NFT #210">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #210</div>
-            <h3 class="burned-nft-title">The Deathforged Raider</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Deathforged</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #263 -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(1).jpg" alt="Burned NFT #263">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #263</div>
-            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Horned Dimension</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #272 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(18).jpg" alt="Burned NFT #272">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #272</div>
-            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Horned Dimension</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #279 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/HD4%20(6).jpg" alt="Burned NFT #279">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #279</div>
-            <h3 class="burned-nft-title">The Horned Dimension Raider</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Horned Dimension</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #356 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron3%20(16).jpg" alt="Burned NFT #356">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #356</div>
-            <h3 class="burned-nft-title">The Ironstride Guardian</h3>
-            <div class="burned-nft-faction">Cronos Guardians</div>
-            <div class="burned-nft-division">The Ironstride</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #390 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Iron4%20(16).jpg" alt="Burned NFT #390">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #390</div>
-            <h3 class="burned-nft-title">The Ironstride Sentinel</h3>
-            <div class="burned-nft-faction">Cronos Guardians</div>
-            <div class="burned-nft-division">The Ironstride</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #420 -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW3%20(2).jpg" alt="Burned NFT #420">
-            <div class="burn-overlay">🔥 BURNED (DUPLICATE!)</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #420</div>
-            <h3 class="burned-nft-title">Nightshade Wardens Berserker</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">Nightshade Wardens</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #450 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/NW4%20(16).jpg" alt="Burned NFT #450">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #450</div>
-            <h3 class="burned-nft-title">Nightshade Wardens Raider</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">Nightshade Wardens</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #559 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Shadow3%20(19).jpg" alt="Burned NFT #559">
-            <div class="burn-overlay">🔥 BURNED(DUPLICATE!)</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #559</div>
-            <h3 class="burned-nft-title">The Shadowborn Berserker</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Shadowborn</div>
-        </div>
-    </div>
-
-    <!-- Burned NFT #752 - CORRECTED -->
-    <div class="burned-nft-card">
-        <div class="burned-nft-image">
-            <img src="https://ipfs.io/ipfs/bafybeigtgkbgmhi57hcipj6qpyonlonbbrkzlayvohrqwxlaciqwro7k3u/Void3%20(10).jpg" alt="Burned NFT #752">
-            <div class="burn-overlay">🔥 BURNED</div>
-        </div>
-        <div class="burned-nft-info">
-            <div class="burned-nft-id">ID #752</div>
-            <h3 class="burned-nft-title">The Voidweavers Berserker</h3>
-            <div class="burned-nft-faction">Chaos Horde</div>
-            <div class="burned-nft-division">The Voidweavers</div>
-        </div>
-    </div>
-</div>
-    </section>
+    <footer class="footer">
+        <p style="color: #999; font-size: 1.1rem; margin-bottom: 20px;">
+            Have questions? Check out our <a href="/faq">FAQ</a> or join our community on 
+            <a href="https://discord.gg/cronoslegends">Discord</a>
+        </p>
+        <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Scroll animations
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 968) {
+                    e.preventDefault();
+                    const dropdown = toggle.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            if (!link.classList.contains('dropdown-toggle')) {
+                link.addEventListener('click', () => {
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1952,519 +1361,5 @@
             observer.observe(el);
         });
     </script>
-</body>
-</html>
-        <!-- Crypto.com Unified Launch Platform Section -->
-        <div class="crypto-platform-unified">
-            <div class="unified-platform-container">
-                <div class="platform-logo-wrapper">
-                    <img src="../Images/cdc.png" alt="Crypto.com Logo">
-                </div>
-                
-                <div class="platform-content-wrapper">
-                    <div class="platform-badge">🏛️ OFFICIAL LAUNCH PLATFORM</div>
-                    <h2 class="platform-title">Crypto.com/NFT</h2>
-                    <p class="platform-description">
-                        Legends Awaken II was exclusively launched on Crypto.com NFT marketplace on <strong>December 10, 2025</strong>. Grab yours to secure your legendary NFTs on one of the world's leading NFT platforms.
-                    </p>
-
-                    <div class="reserved-nfts-list">
-                        <p><strong>There are 769 NFTs in total.</strong></p>
-                        <p>50 NFTs are reserved for:</p>
-                        <ul>
-                            <li>Holders of 1% $TRI token supply</li>
-                            <li>Holders of 5 Legends Awaken I NFTs</li>
-                            <li>Marketing</li>
-			<p> Snapshot to be announced. In case there are needed more than 50 NFTs, the remaining will be bought from the floor.
-                        </ul>
-                    </div>
-
-                    <div class="unified-cta-wrapper">
-                        <a href="https://crypto.com/nft/collection/9f55d1e8edf7e18ff79941cc14ee7e0a" target="_blank" class="btn btn-primary">Visit Crypto.com NFT</a>
-                        <a href="/la2-terms" class="btn btn-outline">Read Terms</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="section">
-            <h2 class="section-title">⚔️ The Three Factions</h2>
-            <p class="section-subtitle">Choose your allegiance and join the battle for supremacy</p>
-
-            <div class="faction-grid">
-                <article class="faction-card">
-                    <div class="faction-header">
-                        <div class="faction-icon">🌿</div>
-                        <h3 class="faction-name">Trinari</h3>
-                        <div class="faction-count">3 Divisions • 150 NFTs</div>
-                    </div>
-                    <div class="faction-body">
-                        <p class="faction-description">
-                            Mystic spirits born from the primal forces of nature. The Trinari awakened when the balance of the realm was shattered. They may be small, but don't be fooled—their power is immense. The Trinari seek a single purpose: restore balance… or reshape it.
-                        </p>
-                        <ul class="division-list">
-                            <li class="division-item">🌿 Lumivira (30 NFTs)</li>
-                            <li class="division-item">🌿 Mistralis (50 NFTs)</li>
-                            <li class="division-item">🌿 Whimkin (70 NFTs)</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="faction-card">
-                    <div class="faction-header">
-                        <div class="faction-icon">⚔️</div>
-                        <h3 class="faction-name">Cronos Guardians</h3>
-                        <div class="faction-count">7 Divisions • 311 NFTs</div>
-                    </div>
-                    <div class="faction-body">
-                        <p class="faction-description">
-                            The sworn warriors of order across the realms. The Cronos Guardians rise from ancient traditions, wielding celestial power and unmatched battle discipline. Their purpose: eradicate the Chaos Horde, protect the innocent, and uphold honor without compromise.
-                        </p>
-                        <ul class="division-list">
-                            <li class="division-item">⚔️ Ironstride (60 NFTs)</li>
-                            <li class="division-item">⚔️ Celestial Vanguard (60 NFTs)</li>
-                            <li class="division-item">⚔️ Arcane Enclave (50 NFTs)</li>
-                            <li class="division-item">⚔️ Shadowforged (50 NFTs)</li>
-                            <li class="division-item">⚔️ Icelyn Frostguard (30 NFTs)</li>
-                            <li class="division-item">⚔️ Inkforged Sigilbearers (30 NFTs)</li>
-                            <li class="division-item">⚔️ Alloyed Core (30 NFTs)</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="faction-card">
-                    <div class="faction-header">
-                        <div class="faction-icon">🔥</div>
-                        <h3 class="faction-name">Chaos Horde</h3>
-                        <div class="faction-count">7 Divisions • 311 NFTs</div>
-                    </div>
-                    <div class="faction-body">
-                        <p class="faction-description">
-                            Savage conquerors driven by raw power, madness, and the pursuit of absolute domination. Born from corrupted magic and ancient forbidden rituals, the Chaos Horde grows stronger with every war they spark. Each division of the Horde represents a different manifestation of destruction.
-                        </p>
-                        <ul class="division-list">
-                            <li class="division-item">💀 Nightshade Wardens (60 NFTs)</li>
-                            <li class="division-item">💀 The Horned Dimension (60 NFTs)</li>
-                            <li class="division-item">💀 The Shadowborn (50 NFTs)</li>
-                            <li class="division-item">💀 The Deathforged (50 NFTs)</li>
-                            <li class="division-item">💀 The Blood Eclipse (30 NFTs)</li>
-                            <li class="division-item">💀 The Voidweavers (30 NFTs)</li>
-                            <li class="division-item">💀 Oathbreaker (30 NFTs)</li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- NFT Gallery Section -->
-        <section class="section">
-            <h2 class="section-title">🎨 Featured NFT Characters</h2>
-            <p class="section-subtitle">Explore the heroes, warriors, and creatures of Legends Awaken II</p>
-
-            <!-- Trinari Divisions -->
-            <div class="faction-divider" style="margin-top: 80px;">
-                <div class="faction-divider-content">
-                    <span class="faction-divider-icon">🌿</span>
-                    <h3 class="faction-divider-title">TRINARI</h3>
-                </div>
-            </div>
-            <div class="nft-gallery">
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
-                        <img src="../Images/LA2/T1.png" alt="Lumivira" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Lumivira</h3>
-                        <div class="nft-faction">Trinari</div>
-                        <p class="nft-desc">The rarest and most radiant of all Trinari – ancient beings born of pure essence, guiding light and harmony across the realms.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #10b981, #065f46);">
-                        <img src="../Images/LA2/T3.png" alt="Mistralis" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Mistralis</h3>
-                        <div class="nft-faction">Trinari</div>
-                        <p class="nft-desc">Balanced Trinari of growing strength and wisdom, embodying the natural bond between life, energy, and creation.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #34d399, #047857);">
-                        <img src="../Images/LA2/T2.png" alt="Whimkin" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Whimkin</h3>
-                        <div class="nft-faction">Trinari</div>
-                        <p class="nft-desc">Common among the Trinari, curious and lively creatures whose playful nature hides untapped power within.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cronos Guardians Divisions -->
-            <div class="faction-divider" style="margin-top: 80px;">
-                <div class="faction-divider-content">
-                    <span class="faction-divider-icon">⚔️</span>
-                    <h3 class="faction-divider-title">CRONOS GUARDIANS</h3>
-                </div>
-            </div>
-            <div class="nft-gallery">
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #0064FF, #001a4d);">
-                        <img src="../Images/LA2/G1.webp" alt="The Ironstride" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Ironstride</h3>
-                        <div class="nft-faction">Ground Warriors</div>
-                        <p class="nft-desc">Elite defenders of Cronos, forged in unbreakable armor and bound by sacred oaths of valor.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #4169E1, #1e3a8a);">
-                        <img src="../Images/LA2/G2.webp" alt="Celestial Vanguard" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Celestial Vanguard</h3>
-                        <div class="nft-faction">Cronos Guardians</div>
-                        <p class="nft-desc">Radiant champions who descend from the heavens, guardians of cosmic balance and divine light.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #6366f1, #312e81);">
-                        <img src="../Images/LA2/G3.webp" alt="Arcane Enclave" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Arcane Enclave</h3>
-                        <div class="nft-faction">Keepers of Magic</div>
-                        <p class="nft-desc">Masters of ancient spells and forbidden knowledge, protectors of Cronos' most powerful secrets.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
-                        <img src="../Images/LA2/G4.png" alt="Shadowforged" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Shadowforged</h3>
-                        <div class="nft-faction">The Silent Watch</div>
-                        <p class="nft-desc">Former Chaos warriors who turned against the darkness, now silent sentinels sworn to guard the light they once tried to destroy.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #60a5fa, #1e3a8a);">
-                        <img src="../Images/LA2/G5.png" alt="Icelyn Frostguard" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Icelyn Frostguard</h3>
-                        <div class="nft-faction">Cronos Guardians</div>
-                        <p class="nft-desc">Cold-hearted protectors from the frozen north, their blades sing with the chill of eternal winter.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #3b82f6, #1e40af);">
-                        <img src="../Images/LA2/G6.png" alt="Inkforged Sigilbearers" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Inkforged Sigilbearers</h3>
-                        <div class="nft-faction">Binding Oaths</div>
-                        <p class="nft-desc">Tattooed mystics whose ink holds power older than time, sealing their bodies with runes of strength and fate.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #64748b, #1e293b);">
-                        <img src="../Images/LA2/G7.png" alt="Alloyed Core" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Alloyed Core</h3>
-                        <div class="nft-faction">Ancient Biomechanical Guardians</div>
-                        <p class="nft-desc">Ancient machines merged with divine essence, guardians of both metal and spirit.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chaos Horde Divisions -->
-            <div class="faction-divider" style="margin-top: 80px;">
-                <div class="faction-divider-content">
-                    <span class="faction-divider-icon">🔥</span>
-                    <h3 class="faction-divider-title">CHAOS HORDE</h3>
-                </div>
-            </div>
-            <div class="nft-gallery">
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #7c3aed, #4c1d95);">
-                        <img src="../Images/LA2/C3.webp" alt="Nightshade Wardens" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Nightshade Wardens</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Masters of shadow and venom, creeping through darkness to spread the will of Chaos.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #dc2626, #7f1d1d);">
-                        <img src="../Images/LA2/C1.webp" alt="The Horned Dimension" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Horned Dimension</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Eldritch beings from realms beyond reason, twisting reality itself in their chaotic image.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #18181b, #000000);">
-                        <img src="../Images/LA2/C4.webp" alt="The Shadowborn" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Shadowborn</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Cursed souls reborn in pure darkness, driven by vengeance and an unending hunger for power.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #78350f, #292524);">
-                        <img src="../Images/LA2/C5.webp" alt="The Deathforged" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Deathforged</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Souls bound in armor of bone and flame, warriors who find life only in death's embrace.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #b91c1c, #450a0a);">
-                        <img src="../Images/LA2/C6.webp" alt="The Blood Eclipse" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Blood Eclipse</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Priests of crimson moons who draw strength from sacrifice, their rituals painting the stars in red.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #312e81, #0c0a09);">
-                        <img src="../Images/LA2/C7.webp" alt="The Voidweavers" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">The Voidweavers</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Cosmic cultists who command the nothingness between worlds, bending space to their will.</p>
-                    </div>
-                </div>
-
-                <div class="nft-card">
-                    <div class="nft-image" style="background: linear-gradient(135deg, #ef4444, #7f1d1d);">
-                        <img src="../Images/LA2/C2.webp" alt="Oathbreaker" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="nft-info">
-                        <h3 class="nft-title">Oathbreaker</h3>
-                        <div class="nft-faction">Chaos Horde</div>
-                        <p class="nft-desc">Once noble Guardians who betrayed their vows, now corrupted champions of Chaos and sworn enemies of their former kin.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">💎 Utility & Benefits</h2>
-            <p class="section-subtitle">Your NFT is more than just art — it's a key to exclusive experiences</p>
-
-            <div class="utility-grid">
-                <div class="utility-card">
-                    <div class="utility-icon">🎮</div>
-                    <h3 class="utility-title">Future Game Integration (planned)</h3>
-                    <p class="utility-description">
-                        Your NFTs may become playable characters in upcoming Cronos Legends game where you could Battle other players, 
-                        complete quests, and earn rewards using your unique Legend.
-                    </p>
-                </div>
-
-                <div class="utility-card">
-                    <div class="utility-icon">🏆</div>
-                    <h3 class="utility-title">Exclusive Tournaments</h3>
-                    <p class="utility-description">
-                        Participate in online games with real prizes. Compete against other holders and 
-                        prove your faction's superiority on the battlefield.
-                    </p>
-                </div>
-
-                <div class="utility-card">
-                    <div class="utility-icon">💰</div>
-                    <h3 class="utility-title">Discord Game Rewards</h3>
-                    <p class="utility-description">
-                        Participate on play-to-earn Discord games with reward pool of 1000$ that is reserved for Legends Awaken holders.
-                    </p>
-                </div>
-
-                <div class="utility-card">
-                    <div class="utility-icon">🎁</div>
-                    <h3 class="utility-title">Holder Airdrops</h3>
-                    <p class="utility-description">
-                        Be eligble for  exclusive airdrops. Loyalty is rewarded in the Cronos Legends ecosystem.
-                    </p>
-                </div>
-
-
-
-                <div class="utility-card">
-                    <div class="utility-icon">🗳️</div>
-                    <h3 class="utility-title">Governance Rights</h3>
-                    <p class="utility-description">
-                        Vote and give your voice heard on important project decisions, future collection themes, and game mechanics. 
-                        Your voice can shape the future of Cronos Legends.
-                    </p>
-                </div>
-                <div class="utility-card">
-                    <div class="utility-icon">💰</div>
-                    <h3 class="utility-title">NFT buybacks</h3>
-                    <p class="utility-description">
-                        500$ was used to buyback Legends Awaken II NFT's from floor during Q4/2025. These NFT's been used for buybacks and burns.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">✨ Rarity Distribution</h2>
-            <p class="section-subtitle">Each NFT has unique traits across multiple rarity tiers</p>
-
-            <div class="rarity-table">
-                <div class="rarity-row">
-                    <span class="rarity-tier rarity-mythic">💎 Mythic</span>
-                    <span class="rarity-percentage">1.3%</span>
-                </div>
-                <div class="rarity-row">
-                    <span class="rarity-tier rarity-legendary">🟣 Legendary</span>
-                    <span class="rarity-percentage">4.3%</span>
-                </div>
-                <div class="rarity-row">
-                    <span class="rarity-tier rarity-epic">🟡 Epic</span>
-                    <span class="rarity-percentage">8.9%</span>
-                </div>
-                <div class="rarity-row">
-                    <span class="rarity-tier rarity-rare">💜 Rare</span>
-                    <span class="rarity-percentage">66.9%</span>
-                </div>
-                <div class="rarity-row">
-                    <span class="rarity-tier rarity-common">⚪ Common</span>
-                    <span class="rarity-percentage">18.6%</span>
-                </div>
-            </div>
-
-            <div class="info-box">
-                <strong>Note:</strong> Each NFT has multiple trait categories including Faction, Rank, Name, Rarity, Division and Collection.
-            </div>
-        </section>
-
-        
-    </main>
-
-    <footer class="footer">
-        <p class="footer-note">
-            Have questions? Check out our <a href="/faq">FAQ</a> or join our community on 
-            <a href="https://discord.gg/cronoslegends">Discord</a>
-        </p>
-        <p class="footer-copyright">© 2025 Cronos Legends. All rights reserved.</p>
-    </footer>
-
-    <!-- Footer -->
-    <div class="footer" id="community">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
-            this chapter is a defining moment—and the beginning of something far greater.
-        </p>
-        <div class="social-links">
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
-        </div>
-        
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
-            <a href="/la2-terms">LA2 Terms</a>
-            <a href="/la1-terms">LA1 Terms</a>
-        </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
-    </div>
-
-
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (!link.classList.contains('dropdown-toggle')) {
-                link.addEventListener('click', () => {
-                    document.getElementById('navLinks').classList.remove('active');
-                });
-            }
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (navbar && window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else if (navbar) {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Scroll animations for NFT cards
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.nft-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-
 </body>
 </html>
