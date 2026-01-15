@@ -432,6 +432,112 @@
             }
         }
 
+        /* Faction Burn Stats */
+        .faction-burn-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .faction-burn-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faction-burn-card.light {
+            border: 2px solid rgba(0, 150, 255, 0.4);
+        }
+
+        .faction-burn-card.chaos {
+            border: 2px solid rgba(255, 50, 50, 0.4);
+        }
+
+        .faction-burn-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .faction-burn-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .faction-burn-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .faction-burn-card.light .faction-burn-title {
+            background: linear-gradient(135deg, #00D4FF, #00A8E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burn-card.chaos .faction-burn-title {
+            background: linear-gradient(135deg, #FF0000, #CC0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burn-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .faction-burn-card.light .faction-burn-number {
+            color: #00D4FF;
+        }
+
+        .faction-burn-card.chaos .faction-burn-number {
+            color: #FF3333;
+        }
+
+        .faction-burn-percentage {
+            font-size: 1.1rem;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .faction-burn-details {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .burn-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .burn-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .burn-detail-label {
+            color: #999;
+        }
+
+        .burn-detail-value {
+            color: #FFD700;
+            font-weight: 600;
+        }
+
         /* Burned NFTs Gallery Section */
         .burned-gallery-section {
             max-width: 1400px;
@@ -457,11 +563,61 @@
             margin-bottom: 40px;
         }
 
+        .faction-burned-section {
+            margin-bottom: 60px;
+        }
+
+        .faction-burned-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .faction-burned-header.light {
+            border-bottom-color: rgba(0, 150, 255, 0.4);
+        }
+
+        .faction-burned-header.chaos {
+            border-bottom-color: rgba(255, 50, 50, 0.4);
+        }
+
+        .faction-burned-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .faction-burned-header.light h3 {
+            background: linear-gradient(135deg, #00D4FF, #00A8E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burned-header.chaos h3 {
+            background: linear-gradient(135deg, #FF0000, #CC0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .faction-burned-count {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
         .burned-nfts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .burned-nft-card {
@@ -1079,6 +1235,69 @@
                 <p class="nft-stat-description">Available NFTs making each one more valuable</p>
             </div>
         </div>
+
+        <!-- Faction Burn Statistics -->
+        <div class="faction-burn-stats">
+            <!-- Cronos Guardians Burn Stats -->
+            <div class="faction-burn-card light">
+                <div class="faction-burn-icon">🛡️</div>
+                <h3 class="faction-burn-title">Cronos Guardians</h3>
+                <div class="faction-burn-number" id="light-burned">15</div>
+                <div class="faction-burn-percentage">30% of total burns</div>
+                <div class="faction-burn-details">
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Cronos Titans</span>
+                        <span class="burn-detail-value">10 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Celestial Beasts</span>
+                        <span class="burn-detail-value">3 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Oceanic Guardians</span>
+                        <span class="burn-detail-value">1 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Verdant Guardians</span>
+                        <span class="burn-detail-value">1 burned</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos Horde Burn Stats -->
+            <div class="faction-burn-card chaos">
+                <div class="faction-burn-icon">⚔️</div>
+                <h3 class="faction-burn-title">Chaos Horde</h3>
+                <div class="faction-burn-number" id="chaos-burned">35</div>
+                <div class="faction-burn-percentage">70% of total burns</div>
+                <div class="faction-burn-details">
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Chaos Legion</span>
+                        <span class="burn-detail-value">15 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Deathsworn</span>
+                        <span class="burn-detail-value">7 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Chaos Vanguard</span>
+                        <span class="burn-detail-value">6 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Horde Creatures</span>
+                        <span class="burn-detail-value">3 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Nightshade Wardens</span>
+                        <span class="burn-detail-value">2 burned</span>
+                    </div>
+                    <div class="burn-detail-item">
+                        <span class="burn-detail-label">Others</span>
+                        <span class="burn-detail-value">2 burned</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Burned NFTs Gallery Section -->
@@ -1086,8 +1305,26 @@
         <h2 class="burned-gallery-title">🔥 Burned NFTs Gallery</h2>
         <p class="burned-gallery-subtitle">These 50 NFTs have been permanently removed from circulation, increasing the rarity of remaining NFTs</p>
         
-        <div class="burned-nfts-grid" id="burned-nfts-container">
-            <!-- NFTs will be dynamically loaded here -->
+        <!-- Cronos Guardians Burned NFTs -->
+        <div class="faction-burned-section">
+            <div class="faction-burned-header light">
+                <h3>🛡️ Cronos Guardians</h3>
+                <span class="faction-burned-count">15 Burned</span>
+            </div>
+            <div class="burned-nfts-grid" id="light-burned-container">
+                <!-- Light faction burned NFTs will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Chaos Horde Burned NFTs -->
+        <div class="faction-burned-section">
+            <div class="faction-burned-header chaos">
+                <h3>⚔️ Chaos Horde</h3>
+                <span class="faction-burned-count">35 Burned</span>
+            </div>
+            <div class="burned-nfts-grid" id="chaos-burned-container">
+                <!-- Chaos faction burned NFTs will be loaded here -->
+            </div>
         </div>
     </div>
 
@@ -1408,8 +1645,37 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        // Burned token IDs
-        const burnedTokenIds = [46,49,60,64,67,81,84,88,95,100,158,161,169,200,216,275,276,292,306,307,308,310,318,321,322,326,333,336,347,348,361,362,366,371,372,374,385,388,391,396,398,399,400,405,413,419,427,451,495,500];
+        // Categorized burned token IDs by faction
+        const burnedTokensByFaction = {
+            light: [
+                // Cronos Titans (10)
+                46, 49, 60, 64, 67, 81, 84, 88, 95, 100,
+                // Celestial Beasts (3)
+                158, 161, 169,
+                // Oceanic Guardians (1)
+                200,
+                // Verdant Guardians (1)
+                216
+            ],
+            chaos: [
+                // Chaos Legion (15)
+                275, 276, 292, 306, 307, 308, 310, 318, 321, 322, 326, 333, 336, 347, 348,
+                // Chaos Vanguard (6)
+                361, 362, 366, 371, 372, 374,
+                // Deathsworn (7)
+                385, 388, 391, 396, 398, 399, 400,
+                // Horde Creatures (3)
+                405, 413, 419,
+                // Frostbound Horde (1)
+                427,
+                // Abyss Beasts (1)
+                451,
+                // Nightshade Warden (2)
+                495, 500
+            ]
+        };
+
+        const allBurnedTokenIds = [...burnedTokensByFaction.light, ...burnedTokensByFaction.chaos];
         
         const contractAddress = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
 
@@ -1481,12 +1747,37 @@
           419: 'Raider', 427: 'Berserker', 451: 'Raider', 495: 'Raider', 500: 'Raider'
         };
 
+        // Function to create NFT card
+        function createBurnedNFTCard(tokenId) {
+            const card = document.createElement('div');
+            card.className = 'burned-nft-card';
+            
+            const imageUrl = burnedNFTImages[tokenId] || `https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}`;
+            const nftName = burnedNFTNames[tokenId] || 'BURNED';
+            
+            card.innerHTML = `
+                <img src="${imageUrl}" 
+                     alt="Burned NFT #${tokenId}" 
+                     class="burned-nft-image"
+                     loading="lazy"
+                     onerror="this.src='https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}'">
+                <div class="burned-nft-info">
+                    <div class="burned-nft-id">#${tokenId}</div>
+                    <div class="burned-nft-label">${nftName}</div>
+                </div>
+            `;
+            
+            return card;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Update static stats
             const stats = {
                 'total-supply': 500,
-                'burned-count': burnedTokenIds.length,
-                'remaining-count': 500 - burnedTokenIds.length
+                'burned-count': allBurnedTokenIds.length,
+                'remaining-count': 500 - allBurnedTokenIds.length,
+                'light-burned': burnedTokensByFaction.light.length,
+                'chaos-burned': burnedTokensByFaction.chaos.length
             };
             
             Object.entries(stats).forEach(([id, val]) => {
@@ -1496,33 +1787,16 @@
                 }
             });
 
-            // Load burned NFTs with IPFS images
-            const container = document.getElementById('burned-nfts-container');
-            
-            burnedTokenIds.forEach(tokenId => {
-                const card = document.createElement('div');
-                card.className = 'burned-nft-card';
-                
-                // Get IPFS image URL or fallback to Minted CDN
-                const imageUrl = burnedNFTImages[tokenId] || `https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}`;
-                const nftName = burnedNFTNames[tokenId] || 'BURNED';
-                const metadataUrl = `https://nft.minted.network/cronos/${contractAddress}/${tokenId}`;
-                
-                card.innerHTML = `
-                    <a href="${metadataUrl}" target="_blank" style="text-decoration: none; color: inherit;">
-                        <img src="${imageUrl}" 
-                             alt="Burned NFT #${tokenId}" 
-                             class="burned-nft-image"
-                             loading="lazy"
-                             onerror="this.src='https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}'">
-                        <div class="burned-nft-info">
-                            <div class="burned-nft-id">#${tokenId}</div>
-                            <div class="burned-nft-label">${nftName}</div>
-                        </div>
-                    </a>
-                `;
-                
-                container.appendChild(card);
+            // Load Cronos Guardians burned NFTs
+            const lightContainer = document.getElementById('light-burned-container');
+            burnedTokensByFaction.light.forEach(tokenId => {
+                lightContainer.appendChild(createBurnedNFTCard(tokenId));
+            });
+
+            // Load Chaos Horde burned NFTs
+            const chaosContainer = document.getElementById('chaos-burned-container');
+            burnedTokensByFaction.chaos.forEach(tokenId => {
+                chaosContainer.appendChild(createBurnedNFTCard(tokenId));
             });
         });
     </script>
