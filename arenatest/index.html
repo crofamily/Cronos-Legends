@@ -689,10 +689,36 @@
                         </div>
                     </div>
                 </div>
+                <div id="noWalletInfo" style="margin-top: 20px; padding: 20px; background: rgba(0, 255, 136, 0.1); border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.3);">
+                    <p style="font-size: 1.1em; color: var(--trinari-color);">
+                        💡 <strong>No wallet?</strong> Try Practice Mode to learn the game!
+                    </p>
+                    <p style="font-size: 0.9em; color: #888; margin-top: 10px;">
+                        Connect wallet to unlock competitive modes and NFT boosts.
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="game-modes" id="gameModes" style="display: none;">
+            <div class="mode-card" style="border-color: rgba(0, 255, 136, 0.3);" id="modePractice">
+                <div class="mode-title" style="color: var(--trinari-color);">🎯 Practice Mode</div>
+                <div class="mode-description">
+                    Train against AI opponents to master your skills. No NFT required. Doesn't count toward daily limits or leaderboards.
+                </div>
+                <div class="mode-stats">
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Daily Battles</div>
+                        <div class="mode-stat-value">Unlimited</div>
+                    </div>
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Difficulty</div>
+                        <div class="mode-stat-value" style="font-size: 1.2em;">Easy</div>
+                    </div>
+                </div>
+                <button class="play-button" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);" onclick="startGame('practice')">Start Training</button>
+            </div>
+
             <div class="mode-card" id="mode1v1">
                 <div class="mode-title" style="color: var(--guardian-color);">⚔️ 1v1 Duel</div>
                 <div class="mode-description">
@@ -772,7 +798,14 @@
         <div class="health-bar-container">
             <div class="health-bar">
                 <div class="health-fill" id="playerHealth" style="width: 100%;"></div>
-                <div class="health-text"><span id="healthValue">100</span> / 100</div>
+                <div class="health-text">You: <span id="healthValue">100</span> / 100</div>
+            </div>
+        </div>
+
+        <div class="health-bar-container" style="top: 30px; left: auto; right: 30px;" id="enemyHealthContainer">
+            <div class="health-bar" style="border-color: var(--chaos-color);">
+                <div class="health-fill" id="enemyHealth" style="width: 100%; background: linear-gradient(90deg, var(--chaos-color), #cc0044);"></div>
+                <div class="health-text">AI: <span id="enemyHealthValue">100</span> / 100</div>
             </div>
         </div>
 
@@ -819,7 +852,8 @@
             dailyBattles: { '1v1': 2, '2v2': 2 },
             currentMode: null,
             inGame: false,
-            selectedFaction: null
+            selectedFaction: null,
+            isPracticeMode: false
         };
 
         // Contract addresses
@@ -829,6 +863,11 @@
         // Web3 initialization
         let web3;
         let userAccount;
+
+        // Show game modes on page load (for practice mode)
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('gameModes').style.display = 'grid';
+        });
 
         // Connect Wallet
         document.getElementById('connectWalletBtn').addEventListener('click', async () => {
@@ -842,7 +881,7 @@
                     
                     document.getElementById('connectWalletBtn').style.display = 'none';
                     document.getElementById('walletInfo').style.display = 'block';
-                    document.getElementById('gameModes').style.display = 'grid';
+                    document.getElementById('noWalletInfo').style.display = 'none';
                     
                     showNotification('Wallet Connected Successfully!');
                 } catch (error) {
@@ -942,8 +981,25 @@
 
         // Start Game
         function startGame(mode) {
+            // Practice mode doesn't require NFTs or wallet
+            if (mode === 'practice') {
+                gameState.currentMode = mode;
+                gameState.inGame = true;
+                gameState.isPracticeMode = true;
+                
+                // Hide menu, show game
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('gameCanvas').style.display = 'block';
+                document.getElementById('gameUI').style.display = 'block';
+                
+                initGame(mode);
+                showNotification('Practice Mode - Fight the AI!');
+                return;
+            }
+            
+            // Competitive modes require NFTs
             if (gameState.nfts.total === 0) {
-                showNotification('You need at least 1 NFT to play!');
+                showNotification('You need at least 1 NFT to play competitive modes!');
                 return;
             }
             
@@ -954,6 +1010,7 @@
             
             gameState.currentMode = mode;
             gameState.inGame = true;
+            gameState.isPracticeMode = false;
             
             // Hide menu, show game
             document.querySelector('.container').style.display = 'none';
@@ -976,7 +1033,15 @@
         }
 
         // 3D Game Variables
-        let gameScene, camera, renderer, player, animationId;
+        let gameScene, camera, renderer, player, enemy, animationId;
+        let aiState = {
+            health: 100,
+            maxHealth: 100,
+            nextAttackTime: 0,
+            attackCooldown: 3000,
+            moveDirection: 1
+        };
+        
         let abilities = [
             { name: 'Strike', cooldown: 1000, damage: 15, staminaCost: 10, ready: true },
             { name: 'Blast', cooldown: 3000, damage: 35, staminaCost: 30, ready: true },
@@ -1060,10 +1125,16 @@
                 emissive: 0xff0055,
                 emissiveIntensity: 0.3
             });
-            const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
-            enemy.position.set(mode === '1v1' ? 8 : 10, 1.5, 0);
+            enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+            enemy.position.set(mode === '1v1' || mode === 'practice' ? 8 : 10, 1.5, 0);
             enemy.castShadow = true;
             gameScene.add(enemy);
+            
+            // Reset AI state for practice mode
+            if (mode === 'practice') {
+                aiState.health = aiState.maxHealth;
+                aiState.nextAttackTime = Date.now() + 2000; // First attack after 2 seconds
+            }
             
             // Add particle effects
             const particleCount = 1000;
@@ -1090,6 +1161,11 @@
             updateHealthBar();
             updateStaminaBar();
             
+            // Initialize enemy health bar for practice mode
+            if (mode === 'practice') {
+                updateEnemyHealthBar();
+            }
+            
             // Start game loop
             animate();
             startStaminaRegen();
@@ -1103,7 +1179,76 @@
                 player.rotation.y += 0.01;
             }
             
+            // AI behavior in practice mode
+            if (gameState.isPracticeMode && enemy) {
+                // Simple AI movement (side to side)
+                enemy.position.x += 0.05 * aiState.moveDirection;
+                if (enemy.position.x > 12 || enemy.position.x < 4) {
+                    aiState.moveDirection *= -1;
+                }
+                
+                // AI attacks
+                const currentTime = Date.now();
+                if (currentTime >= aiState.nextAttackTime) {
+                    aiAttack();
+                    aiState.nextAttackTime = currentTime + aiState.attackCooldown + (Math.random() * 2000);
+                }
+                
+                // Rotate enemy toward player
+                if (player) {
+                    enemy.lookAt(player.position);
+                    enemy.rotation.y += Math.PI; // Face forward
+                }
+            }
+            
             renderer.render(gameScene, camera);
+        }
+
+        // AI Attack
+        function aiAttack() {
+            if (!gameState.isPracticeMode || !enemy) return;
+            
+            // Visual attack effect
+            const geometry = new THREE.SphereGeometry(0.3, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0xff0055,
+                transparent: true,
+                opacity: 1
+            });
+            const projectile = new THREE.Mesh(geometry, material);
+            projectile.position.copy(enemy.position);
+            gameScene.add(projectile);
+            
+            // Animate projectile toward player
+            const startPos = enemy.position.clone();
+            const targetPos = player.position.clone();
+            let progress = 0;
+            
+            const projectileInterval = setInterval(() => {
+                progress += 0.05;
+                projectile.position.lerpVectors(startPos, targetPos, progress);
+                
+                // Check if hit player
+                if (progress >= 1) {
+                    clearInterval(projectileInterval);
+                    gameScene.remove(projectile);
+                    
+                    // Apply damage to player
+                    if (!playerStats.isShielded) {
+                        const damage = 10;
+                        playerStats.health = Math.max(0, playerStats.health - damage);
+                        updateHealthBar();
+                        showNotification(`AI hit you for ${damage} damage!`);
+                        
+                        // Check if player died
+                        if (playerStats.health <= 0) {
+                            endBattle(false);
+                        }
+                    } else {
+                        showNotification('Shield blocked AI attack!');
+                    }
+                }
+            }, 30);
         }
 
         // Use Ability
@@ -1125,6 +1270,17 @@
                 // Deal damage (placeholder - in real game would affect enemy)
                 createAbilityEffect(abilityIndex);
                 showNotification(`${ability.name} - ${ability.damage} damage!`);
+                
+                // Apply damage to AI in practice mode
+                if (gameState.isPracticeMode) {
+                    aiState.health = Math.max(0, aiState.health - ability.damage);
+                    updateEnemyHealthBar();
+                    
+                    // Check if AI died
+                    if (aiState.health <= 0) {
+                        endBattle(true);
+                    }
+                }
             } else if (ability.name === 'Shield') {
                 playerStats.isShielded = true;
                 showNotification('Shield activated!');
@@ -1164,6 +1320,35 @@
             }, 1000);
         }
 
+        // End Battle
+        function endBattle(playerWon) {
+            const message = playerWon ? 
+                '🎉 VICTORY! You defeated the AI!' : 
+                '💀 DEFEAT! The AI won this round.';
+            
+            showNotification(message);
+            
+            setTimeout(() => {
+                exitGame();
+                
+                if (gameState.isPracticeMode) {
+                    showNotification('Practice complete! Ready for another round?');
+                } else {
+                    // Deduct daily battle in competitive mode
+                    if (gameState.currentMode) {
+                        gameState.dailyBattles[gameState.currentMode]--;
+                        updateBattleCounts();
+                    }
+                }
+            }, 3000);
+        }
+
+        // Update Battle Counts Display
+        function updateBattleCounts() {
+            document.getElementById('battles1v1').textContent = `${gameState.dailyBattles['1v1']} / 2`;
+            document.getElementById('battles2v2').textContent = `${gameState.dailyBattles['2v2']} / 2`;
+        }
+
         // Create Ability Visual Effect
         function createAbilityEffect(abilityIndex) {
             if (!gameScene) return;
@@ -1197,6 +1382,21 @@
             const percentage = (playerStats.health / playerStats.maxHealth) * 100;
             document.getElementById('playerHealth').style.width = percentage + '%';
             document.getElementById('healthValue').textContent = Math.floor(playerStats.health);
+        }
+
+        // Update Enemy Health Bar
+        function updateEnemyHealthBar() {
+            const percentage = (aiState.health / aiState.maxHealth) * 100;
+            document.getElementById('enemyHealth').style.width = percentage + '%';
+            document.getElementById('enemyHealthValue').textContent = Math.floor(aiState.health);
+            
+            // Show/hide enemy health bar based on mode
+            const enemyHealthContainer = document.getElementById('enemyHealthContainer');
+            if (gameState.isPracticeMode) {
+                enemyHealthContainer.style.display = 'block';
+            } else {
+                enemyHealthContainer.style.display = 'none';
+            }
         }
 
         // Update Stamina Bar
