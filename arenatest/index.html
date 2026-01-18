@@ -25,9 +25,17 @@
 
         body {
             font-family: 'Rajdhani', sans-serif;
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
+            background: linear-gradient(-45deg, #0a0a0f, #1a0a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             color: #fff;
             overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .stars-bg {
@@ -741,21 +749,6 @@
         let queueStartTime = 0;
 
         // Mode Selection
-        function selectMode(mode) {
-            currentGameMode = mode;
-            selectedSkills = []; // Reset skills
-            
-            if (mode === 'practice') {
-                // Go directly to skill selection for practice
-                document.getElementById('mainMenu').style.display = 'none';
-                initSkillSelection();
-                document.getElementById('skillSelection').style.display = 'flex';
-            } else {
-                // Enter queue for competitive modes
-                enterQueue(mode);
-            }
-        }
-
         // Queue System
         function enterQueue(mode) {
             document.getElementById('mainMenu').style.display = 'none';
@@ -783,7 +776,7 @@
 
         function matchFound() {
             document.getElementById('queueStatus').textContent = 'Match Found!';
-            document.getElementById('queueStatus').style.color = var(--trinari-color);
+            document.getElementById('queueStatus').style.color = '#00ff88';
             
             setTimeout(() => {
                 document.getElementById('queueScreen').style.display = 'none';
@@ -792,6 +785,22 @@
                 inQueue = false;
             }, 1000);
         }
+
+        // Make selectMode globally accessible
+        window.selectMode = function(mode) {
+            currentGameMode = mode;
+            selectedSkills = []; // Reset skills
+            
+            if (mode === 'practice') {
+                // Go directly to skill selection for practice
+                document.getElementById('mainMenu').style.display = 'none';
+                initSkillSelection();
+                document.getElementById('skillSelection').style.display = 'flex';
+            } else {
+                // Enter queue for competitive modes
+                enterQueue(mode);
+            }
+        };
 
         function updateQueueTimer() {
             if (!inQueue) return;
@@ -805,11 +814,11 @@
             setTimeout(updateQueueTimer, 1000);
         }
 
-        function cancelQueue() {
+        window.cancelQueue = function() {
             inQueue = false;
             document.getElementById('queueScreen').style.display = 'none';
             document.getElementById('mainMenu').style.display = 'flex';
-        }
+        };
 
         // Available Skills
         const AVAILABLE_SKILLS = [
