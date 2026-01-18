@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronos Legends - Battle Arena</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --guardian-color: #00d4ff;
+            --chaos-color: #ff0055;
+            --trinari-color: #00ff88;
+            --bg-dark: #0a0a0f;
+            --bg-darker: #050508;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 60px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 50px 50px, #ddd, transparent),
+                radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 90px 10px, #eee, transparent);
+            background-size: 200px 200px;
+            background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 150px 50px;
+            opacity: 0.3;
+            animation: twinkle 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--guardian-color), var(--chaos-color), var(--trinari-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.6)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 0, 85, 0.8)); }
+        }
+
+        .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5em;
+            color: #888;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .wallet-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .wallet-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, var(--guardian-color), var(--chaos-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 25px rgba(0, 212, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .wallet-btn:hover::before {
+            left: 100%;
+        }
+
+        .wallet-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.8);
+        }
+
+        .wallet-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .wallet-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .nft-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--guardian-color);
+        }
+
+        .boost-tier {
+            display: inline-block;
+            padding: 5px 15px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, var(--gold), #ff9500);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .game-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .mode-card {
+            background: rgba(20, 20, 30, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mode-card:hover::before {
+            opacity: 1;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--guardian-color);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+        }
+
+        .mode-card.chaos:hover {
+            border-color: var(--chaos-color);
+            box-shadow: 0 20px 60px rgba(255, 0, 85, 0.4);
+        }
+
+        .mode-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .mode-description {
+            color: #aaa;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .mode-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mode-stat {
+            text-align: center;
+        }
+
+        .mode-stat-label {
+            font-size: 0.8em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mode-stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--guardian-color);
+            margin-top: 5px;
+        }
+
+        .play-button {
+            font-family: 'Orbitron', sans-serif;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #00d4ff, #0088ff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .play-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .leaderboard-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .leaderboard-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            font-family: 'Rajdhani', sans-serif;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #888;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--guardian-color), var(--chaos-color));
+            border-color: var(--guardian-color);
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .leaderboard-table thead th {
+            font-family: 'Orbitron', sans-serif;
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--guardian-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9em;
+            font-weight: 700;
+            border: none;
+        }
+
+        .leaderboard-table tbody tr {
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-table tbody tr:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .leaderboard-table td {
+            padding: 18px 15px;
+            border: none;
+            font-size: 1.1em;
+        }
+
+        .rank {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.3em;
+        }
+
+        .rank.gold { color: var(--gold); }
+        .rank.silver { color: var(--silver); }
+        .rank.bronze { color: var(--bronze); }
+
+        .player-name {
+            font-weight: 600;
+        }
+
+        .faction-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .faction-guardian {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--guardian-color);
+            border: 1px solid var(--guardian-color);
+        }
+
+        .faction-chaos {
+            background: rgba(255, 0, 85, 0.2);
+            color: var(--chaos-color);
+            border: 1px solid var(--chaos-color);
+        }
+
+        .faction-trinari {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--trinari-color);
+            border: 1px solid var(--trinari-color);
+        }
+
+        .game-canvas {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .game-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        .health-bar-container {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 300px;
+        }
+
+        .health-bar {
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--guardian-color);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--guardian-color), #0088ff);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px var(--guardian-color);
+        }
+
+        .health-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .stamina-bar-container {
+            position: absolute;
+            top: 70px;
+            left: 30px;
+            width: 300px;
+        }
+
+        .stamina-bar {
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--trinari-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .stamina-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--trinari-color), #00aa66);
+            transition: width 0.1s ease;
+            box-shadow: 0 0 15px var(--trinari-color);
+        }
+
+        .abilities-container {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .ability-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--guardian-color);
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.8em;
+            color: white;
+            cursor: pointer;
+            pointer-events: all;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .ability-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--guardian-color);
+        }
+
+        .ability-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ability-btn.on-cooldown {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .ability-cooldown {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .ability-key {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+        }
+
+        .notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--guardian-color);
+            border-radius: 15px;
+            padding: 30px 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-align: center;
+            z-index: 2000;
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.8);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            padding: 12px 30px;
+            background: rgba(255, 0, 85, 0.8);
+            border: 2px solid var(--chaos-color);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .close-btn:hover {
+            background: var(--chaos-color);
+            box-shadow: 0 0 20px var(--chaos-color);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; letter-spacing: 4px; }
+            .subtitle { font-size: 1em; }
+            .game-modes { grid-template-columns: 1fr; }
+            .health-bar-container, .stamina-bar-container { width: 200px; }
+            .abilities-container { gap: 10px; bottom: 20px; }
+            .ability-btn { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Battle Arena</h1>
+            <div class="subtitle">Cronos Legends</div>
+        </div>
+
+        <div class="wallet-section">
+            <div style="text-align: center;">
+                <button class="wallet-btn" id="connectWalletBtn">Connect Wallet</button>
+                <div id="walletInfo" style="display: none;">
+                    <div class="wallet-info">
+                        <p style="font-size: 1.2em; margin-bottom: 15px;">
+                            <strong>Connected:</strong> <span id="walletAddress"></span>
+                        </p>
+                        <div class="nft-stats">
+                            <div class="stat-box">
+                                <div class="stat-label">LA1 NFTs</div>
+                                <div class="stat-value" id="la1Count">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">LA2 NFTs</div>
+                                <div class="stat-value" id="la2Count">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total NFTs</div>
+                                <div class="stat-value" id="totalCount">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Boost Multiplier</div>
+                                <div class="stat-value" id="boostMultiplier">1.0x</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <span class="boost-tier" id="boostTier">No Boost</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-modes" id="gameModes" style="display: none;">
+            <div class="mode-card" id="mode1v1">
+                <div class="mode-title" style="color: var(--guardian-color);">⚔️ 1v1 Duel</div>
+                <div class="mode-description">
+                    Face off against a single opponent in an intense one-on-one battle. Pure skill and strategy determine the victor.
+                </div>
+                <div class="mode-stats">
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Daily Battles</div>
+                        <div class="mode-stat-value" id="battles1v1">2 / 2</div>
+                    </div>
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Players</div>
+                        <div class="mode-stat-value">2</div>
+                    </div>
+                </div>
+                <button class="play-button" onclick="startGame('1v1')">Enter Arena</button>
+            </div>
+
+            <div class="mode-card chaos" id="mode2v2">
+                <div class="mode-title" style="color: var(--chaos-color);">🔥 2v2 Team Battle</div>
+                <div class="mode-description">
+                    Team up with an ally to dominate the battlefield. Coordination and teamwork lead to glory.
+                </div>
+                <div class="mode-stats">
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Daily Battles</div>
+                        <div class="mode-stat-value" id="battles2v2">2 / 2</div>
+                    </div>
+                    <div class="mode-stat">
+                        <div class="mode-stat-label">Players</div>
+                        <div class="mode-stat-value">4</div>
+                    </div>
+                </div>
+                <button class="play-button" onclick="startGame('2v2')">Enter Arena</button>
+            </div>
+        </div>
+
+        <div class="leaderboard-section">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-size: 2em; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 3px;">
+                🏆 Leaderboards
+            </h2>
+            
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" onclick="switchLeaderboard('weekly')">Weekly</button>
+                <button class="tab-btn" onclick="switchLeaderboard('guardian')">Guardians</button>
+                <button class="tab-btn" onclick="switchLeaderboard('chaos')">Chaos Horde</button>
+                <button class="tab-btn" onclick="switchLeaderboard('trinari')">Trinari</button>
+                <button class="tab-btn" onclick="switchLeaderboard('alltime')">All-Time Top 3</button>
+            </div>
+
+            <div id="leaderboardContent">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Faction</th>
+                            <th>Points</th>
+                            <th>Wins</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Leaderboard data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Canvas (3D Battle Arena) -->
+    <canvas id="gameCanvas" class="game-canvas"></canvas>
+
+    <!-- Game UI Overlay -->
+    <div id="gameUI" class="game-ui" style="display: none;">
+        <button class="close-btn" onclick="exitGame()">Exit Battle</button>
+        
+        <div class="health-bar-container">
+            <div class="health-bar">
+                <div class="health-fill" id="playerHealth" style="width: 100%;"></div>
+                <div class="health-text"><span id="healthValue">100</span> / 100</div>
+            </div>
+        </div>
+
+        <div class="stamina-bar-container">
+            <div class="stamina-bar">
+                <div class="stamina-fill" id="playerStamina" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="abilities-container">
+            <button class="ability-btn" id="ability1" onclick="useAbility(1)">
+                <div class="ability-key">1</div>
+                STRIKE<br/>
+                <small>Fast Attack</small>
+            </button>
+            <button class="ability-btn" id="ability2" onclick="useAbility(2)">
+                <div class="ability-key">2</div>
+                BLAST<br/>
+                <small>Heavy DMG</small>
+            </button>
+            <button class="ability-btn" id="ability3" onclick="useAbility(3)">
+                <div class="ability-key">3</div>
+                SHIELD<br/>
+                <small>Defense</small>
+            </button>
+            <button class="ability-btn" id="ability4" onclick="useAbility(4)">
+                <div class="ability-key">4</div>
+                DASH<br/>
+                <small>Evade</small>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+    
+    <script>
+        // Game State
+        let gameState = {
+            wallet: null,
+            nfts: { la1: 0, la2: 0, total: 0 },
+            boostTier: 0,
+            boostMultiplier: 1.0,
+            dailyBattles: { '1v1': 2, '2v2': 2 },
+            currentMode: null,
+            inGame: false,
+            selectedFaction: null
+        };
+
+        // Contract addresses
+        const LA1_ADDRESS = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
+        const LA2_ADDRESS = '0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d';
+
+        // Web3 initialization
+        let web3;
+        let userAccount;
+
+        // Connect Wallet
+        document.getElementById('connectWalletBtn').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    web3 = new Web3(window.ethereum);
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userAccount = accounts[0];
+                    
+                    await loadNFTData();
+                    
+                    document.getElementById('connectWalletBtn').style.display = 'none';
+                    document.getElementById('walletInfo').style.display = 'block';
+                    document.getElementById('gameModes').style.display = 'grid';
+                    
+                    showNotification('Wallet Connected Successfully!');
+                } catch (error) {
+                    console.error('Error connecting wallet:', error);
+                    showNotification('Failed to connect wallet. Please try again.');
+                }
+            } else {
+                showNotification('Please install MetaMask or Crypto.com DeFi Wallet!');
+            }
+        });
+
+        // Load NFT Data
+        async function loadNFTData() {
+            try {
+                const la1Balance = await getNFTBalance(LA1_ADDRESS);
+                const la2Balance = await getNFTBalance(LA2_ADDRESS);
+                const total = la1Balance + la2Balance;
+                
+                gameState.nfts = { la1: la1Balance, la2: la2Balance, total: total };
+                
+                // Calculate boost tier
+                if (total >= 20) {
+                    gameState.boostTier = 4;
+                    gameState.boostMultiplier = 2.5;
+                } else if (total >= 10) {
+                    gameState.boostTier = 3;
+                    gameState.boostMultiplier = 2.0;
+                } else if (total >= 5) {
+                    gameState.boostTier = 2;
+                    gameState.boostMultiplier = 1.5;
+                } else if (total >= 1) {
+                    gameState.boostTier = 1;
+                    gameState.boostMultiplier = 1.2;
+                } else {
+                    gameState.boostTier = 0;
+                    gameState.boostMultiplier = 1.0;
+                }
+                
+                updateWalletDisplay();
+            } catch (error) {
+                console.error('Error loading NFT data:', error);
+            }
+        }
+
+        // Get NFT Balance
+        async function getNFTBalance(contractAddress) {
+            const minABI = [
+                {
+                    "constant": true,
+                    "inputs": [{"name": "_owner", "type": "address"}],
+                    "name": "balanceOf",
+                    "outputs": [{"name": "balance", "type": "uint256"}],
+                    "type": "function"
+                }
+            ];
+            
+            const contract = new web3.eth.Contract(minABI, contractAddress);
+            const balance = await contract.methods.balanceOf(userAccount).call();
+            return parseInt(balance);
+        }
+
+        // Update Wallet Display
+        function updateWalletDisplay() {
+            const shortAddress = userAccount.substring(0, 6) + '...' + userAccount.substring(38);
+            document.getElementById('walletAddress').textContent = shortAddress;
+            document.getElementById('la1Count').textContent = gameState.nfts.la1;
+            document.getElementById('la2Count').textContent = gameState.nfts.la2;
+            document.getElementById('totalCount').textContent = gameState.nfts.total;
+            document.getElementById('boostMultiplier').textContent = gameState.boostMultiplier + 'x';
+            
+            const tierNames = ['No Boost', 'Bronze Tier (1+ NFTs)', 'Silver Tier (5+ NFTs)', 'Gold Tier (10+ NFTs)', 'Legendary Tier (20+ NFTs)'];
+            const tierColors = ['#888', '#cd7f32', '#c0c0c0', '#ffd700', '#ff6b35'];
+            const tierElement = document.getElementById('boostTier');
+            tierElement.textContent = tierNames[gameState.boostTier];
+            tierElement.style.background = `linear-gradient(135deg, ${tierColors[gameState.boostTier]}, ${tierColors[gameState.boostTier]}aa)`;
+            
+            // Disable play buttons if no NFTs
+            if (gameState.nfts.total === 0) {
+                document.querySelectorAll('.play-button').forEach(btn => {
+                    btn.disabled = true;
+                    btn.textContent = 'Need 1+ NFT to Play';
+                });
+            }
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Start Game
+        function startGame(mode) {
+            if (gameState.nfts.total === 0) {
+                showNotification('You need at least 1 NFT to play!');
+                return;
+            }
+            
+            if (gameState.dailyBattles[mode] <= 0) {
+                showNotification(`No ${mode} battles remaining today!`);
+                return;
+            }
+            
+            gameState.currentMode = mode;
+            gameState.inGame = true;
+            
+            // Hide menu, show game
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('gameCanvas').style.display = 'block';
+            document.getElementById('gameUI').style.display = 'block';
+            
+            initGame(mode);
+        }
+
+        // Exit Game
+        function exitGame() {
+            gameState.inGame = false;
+            document.querySelector('.container').style.display = 'block';
+            document.getElementById('gameCanvas').style.display = 'none';
+            document.getElementById('gameUI').style.display = 'none';
+            
+            if (gameScene) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+
+        // 3D Game Variables
+        let gameScene, camera, renderer, player, animationId;
+        let abilities = [
+            { name: 'Strike', cooldown: 1000, damage: 15, staminaCost: 10, ready: true },
+            { name: 'Blast', cooldown: 3000, damage: 35, staminaCost: 30, ready: true },
+            { name: 'Shield', cooldown: 5000, duration: 2000, staminaCost: 20, ready: true },
+            { name: 'Dash', cooldown: 2000, distance: 5, staminaCost: 15, ready: true }
+        ];
+        
+        let playerStats = {
+            health: 100,
+            maxHealth: 100,
+            stamina: 100,
+            maxStamina: 100,
+            isShielded: false
+        };
+
+        // Initialize 3D Game
+        function initGame(mode) {
+            const canvas = document.getElementById('gameCanvas');
+            gameScene = new THREE.Scene();
+            gameScene.background = new THREE.Color(0x0a0a0f);
+            
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 5, 10);
+            camera.lookAt(0, 0, 0);
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 2);
+            gameScene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 10, 5);
+            directionalLight.castShadow = true;
+            gameScene.add(directionalLight);
+            
+            // Arena Floor with faction colors
+            const floorGeometry = new THREE.CircleGeometry(20, 64);
+            const floorMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x1a1a2e,
+                metalness: 0.8,
+                roughness: 0.2
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.receiveShadow = true;
+            gameScene.add(floor);
+            
+            // Arena Border
+            const borderGeometry = new THREE.TorusGeometry(20, 0.3, 16, 100);
+            const borderMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x00d4ff,
+                emissive: 0x00d4ff,
+                emissiveIntensity: 0.5
+            });
+            const border = new THREE.Mesh(borderGeometry, borderMaterial);
+            border.rotation.x = Math.PI / 2;
+            border.position.y = 0.1;
+            gameScene.add(border);
+            
+            // Player Character (simple for now)
+            const playerGeometry = new THREE.CapsuleGeometry(0.5, 1.5, 16, 32);
+            const playerMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x00d4ff,
+                emissive: 0x00d4ff,
+                emissiveIntensity: 0.3
+            });
+            player = new THREE.Mesh(playerGeometry, playerMaterial);
+            player.position.set(0, 1.5, 0);
+            player.castShadow = true;
+            gameScene.add(player);
+            
+            // Enemy placeholder
+            const enemyGeometry = new THREE.CapsuleGeometry(0.5, 1.5, 16, 32);
+            const enemyMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xff0055,
+                emissive: 0xff0055,
+                emissiveIntensity: 0.3
+            });
+            const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+            enemy.position.set(mode === '1v1' ? 8 : 10, 1.5, 0);
+            enemy.castShadow = true;
+            gameScene.add(enemy);
+            
+            // Add particle effects
+            const particleCount = 1000;
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlePositions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                particlePositions[i] = (Math.random() - 0.5) * 50;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+            const particlesMaterial = new THREE.PointsMaterial({ 
+                color: 0x00d4ff, 
+                size: 0.1,
+                transparent: true,
+                opacity: 0.6
+            });
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            gameScene.add(particles);
+            
+            // Reset player stats
+            playerStats.health = playerStats.maxHealth;
+            playerStats.stamina = playerStats.maxStamina;
+            updateHealthBar();
+            updateStaminaBar();
+            
+            // Start game loop
+            animate();
+            startStaminaRegen();
+        }
+
+        // Animation Loop
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            
+            if (player) {
+                player.rotation.y += 0.01;
+            }
+            
+            renderer.render(gameScene, camera);
+        }
+
+        // Use Ability
+        function useAbility(abilityIndex) {
+            const ability = abilities[abilityIndex - 1];
+            
+            if (!ability.ready) return;
+            if (playerStats.stamina < ability.staminaCost) {
+                showNotification('Not enough stamina!');
+                return;
+            }
+            
+            // Consume stamina
+            playerStats.stamina = Math.max(0, playerStats.stamina - ability.staminaCost);
+            updateStaminaBar();
+            
+            // Execute ability effect
+            if (ability.name === 'Strike' || ability.name === 'Blast') {
+                // Deal damage (placeholder - in real game would affect enemy)
+                createAbilityEffect(abilityIndex);
+                showNotification(`${ability.name} - ${ability.damage} damage!`);
+            } else if (ability.name === 'Shield') {
+                playerStats.isShielded = true;
+                showNotification('Shield activated!');
+                setTimeout(() => {
+                    playerStats.isShielded = false;
+                    showNotification('Shield expired');
+                }, ability.duration);
+            } else if (ability.name === 'Dash') {
+                // Dash forward
+                if (player) {
+                    player.position.z -= ability.distance;
+                }
+                showNotification('Dash!');
+            }
+            
+            // Start cooldown
+            ability.ready = false;
+            const btn = document.getElementById(`ability${abilityIndex}`);
+            btn.classList.add('on-cooldown');
+            
+            let cooldownRemaining = ability.cooldown / 1000;
+            const cooldownDiv = document.createElement('div');
+            cooldownDiv.className = 'ability-cooldown';
+            cooldownDiv.textContent = cooldownRemaining;
+            btn.appendChild(cooldownDiv);
+            
+            const cooldownInterval = setInterval(() => {
+                cooldownRemaining--;
+                cooldownDiv.textContent = cooldownRemaining;
+                
+                if (cooldownRemaining <= 0) {
+                    clearInterval(cooldownInterval);
+                    cooldownDiv.remove();
+                    btn.classList.remove('on-cooldown');
+                    ability.ready = true;
+                }
+            }, 1000);
+        }
+
+        // Create Ability Visual Effect
+        function createAbilityEffect(abilityIndex) {
+            if (!gameScene) return;
+            
+            const geometry = new THREE.SphereGeometry(0.5, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: abilityIndex === 1 ? 0x00d4ff : 0xff0055,
+                transparent: true,
+                opacity: 0.8
+            });
+            const effect = new THREE.Mesh(geometry, material);
+            effect.position.copy(player.position);
+            gameScene.add(effect);
+            
+            // Animate effect
+            let scale = 1;
+            const effectInterval = setInterval(() => {
+                scale += 0.3;
+                effect.scale.set(scale, scale, scale);
+                material.opacity -= 0.1;
+                
+                if (material.opacity <= 0) {
+                    clearInterval(effectInterval);
+                    gameScene.remove(effect);
+                }
+            }, 50);
+        }
+
+        // Update Health Bar
+        function updateHealthBar() {
+            const percentage = (playerStats.health / playerStats.maxHealth) * 100;
+            document.getElementById('playerHealth').style.width = percentage + '%';
+            document.getElementById('healthValue').textContent = Math.floor(playerStats.health);
+        }
+
+        // Update Stamina Bar
+        function updateStaminaBar() {
+            const percentage = (playerStats.stamina / playerStats.maxStamina) * 100;
+            document.getElementById('playerStamina').style.width = percentage + '%';
+        }
+
+        // Stamina Regeneration
+        function startStaminaRegen() {
+            setInterval(() => {
+                if (gameState.inGame && playerStats.stamina < playerStats.maxStamina) {
+                    playerStats.stamina = Math.min(playerStats.maxStamina, playerStats.stamina + 2);
+                    updateStaminaBar();
+                }
+            }, 100);
+        }
+
+        // Leaderboard System
+        let currentLeaderboard = 'weekly';
+        
+        function switchLeaderboard(type) {
+            currentLeaderboard = type;
+            
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            loadLeaderboard(type);
+        }
+
+        function loadLeaderboard(type) {
+            // Placeholder data - in real implementation, this would fetch from backend
+            const leaderboardData = generatePlaceholderLeaderboard(type);
+            
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+            
+            leaderboardData.forEach((player, index) => {
+                const row = document.createElement('tr');
+                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
+                
+                row.innerHTML = `
+                    <td class="rank ${rankClass}">#${index + 1}</td>
+                    <td class="player-name">${player.name}</td>
+                    <td><span class="faction-badge faction-${player.faction.toLowerCase()}">${player.faction}</span></td>
+                    <td><strong>${player.points}</strong></td>
+                    <td>${player.wins}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function generatePlaceholderLeaderboard(type) {
+            const factions = ['Guardian', 'Chaos', 'Trinari'];
+            const players = [];
+            const count = type === 'alltime' ? 3 : 10;
+            
+            for (let i = 0; i < count; i++) {
+                let faction = factions[Math.floor(Math.random() * factions.length)];
+                if (type !== 'weekly' && type !== 'alltime') {
+                    faction = type.charAt(0).toUpperCase() + type.slice(1);
+                }
+                
+                players.push({
+                    name: `Player${1000 + i}`,
+                    faction: faction,
+                    points: 5000 - (i * 400) - Math.floor(Math.random() * 200),
+                    wins: 50 - (i * 4) - Math.floor(Math.random() * 3)
+                });
+            }
+            
+            return players;
+        }
+
+        // Initialize leaderboard on load
+        loadLeaderboard('weekly');
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (!gameState.inGame) return;
+            
+            if (e.key === '1') useAbility(1);
+            if (e.key === '2') useAbility(2);
+            if (e.key === '3') useAbility(3);
+            if (e.key === '4') useAbility(4);
+        });
+    </script>
+</body>
+</html>
