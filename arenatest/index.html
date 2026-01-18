@@ -1037,10 +1037,15 @@
         let player, enemy;
         let playerTower, enemyTower;
         let projectiles = [];
+        let obstacles = []; // Trees, rocks that can be destroyed
+        let pickups = []; // Health and stamina pickups
         let keys = {};
         let mousePos = { x: 0, y: 0 };
         let gameRunning = false;
         let cameraOffset = new THREE.Vector3(0, 30, 20);
+        let lastPickupSpawn = 0;
+        let pickupSpawnInterval = 5000; // 5 seconds
+        let nextPickupType = 'health'; // Alternates between health and stamina
 
         // Player Stats
         const createPlayer = (x, z, color, isPlayer = true) => {
@@ -1111,6 +1116,14 @@
             group.add(top);
             
             group.position.set(x, 3, z);
+            
+            // Add collision
+            group.userData = {
+                isObstacle: true,
+                isTower: true,
+                collisionRadius: 3
+            };
+            
             scene.add(group);
             
             return {
@@ -1146,7 +1159,17 @@
             group.add(leaves);
             
             group.position.set(x, 0, z);
+            
+            // Add health and collision
+            group.userData = {
+                isObstacle: true,
+                health: 3,
+                maxHealth: 3,
+                type: 'tree'
+            };
+            
             scene.add(group);
+            obstacles.push(group);
         };
 
         // Create Rock
@@ -1166,7 +1189,18 @@
             );
             rock.castShadow = true;
             rock.receiveShadow = true;
+            
+            // Add health and collision
+            rock.userData = {
+                isObstacle: true,
+                health: 5,
+                maxHealth: 5,
+                type: 'rock',
+                scale: scale
+            };
+            
             scene.add(rock);
+            obstacles.push(rock);
         };
 
         // Create Bush
@@ -1287,6 +1321,101 @@
             
             group.position.set(x, 0, z);
             scene.add(group);
+        };
+
+        // Create Health Pickup
+        const createHealthPickup = (x, z) => {
+            const group = new THREE.Group();
+            
+            // Cross shape (health symbol)
+            const crossMat = new THREE.MeshStandardMaterial({ 
+                color: 0xff0055,
+                emissive: 0xff0055,
+                emissiveIntensity: 0.8
+            });
+            
+            const verticalGeo = new THREE.BoxGeometry(0.3, 1, 0.3);
+            const vertical = new THREE.Mesh(verticalGeo, crossMat);
+            vertical.position.y = 0.5;
+            group.add(vertical);
+            
+            const horizontalGeo = new THREE.BoxGeometry(1, 0.3, 0.3);
+            const horizontal = new THREE.Mesh(horizontalGeo, crossMat);
+            horizontal.position.y = 0.5;
+            group.add(horizontal);
+            
+            group.position.set(x, 0, z);
+            group.userData = {
+                type: 'health',
+                amount: 30,
+                pickupRadius: 2
+            };
+            
+            scene.add(group);
+            pickups.push(group);
+            
+            // Rotate animation
+            const rotatePickup = () => {
+                if (group.parent) {
+                    group.rotation.y += 0.05;
+                    requestAnimationFrame(rotatePickup);
+                }
+            };
+            rotatePickup();
+        };
+
+        // Create Stamina Pickup
+        const createStaminaPickup = (x, z) => {
+            const group = new THREE.Group();
+            
+            // Lightning bolt shape (stamina symbol)
+            const boltMat = new THREE.MeshStandardMaterial({ 
+                color: 0x00ff88,
+                emissive: 0x00ff88,
+                emissiveIntensity: 0.8
+            });
+            
+            const boltGeo = new THREE.ConeGeometry(0.4, 1.2, 4);
+            const bolt = new THREE.Mesh(boltGeo, boltMat);
+            bolt.position.y = 0.6;
+            bolt.rotation.z = Math.PI;
+            group.add(bolt);
+            
+            group.position.set(x, 0, z);
+            group.userData = {
+                type: 'stamina',
+                amount: 40,
+                pickupRadius: 2
+            };
+            
+            scene.add(group);
+            pickups.push(group);
+            
+            // Float animation
+            let floatOffset = 0;
+            const floatPickup = () => {
+                if (group.parent) {
+                    floatOffset += 0.05;
+                    group.position.y = Math.sin(floatOffset) * 0.3;
+                    group.rotation.y += 0.05;
+                    requestAnimationFrame(floatPickup);
+                }
+            };
+            floatPickup();
+        };
+
+        // Spawn Random Pickup
+        const spawnRandomPickup = () => {
+            const x = (Math.random() - 0.5) * 160; // Avoid edges
+            const z = (Math.random() - 0.5) * 70;
+            
+            if (nextPickupType === 'health') {
+                createHealthPickup(x, z);
+                nextPickupType = 'stamina';
+            } else {
+                createStaminaPickup(x, z);
+                nextPickupType = 'health';
+            }
         };
 
         // Initialize Game
@@ -1568,6 +1697,7 @@
         // Game Loop
         function startGameLoop() {
             gameRunning = true;
+            lastPickupSpawn = Date.now();
             animate();
         }
 
@@ -1593,6 +1723,60 @@
             
             player.mesh.position.x += player.velocity.x;
             player.mesh.position.z += player.velocity.z;
+            
+            // Check collisions with obstacles and towers
+            let collided = false;
+            
+            // Check tower collision
+            [playerTower, enemyTower].forEach(tower => {
+                const dist = Math.sqrt(
+                    Math.pow(player.mesh.position.x - tower.mesh.position.x, 2) +
+                    Math.pow(player.mesh.position.z - tower.mesh.position.z, 2)
+                );
+                if (dist < (tower.mesh.userData.collisionRadius || 3) + 1) {
+                    collided = true;
+                }
+            });
+            
+            // Check obstacle collision
+            obstacles.forEach(obstacle => {
+                const dist = Math.sqrt(
+                    Math.pow(player.mesh.position.x - obstacle.position.x, 2) +
+                    Math.pow(player.mesh.position.z - obstacle.position.z, 2)
+                );
+                const collisionDist = obstacle.userData.scale ? obstacle.userData.scale + 1 : 2;
+                if (dist < collisionDist) {
+                    collided = true;
+                }
+            });
+            
+            // If collided, revert position
+            if (collided) {
+                player.mesh.position.x -= player.velocity.x;
+                player.mesh.position.z -= player.velocity.z;
+            }
+            
+            // Check pickup collection
+            for (let i = pickups.length - 1; i >= 0; i--) {
+                const pickup = pickups[i];
+                const dist = Math.sqrt(
+                    Math.pow(player.mesh.position.x - pickup.position.x, 2) +
+                    Math.pow(player.mesh.position.z - pickup.position.z, 2)
+                );
+                
+                if (dist < pickup.userData.pickupRadius) {
+                    if (pickup.userData.type === 'health') {
+                        player.health = Math.min(player.maxHealth, player.health + pickup.userData.amount);
+                        showNotification(`+${pickup.userData.amount} Health!`);
+                    } else if (pickup.userData.type === 'stamina') {
+                        player.stamina = Math.min(player.maxStamina, player.stamina + pickup.userData.amount);
+                        showNotification(`+${pickup.userData.amount} Stamina!`);
+                    }
+                    
+                    scene.remove(pickup);
+                    pickups.splice(i, 1);
+                }
+            }
             
             // Bounds
             player.mesh.position.x = Math.max(-95, Math.min(95, player.mesh.position.x));
@@ -1626,11 +1810,84 @@
                     continue;
                 }
                 
-                // Check collisions
+                // Check collision with obstacles (trees, rocks)
+                for (let j = obstacles.length - 1; j >= 0; j--) {
+                    const obstacle = obstacles[j];
+                    const dist = proj.position.distanceTo(obstacle.position);
+                    const collisionDist = obstacle.userData.scale ? obstacle.userData.scale + 0.5 : 2;
+                    
+                    if (dist < collisionDist) {
+                        obstacle.userData.health--;
+                        
+                        // Visual feedback - flash
+                        if (obstacle.children && obstacle.children[0]) {
+                            const originalColor = obstacle.children[0].material.color.clone();
+                            obstacle.children[0].material.color.set(0xffffff);
+                            setTimeout(() => {
+                                if (obstacle.children[0]) {
+                                    obstacle.children[0].material.color.copy(originalColor);
+                                }
+                            }, 100);
+                        } else if (obstacle.material) {
+                            const originalColor = obstacle.material.color.clone();
+                            obstacle.material.color.set(0xffffff);
+                            setTimeout(() => {
+                                obstacle.material.color.copy(originalColor);
+                            }, 100);
+                        }
+                        
+                        // Destroy obstacle if health depleted
+                        if (obstacle.userData.health <= 0) {
+                            scene.remove(obstacle);
+                            obstacles.splice(j, 1);
+                            showNotification(`${obstacle.userData.type} destroyed!`);
+                        }
+                        
+                        scene.remove(proj);
+                        projectiles.splice(i, 1);
+                        break;
+                    }
+                }
+                
+                if (!proj.parent) continue; // Already removed
+                
+                // Check collision with towers
+                const checkTowerCollision = (tower, isPlayerTower) => {
+                    if (proj.userData.owner.isPlayer === isPlayerTower) return; // Don't hit own tower
+                    
+                    const dist = proj.position.distanceTo(tower.mesh.position);
+                    if (dist < 3) {
+                        tower.health -= proj.userData.damage;
+                        
+                        // Visual feedback
+                        const originalColor = tower.mesh.children[0].material.color.clone();
+                        tower.mesh.children[0].material.color.set(0xffffff);
+                        setTimeout(() => {
+                            tower.mesh.children[0].material.color.copy(originalColor);
+                        }, 100);
+                        
+                        scene.remove(proj);
+                        projectiles.splice(i, 1);
+                        
+                        if (tower.health <= 0) {
+                            checkGameOver();
+                        }
+                    }
+                };
+                
+                if (proj.parent) {
+                    checkTowerCollision(playerTower, true);
+                    checkTowerCollision(enemyTower, false);
+                }
+                
+                if (!proj.parent) continue;
+                
+                // Check collision with enemy (original code)
                 const targets = proj.userData.owner.isPlayer ? 
-                    [enemy, enemyTower] : [player, playerTower];
+                    [enemy] : [player];
                 
                 targets.forEach(target => {
+                    if (!proj.parent) return;
                     const dist = proj.position.distanceTo(target.mesh.position);
                     if (dist < 2) {
                         if (!target.shielded) {
@@ -1641,6 +1898,13 @@
                         projectiles.splice(i, 1);
                     }
                 });
+            }
+            
+            // Spawn pickups every 5 seconds
+            const currentTime = Date.now();
+            if (currentTime - lastPickupSpawn > pickupSpawnInterval) {
+                spawnRandomPickup();
+                lastPickupSpawn = currentTime;
             }
             
             // Stamina regen
@@ -1663,6 +1927,30 @@
             document.getElementById('enemyTowerHP').textContent = Math.floor(enemyTower.health);
             document.getElementById('playerTowerFill').style.width = (playerTower.health / playerTower.maxHealth * 100) + '%';
             document.getElementById('enemyTowerFill').style.width = (enemyTower.health / enemyTower.maxHealth * 100) + '%';
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '50%';
+            notification.style.left = '50%';
+            notification.style.transform = 'translate(-50%, -50%)';
+            notification.style.background = 'rgba(0, 0, 0, 0.9)';
+            notification.style.border = '2px solid #00d4ff';
+            notification.style.borderRadius = '10px';
+            notification.style.padding = '20px 40px';
+            notification.style.fontFamily = 'Orbitron, sans-serif';
+            notification.style.fontSize = '1.2em';
+            notification.style.color = 'white';
+            notification.style.zIndex = '3000';
+            notification.style.pointerEvents = 'none';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
         }
 
         // Check Game Over
