@@ -231,9 +231,10 @@
             padding: 30px;
             border: 2px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            cursor: pointer;
+            cursor: default;
             position: relative;
             overflow: hidden;
+            pointer-events: all;
         }
 
         .mode-card::before {
@@ -322,6 +323,9 @@
             letter-spacing: 2px;
             transition: all 0.3s ease;
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            pointer-events: all !important;
+            position: relative;
+            z-index: 10;
         }
 
         .play-button:hover {
@@ -718,7 +722,7 @@
                         <div class="mode-stat-value" style="font-size: 1.2em;">Easy</div>
                     </div>
                 </div>
-                <button class="play-button" id="practiceModeBtn" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);">Start Training</button>
+                <button class="play-button" id="practiceModeBtn" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);" onmousedown="console.log('MOUSEDOWN'); window.startGame('practice'); return false;">Start Training</button>
             </div>
 
             <div class="mode-card" id="mode1v1">
@@ -951,11 +955,34 @@
             const practiceModeBtn = document.getElementById('practiceModeBtn');
             if (practiceModeBtn) {
                 console.log('Adding click listener to practice button');
+                console.log('Button element:', practiceModeBtn);
+                console.log('Button disabled:', practiceModeBtn.disabled);
+                console.log('Button style:', window.getComputedStyle(practiceModeBtn).pointerEvents);
+                
                 practiceModeBtn.addEventListener('click', function(e) {
+                    console.log('=== PRACTICE BUTTON CLICKED ===');
+                    console.log('Event:', e);
                     e.preventDefault();
-                    console.log('Practice button clicked!');
+                    e.stopPropagation();
+                    alert('Button clicked! Starting practice mode...');
+                    window.startGame('practice');
+                }, true); // Use capture phase
+                
+                // Also try mousedown
+                practiceModeBtn.addEventListener('mousedown', function(e) {
+                    console.log('=== MOUSEDOWN FIRED ===');
+                    e.preventDefault();
                     window.startGame('practice');
                 });
+                
+                // Also try with normal event phase
+                practiceModeBtn.onclick = function(e) {
+                    console.log('=== ONCLICK FIRED ===');
+                    e.preventDefault();
+                    window.startGame('practice');
+                };
+            } else {
+                console.error('Practice button NOT found!');
             }
             
             // Add listeners for 1v1 and 2v2 mode buttons
