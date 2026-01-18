@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronos Legends - Battle Arena</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
         
@@ -762,11 +764,11 @@
             </h2>
             
             <div class="leaderboard-tabs">
-                <button class="tab-btn active" onclick="switchLeaderboard('weekly')">Weekly</button>
-                <button class="tab-btn" onclick="switchLeaderboard('guardian')">Guardians</button>
-                <button class="tab-btn" onclick="switchLeaderboard('chaos')">Chaos Horde</button>
-                <button class="tab-btn" onclick="switchLeaderboard('trinari')">Trinari</button>
-                <button class="tab-btn" onclick="switchLeaderboard('alltime')">All-Time Top 3</button>
+                <button class="tab-btn active" onclick="switchLeaderboard('weekly', this)">Weekly</button>
+                <button class="tab-btn" onclick="switchLeaderboard('guardian', this)">Guardians</button>
+                <button class="tab-btn" onclick="switchLeaderboard('chaos', this)">Chaos Horde</button>
+                <button class="tab-btn" onclick="switchLeaderboard('trinari', this)">Trinari</button>
+                <button class="tab-btn" onclick="switchLeaderboard('alltime', this)">All-Time Top 3</button>
             </div>
 
             <div id="leaderboardContent">
@@ -839,10 +841,25 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
-    
     <script>
+        // Wait for page to fully load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('=== CRONOS LEGENDS BATTLE ARENA LOADED ===');
+            console.log('DOM Content Loaded');
+            console.log('THREE available:', typeof THREE !== 'undefined');
+            console.log('Web3 available:', typeof Web3 !== 'undefined');
+            console.log('startGame function:', typeof window.startGame);
+            console.log('gameState:', gameState);
+            
+            // Test button click
+            const practiceBtn = document.querySelector('#modePractice .play-button');
+            console.log('Practice button found:', practiceBtn);
+            if (practiceBtn) {
+                console.log('Practice button onclick:', practiceBtn.onclick);
+                console.log('Practice button getAttribute onclick:', practiceBtn.getAttribute('onclick'));
+            }
+        });
+        
         // Game State
         let gameState = {
             wallet: null,
@@ -865,9 +882,11 @@
         let userAccount;
 
         // Start Game (defined early to ensure it's available)
-        function startGame(mode) {
+        window.startGame = function(mode) {
             try {
                 console.log('startGame called with mode:', mode);
+                console.log('THREE available:', typeof THREE);
+                console.log('gameState:', gameState);
                 
                 // Practice mode doesn't require NFTs or wallet
                 if (mode === 'practice') {
@@ -877,9 +896,17 @@
                     gameState.isPracticeMode = true;
                     
                     // Hide menu, show game
-                    document.querySelector('.container').style.display = 'none';
-                    document.getElementById('gameCanvas').style.display = 'block';
-                    document.getElementById('gameUI').style.display = 'block';
+                    const container = document.querySelector('.container');
+                    const canvas = document.getElementById('gameCanvas');
+                    const ui = document.getElementById('gameUI');
+                    
+                    console.log('Container:', container);
+                    console.log('Canvas:', canvas);
+                    console.log('UI:', ui);
+                    
+                    if (container) container.style.display = 'none';
+                    if (canvas) canvas.style.display = 'block';
+                    if (ui) ui.style.display = 'block';
                     
                     console.log('Initializing game...');
                     initGame(mode);
@@ -910,9 +937,10 @@
                 initGame(mode);
             } catch (error) {
                 console.error('Error in startGame:', error);
+                alert('Error starting game: ' + error.message);
                 showNotification('Error starting game: ' + error.message);
             }
-        }
+        };
 
         // Show game modes on page load (for practice mode)
         window.addEventListener('DOMContentLoaded', () => {
@@ -1036,7 +1064,7 @@
         }
 
         // Exit Game
-        function exitGame() {
+        window.exitGame = function() {
             gameState.inGame = false;
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gameCanvas').style.display = 'none';
@@ -1045,7 +1073,7 @@
             if (gameScene) {
                 cancelAnimationFrame(animationId);
             }
-        }
+        };
 
         // 3D Game Variables
         let gameScene, camera, renderer, player, enemy, animationId;
@@ -1283,7 +1311,7 @@
         }
 
         // Use Ability
-        function useAbility(abilityIndex) {
+        window.useAbility = function(abilityIndex) {
             const ability = abilities[abilityIndex - 1];
             
             if (!ability.ready) return;
@@ -1449,12 +1477,14 @@
         // Leaderboard System
         let currentLeaderboard = 'weekly';
         
-        function switchLeaderboard(type) {
+        window.switchLeaderboard = function(type, element) {
             currentLeaderboard = type;
             
             // Update active tab
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (element) {
+                element.classList.add('active');
+            }
             
             loadLeaderboard(type);
         }
