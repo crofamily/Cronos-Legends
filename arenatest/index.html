@@ -1348,7 +1348,9 @@
             group.userData = {
                 type: 'health',
                 amount: 30,
-                pickupRadius: 2
+                pickupRadius: 2,
+                spawnTime: Date.now(),
+                lifetime: 20000 // 20 seconds
             };
             
             scene.add(group);
@@ -1385,7 +1387,9 @@
             group.userData = {
                 type: 'stamina',
                 amount: 40,
-                pickupRadius: 2
+                pickupRadius: 2,
+                spawnTime: Date.now(),
+                lifetime: 20000 // 20 seconds
             };
             
             scene.add(group);
@@ -1756,9 +1760,25 @@
                 player.mesh.position.z -= player.velocity.z;
             }
             
-            // Check pickup collection
+            // Spawn pickups every 5 seconds
+            const currentTime = Date.now();
+            if (currentTime - lastPickupSpawn > pickupSpawnInterval) {
+                spawnRandomPickup();
+                lastPickupSpawn = currentTime;
+            }
+            
+            // Check pickup collection and expiration
             for (let i = pickups.length - 1; i >= 0; i--) {
                 const pickup = pickups[i];
+                
+                // Check if pickup has expired (20 seconds)
+                if (currentTime - pickup.userData.spawnTime > pickup.userData.lifetime) {
+                    scene.remove(pickup);
+                    pickups.splice(i, 1);
+                    continue;
+                }
+                
+                // Check if player collected it
                 const dist = Math.sqrt(
                     Math.pow(player.mesh.position.x - pickup.position.x, 2) +
                     Math.pow(player.mesh.position.z - pickup.position.z, 2)
@@ -1840,7 +1860,6 @@
                         if (obstacle.userData.health <= 0) {
                             scene.remove(obstacle);
                             obstacles.splice(j, 1);
-                            showNotification(`${obstacle.userData.type} destroyed!`);
                         }
                         
                         scene.remove(proj);
@@ -1898,13 +1917,6 @@
                         projectiles.splice(i, 1);
                     }
                 });
-            }
-            
-            // Spawn pickups every 5 seconds
-            const currentTime = Date.now();
-            if (currentTime - lastPickupSpawn > pickupSpawnInterval) {
-                spawnRandomPickup();
-                lastPickupSpawn = currentTime;
             }
             
             // Stamina regen
