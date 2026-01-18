@@ -718,7 +718,7 @@
                         <div class="mode-stat-value" style="font-size: 1.2em;">Easy</div>
                     </div>
                 </div>
-                <button class="play-button" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);" onclick="startGame('practice'); return false;">Start Training</button>
+                <button class="play-button" id="practiceModeBtn" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);">Start Training</button>
             </div>
 
             <div class="mode-card" id="mode1v1">
@@ -736,7 +736,7 @@
                         <div class="mode-stat-value">2</div>
                     </div>
                 </div>
-                <button class="play-button" onclick="startGame('1v1')">Enter Arena</button>
+                <button class="play-button">Enter Arena</button>
             </div>
 
             <div class="mode-card chaos" id="mode2v2">
@@ -754,7 +754,7 @@
                         <div class="mode-stat-value">4</div>
                     </div>
                 </div>
-                <button class="play-button" onclick="startGame('2v2')">Enter Arena</button>
+                <button class="play-button">Enter Arena</button>
             </div>
         </div>
 
@@ -764,11 +764,11 @@
             </h2>
             
             <div class="leaderboard-tabs">
-                <button class="tab-btn active" onclick="switchLeaderboard('weekly', this)">Weekly</button>
-                <button class="tab-btn" onclick="switchLeaderboard('guardian', this)">Guardians</button>
-                <button class="tab-btn" onclick="switchLeaderboard('chaos', this)">Chaos Horde</button>
-                <button class="tab-btn" onclick="switchLeaderboard('trinari', this)">Trinari</button>
-                <button class="tab-btn" onclick="switchLeaderboard('alltime', this)">All-Time Top 3</button>
+                <button class="tab-btn active" data-leaderboard="weekly">Weekly</button>
+                <button class="tab-btn" data-leaderboard="guardian">Guardians</button>
+                <button class="tab-btn" data-leaderboard="chaos">Chaos Horde</button>
+                <button class="tab-btn" data-leaderboard="trinari">Trinari</button>
+                <button class="tab-btn" data-leaderboard="alltime">All-Time Top 3</button>
             </div>
 
             <div id="leaderboardContent">
@@ -795,7 +795,7 @@
 
     <!-- Game UI Overlay -->
     <div id="gameUI" class="game-ui" style="display: none;">
-        <button class="close-btn" onclick="exitGame()">Exit Battle</button>
+        <button class="close-btn">Exit Battle</button>
         
         <div class="health-bar-container">
             <div class="health-bar">
@@ -818,22 +818,22 @@
         </div>
 
         <div class="abilities-container">
-            <button class="ability-btn" id="ability1" onclick="useAbility(1)">
+            <button class="ability-btn" id="ability1">
                 <div class="ability-key">1</div>
                 STRIKE<br/>
                 <small>Fast Attack</small>
             </button>
-            <button class="ability-btn" id="ability2" onclick="useAbility(2)">
+            <button class="ability-btn" id="ability2">
                 <div class="ability-key">2</div>
                 BLAST<br/>
                 <small>Heavy DMG</small>
             </button>
-            <button class="ability-btn" id="ability3" onclick="useAbility(3)">
+            <button class="ability-btn" id="ability3">
                 <div class="ability-key">3</div>
                 SHIELD<br/>
                 <small>Defense</small>
             </button>
-            <button class="ability-btn" id="ability4" onclick="useAbility(4)">
+            <button class="ability-btn" id="ability4">
                 <div class="ability-key">4</div>
                 DASH<br/>
                 <small>Evade</small>
@@ -944,7 +944,68 @@
 
         // Show game modes on page load (for practice mode)
         window.addEventListener('DOMContentLoaded', () => {
+            console.log('Setting up game modes display...');
             document.getElementById('gameModes').style.display = 'grid';
+            
+            // Add event listeners to buttons (instead of inline onclick)
+            const practiceModeBtn = document.getElementById('practiceModeBtn');
+            if (practiceModeBtn) {
+                console.log('Adding click listener to practice button');
+                practiceModeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Practice button clicked!');
+                    window.startGame('practice');
+                });
+            }
+            
+            // Add listeners for 1v1 and 2v2 mode buttons
+            const mode1v1Btn = document.querySelector('#mode1v1 .play-button');
+            const mode2v2Btn = document.querySelector('#mode2v2 .play-button');
+            
+            if (mode1v1Btn) {
+                mode1v1Btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.startGame('1v1');
+                });
+            }
+            
+            if (mode2v2Btn) {
+                mode2v2Btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.startGame('2v2');
+                });
+            }
+            
+            // Add listeners for ability buttons
+            for (let i = 1; i <= 4; i++) {
+                const abilityBtn = document.getElementById('ability' + i);
+                if (abilityBtn) {
+                    abilityBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.useAbility(i);
+                    });
+                }
+            }
+            
+            // Add listener for exit button
+            const exitBtn = document.querySelector('.close-btn');
+            if (exitBtn) {
+                exitBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.exitGame();
+                });
+            }
+            
+            // Add listeners for leaderboard tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const type = this.getAttribute('data-leaderboard');
+                    window.switchLeaderboard(type, this);
+                });
+            });
+            
+            console.log('Event listeners attached');
         });
 
         // Connect Wallet
