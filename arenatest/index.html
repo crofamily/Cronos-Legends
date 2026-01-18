@@ -1210,9 +1210,9 @@
             gameScene = new THREE.Scene();
             gameScene.background = new THREE.Color(0x0a0a0f);
             
-            // Camera
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 5, 10);
+            // Top-down camera (MOBA style)
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 25, 15);
             camera.lookAt(0, 0, 0);
             
             // Renderer
@@ -1225,119 +1225,124 @@
             gameScene.add(ambientLight);
             
             const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 10, 5);
+            directionalLight.position.set(5, 20, 5);
             directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
             gameScene.add(directionalLight);
             
-            // Arena Floor with faction colors
-            const floorGeometry = new THREE.CircleGeometry(20, 64);
+            // Arena Floor with grid pattern
+            const floorGeometry = new THREE.CircleGeometry(30, 64);
             const floorMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0x1a1a2e,
-                metalness: 0.8,
-                roughness: 0.2
+                metalness: 0.3,
+                roughness: 0.7
             });
             const floor = new THREE.Mesh(floorGeometry, floorMaterial);
             floor.rotation.x = -Math.PI / 2;
             floor.receiveShadow = true;
             gameScene.add(floor);
             
-            // Arena Border
-            const borderGeometry = new THREE.TorusGeometry(20, 0.3, 16, 100);
+            // Grid lines on floor
+            const gridHelper = new THREE.GridHelper(60, 30, 0x00d4ff, 0x333344);
+            gridHelper.position.y = 0.05;
+            gameScene.add(gridHelper);
+            
+            // Arena Border (glowing wall)
+            const borderGeometry = new THREE.TorusGeometry(30, 0.5, 16, 100);
             const borderMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0x00d4ff,
                 emissive: 0x00d4ff,
-                emissiveIntensity: 0.5
+                emissiveIntensity: 0.8
             });
             const border = new THREE.Mesh(borderGeometry, borderMaterial);
             border.rotation.x = Math.PI / 2;
             border.position.y = 0.1;
             gameScene.add(border);
             
-            // Player Character (using cylinder + spheres since CapsuleGeometry not in r128)
+            // Player Character (top-down view - circle with direction indicator)
             const playerGroup = new THREE.Group();
             
-            // Body (cylinder)
-            const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.5, 16);
+            // Body (cylinder viewed from top)
+            const bodyGeometry = new THREE.CylinderGeometry(0.8, 0.8, 0.5, 16);
             const playerMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0x00d4ff,
                 emissive: 0x00d4ff,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.5
             });
             const body = new THREE.Mesh(bodyGeometry, playerMaterial);
             body.castShadow = true;
             playerGroup.add(body);
             
-            // Top sphere (head)
-            const headGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-            const head = new THREE.Mesh(headGeometry, playerMaterial);
-            head.position.y = 1.0;
-            head.castShadow = true;
-            playerGroup.add(head);
-            
-            // Bottom sphere (feet)
-            const feetGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-            const feet = new THREE.Mesh(feetGeometry, playerMaterial);
-            feet.position.y = -1.0;
-            feet.castShadow = true;
-            playerGroup.add(feet);
+            // Direction indicator (cone pointing forward)
+            const directionGeometry = new THREE.ConeGeometry(0.4, 1, 8);
+            const directionMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                emissive: 0xffffff,
+                emissiveIntensity: 0.3
+            });
+            const direction = new THREE.Mesh(directionGeometry, directionMaterial);
+            direction.rotation.x = Math.PI / 2;
+            direction.position.z = 0.8;
+            direction.castShadow = true;
+            playerGroup.add(direction);
             
             player = playerGroup;
-            player.position.set(0, 1.5, 0);
+            player.position.set(0, 0.5, 0);
             gameScene.add(player);
             
-            // Enemy character (using cylinder + spheres)
+            // Enemy character (same style, different color)
             const enemyGroup = new THREE.Group();
             
-            // Body (cylinder)
-            const enemyBodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.5, 16);
+            const enemyBodyGeometry = new THREE.CylinderGeometry(0.8, 0.8, 0.5, 16);
             const enemyMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0xff0055,
                 emissive: 0xff0055,
-                emissiveIntensity: 0.3
+                emissiveIntensity: 0.5
             });
             const enemyBody = new THREE.Mesh(enemyBodyGeometry, enemyMaterial);
             enemyBody.castShadow = true;
             enemyGroup.add(enemyBody);
             
-            // Top sphere (head)
-            const enemyHeadGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-            const enemyHead = new THREE.Mesh(enemyHeadGeometry, enemyMaterial);
-            enemyHead.position.y = 1.0;
-            enemyHead.castShadow = true;
-            enemyGroup.add(enemyHead);
-            
-            // Bottom sphere (feet)
-            const enemyFeetGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-            const enemyFeet = new THREE.Mesh(enemyFeetGeometry, enemyMaterial);
-            enemyFeet.position.y = -1.0;
-            enemyFeet.castShadow = true;
-            enemyGroup.add(enemyFeet);
+            const enemyDirectionGeometry = new THREE.ConeGeometry(0.4, 1, 8);
+            const enemyDirectionMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                emissive: 0xffffff,
+                emissiveIntensity: 0.3
+            });
+            const enemyDirection = new THREE.Mesh(enemyDirectionGeometry, enemyDirectionMaterial);
+            enemyDirection.rotation.x = Math.PI / 2;
+            enemyDirection.position.z = 0.8;
+            enemyDirection.castShadow = true;
+            enemyGroup.add(enemyDirection);
             
             enemy = enemyGroup;
-            enemy.position.set(mode === '1v1' || mode === 'practice' ? 8 : 10, 1.5, 0);
+            enemy.position.set(15, 0.5, 0);
             gameScene.add(enemy);
             
             // Reset AI state for practice mode
             if (mode === 'practice') {
                 aiState.health = aiState.maxHealth;
-                aiState.nextAttackTime = Date.now() + 2000; // First attack after 2 seconds
+                aiState.nextAttackTime = Date.now() + 2000;
             }
             
             // Add particle effects
-            const particleCount = 1000;
+            const particleCount = 500;
             const particlesGeometry = new THREE.BufferGeometry();
             const particlePositions = new Float32Array(particleCount * 3);
             
-            for (let i = 0; i < particleCount * 3; i++) {
-                particlePositions[i] = (Math.random() - 0.5) * 50;
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                particlePositions[i] = (Math.random() - 0.5) * 60;
+                particlePositions[i + 1] = Math.random() * 30;
+                particlePositions[i + 2] = (Math.random() - 0.5) * 60;
             }
             
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
             const particlesMaterial = new THREE.PointsMaterial({ 
                 color: 0x00d4ff, 
-                size: 0.1,
+                size: 0.15,
                 transparent: true,
-                opacity: 0.6
+                opacity: 0.4
             });
             const particles = new THREE.Points(particlesGeometry, particlesMaterial);
             gameScene.add(particles);
@@ -1353,89 +1358,321 @@
                 updateEnemyHealthBar();
             }
             
+            // Initialize movement and controls
+            initControls();
+            
             // Start game loop
             animate();
             startStaminaRegen();
+        }
+
+        // Movement and controls
+        let keys = {};
+        let mousePosition = { x: 0, y: 0 };
+        let playerVelocity = { x: 0, z: 0 };
+        let projectiles = [];
+        const moveSpeed = 0.15;
+        const projectileSpeed = 0.5;
+        let lastShotTime = 0;
+        const shootCooldown = 500; // ms between shots
+
+        function initControls() {
+            const canvas = document.getElementById('gameCanvas');
+            
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                if (!gameState.inGame) return;
+                keys[e.key.toLowerCase()] = true;
+                
+                // Ability keys
+                if (e.key >= '1' && e.key <= '4') {
+                    window.useAbility(parseInt(e.key));
+                }
+            });
+            
+            document.addEventListener('keyup', (e) => {
+                if (!gameState.inGame) return;
+                keys[e.key.toLowerCase()] = false;
+            });
+            
+            // Mouse controls for aiming and shooting
+            document.addEventListener('mousemove', (e) => {
+                if (!gameState.inGame) return;
+                mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mousePosition.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            document.addEventListener('mousedown', (e) => {
+                if (!gameState.inGame) return;
+                if (e.button === 0) { // Left click
+                    shootProjectile();
+                }
+            });
+            
+            // Touch controls for mobile
+            canvas.addEventListener('touchmove', (e) => {
+                if (!gameState.inGame) return;
+                e.preventDefault();
+                const touch = e.touches[0];
+                mousePosition.x = (touch.clientX / window.innerWidth) * 2 - 1;
+                mousePosition.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            canvas.addEventListener('touchstart', (e) => {
+                if (!gameState.inGame) return;
+                shootProjectile();
+            });
+        }
+
+        function shootProjectile() {
+            const currentTime = Date.now();
+            if (currentTime - lastShotTime < shootCooldown) return;
+            if (playerStats.stamina < 5) {
+                showNotification('Not enough stamina!');
+                return;
+            }
+            
+            lastShotTime = currentTime;
+            playerStats.stamina = Math.max(0, playerStats.stamina - 5);
+            updateStaminaBar();
+            
+            // Create projectile
+            const projectileGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+            const projectileMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x00d4ff,
+                emissive: 0x00d4ff,
+                emissiveIntensity: 1
+            });
+            const projectile = new THREE.Mesh(projectileGeometry, projectileMaterial);
+            projectile.position.copy(player.position);
+            projectile.position.y = 0.5;
+            
+            // Calculate direction to mouse
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mousePosition, camera);
+            const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            
+            const direction = new THREE.Vector3()
+                .subVectors(intersectPoint, player.position)
+                .normalize();
+            
+            projectile.userData = {
+                velocity: direction.multiplyScalar(projectileSpeed),
+                damage: 15,
+                lifetime: 100 // frames
+            };
+            
+            gameScene.add(projectile);
+            projectiles.push(projectile);
         }
 
         // Animation Loop
         function animate() {
             animationId = requestAnimationFrame(animate);
             
-            if (player) {
-                player.rotation.y += 0.01;
+            if (!player || !gameState.inGame) {
+                renderer.render(gameScene, camera);
+                return;
+            }
+            
+            // WASD Movement
+            playerVelocity.x = 0;
+            playerVelocity.z = 0;
+            
+            if (keys['w']) playerVelocity.z -= moveSpeed;
+            if (keys['s']) playerVelocity.z += moveSpeed;
+            if (keys['a']) playerVelocity.x -= moveSpeed;
+            if (keys['d']) playerVelocity.x += moveSpeed;
+            
+            // Normalize diagonal movement
+            if (playerVelocity.x !== 0 && playerVelocity.z !== 0) {
+                const length = Math.sqrt(playerVelocity.x * playerVelocity.x + playerVelocity.z * playerVelocity.z);
+                playerVelocity.x /= length;
+                playerVelocity.z /= length;
+                playerVelocity.x *= moveSpeed;
+                playerVelocity.z *= moveSpeed;
+            }
+            
+            // Apply movement
+            player.position.x += playerVelocity.x;
+            player.position.z += playerVelocity.z;
+            
+            // Keep player in arena bounds
+            const maxDistance = 28;
+            const distanceFromCenter = Math.sqrt(player.position.x * player.position.x + player.position.z * player.position.z);
+            if (distanceFromCenter > maxDistance) {
+                const angle = Math.atan2(player.position.z, player.position.x);
+                player.position.x = Math.cos(angle) * maxDistance;
+                player.position.z = Math.sin(angle) * maxDistance;
+            }
+            
+            // Rotate player to face mouse
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mousePosition, camera);
+            const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            
+            if (intersectPoint) {
+                const lookDirection = new THREE.Vector3()
+                    .subVectors(intersectPoint, player.position)
+                    .normalize();
+                player.rotation.y = Math.atan2(lookDirection.x, lookDirection.z);
+            }
+            
+            // Update projectiles
+            for (let i = projectiles.length - 1; i >= 0; i--) {
+                const proj = projectiles[i];
+                proj.position.add(proj.userData.velocity);
+                proj.userData.lifetime--;
+                
+                // Remove if lifetime expired or out of bounds
+                if (proj.userData.lifetime <= 0 || Math.abs(proj.position.x) > 35 || Math.abs(proj.position.z) > 35) {
+                    gameScene.remove(proj);
+                    projectiles.splice(i, 1);
+                    continue;
+                }
+                
+                // Check collision with enemy in practice mode
+                if (gameState.isPracticeMode && enemy) {
+                    const distance = proj.position.distanceTo(enemy.position);
+                    if (distance < 1.5) {
+                        aiState.health = Math.max(0, aiState.health - proj.userData.damage);
+                        updateEnemyHealthBar();
+                        
+                        // Hit effect
+                        createHitEffect(proj.position);
+                        
+                        gameScene.remove(proj);
+                        projectiles.splice(i, 1);
+                        
+                        if (aiState.health <= 0) {
+                            endBattle(true);
+                        }
+                    }
+                }
             }
             
             // AI behavior in practice mode
             if (gameState.isPracticeMode && enemy) {
-                // Simple AI movement (side to side)
-                enemy.position.x += 0.05 * aiState.moveDirection;
-                if (enemy.position.x > 12 || enemy.position.x < 4) {
-                    aiState.moveDirection *= -1;
+                // Simple AI - move toward player
+                const dirToPlayer = new THREE.Vector3()
+                    .subVectors(player.position, enemy.position)
+                    .normalize();
+                
+                // Keep distance
+                const distToPlayer = enemy.position.distanceTo(player.position);
+                if (distToPlayer > 8) {
+                    enemy.position.x += dirToPlayer.x * 0.08;
+                    enemy.position.z += dirToPlayer.z * 0.08;
+                } else if (distToPlayer < 5) {
+                    enemy.position.x -= dirToPlayer.x * 0.05;
+                    enemy.position.z -= dirToPlayer.z * 0.05;
                 }
+                
+                // Rotate enemy toward player
+                enemy.rotation.y = Math.atan2(dirToPlayer.x, dirToPlayer.z);
                 
                 // AI attacks
                 const currentTime = Date.now();
                 if (currentTime >= aiState.nextAttackTime) {
-                    aiAttack();
+                    aiShootProjectile();
                     aiState.nextAttackTime = currentTime + aiState.attackCooldown + (Math.random() * 2000);
                 }
-                
-                // Rotate enemy toward player
-                if (player) {
-                    enemy.lookAt(player.position);
-                    enemy.rotation.y += Math.PI; // Face forward
+            }
+            
+            // Update AI projectiles
+            if (aiProjectiles) {
+                for (let i = aiProjectiles.length - 1; i >= 0; i--) {
+                    const proj = aiProjectiles[i];
+                    proj.position.add(proj.userData.velocity);
+                    proj.userData.lifetime--;
+                    
+                    if (proj.userData.lifetime <= 0 || Math.abs(proj.position.x) > 35 || Math.abs(proj.position.z) > 35) {
+                        gameScene.remove(proj);
+                        aiProjectiles.splice(i, 1);
+                        continue;
+                    }
+                    
+                    // Check collision with player
+                    const distance = proj.position.distanceTo(player.position);
+                    if (distance < 1.5) {
+                        if (!playerStats.isShielded) {
+                            const damage = 10;
+                            playerStats.health = Math.max(0, playerStats.health - damage);
+                            updateHealthBar();
+                            createHitEffect(proj.position);
+                            
+                            if (playerStats.health <= 0) {
+                                endBattle(false);
+                            }
+                        }
+                        
+                        gameScene.remove(proj);
+                        aiProjectiles.splice(i, 1);
+                    }
                 }
             }
             
             renderer.render(gameScene, camera);
         }
 
-        // AI Attack
-        function aiAttack() {
-            if (!gameState.isPracticeMode || !enemy) return;
+        // AI projectile array
+        let aiProjectiles = [];
+
+        // AI Shoot Projectile
+        function aiShootProjectile() {
+            if (!enemy || !player) return;
             
-            // Visual attack effect
-            const geometry = new THREE.SphereGeometry(0.3, 16, 16);
-            const material = new THREE.MeshBasicMaterial({ 
+            const projectileGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+            const projectileMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0xff0055,
-                transparent: true,
-                opacity: 1
+                emissive: 0xff0055,
+                emissiveIntensity: 1
             });
-            const projectile = new THREE.Mesh(geometry, material);
+            const projectile = new THREE.Mesh(projectileGeometry, projectileMaterial);
             projectile.position.copy(enemy.position);
+            projectile.position.y = 0.5;
+            
+            const direction = new THREE.Vector3()
+                .subVectors(player.position, enemy.position)
+                .normalize();
+            
+            projectile.userData = {
+                velocity: direction.multiplyScalar(projectileSpeed * 0.8),
+                damage: 10,
+                lifetime: 100
+            };
+            
             gameScene.add(projectile);
+            aiProjectiles.push(projectile);
+        }
+
+        // Create hit effect
+        function createHitEffect(position) {
+            const geometry = new THREE.SphereGeometry(1, 8, 8);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0xffff00,
+                transparent: true,
+                opacity: 0.8
+            });
+            const effect = new THREE.Mesh(geometry, material);
+            effect.position.copy(position);
+            gameScene.add(effect);
             
-            // Animate projectile toward player
-            const startPos = enemy.position.clone();
-            const targetPos = player.position.clone();
-            let progress = 0;
-            
-            const projectileInterval = setInterval(() => {
-                progress += 0.05;
-                projectile.position.lerpVectors(startPos, targetPos, progress);
+            let scale = 1;
+            const effectInterval = setInterval(() => {
+                scale += 0.5;
+                effect.scale.set(scale, scale, scale);
+                material.opacity -= 0.1;
                 
-                // Check if hit player
-                if (progress >= 1) {
-                    clearInterval(projectileInterval);
-                    gameScene.remove(projectile);
-                    
-                    // Apply damage to player
-                    if (!playerStats.isShielded) {
-                        const damage = 10;
-                        playerStats.health = Math.max(0, playerStats.health - damage);
-                        updateHealthBar();
-                        showNotification(`AI hit you for ${damage} damage!`);
-                        
-                        // Check if player died
-                        if (playerStats.health <= 0) {
-                            endBattle(false);
-                        }
-                    } else {
-                        showNotification('Shield blocked AI attack!');
-                    }
+                if (material.opacity <= 0) {
+                    clearInterval(effectInterval);
+                    gameScene.remove(effect);
                 }
-            }, 30);
+            }, 50);
         }
 
         // Use Ability
@@ -1453,58 +1690,116 @@
             updateStaminaBar();
             
             // Execute ability effect
-            if (ability.name === 'Strike' || ability.name === 'Blast') {
-                // Deal damage (placeholder - in real game would affect enemy)
-                createAbilityEffect(abilityIndex);
-                showNotification(`${ability.name} - ${ability.damage} damage!`);
-                
-                // Apply damage to AI in practice mode
-                if (gameState.isPracticeMode) {
-                    aiState.health = Math.max(0, aiState.health - ability.damage);
-                    updateEnemyHealthBar();
-                    
-                    // Check if AI died
-                    if (aiState.health <= 0) {
-                        endBattle(true);
-                    }
+            if (ability.name === 'Strike') {
+                // Quick burst of 3 fast shots
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        shootProjectile();
+                    }, i * 100);
                 }
+                showNotification('Strike - Rapid Fire!');
+            } else if (ability.name === 'Blast') {
+                // Single powerful shot
+                shootPowerfulBlast();
+                showNotification('Blast - Heavy Damage!');
             } else if (ability.name === 'Shield') {
                 playerStats.isShielded = true;
+                if (player && player.children) {
+                    player.children.forEach(child => {
+                        if (child.material) {
+                            child.material.emissiveIntensity = 1;
+                        }
+                    });
+                }
                 showNotification('Shield activated!');
                 setTimeout(() => {
                     playerStats.isShielded = false;
+                    if (player && player.children) {
+                        player.children.forEach(child => {
+                            if (child.material) {
+                                child.material.emissiveIntensity = 0.5;
+                            }
+                        });
+                    }
                     showNotification('Shield expired');
                 }, ability.duration);
             } else if (ability.name === 'Dash') {
-                // Dash forward
-                if (player) {
-                    player.position.z -= ability.distance;
+                // Quick dash in movement direction
+                const dashDistance = ability.distance;
+                const dashDirection = new THREE.Vector3(playerVelocity.x, 0, playerVelocity.z);
+                if (dashDirection.length() > 0) {
+                    dashDirection.normalize().multiplyScalar(dashDistance);
+                } else {
+                    // Dash forward if not moving
+                    const forward = new THREE.Vector3(0, 0, -1);
+                    forward.applyAxisAngle(new THREE.Vector3(0, 1, 0), player.rotation.y);
+                    dashDirection.copy(forward.multiplyScalar(dashDistance));
                 }
+                player.position.add(dashDirection);
                 showNotification('Dash!');
             }
             
             // Start cooldown
             ability.ready = false;
             const btn = document.getElementById(`ability${abilityIndex}`);
-            btn.classList.add('on-cooldown');
-            
-            let cooldownRemaining = ability.cooldown / 1000;
-            const cooldownDiv = document.createElement('div');
-            cooldownDiv.className = 'ability-cooldown';
-            cooldownDiv.textContent = cooldownRemaining;
-            btn.appendChild(cooldownDiv);
-            
-            const cooldownInterval = setInterval(() => {
-                cooldownRemaining--;
-                cooldownDiv.textContent = cooldownRemaining;
+            if (btn) {
+                btn.classList.add('on-cooldown');
                 
-                if (cooldownRemaining <= 0) {
-                    clearInterval(cooldownInterval);
-                    cooldownDiv.remove();
-                    btn.classList.remove('on-cooldown');
-                    ability.ready = true;
-                }
-            }, 1000);
+                let cooldownRemaining = ability.cooldown / 1000;
+                const cooldownDiv = document.createElement('div');
+                cooldownDiv.className = 'ability-cooldown';
+                cooldownDiv.textContent = cooldownRemaining;
+                btn.appendChild(cooldownDiv);
+                
+                const cooldownInterval = setInterval(() => {
+                    cooldownRemaining--;
+                    cooldownDiv.textContent = cooldownRemaining;
+                    
+                    if (cooldownRemaining <= 0) {
+                        clearInterval(cooldownInterval);
+                        cooldownDiv.remove();
+                        btn.classList.remove('on-cooldown');
+                        ability.ready = true;
+                    }
+                }, 1000);
+            }
+        };
+
+        function shootPowerfulBlast() {
+            if (playerStats.stamina < 5) return;
+            
+            playerStats.stamina = Math.max(0, playerStats.stamina - 5);
+            updateStaminaBar();
+            
+            const projectileGeometry = new THREE.SphereGeometry(0.6, 16, 16);
+            const projectileMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffff00,
+                emissive: 0xffff00,
+                emissiveIntensity: 1
+            });
+            const projectile = new THREE.Mesh(projectileGeometry, projectileMaterial);
+            projectile.position.copy(player.position);
+            projectile.position.y = 0.5;
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mousePosition, camera);
+            const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            
+            const direction = new THREE.Vector3()
+                .subVectors(intersectPoint, player.position)
+                .normalize();
+            
+            projectile.userData = {
+                velocity: direction.multiplyScalar(projectileSpeed * 0.7),
+                damage: 35,
+                lifetime: 100
+            };
+            
+            gameScene.add(projectile);
+            projectiles.push(projectile);
+        }
         }
 
         // End Battle
