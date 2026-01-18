@@ -706,7 +706,7 @@
             </div>
         </div>
 
-        <div class="game-modes" id="gameModes" style="display: none;">
+        <div class="game-modes" id="gameModes" style="display: grid;">
             <div class="mode-card" style="border-color: rgba(0, 255, 136, 0.3);" id="modePractice">
                 <div class="mode-title" style="color: var(--trinari-color);">🎯 Practice Mode</div>
                 <div class="mode-description">
@@ -964,7 +964,6 @@
                     console.log('Event:', e);
                     e.preventDefault();
                     e.stopPropagation();
-                    alert('Button clicked! Starting practice mode...');
                     window.startGame('practice');
                 }, true); // Use capture phase
                 
