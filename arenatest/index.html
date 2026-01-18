@@ -1253,28 +1253,68 @@
             border.position.y = 0.1;
             gameScene.add(border);
             
-            // Player Character (simple for now)
-            const playerGeometry = new THREE.CapsuleGeometry(0.5, 1.5, 16, 32);
+            // Player Character (using cylinder + spheres since CapsuleGeometry not in r128)
+            const playerGroup = new THREE.Group();
+            
+            // Body (cylinder)
+            const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.5, 16);
             const playerMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0x00d4ff,
                 emissive: 0x00d4ff,
                 emissiveIntensity: 0.3
             });
-            player = new THREE.Mesh(playerGeometry, playerMaterial);
+            const body = new THREE.Mesh(bodyGeometry, playerMaterial);
+            body.castShadow = true;
+            playerGroup.add(body);
+            
+            // Top sphere (head)
+            const headGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+            const head = new THREE.Mesh(headGeometry, playerMaterial);
+            head.position.y = 1.0;
+            head.castShadow = true;
+            playerGroup.add(head);
+            
+            // Bottom sphere (feet)
+            const feetGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+            const feet = new THREE.Mesh(feetGeometry, playerMaterial);
+            feet.position.y = -1.0;
+            feet.castShadow = true;
+            playerGroup.add(feet);
+            
+            player = playerGroup;
             player.position.set(0, 1.5, 0);
-            player.castShadow = true;
             gameScene.add(player);
             
-            // Enemy placeholder
-            const enemyGeometry = new THREE.CapsuleGeometry(0.5, 1.5, 16, 32);
+            // Enemy character (using cylinder + spheres)
+            const enemyGroup = new THREE.Group();
+            
+            // Body (cylinder)
+            const enemyBodyGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.5, 16);
             const enemyMaterial = new THREE.MeshStandardMaterial({ 
                 color: 0xff0055,
                 emissive: 0xff0055,
                 emissiveIntensity: 0.3
             });
-            enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+            const enemyBody = new THREE.Mesh(enemyBodyGeometry, enemyMaterial);
+            enemyBody.castShadow = true;
+            enemyGroup.add(enemyBody);
+            
+            // Top sphere (head)
+            const enemyHeadGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+            const enemyHead = new THREE.Mesh(enemyHeadGeometry, enemyMaterial);
+            enemyHead.position.y = 1.0;
+            enemyHead.castShadow = true;
+            enemyGroup.add(enemyHead);
+            
+            // Bottom sphere (feet)
+            const enemyFeetGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+            const enemyFeet = new THREE.Mesh(enemyFeetGeometry, enemyMaterial);
+            enemyFeet.position.y = -1.0;
+            enemyFeet.castShadow = true;
+            enemyGroup.add(enemyFeet);
+            
+            enemy = enemyGroup;
             enemy.position.set(mode === '1v1' || mode === 'practice' ? 8 : 10, 1.5, 0);
-            enemy.castShadow = true;
             gameScene.add(enemy);
             
             // Reset AI state for practice mode
