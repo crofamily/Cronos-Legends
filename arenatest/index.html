@@ -716,7 +716,7 @@
                         <div class="mode-stat-value" style="font-size: 1.2em;">Easy</div>
                     </div>
                 </div>
-                <button class="play-button" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);" onclick="startGame('practice')">Start Training</button>
+                <button class="play-button" style="background: linear-gradient(135deg, var(--trinari-color), #00aa66);" onclick="startGame('practice'); return false;">Start Training</button>
             </div>
 
             <div class="mode-card" id="mode1v1">
@@ -864,6 +864,56 @@
         let web3;
         let userAccount;
 
+        // Start Game (defined early to ensure it's available)
+        function startGame(mode) {
+            try {
+                console.log('startGame called with mode:', mode);
+                
+                // Practice mode doesn't require NFTs or wallet
+                if (mode === 'practice') {
+                    console.log('Starting practice mode...');
+                    gameState.currentMode = mode;
+                    gameState.inGame = true;
+                    gameState.isPracticeMode = true;
+                    
+                    // Hide menu, show game
+                    document.querySelector('.container').style.display = 'none';
+                    document.getElementById('gameCanvas').style.display = 'block';
+                    document.getElementById('gameUI').style.display = 'block';
+                    
+                    console.log('Initializing game...');
+                    initGame(mode);
+                    showNotification('Practice Mode - Fight the AI!');
+                    return;
+                }
+                
+                // Competitive modes require NFTs
+                if (gameState.nfts.total === 0) {
+                    showNotification('You need at least 1 NFT to play competitive modes!');
+                    return;
+                }
+                
+                if (gameState.dailyBattles[mode] <= 0) {
+                    showNotification(`No ${mode} battles remaining today!`);
+                    return;
+                }
+                
+                gameState.currentMode = mode;
+                gameState.inGame = true;
+                gameState.isPracticeMode = false;
+                
+                // Hide menu, show game
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('gameCanvas').style.display = 'block';
+                document.getElementById('gameUI').style.display = 'block';
+                
+                initGame(mode);
+            } catch (error) {
+                console.error('Error in startGame:', error);
+                showNotification('Error starting game: ' + error.message);
+            }
+        }
+
         // Show game modes on page load (for practice mode)
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('gameModes').style.display = 'grid';
@@ -958,11 +1008,17 @@
             tierElement.textContent = tierNames[gameState.boostTier];
             tierElement.style.background = `linear-gradient(135deg, ${tierColors[gameState.boostTier]}, ${tierColors[gameState.boostTier]}aa)`;
             
-            // Disable play buttons if no NFTs
+            // Disable competitive mode buttons if no NFTs (but keep practice mode enabled)
             if (gameState.nfts.total === 0) {
-                document.querySelectorAll('.play-button').forEach(btn => {
-                    btn.disabled = true;
-                    btn.textContent = 'Need 1+ NFT to Play';
+                const competitiveButtons = [
+                    document.querySelector('#mode1v1 .play-button'),
+                    document.querySelector('#mode2v2 .play-button')
+                ];
+                competitiveButtons.forEach(btn => {
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.textContent = 'Need 1+ NFT to Play';
+                    }
                 });
             }
         }
@@ -977,47 +1033,6 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        }
-
-        // Start Game
-        function startGame(mode) {
-            // Practice mode doesn't require NFTs or wallet
-            if (mode === 'practice') {
-                gameState.currentMode = mode;
-                gameState.inGame = true;
-                gameState.isPracticeMode = true;
-                
-                // Hide menu, show game
-                document.querySelector('.container').style.display = 'none';
-                document.getElementById('gameCanvas').style.display = 'block';
-                document.getElementById('gameUI').style.display = 'block';
-                
-                initGame(mode);
-                showNotification('Practice Mode - Fight the AI!');
-                return;
-            }
-            
-            // Competitive modes require NFTs
-            if (gameState.nfts.total === 0) {
-                showNotification('You need at least 1 NFT to play competitive modes!');
-                return;
-            }
-            
-            if (gameState.dailyBattles[mode] <= 0) {
-                showNotification(`No ${mode} battles remaining today!`);
-                return;
-            }
-            
-            gameState.currentMode = mode;
-            gameState.inGame = true;
-            gameState.isPracticeMode = false;
-            
-            // Hide menu, show game
-            document.querySelector('.container').style.display = 'none';
-            document.getElementById('gameCanvas').style.display = 'block';
-            document.getElementById('gameUI').style.display = 'block';
-            
-            initGame(mode);
         }
 
         // Exit Game
@@ -1059,7 +1074,23 @@
 
         // Initialize 3D Game
         function initGame(mode) {
+            console.log('initGame called with mode:', mode);
+            
+            if (typeof THREE === 'undefined') {
+                console.error('THREE.js not loaded!');
+                showNotification('Error: Game engine not loaded. Please refresh the page.');
+                return;
+            }
+            
             const canvas = document.getElementById('gameCanvas');
+            console.log('Canvas element:', canvas);
+            
+            if (!canvas) {
+                console.error('Canvas element not found!');
+                showNotification('Error: Canvas not found. Please refresh the page.');
+                return;
+            }
+            
             gameScene = new THREE.Scene();
             gameScene.background = new THREE.Color(0x0a0a0f);
             
