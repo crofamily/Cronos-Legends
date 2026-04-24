@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronos Legends - Web3 Gaming & NFT Ecosystem</title>
+    <title>Cronos Legends - Web3 Gaming & NFT Ecosystem on Cronos</title>
+    <meta name="description" content="Cronos Legends is a Web3 gaming and NFT ecosystem on Cronos. Three factions, multiple tokens ($CLG, $CARA, $TRI, $LYRA), expanding collections, and an active Discord arena.">
+    <meta name="theme-color" content="#FFD700">
+    <link rel="canonical" href="https://cronoslegends.com/">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cronos Legends">
+    <meta property="og:title" content="Cronos Legends - Web3 Gaming & NFT Ecosystem">
+    <meta property="og:description" content="Three factions. Multiple tokens. Expanding NFT collections. Enter the Cronos Legends universe.">
+    <meta property="og:url" content="https://cronoslegends.com/">
+    <meta property="og:image" content="https://cronoslegends.com/Images/projectoverviewlowres.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@CronosLegends">
+    <meta name="twitter:title" content="Cronos Legends - Web3 Gaming & NFT Ecosystem">
+    <meta name="twitter:description" content="Three factions. Multiple tokens. Expanding NFT collections. Enter the Cronos Legends universe.">
+    <meta name="twitter:image" content="https://cronoslegends.com/Images/projectoverviewlowres.png">
+
+    <link rel="icon" type="image/png" href="/Images/clg-logo.png">
+    <link rel="apple-touch-icon" href="/Images/clg-logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -94,12 +116,25 @@
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a:focus-visible,
+        .dropdown-toggle:focus-visible {
             color: #FFD700;
+            outline: none;
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a:focus-visible::after {
             width: 100%;
+        }
+
+        /* Accessible focus ring for interactive elements */
+        a:focus-visible,
+        button:focus-visible,
+        .btn:focus-visible {
+            outline: 2px solid #FFD700;
+            outline-offset: 3px;
+            border-radius: 4px;
         }
 
         /* Dropdown Menu */
@@ -109,6 +144,17 @@
 
         .dropdown-toggle {
             cursor: pointer;
+            background: none;
+            border: none;
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ccc;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
         }
 
         .dropdown-toggle::before {
@@ -590,6 +636,9 @@
             border: 2px solid rgba(255, 215, 0, 0.2);
             transition: all 0.4s ease;
             cursor: pointer;
+            display: block;
+            color: inherit;
+            text-decoration: none;
         }
 
         .collection-mini-card:hover {
@@ -830,11 +879,13 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Home</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
+                    <button type="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">NFT Collections</button>
                     <ul class="dropdown-menu">
                         <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
                         <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
                         <li><a href="/totems">Totems</a></li>
+                        <li><a href="/trinari-elderborn">Trinari Elderborn</a></li>
+                        <li><a href="/nft">All Collections</a></li>
                     </ul>
                 </li>
                 <li><a href="/tokens">Tokens</a></li>
@@ -843,7 +894,7 @@
                 <li><a href="/roadmap">Roadmap</a></li>
                 <li><a href="/faq">FAQ</a></li>
             </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">☰</button>
         </div>
     </nav>
 
@@ -851,13 +902,15 @@
     <div class="hero">
         <div class="hero-content">
             <h1 class="logo">CRONOS LEGENDS</h1>
-            <p class="subtitle">⚔️ Web3 Gaming & NFT Ecosystem</p>
+            <p class="subtitle"><span aria-hidden="true">⚔️</span> Web3 Gaming &amp; NFT Ecosystem</p>
             <p class="hero-text">
-                Enter a world where three factions clash for dominance. Collect unique NFTs, 
-                earn tokens, battle in the arena, and shape the destiny of the Cronos blockchain. 
+                Enter a world where three factions clash for dominance. Collect unique NFTs,
+                earn tokens, battle in the arena, and shape the destiny of the Cronos blockchain.
             </p>
             <div class="hero-buttons">
-                <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">💬 Join Discord</a>
+                <a href="/nft" class="btn btn-primary"><span aria-hidden="true">🎨</span> Explore NFTs</a>
+                <a href="/game" class="btn btn-outline"><span aria-hidden="true">🎮</span> Play the Game</a>
+                <a href="https://discord.gg/cronoslegends" target="_blank" rel="noopener" class="btn btn-discord"><span aria-hidden="true">💬</span> Join Discord</a>
             </div>
         </div>
     </div>
@@ -876,7 +929,10 @@
                 <div class="main-token-label">Main Token</div>
                 <div class="main-token-box">
                     <div class="main-token-content">
-                        <img src="Images/clg-logo.png" alt="CLG Token" class="main-token-logo">
+                        <picture>
+                            <source srcset="Images/clg-logo.webp" type="image/webp">
+                            <img src="Images/clg-logo.png" alt="CLG Token logo" class="main-token-logo" width="105" height="105" decoding="async">
+                        </picture>
                         <div class="main-token-name">$CLG</div>
                     </div>
                 </div>
@@ -888,11 +944,17 @@
                 <!-- Cronos Guardians -->
                 <div class="faction-card guardians">
                     <h4 class="faction-name">CRONOS GUARDIANS</h4>
-                    <img src="Images/cara1.png" alt="Cronos Guardians Character" class="faction-image">
+                    <picture>
+                        <source srcset="Images/cara1.webp" type="image/webp">
+                        <img src="Images/cara1.png" alt="Cronos Guardians faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
+                    </picture>
                     <div class="faction-token">
                         <div class="faction-token-label">Faction Token</div>
                         <div class="faction-token-content">
-                            <img src="Images/cara1.png" alt="CARA Token" class="faction-token-logo">
+                            <picture>
+                                <source srcset="Images/cara1.webp" type="image/webp">
+                                <img src="Images/cara1.png" alt="CARA Token logo" class="faction-token-logo" loading="lazy" decoding="async" width="60" height="60">
+                            </picture>
                             <div class="faction-token-name">$CARA</div>
                         </div>
                         <div class="faction-nft-note">CARA also as NFT in LA1</div>
@@ -902,11 +964,17 @@
                 <!-- Trinari -->
                 <div class="faction-card trinari">
                     <h4 class="faction-name">TRINARI</h4>
-                    <img src="Images/trinari-logo.jpg" alt="Trinari Characters" class="faction-image">
+                    <picture>
+                        <source srcset="Images/trinari-logo.webp" type="image/webp">
+                        <img src="Images/trinari-logo.jpg" alt="Trinari faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
+                    </picture>
                     <div class="faction-token">
                         <div class="faction-token-label">Faction Token</div>
                         <div class="faction-token-content">
-                            <img src="Images/tri-logo.png" alt="TRI Token" class="faction-token-logo">
+                            <picture>
+                                <source srcset="Images/tri-logo.webp" type="image/webp">
+                                <img src="Images/tri-logo.png" alt="TRI Token logo" class="faction-token-logo" loading="lazy" decoding="async" width="60" height="60">
+                            </picture>
                             <div class="faction-token-name">$TRI</div>
                         </div>
                         <div class="faction-nft-note">150 pcs Trinari in LA2</div>
@@ -916,11 +984,17 @@
                 <!-- Chaos Horde -->
                 <div class="faction-card horde">
                     <h4 class="faction-name">CHAOS HORDE</h4>
-                    <img src="Images/Lyra.jpg" alt="Chaos Horde Character" class="faction-image">
+                    <picture>
+                        <source srcset="Images/Lyra.webp" type="image/webp">
+                        <img src="Images/Lyra.jpg" alt="Chaos Horde faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
+                    </picture>
                     <div class="faction-token">
                         <div class="faction-token-label">Faction Token</div>
                         <div class="faction-token-content">
-                            <img src="Images/Lyralogo1.png" alt="LYRA Token" class="faction-token-logo">
+                            <picture>
+                                <source srcset="Images/Lyralogo1.webp" type="image/webp">
+                                <img src="Images/Lyralogo1.png" alt="LYRA Token logo" class="faction-token-logo" loading="lazy" decoding="async" width="60" height="60">
+                            </picture>
                             <div class="faction-token-name">$LYRA</div>
                         </div>
                         <div class="faction-nft-note">LYRA also as NFT in LA2</div>
@@ -932,49 +1006,53 @@
             <div class="collections-overview">
                 <h3 class="collections-category-title">🎨 Main NFT Collections</h3>
                 <div class="collections-row">
-                    <div class="collection-mini-card" onclick="window.location.href='/legends-awaken-1'">
-                        <img src="Images/LA1/Horde Creatures (1).jpg" alt="Legends Awaken I" class="collection-mini-image">
+                    <a href="/legends-awaken-1" class="collection-mini-card">
+                        <picture>
+                            <source srcset="Images/LA1/Horde Creatures (1).webp" type="image/webp">
+                            <img src="Images/LA1/Horde Creatures (1).jpg" alt="Legends Awaken I collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
+                        </picture>
                         <div class="collection-mini-info">
                             <h4 class="collection-mini-title">Legends Awaken I</h4>
                             <p class="collection-mini-subtitle">Original Collection</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="collection-mini-card" onclick="window.location.href='/legends-awaken-2'">
-                        <img src="Images/PreviewLAII/1.jpg" alt="Legends Awaken II" class="collection-mini-image">
+                    <a href="/legends-awaken-2" class="collection-mini-card">
+                        <picture>
+                            <source srcset="Images/PreviewLAII/1.webp" type="image/webp">
+                            <img src="Images/PreviewLAII/1.jpg" alt="Legends Awaken II collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
+                        </picture>
                         <div class="collection-mini-info">
                             <h4 class="collection-mini-title">Legends Awaken II</h4>
                             <p class="collection-mini-subtitle">Three Factions United</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <h3 class="collections-category-title">✨ Exclusive Collections</h3>
                 <div class="collections-row">
-                    <div class="collection-mini-card" onclick="window.location.href='/totems'">
-                        <img src="Images/totem-collection.jpg" alt="Totems" class="collection-mini-image">
+                    <a href="/totems" class="collection-mini-card">
+                        <picture>
+                            <source srcset="Images/totem-collection.webp" type="image/webp">
+                            <img src="Images/totem-collection.jpg" alt="Totems of Power collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
+                        </picture>
                         <div class="collection-mini-info">
                             <h4 class="collection-mini-title">Totems of Power</h4>
                             <p class="collection-mini-subtitle">Mystical Artifacts</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="collection-mini-card" onclick="window.location.href='/art-of-giving'">
-                        <img src="Images/peace-collection.jpg" alt="Art of Giving Collection" class="collection-mini-image">
-                        <div class="collection-mini-info">
-                            <h4 class="collection-mini-title">Art of Giving</h4>
-                            <p class="collection-mini-subtitle">PEACE Collection</p>
-                        </div>
-                    </div>
-
-                    <div class="collection-mini-card" onclick="window.location.href='https://cronoslegends.com/trinari-elderborn/'" style="position: relative;">
-                        <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn Collection" class="collection-mini-image">
-                        <div class="collection-badge" style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #00ff64, #00cc50); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); z-index: 2;">🌟 COMING SOON</div>
+                    <a href="/trinari-elderborn" class="collection-mini-card" style="position: relative;">
+                        <picture>
+                            <source srcset="Images/TrinariElderborn/T54.webp" type="image/webp">
+                            <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
+                        </picture>
+                        <div class="collection-badge" style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #00ff64, #00cc50); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); z-index: 2;"><span aria-hidden="true">🌟</span> COMING SOON</div>
                         <div class="collection-mini-info">
                             <h4 class="collection-mini-title">Trinari Elderborn</h4>
                             <p class="collection-mini-subtitle">Next Generation</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -994,7 +1072,7 @@
                     <div class="feature-icon">⚔️</div>
                     <h3 class="feature-title">Legends Arena</h3>
                     <p class="feature-desc">
-                        Battle in Discord game. Your NFTs and tokens work as boosters in the game. Prize pool of +1500$!
+                        Battle in our Discord game. Your NFTs and tokens act as boosters. Prize pool of $1,500+.
                     </p>
                 </div>
 
@@ -1075,41 +1153,45 @@
         </p>
         
         <div class="social-links">
-            <a href="https://discord.gg/cronoslegends" target="_blank" class="btn btn-discord">💬 Join Discord</a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter">🐦 Follow on X</a>
+            <a href="https://discord.gg/cronoslegends" target="_blank" rel="noopener" class="btn btn-discord"><span aria-hidden="true">💬</span> Join Discord</a>
+            <a href="https://x.com/CronosLegends" target="_blank" rel="noopener" class="btn btn-twitter"><span aria-hidden="true">🐦</span> Follow on X</a>
         </div>
-        
+
         <div class="footer-links">
             <a href="/">Home</a>
             <a href="/legends-awaken-2">Legends Awaken II</a>
             <a href="/legends-awaken-1">Legends Awaken I</a>
             <a href="/totems">Totems</a>
+            <a href="/trinari-elderborn">Trinari Elderborn</a>
             <a href="/tokens">Tokens</a>
-            <a href="/Earn/">Earn & Swap</a>
+            <a href="/Earn/">Earn &amp; Swap</a>
             <a href="/game">Game</a>
             <a href="/roadmap">Roadmap</a>
             <a href="/faq">FAQ</a>
             <a href="/la2-terms">LA2 Terms</a>
             <a href="/la1-terms">LA1 Terms</a>
         </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+
+        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2026 Cronos Legends. All rights reserved.</p>
     </div>
 
     <script>
         // Mobile menu toggle
         function toggleMobileMenu() {
             const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+            const btn = document.querySelector('.mobile-menu-toggle');
+            const open = navLinks.classList.toggle('active');
+            if (btn) btn.setAttribute('aria-expanded', String(open));
         }
 
-        // Mobile dropdown toggle
+        // Dropdown toggle (mobile tap + keyboard)
         document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', (e) => {
                 if (window.innerWidth <= 968) {
                     e.preventDefault();
                     const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
+                    const open = dropdown.classList.toggle('active');
+                    toggle.setAttribute('aria-expanded', String(open));
                 }
             });
         });

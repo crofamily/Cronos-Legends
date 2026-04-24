@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /arenatest/
+Disallow: /earntest.html
+
+Sitemap: https://cronoslegends.com/sitemap.xml
