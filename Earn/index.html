@@ -779,17 +779,6 @@
                     <span class="fund-usd" style="color: #22c55e;">$0.00</span>
                 </div>
                 
-                <div class="fund-item" data-token="LYRA" style="border-color: rgba(239, 68, 68, 0.6); background: rgba(239, 68, 68, 0.05);">
-                    <span class="fund-label" style="color: #ef4444;">🩸 $LYRA</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd" style="color: #ef4444;">$0.00</span>
-                </div>
-                
-                <div class="fund-item" data-token="CARA" style="border-color: rgba(236, 72, 153, 0.6); background: rgba(236, 72, 153, 0.05);">
-                    <span class="fund-label" style="color: #ec4899;">🌸 $CARA</span>
-                    <span class="fund-value">Loading...</span>
-                    <span class="fund-usd" style="color: #ec4899;">$0.00</span>
-                </div>
             </div>
 
             <!-- Partner & Other Token Holdings (Combined) -->
@@ -939,52 +928,6 @@
                     </div>
                     <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
                         Legends Awaken II collection NFT swap with increasing value over time. Subject to changes; continuation after May to be re-evaluated.
-                    </p>
-                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                        🎫 Create Swap Ticket on Discord
-                    </button>
-                </div>
-            </div>
-
-            <!-- Cara Valoria - WITH FULL BACKGROUND IMAGE -->
-            <div class="swap-card" style="position: relative; overflow: hidden; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: flex-end;">
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
-                    <img src="/Images/cara1.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="card-content" style="background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.85) 60%, transparent 100%); padding: 25px;">
-                    <h3>
-                        <span class="icon">CV</span>
-                        Cara Valoria Owner
-                    </h3>
-                    <div class="swap-rate">1 NFT = <span style="color: #ec4899;">0.005</span> <span class="token-badge">$CARA</span></div>
-                    <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                        Live USD Value: <span id="cara-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
-                    </div>
-                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                        Exclusive offer for Cara Valoria holder from Legends Awaken I.
-                    </p>
-                    <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
-                        🎫 Create Swap Ticket on Discord
-                    </button>
-                </div>
-            </div>
-
-            <!-- Lyra NFT Owner - WITH FULL BACKGROUND IMAGE -->
-            <div class="swap-card" style="position: relative; overflow: hidden; aspect-ratio: 1/1; display: flex; flex-direction: column; justify-content: flex-end;">
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; pointer-events: none; z-index: 0;">
-                    <img src="/Images/lyralogo.png" alt="" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="card-content" style="background: linear-gradient(to top, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.85) 60%, transparent 100%); padding: 25px;">
-                    <h3>
-                        <span class="icon">LY</span>
-                        Lyra NFT Owner
-                    </h3>
-                    <div class="swap-rate">1 NFT = <span style="color: #ef4444;">5,000,000</span> <span class="token-badge">$LYRA</span></div>
-                    <div style="color: #aaa; font-size: 14px; margin-top: 10px;">
-                        Live USD Value: <span id="lyra-usd-value" style="color: #00d4ff; font-weight: bold;">Loading...</span>
-                    </div>
-                    <p style="color: #aaa; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                         Exclusive offer for Lyra holder from Legends Awaken II.
                     </p>
                     <button class="swap-btn" onclick="createTicket()" style="font-size: 16px; padding: 15px;">
                         🎫 Create Swap Ticket on Discord
@@ -1194,9 +1137,7 @@
         const TOKEN_CONTRACTS = {
             CRO: 'NATIVE',
             CLG: '0x08d9cb5100C306C2909B63415d7ff05268633b41',
-            TRI: '0xF1F8B074D616796Ae529651a41874246389eC6d3',
-            LYRA: '0xb0B1b92e435A00DbB7d486CafFf7C2ba380De9cE',
-            CARA: '0x3Caf0136302440Ebb68f41D6c57b7bEbDE9E12ca'
+            TRI: '0xF1F8B074D616796Ae529651a41874246389eC6d3'
         };
 
         const PARTNER_CONTRACTS = {
@@ -1273,18 +1214,6 @@
         // UPDATE SWAP CARD PRICES
         // ===========================
         function updateSwapCardPrices() {
-            // Cara Valoria: 0.005 CARA
-            if (TOKEN_PRICES['CARA']) {
-                const caraValue = 0.005 * TOKEN_PRICES['CARA'];
-                document.getElementById('cara-usd-value').textContent = formatUSD(caraValue);
-            }
-            
-            // Lyra: 5,000,000 LYRA
-            if (TOKEN_PRICES['LYRA']) {
-                const lyraValue = 5000000 * TOKEN_PRICES['LYRA'];
-                document.getElementById('lyra-usd-value').textContent = formatUSD(lyraValue);
-            }
-            
             // Totems: CLG values
             if (TOKEN_PRICES['CLG']) {
                 const mythicValue = 1 * TOKEN_PRICES['CLG'];
