@@ -53,7 +53,7 @@
     "positionManager": "0xc2DDB059FEc2afa593dFF9c70Fda2cfABe9b4eC8",
     "owner": "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D",
     "feeTier": 10000,
-    "vvsUrl": "https://vvs.finance/swap?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41"
+    "buyUrl": "https://cro.trade/0x08d9cb5100c306c2909b63415d7ff05268633b41"
   },
   "pricing": {
     "cronusWcroPair": "0x9e44225db6A7c0d31f081D9FfA658979B8e523db",
