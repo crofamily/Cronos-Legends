@@ -119,6 +119,65 @@
       });
     }
 
+    // -------------------------------------------------------------- hero card shuffle
+    // The three fanned hero cards take turns in front: every few seconds the left card glides to
+    // the centre. Clicking a side card brings it forward. Pauses on hover, off screen and in
+    // background tabs; no automatic motion for people who prefer reduced motion.
+    document.querySelectorAll(".hero-art").forEach((art) => {
+      const cards = Array.from(art.querySelectorAll(".card-art"));
+      if (cards.length !== 3) return;
+      cards.forEach((c) => c.classList.remove("bob"));
+      let slots = { left: cards[0], center: cards[2], right: cards[1] };
+      const apply = () => {
+        Object.entries(slots).forEach(([pos, el]) => {
+          el.classList.remove("pos-left", "pos-center", "pos-right");
+          el.classList.add("pos-" + pos);
+        });
+      };
+      apply();
+
+      let timer = null;
+      let onScreen = true;
+      let hovering = false;
+      const stop = () => {
+        clearInterval(timer);
+        timer = null;
+      };
+      const start = () => {
+        if (reduceMotion || timer || !onScreen || hovering || document.hidden) return;
+        timer = setInterval(() => {
+          slots = { left: slots.right, center: slots.left, right: slots.center };
+          apply();
+        }, 5000);
+      };
+
+      cards.forEach((el) =>
+        el.addEventListener("click", () => {
+          if (slots.center === el) return;
+          slots = slots.left === el ? { left: slots.right, center: el, right: slots.center } : { left: slots.center, center: el, right: slots.left };
+          apply();
+          stop();
+          start();
+        })
+      );
+      art.addEventListener("pointerenter", () => {
+        hovering = true;
+        stop();
+      });
+      art.addEventListener("pointerleave", () => {
+        hovering = false;
+        start();
+      });
+      document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(([en]) => {
+          onScreen = en.isIntersecting;
+          onScreen ? start() : stop();
+        }).observe(art);
+      }
+      start();
+    });
+
     // -------------------------------------------------------------- reading progress
     const bar = document.querySelector(".progress");
     if (bar) {
@@ -145,7 +204,8 @@
   function countUp(key, value, format) {
     const els = document.querySelectorAll('[data-live="' + key + '"]');
     if (!els.length) return;
-    if (reduceMotion || !isFinite(value)) return set(key, format(value));
+    // Background tabs don't run animation frames, so show the final number straight away there.
+    if (reduceMotion || document.hidden || !isFinite(value)) return set(key, format(value));
     const start = performance.now();
     const dur = 900;
     const step = (now) => {
@@ -179,6 +239,9 @@
             rows.forEach(([k, n]) => {
               total += n;
               countUp("burned-" + k, n, (v) => CL.fmt(Math.round(v), 0));
+              const col = burnable.find((c) => c.key === k);
+              const size = col && col.minTokenId != null && col.maxTokenId ? col.maxTokenId - col.minTokenId + 1 : 0;
+              if (size) set("burned-" + k + "-pct", CL.fmt((n / size) * 100, 1) + "% of the collection, gone forever");
             });
             countUp("burned", total, (v) => CL.fmt(Math.round(v), 0));
           })
