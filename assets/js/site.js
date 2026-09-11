@@ -176,7 +176,7 @@
       c.setAttribute("aria-hidden", "true");
     });
 
-    const SPEED = TURN / 7; // radians per second; with the easing below a new card reaches the front about every 8 s
+    const SPEED = TURN / 5.4; // radians per second; with the easing below a new card reaches the front about every 6 s
     let angle = -2 * TURN; // card i sits at angle + i * TURN, so the third card starts in front
     let pace = 0; // 0…1, eases towards 0 while paused or hovered
     let hovering = false;
