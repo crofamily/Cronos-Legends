@@ -1,0 +1,80 @@
+# Watches the NFT burn redeemers and the CLG/CRONUS LP, and posts Discord alerts.
+#
+# Setup (once): in GitHub → Settings → Secrets and variables → Actions, add
+#   DISCORD_WEBHOOK_URL   a webhook for the Discord channel that should receive alerts
+#   DISCORD_MENTION_ID    (optional) your Discord user ID, to be pinged on critical alerts
+#   POKE_PRIVATE_KEY      private key of a NEW, separate wallet holding only ~30 CRO for gas. The
+#                         monitor uses it to record the oracle's hourly price checkpoint (poke() is
+#                         permissionless). Never use the treasury key here.
+# Then run this workflow once by hand with "mode = test" to check the connection.
+name: Burn monitor
+
+on:
+  schedule:
+    # Every 30 minutes, off the top of the hour (GitHub delays top-of-hour schedules).
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "run = normal check, test = send a test message, digest = send the daily report now"
+        required: true
+        default: run
+        type: choice
+        options: [run, test, digest]
+
+permissions:
+  contents: read
+  actions: write # only used to keep this schedule enabled (see the last step)
+
+concurrency:
+  group: burn-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Install
+        working-directory: monitor
+        run: npm install --no-audit --no-fund
+
+      - name: Restore monitor state
+        uses: actions/cache/restore@v6
+        with:
+          path: .monitor-state
+          key: burn-monitor-state-${{ github.run_id }}
+          restore-keys: burn-monitor-state-
+
+      - name: Check burns, reserves and LP
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_MENTION_ID: ${{ secrets.DISCORD_MENTION_ID }}
+          POKE_PRIVATE_KEY: ${{ secrets.POKE_PRIVATE_KEY }}
+          MONITOR_MODE: ${{ inputs.mode || 'run' }}
+          MONITOR_STATE: ${{ github.workspace }}/.monitor-state/state.json
+        run: node monitor/burn-monitor.mjs
+
+      - name: Save monitor state
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: .monitor-state
+          key: burn-monitor-state-${{ github.run_id }}
+
+      # GitHub disables scheduled workflows in public repos after 60 days without commits.
+      # Re-enabling an enabled workflow is harmless and keeps the alerts (and the daily site
+      # refresh of the LP fee history) running.
+      - name: Keep schedules enabled
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X PUT "repos/${{ github.repository }}/actions/workflows/burn-monitor.yml/enable" || true
+          gh api -X PUT "repos/${{ github.repository }}/actions/workflows/static.yml/enable" || true

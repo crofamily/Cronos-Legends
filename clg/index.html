@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>$CLG token and liquidity — Cronos Legends</title>
+  <meta name="description" content="$CLG is the one token of Cronos Legends: exactly 500, fixed forever, ownership renounced. See where every $CLG lives, our VVS liquidity and fees, and how to get $CLG, all read live from Cronos.">
+  <link rel="canonical" href="https://cronoslegends.com/clg/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="500 $CLG. That's all there will ever be.">
+  <meta property="og:description" content="The one token of Cronos Legends: fixed supply, renounced ownership, and liquidity you can check live.">
+  <meta property="og:url" content="https://cronoslegends.com/clg/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/clg.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/clg.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/clg-256.webp" fetchpriority="high">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Cronos Legends","url":"https://cronoslegends.com/","logo":"https://cronoslegends.com/assets/img/icon-512.png","sameAs":["https://x.com/CronosLegends","https://discord.gg/huWn4Tz4g4","https://crovia.app/creators/cronoslegends"]}
+  </script>
+  <style>
+    /* $CLG page: hero coin, live supply bar, LP widget states. Segment colours are darker steps of the
+       faction hues, validated as a categorical set (lightness band, CVD separation, contrast). */
+    .clg-coin { display: grid; justify-items: center; gap: var(--space-5); }
+    .clg-coin img { width: min(256px, 62vw); filter: drop-shadow(0 22px 44px rgba(242, 185, 59, 0.32)); }
+    .clg-coin .row { justify-content: center; }
+    .supply-bar { display: flex; gap: 2px; height: 14px; border-radius: 4px; overflow: hidden; margin-bottom: var(--space-5); }
+    .supply-bar.is-loading { background: var(--surface-3); }
+    .seg { flex: 0 1 0; min-width: 0; background: var(--c); transition: flex-grow 900ms var(--ease); }
+    .seg--project { --c: #ba8900; }
+    .seg--reserves { --c: #997fdf; }
+    .seg--pool { --c: #29ab78; }
+    .seg--others { --c: #4896e3; }
+    .seg--burned { --c: #ee5b44; }
+    .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 0; background: var(--c); }
+    .stat dd.sub { font: 400 var(--fs-small)/1.5 var(--font-body); margin: 4px 0 0; color: var(--text-2); }
+    .stat dd.sub a { color: var(--text-2); white-space: nowrap; }
+    .split.is-top { align-items: start; }
+    .nb { white-space: nowrap; }
+    .stat dd.sub b { color: var(--text); }
+    .use-icon { width: 40px; height: 40px; color: var(--accent); margin-bottom: var(--space-4); }
+    .lp-group h3 { margin-bottom: var(--space-3); }
+    [data-lp-widget][data-state="loading"] [data-lp] { color: var(--text-3); }
+    .lp-foot { justify-content: space-between; margin-top: var(--space-5); }
+    .lp-foot .live-note { margin: 0; }
+    .lp-error { display: none; margin: var(--space-3) 0 0; }
+    [data-lp-widget][data-state="error"] .lp-error { display: block; }
+    .addr-row { margin-top: var(--space-5); }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/" aria-current="page">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/" aria-current="page">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="page-hero" aria-labelledby="clg-title">
+    <div class="container split">
+      <div>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">$CLG</span></nav>
+        <span class="eyebrow">The one token of Cronos Legends</span>
+        <h1 id="clg-title">500 $CLG. That's all there will ever be.</h1>
+        <p class="lead">All 500 $CLG were minted once, when the token was created in 2024, and four days later its ownership was renounced. Nobody can make more. Not the team, not anyone.</p>
+        <p><span class="addr addr--full"><span class="label">$CLG</span><code>0x08d9cb5100C306C2909B63415d7ff05268633b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank" aria-label="View $CLG on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></p>
+        <div class="hero-actions">
+          <a class="btn btn--gold btn--lg" href="https://vvs.finance/swap?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank">Get $CLG on VVS</a>
+          <a class="btn btn--lg" href="#liquidity">See the liquidity</a>
+        </div>
+      </div>
+      <div class="clg-coin">
+        <img class="bob" src="/assets/img/clg-256.webp" width="256" height="256" alt="The $CLG coin: a black and gold dragon coiled around a gold coin marked CLG" fetchpriority="high">
+        <div class="row">
+          <span class="chip chip--gold">500 total</span><span class="chip">No mint</span><span class="chip">No tax</span><span class="chip">Owner renounced</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Token facts -->
+  <section class="section" aria-labelledby="facts-title">
+    <div class="container split is-top">
+      <div>
+        <span class="eyebrow">Token facts</span>
+        <h2 id="facts-title">Written once. Changed by no one.</h2>
+        <p class="lead">$CLG is a plain ERC-20 token on Cronos. Its rules were set the day it was created, and there is no owner left who could change them.</p>
+        <p class="muted">Don't take our word for it: every fact here links to the chain.</p>
+        <p><a class="link-arrow" href="https://explorer.cronos.org/token/0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank">Check $CLG on the Cronos explorer</a></p>
+      </div>
+      <div class="card card--pad-lg reveal">
+        <dl class="facts">
+          <dt>Name</dt><dd>Cronos Legends (CLG)</dd>
+          <dt>Network</dt><dd>Cronos, chain ID 25</dd>
+          <dt>Decimals</dt><dd>18</dd>
+          <dt>Total supply</dt><dd>Exactly 500 CLG, all minted once when the token was created on 2024-10-15</dd>
+          <dt>New minting</dt><dd>Impossible. The contract has no mint function.</dd>
+          <dt>Owner</dt><dd>None. Ownership was renounced on 2024-10-19. <a href="https://explorer.cronos.org/tx/0x12d1cb8111c938a00903acdfd8c1aabd8cbdb3b49ba1df4f2e47167011be7ce8" rel="noopener" target="_blank">View the transaction</a></dd>
+          <dt>Code</dt><dd>A minimal clone (EIP-1167) of a verified, plain OpenZeppelin ERC-20 implementation, <a class="nb" href="https://explorer.cronos.org/address/0x08A78d6CBBf1e05CE0b735ba1277158EC1747d3b" rel="noopener" target="_blank">0x08A7…3d7b</a>. That address is fixed in the clone's code, so it can't be upgraded.</dd>
+          <dt>Controls</dt><dd>None: no transfer tax, no blacklist, no pause.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where the 500 live (live) -->
+  <section class="section section--deep section--rim" aria-labelledby="supply-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Live from Cronos</span>
+        <h2 id="supply-title">Where the 500 $CLG live.</h2>
+        <p>Every $CLG sits at an address you can check. These balances are read from the token contract each time you open this page.</p>
+      </div>
+      <div data-supply-widget>
+        <div class="supply-bar is-loading" aria-hidden="true">
+          <span class="seg seg--project" data-supply-bar="project"></span>
+          <span class="seg seg--reserves" data-supply-bar="reserves" hidden></span>
+          <span class="seg seg--pool" data-supply-bar="pool"></span>
+          <span class="seg seg--others" data-supply-bar="others"></span>
+          <span class="seg seg--burned" data-supply-bar="burned"></span>
+        </div>
+        <dl class="stats">
+          <div class="stat">
+            <dt><span class="swatch seg--project"></span>Project wallet</dt>
+            <dd class="num is-loading" data-supply="project">—</dd>
+            <dd class="sub"><b data-supply-share="project">—</b> of supply. Our single-key wallet, <a href="https://explorer.cronos.org/address/0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D" rel="noopener" target="_blank">0xAF87…175D</a></dd>
+          </div>
+          <div class="stat" data-supply-row="reserves" hidden>
+            <dt><span class="swatch seg--reserves"></span>Burn reserves</dt>
+            <dd class="num is-loading" data-supply="reserves">—</dd>
+            <dd class="sub"><b data-supply-share="reserves">—</b> of supply. Waiting in the burn contracts to pay burners. <a href="/burn/">Burn page</a></dd>
+          </div>
+          <div class="stat">
+            <dt><span class="swatch seg--pool"></span>VVS pool</dt>
+            <dd class="num is-loading" data-supply="pool">—</dd>
+            <dd class="sub"><b data-supply-share="pool">—</b> of supply. The CLG/CRONUS 1% pool, including our position, <a href="https://explorer.cronos.org/address/0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818" rel="noopener" target="_blank">0x3d7e…d818</a></dd>
+          </div>
+          <div class="stat">
+            <dt><span class="swatch seg--others"></span>Everyone else</dt>
+            <dd class="num is-loading" data-supply="others">—</dd>
+            <dd class="sub"><b data-supply-share="others">—</b> of supply. Every other wallet and contract. <a href="https://explorer.cronos.org/token/0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank">See all holders</a></dd>
+          </div>
+          <div class="stat">
+            <dt><span class="swatch seg--burned"></span>Burn address</dt>
+            <dd class="num is-loading" data-supply="burned">—</dd>
+            <dd class="sub"><b data-supply-share="burned">—</b> of supply. Out of circulation for good, <a href="https://explorer.cronos.org/address/0x000000000000000000000000000000000000dEaD" rel="noopener" target="_blank">0x…dEaD</a></dd>
+          </div>
+        </dl>
+        <p class="live-note" data-supply-updated>Live from Cronos</p>
+        <p class="small faint" data-supply-error hidden>Couldn't reach Cronos just now. Refresh the page to try again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What $CLG does -->
+  <section class="section" aria-labelledby="use-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What $CLG does</span>
+        <h2 id="use-title">Small supply, real jobs.</h2>
+        <p>$CLG is the realm's one token. Here is what it does today.</p>
+      </div>
+      <div class="grid-2">
+        <div class="card card--accent card--pad-lg reveal" data-faction="chaos">
+          <svg class="use-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <h3>Burn payouts</h3>
+          <p>Burn a Legends Awaken I or II NFT and you receive $35 of $CLG, never more than 0.3 CLG, in the same transaction. Trinari: Elderborn pays $15 of $CLG once its mint has sold out.</p>
+          <p><a class="link-arrow" href="/burn/#rules">Read the burn rules</a></p>
+        </div>
+        <div class="card card--accent card--pad-lg reveal" data-faction="guardian">
+          <svg class="use-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Holder roles in the Discord</h3>
+          <p>Verify your wallet in the Discord and your $CLG unlocks holder roles and channels, right next to the roles for your Legends Awaken NFTs.</p>
+          <p><a class="link-arrow" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Join the Discord</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Liquidity -->
+  <section class="section section--deep" id="liquidity" aria-labelledby="lp-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Liquidity</span>
+        <h2 id="lp-title">Our liquidity, in the open.</h2>
+        <p>Most $CLG trading happens in one pool: the VVS Finance V3 CLG/CRONUS pool with a 1% fee. Our project wallet supplies most of its liquidity through one full-range position, #49804. Every trade pays the pool 1%, and that fee goes to the liquidity in it.</p>
+        <p class="small">$CRONUS appears here only because it's the pool's pair token. Every trade in this pool has $CLG on one side and $CRONUS on the other, so the pool and its fees are counted in both.</p>
+      </div>
+
+      <div class="card card--pad-lg" data-lp-widget>
+        <div class="grid-3">
+          <div class="lp-group">
+            <h3>The pool</h3>
+            <dl class="facts">
+              <dt>Pool value</dt><dd class="num" data-lp="tvl">—</dd>
+              <dt>$CLG in the pool</dt><dd class="num" data-lp="pool-clg">—</dd>
+              <dt>CRONUS in the pool</dt><dd class="num" data-lp="pool-cronus">—</dd>
+              <dt>$CLG price here</dt><dd class="num" data-lp="clg-price">—</dd>
+            </dl>
+          </div>
+          <div class="lp-group">
+            <h3>Our position</h3>
+            <dl class="facts">
+              <dt>Position</dt><dd class="num" data-lp="position-ids">—</dd>
+              <dt>Value</dt><dd class="num" data-lp="position-value">—</dd>
+              <dt>Share of pool liquidity</dt><dd class="num" data-lp="position-share">—</dd>
+              <dt>Holds</dt><dd class="num"><span data-lp="position-clg">—</span> + <span data-lp="position-cronus">—</span></dd>
+            </dl>
+          </div>
+          <div class="lp-group">
+            <h3>Fees</h3>
+            <dl class="facts">
+              <dt>Waiting to collect</dt><dd class="num"><span data-lp="uncollected-clg">—</span> + <span data-lp="uncollected-cronus">—</span> <span class="faint">≈ <span data-lp="uncollected-usd">—</span></span></dd>
+              <dt data-lp-needs="history">Collected so far</dt><dd class="num" data-lp-needs="history"><span data-lp="collected-clg">—</span> + <span data-lp="collected-cronus">—</span> <span class="faint">≈ <span data-lp="collected-usd">—</span></span></dd>
+              <dt data-lp-needs="history">All fees to date</dt><dd class="num" data-lp-needs="history" data-lp="earned-usd">—</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="row lp-foot">
+          <p class="live-note">Live from Cronos · updated <span data-lp="updated">—</span></p>
+          <button class="btn btn--ghost" type="button" data-lp-refresh><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>Refresh</button>
+        </div>
+        <p class="small lp-error">Couldn't read the pool right now. Try Refresh in a moment.</p>
+      </div>
+
+      <div class="row addr-row">
+        <span class="addr"><span class="label">Pool</span><code>0x3d7e…d818</code><button type="button" data-copy="0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818" aria-label="Copy the VVS CLG/CRONUS pool address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/address/0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818" rel="noopener" target="_blank" aria-label="View the pool on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span>
+        <span class="addr"><span class="label">Project wallet</span><code>0xAF87…175D</code><button type="button" data-copy="0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D" aria-label="Copy the project wallet address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/address/0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D" rel="noopener" target="_blank" aria-label="View the project wallet on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span>
+      </div>
+      <p class="small faint" style="margin-top:var(--space-4)">Position #49804 is held by our single-key project wallet, the same wallet that receives NFT royalties. It isn't locked, so any change to it shows up here. Fees waiting to collect come from a read-only simulation of the position's collect call, which sends nothing. "Collected so far" is added up from on-chain events once a day.</p>
+
+      <div class="callout callout--tba" style="margin-top:var(--space-6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <p><strong>What we do with LP fees: TBA</strong>The plan will be published here. Until then the fees stay on-chain where anyone can see them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to get $CLG -->
+  <section class="section" id="get" aria-labelledby="get-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Getting $CLG</span>
+        <h2 id="get-title">Check twice, buy once.</h2>
+        <p class="lead">$CLG trades on VVS Finance, a decentralized exchange on Cronos. Here is how to get the real one.</p>
+        <ol class="steps">
+          <li><strong>Start from this page</strong>The Get $CLG on VVS button opens VVS with the real $CLG already selected.</li>
+          <li><strong>Check the address</strong>The only $CLG contract is <span class="nb">0x08d9…3b41</span>. Anyone can create a token called CLG, so match the first and last four characters every time.</li>
+          <li><strong>Mind the pool and the price impact</strong>Most $CLG liquidity sits in the CLG/CRONUS 1% pool; other $CLG pools are tiny and their prices can be far off. With only 500 $CLG in existence, even small trades move the price, so check the price impact before you confirm and keep your slippage tolerance low.</li>
+          <li><strong>Confirm in your own wallet</strong>Your wallet shows what you pay and what you receive. No real app or person will ever ask for your recovery phrase.</li>
+        </ol>
+      </div>
+      <div class="stack">
+        <a class="btn btn--gold btn--lg btn--block" href="https://vvs.finance/swap?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank">Get $CLG on VVS</a>
+        <div class="callout callout--warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <p><strong>Scams look official</strong>We never DM first and never ask for your recovery phrase. A message about a $CLG presale, a "migration" or an airdrop to claim is not from us. Our official links and addresses are all on <a href="/about/#official">one page</a>.</p>
+        </div>
+        <div class="callout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <p><strong>One token</strong>Older community tokens were retired. $CLG is the only Cronos Legends token.</p>
+        </div>
+        <p class="small faint">$CLG's price can fall as well as rise. Only spend what you can afford to lose. Nothing on this site is financial advice.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/chain-lite.js" defer></script>
+<script src="/assets/js/lp.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+<script>
+  /* Where the 500 $CLG live: live balanceOf reads for the project wallet, the VVS pool and the burn
+   * address (plus the burn reserves once their contracts are in burn.json). "Everyone else" is
+   * 500 minus those. Deferred scripts (chain-lite.js) have run by DOMContentLoaded. */
+  document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
+    var root = document.querySelector("[data-supply-widget]");
+    var CL = window.CL;
+    if (!root || !CL || !CL.lite) return;
+    var CLG = "0x08d9cb5100C306C2909B63415d7ff05268633b41";
+    var TOTAL = 500n * 10n ** 18n;
+    var HOLDERS = [
+      ["project", "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D"],
+      ["pool", "0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818"],
+      ["burned", "0x000000000000000000000000000000000000dEaD"]
+    ];
+    var LABELS = { project: "Project wallet", reserves: "Burn reserves", pool: "VVS pool", others: "Everyone else", burned: "Burn address" };
+    var bar = root.querySelector(".supply-bar");
+
+    function setText(selector, text) {
+      root.querySelectorAll(selector).forEach(function (el) {
+        el.textContent = text;
+        el.classList.remove("is-loading");
+      });
+    }
+
+    var reserves = CL.config()
+      .then(function (cfg) {
+        var list = (cfg.collections || []).map(function (c) { return c.redeemer; }).filter(Boolean);
+        if (!list.length) return null;
+        return Promise.all(list.map(function (a) { return CL.lite.balanceOf(CLG, a); })).then(function (bs) {
+          return bs.reduce(function (sum, b) { return sum + b; }, 0n);
+        });
+      })
+      .catch(function () { return null; });
+
+    Promise.all([Promise.all(HOLDERS.map(function (h) { return CL.lite.balanceOf(CLG, h[1]); })), reserves])
+      .then(function (res) {
+        var vals = { project: res[0][0], pool: res[0][1], burned: res[0][2] };
+        if (res[1] !== null) vals.reserves = res[1];
+        var known = Object.keys(vals).reduce(function (sum, k) { return sum + vals[k]; }, 0n);
+        vals.others = TOTAL > known ? TOTAL - known : 0n;
+
+        Object.keys(vals).forEach(function (key) {
+          var wei = vals[key];
+          var share = Number((wei * 1000000n) / TOTAL) / 10000;
+          var amount = CL.fmt(CL.num(wei), 2, 2) + " CLG";
+          var pct = CL.fmt(share, share < 1 ? 2 : 1, 1) + "%";
+          setText('[data-supply="' + key + '"]', amount);
+          setText('[data-supply-share="' + key + '"]', pct);
+          root.querySelectorAll('[data-supply-row="' + key + '"]').forEach(function (el) { el.hidden = false; });
+          var seg = root.querySelector('[data-supply-bar="' + key + '"]');
+          if (seg) {
+            seg.hidden = false;
+            seg.title = LABELS[key] + ": " + amount + " (" + pct + ")";
+            seg.style.minWidth = wei > 0n ? "3px" : "0px";
+            seg.style.flexGrow = String(share / 100);
+          }
+        });
+        bar.classList.remove("is-loading");
+        root.dataset.state = "ready";
+        root.querySelectorAll("[data-supply-updated]").forEach(function (el) {
+          el.textContent = "Live from Cronos · " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        });
+      })
+      .catch(function (err) {
+        console.warn("supply:", err);
+        root.dataset.state = "error";
+        root.querySelectorAll("[data-supply-error]").forEach(function (el) { el.hidden = false; });
+        root.querySelectorAll("dd.is-loading").forEach(function (el) { el.classList.remove("is-loading"); });
+      });
+  });
+</script>
+</body>
+</html>

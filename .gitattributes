@@ -1,0 +1,5 @@
+# Keep Solidity sources and verification inputs byte-identical on every OS, so the compiled
+# bytecode metadata (and explorer verification) reproduces exactly.
+*.sol text eol=lf
+contracts/deploy/verify/*.json text eol=lf
+contracts/deploy/artifacts.json text eol=lf

@@ -1,0 +1,12 @@
+{
+  "name": "cronos-legends-burn-monitor",
+  "private": true,
+  "type": "module",
+  "description": "Watches the burn redeemers and the CLG/CRONUS LP, and posts Discord alerts",
+  "scripts": {
+    "start": "node burn-monitor.mjs"
+  },
+  "dependencies": {
+    "ethers": "6.17.0"
+  }
+}

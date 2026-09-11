@@ -1,1702 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legends Awaken I - Original Collection | Cronos Legends</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 20px 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 10px 20px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-        }
-
-        .back-link:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateX(-5px);
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 100px;
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, 
-                rgba(0, 100, 255, 0.15) 0%,
-                rgba(255, 50, 50, 0.15) 100%
-            ), #0a0a0a;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 100, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 40%, rgba(255, 50, 50, 0.15) 0%, transparent 40%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .collection-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: 10px 25px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: #ccc;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .stat-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-
-        .stat-value {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: #999;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* NFT Stats Section */
-        .nft-stats-section {
-            max-width: 1200px;
-            margin: 80px auto 60px;
-            padding: 0 20px;
-        }
-
-        .nft-stats-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stats-subtitle {
-            text-align: center;
-            color: #999;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .nft-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .nft-stat-card {
-            background: rgba(20, 20, 20, 0.9);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nft-stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            padding: 3px;
-            background: linear-gradient(135deg, transparent, transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .nft-stat-card:hover::before {
-            opacity: 1;
-        }
-
-        .nft-stat-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Total NFTs Card - Blue/Cyan */
-        .nft-stat-card.total {
-            border: 2px solid rgba(0, 200, 255, 0.3);
-            background: radial-gradient(circle at top, rgba(0, 150, 255, 0.15), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.total::before {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-        }
-
-        .nft-stat-card.total .nft-stat-icon {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-        }
-
-        /* Burned NFTs Card - Red/Orange Fire */
-        .nft-stat-card.burned {
-            border: 2px solid rgba(255, 100, 50, 0.4);
-            background: radial-gradient(circle at top, rgba(255, 50, 0, 0.2), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.burned::before {
-            background: linear-gradient(135deg, #ff6b35, #f7931e, #ff4500);
-        }
-
-        .nft-stat-card.burned .nft-stat-icon {
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
-            animation: flameGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes flameGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 107, 53, 0.6),
-                            0 0 40px rgba(255, 69, 0, 0.4),
-                            inset 0 0 20px rgba(255, 165, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(255, 107, 53, 0.9),
-                            0 0 60px rgba(255, 69, 0, 0.6),
-                            inset 0 0 30px rgba(255, 165, 0, 0.5);
-            }
-        }
-
-        /* Remaining NFTs Card - Green/Emerald */
-        .nft-stat-card.remaining {
-            border: 2px solid rgba(46, 213, 115, 0.3);
-            background: radial-gradient(circle at top, rgba(46, 213, 115, 0.15), rgba(20, 20, 20, 0.9));
-        }
-
-        .nft-stat-card.remaining::before {
-            background: linear-gradient(135deg, #2ed573, #26de81);
-        }
-
-        .nft-stat-card.remaining .nft-stat-icon {
-            background: linear-gradient(135deg, #2ed573, #26de81);
-        }
-
-        .nft-stat-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .nft-stat-card:hover .nft-stat-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .nft-stat-number {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .nft-stat-card.total .nft-stat-number {
-            background: linear-gradient(135deg, #00c8ff, #0080ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stat-card.burned .nft-stat-number {
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stat-card.remaining .nft-stat-number {
-            background: linear-gradient(135deg, #2ed573, #26de81);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nft-stat-label {
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .nft-stat-card.total .nft-stat-label {
-            color: #00c8ff;
-        }
-
-        .nft-stat-card.burned .nft-stat-label {
-            color: #ff6b35;
-        }
-
-        .nft-stat-card.remaining .nft-stat-label {
-            color: #2ed573;
-        }
-
-        .nft-stat-description {
-            color: #999;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        /* Animated fire effect for burned card */
-        .fire-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .fire-particle {
-            position: absolute;
-            bottom: -10px;
-            width: 8px;
-            height: 30px;
-            background: linear-gradient(to top, #ff4500, #ff6b35, transparent);
-            border-radius: 50%;
-            animation: rise 2s ease-in infinite;
-            opacity: 0.7;
-        }
-
-        .fire-particle:nth-child(1) {
-            left: 20%;
-            animation-delay: 0s;
-            animation-duration: 1.8s;
-        }
-
-        .fire-particle:nth-child(2) {
-            left: 40%;
-            animation-delay: 0.3s;
-            animation-duration: 2.2s;
-        }
-
-        .fire-particle:nth-child(3) {
-            left: 60%;
-            animation-delay: 0.6s;
-            animation-duration: 1.5s;
-        }
-
-        .fire-particle:nth-child(4) {
-            left: 80%;
-            animation-delay: 0.9s;
-            animation-duration: 2s;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-50px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* Faction Burn Stats */
-        .faction-burn-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .faction-burn-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .faction-burn-card.light {
-            border: 2px solid rgba(0, 150, 255, 0.4);
-        }
-
-        .faction-burn-card.chaos {
-            border: 2px solid rgba(255, 50, 50, 0.4);
-        }
-
-        .faction-burn-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .faction-burn-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .faction-burn-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .faction-burn-card.light .faction-burn-title {
-            background: linear-gradient(135deg, #00D4FF, #00A8E8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faction-burn-card.chaos .faction-burn-title {
-            background: linear-gradient(135deg, #FF0000, #CC0066);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faction-burn-number {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin: 20px 0;
-        }
-
-        .faction-burn-card.light .faction-burn-number {
-            color: #00D4FF;
-        }
-
-        .faction-burn-card.chaos .faction-burn-number {
-            color: #FF3333;
-        }
-
-        .faction-burn-percentage {
-            font-size: 1.1rem;
-            color: #999;
-            margin-bottom: 20px;
-        }
-
-        .faction-burn-details {
-            background: rgba(30, 30, 30, 0.6);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-
-        .burn-detail-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-        }
-
-        .burn-detail-item:last-child {
-            border-bottom: none;
-        }
-
-        .burn-detail-label {
-            color: #999;
-        }
-
-        .burn-detail-value {
-            color: #FFD700;
-            font-weight: 600;
-        }
-
-        /* Burned NFTs Gallery Section */
-        .burned-gallery-section {
-            max-width: 1400px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-
-        .burned-gallery-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #ff6b35, #ff4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .burned-gallery-subtitle {
-            text-align: center;
-            color: #999;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .faction-burned-section {
-            margin-bottom: 60px;
-        }
-
-        .faction-burned-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .faction-burned-header.light {
-            border-bottom-color: rgba(0, 150, 255, 0.4);
-        }
-
-        .faction-burned-header.chaos {
-            border-bottom-color: rgba(255, 50, 50, 0.4);
-        }
-
-        .faction-burned-header h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            margin: 0;
-        }
-
-        .faction-burned-header.light h3 {
-            background: linear-gradient(135deg, #00D4FF, #00A8E8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faction-burned-header.chaos h3 {
-            background: linear-gradient(135deg, #FF0000, #CC0066);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faction-burned-count {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .burned-nfts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .burned-nft-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 100, 50, 0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .burned-nft-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 69, 0, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .burned-nft-card:hover::before {
-            opacity: 1;
-        }
-
-        .burned-nft-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 100, 50, 0.6);
-            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
-        }
-
-        .burned-nft-image {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            display: block;
-        }
-
-        .burned-nft-info {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .burned-nft-id {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ff6b35;
-            margin-bottom: 5px;
-        }
-
-        .burned-nft-label {
-            font-size: 0.8rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Section */
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #999;
-            font-size: 1.1rem;
-            margin-bottom: 50px;
-        }
-
-        /* Status Banner */
-        .status-banner {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(69, 160, 73, 0.1));
-            border: 2px solid rgba(76, 175, 80, 0.4);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            margin: 60px auto;
-            max-width: 900px;
-        }
-
-        .status-banner h2 {
-            color: #4CAF50;
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .status-banner p {
-            color: #ccc;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        /* Marketplace Section */
-        .marketplace-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .marketplace-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .marketplace-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-
-        .marketplace-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .marketplace-name {
-            font-size: 1.3rem;
-            color: #FFD700;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .marketplace-description {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-
-        /* Faction Cards */
-        .faction-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .faction-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .faction-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
-        }
-
-        .faction-header {
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
-        }
-
-        .faction-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .faction-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: #FFD700;
-            margin-bottom: 10px;
-        }
-
-        .faction-count {
-            color: #999;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .faction-body {
-            padding: 30px;
-        }
-
-        .faction-description {
-            color: #ccc;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .division-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .division-item {
-            background: rgba(255, 215, 0, 0.05);
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 3px solid #FFD700;
-            color: #ddd;
-            font-size: 0.95rem;
-        }
-
-        /* Utilities Section */
-        .utility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .utility-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .utility-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(20, 20, 20, 0.8);
-        }
-
-        .utility-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .utility-title {
-            font-size: 1.3rem;
-            color: #FFD700;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .utility-description {
-            color: #aaa;
-            line-height: 1.6;
-        }
-
-        .utility-status {
-            display: inline-block;
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .utility-status.upcoming {
-            background: rgba(255, 165, 0, 0.2);
-            color: #FFA500;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 4px solid #FFD700;
-            padding: 20px 25px;
-            border-radius: 10px;
-            margin: 30px 0;
-        }
-
-        .info-box strong {
-            color: #FFD700;
-        }
-
-        /* Achievement Section */
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .achievement-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(76, 175, 80, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .achievement-icon {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .achievement-title {
-            color: #4CAF50;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .achievement-value {
-            font-size: 2rem;
-            color: #FFD700;
-            font-weight: 900;
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Divisions Section */
-        .divisions-section {
-            max-width: 1400px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-
-        .factions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
-        .faction {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .faction-header {
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .faction-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-        }
-
-        .faction-header.light::before {
-            background: linear-gradient(135deg, rgba(0, 150, 255, 0.3), rgba(0, 200, 255, 0.3));
-        }
-
-        .faction-header.chaos::before {
-            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(150, 0, 100, 0.3));
-        }
-
-        .faction-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 10px;
-        }
-
-        .faction-title.light {
-            background: linear-gradient(135deg, #00D4FF, #00A8E8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faction-title.chaos {
-            background: linear-gradient(135deg, #FF0000, #CC0066);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .divisions-list {
-            padding: 20px;
-        }
-
-        .division-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            background: rgba(30, 30, 30, 0.6);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-            overflow: visible;
-            position: relative;
-        }
-
-        .division-item:hover {
-            background: rgba(40, 40, 40, 0.8);
-            border-color: rgba(255, 215, 0, 0.3);
-            transform: translateX(5px);
-        }
-
-        .division-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            transform-origin: center center;
-            z-index: 1;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-
-        .division-item:hover .division-image {
-            transform: scale(3.5) translate(120%, 0);
-            z-index: 100;
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.3);
-            border-color: rgba(255, 215, 0, 0.8);
-        }
-        .division-info {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .division-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .division-count {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #FFD700;
-            min-width: 50px;
-            text-align: right;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: 60px 20px 40px;
-            text-align: center;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            margin-top: 80px;
-        }
-
-        @media (max-width: 1200px) {
-            .factions-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .faction-grid, .utility-grid, .marketplace-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .burned-nfts-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legends Awaken I — Cronos Legends</title>
+  <meta name="description" content="The original Cronos Legends collection: 500 NFTs, 250 Cronos Guardians and 250 Chaos Horde across 16 divisions. Contract, facts, and a live burn count.">
+  <link rel="canonical" href="https://cronoslegends.com/legends-awaken-1/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="Legends Awaken I — the original 500">
+  <meta property="og:description" content="250 Cronos Guardians. 250 Chaos Horde. 16 divisions. This is where the war began.">
+  <meta property="og:url" content="https://cronoslegends.com/legends-awaken-1/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/burn.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/burn.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/art/cronos-titans-800.webp" fetchpriority="high">
+  <style>
+    /* Legends Awaken template (shared by /legends-awaken-1/ and /legends-awaken-2/) */
+    .tiles { list-style: none; margin: 0; padding: 0; }
+    @media (min-width: 640px) { .tiles--4 { grid-template-columns: repeat(4, 1fr); } .tiles--3 { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 639px) { .tiles--3 .tile:first-child { grid-column: 1 / -1; } }
+    .faction-block .tile { border-color: color-mix(in srgb, var(--accent) 25%, var(--line)); }
+    .tile .meta p { margin: 6px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--text-2); }
+    .tile--special .art { display: grid; place-items: center; color: var(--accent); background: radial-gradient(60% 60% at 50% 45%, var(--accent-wash), transparent 75%), var(--surface-2); }
+    .tile--special .art svg { width: 38%; height: auto; }
+    .faction-block + .faction-block { margin-top: var(--space-8); }
+    .faction-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+    .faction-head h3 { margin: 0; font: 700 clamp(1.35rem, 1.1rem + 0.8vw, 1.7rem)/1.1 var(--font-display); color: var(--accent); }
+    .faction-block > p { color: var(--text-2); max-width: 68ch; margin-bottom: var(--space-5); }
+    .stat dd.sub { margin: 0; font: 400 var(--fs-small)/1.45 var(--font-body); color: var(--text-2); }
+    .facts .addr .label { flex-shrink: 0; white-space: nowrap; overflow-wrap: normal; }
+    .collection-card .link-arrow { margin-top: auto; }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <a href="/" class="back-link">
-                <span>←</span>
-                <span>Back to Home</span>
-            </a>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
     </nav>
-
-    <div class="hero">
-        <div class="hero-content">
-            <div class="collection-badge">✅ SOLD OUT - NOW TRADING</div>
-            <h1>LEGENDS AWAKEN I</h1>
-            <p class="hero-subtitle">
-                The original collection that started it all in Cronos chain. Where the eternal battle<br>
-                between the Cronos Guardians and Chaos Horde first began.CA: 0x68A3192E286AA5C2182D815F5fE796401eCe28bA
-            </p>
-        </div>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
     </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
 
-   
+<main id="main">
 
-    <!-- NFT Statistics Section -->
-    <div class="nft-stats-section">
-        <h2 class="nft-stats-title">🔢 Collection Statistics</h2>
-        <p class="nft-stats-subtitle">Track the supply and scarcity of Legends Awaken I</p>
-        
-        <div class="nft-stats-grid">
-            <!-- Total NFTs Card -->
-            <div class="nft-stat-card total">
-                <div class="nft-stat-icon">💎</div>
-                <div class="nft-stat-number" id="total-supply">500</div>
-                <div class="nft-stat-label">Total Supply</div>
-                <p class="nft-stat-description">Original collection size across both factions</p>
-            </div>
-
-            <!-- Burned NFTs Card with Fire Effect -->
-            <div class="nft-stat-card burned">
-                <div class="nft-stat-icon">🔥</div>
-                <div class="nft-stat-number" id="burned-count">50</div>
-                <div class="nft-stat-label">Burned Forever</div>
-                <p class="nft-stat-description">Permanently removed from circulation</p>
-                <div class="fire-container">
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
-                    <div class="fire-particle"></div>
-                </div>
-            </div>
-
-            <!-- Remaining NFTs Card -->
-            <div class="nft-stat-card remaining">
-                <div class="nft-stat-icon">✨</div>
-                <div class="nft-stat-number" id="remaining-count">450</div>
-                <div class="nft-stat-label">In Circulation</div>
-                <p class="nft-stat-description">Available NFTs making each one more valuable</p>
-            </div>
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container split">
+      <div>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/collections/">Collections</a> / Legends Awaken I</nav>
+        <span class="eyebrow">The original collection</span>
+        <h1>Legends Awaken I</h1>
+        <p class="lead">When the meteor fell, two armies rose from the ruins: 250 Cronos Guardians and 250 of the Chaos Horde, across 16 divisions. Flame against light, wrath against will. This is where the war began.</p>
+        <p><span class="addr"><span class="label">Contract</span><code>0x68A3…28bA</code><button type="button" data-copy="0x68A3192E286AA5C2182D815F5fE796401eCe28bA" aria-label="Copy the Legends Awaken I contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x68A3192E286AA5C2182D815F5fE796401eCe28bA" rel="noopener" target="_blank" aria-label="View Legends Awaken I on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></p>
+        <div class="hero-actions">
+          <a class="btn btn--gold btn--lg" href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">View on crovia.app</a>
+          <a class="btn btn--lg" href="/burn/">Burn for $CLG</a>
+          <a class="btn btn--ghost btn--lg" href="/la1-terms/">Terms</a>
         </div>
-
-        <!-- Faction Burn Statistics -->
-        <div class="faction-burn-stats">
-            <!-- Cronos Guardians Burn Stats -->
-            <div class="faction-burn-card light">
-                <div class="faction-burn-icon">⚔️</div>
-                <h3 class="faction-burn-title">Cronos Guardians</h3>
-                <div class="faction-burn-number" id="light-burned">15</div>
-                <div class="faction-burn-percentage">30% of total burns</div>
-                <div class="faction-burn-details">
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Cronos Titans</span>
-                        <span class="burn-detail-value">10 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Celestial Beasts</span>
-                        <span class="burn-detail-value">3 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Oceanic Guardians</span>
-                        <span class="burn-detail-value">1 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Verdant Guardians</span>
-                        <span class="burn-detail-value">1 burned</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chaos Horde Burn Stats -->
-            <div class="faction-burn-card chaos">
-                <div class="faction-burn-icon">💀</div>
-                <h3 class="faction-burn-title">Chaos Horde</h3>
-                <div class="faction-burn-number" id="chaos-burned">35</div>
-                <div class="faction-burn-percentage">70% of total burns</div>
-                <div class="faction-burn-details">
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Chaos Legion</span>
-                        <span class="burn-detail-value">15 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Deathsworn</span>
-                        <span class="burn-detail-value">7 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Chaos Vanguard</span>
-                        <span class="burn-detail-value">6 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Horde Creatures</span>
-                        <span class="burn-detail-value">3 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Nightshade Wardens</span>
-                        <span class="burn-detail-value">2 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Frostbound Horde</span>
-                        <span class="burn-detail-value">1 burned</span>
-                    </div>
-                    <div class="burn-detail-item">
-                        <span class="burn-detail-label">Abyss Beasts</span>
-                        <span class="burn-detail-value">1 burned</span>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="card-art" data-faction="chaos"><img src="/assets/img/art/chaos-legion-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art" data-faction="chaos"><img src="/assets/img/art/horde-creatures-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art bob" data-faction="guardian"><img src="/assets/img/art/cronos-titans-800.webp" width="800" height="800" alt="" fetchpriority="high"></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Burned NFTs Gallery Section -->
-    <div class="burned-gallery-section">
-        <h2 class="burned-gallery-title">🔥 Burned NFTs Gallery</h2>
-        <p class="burned-gallery-subtitle">These 50 NFTs have been permanently removed from circulation, increasing the rarity of remaining NFTs</p>
-        
-        <!-- Cronos Guardians Burned NFTs -->
-        <div class="faction-burned-section">
-            <div class="faction-burned-header light">
-                <h3>⚔️ Cronos Guardians</h3>
-                <span class="faction-burned-count">15 Burned</span>
-            </div>
-            <div class="burned-nfts-grid" id="light-burned-container">
-                <!-- Light faction burned NFTs will be loaded here -->
-            </div>
-        </div>
-
-        <!-- Chaos Horde Burned NFTs -->
-        <div class="faction-burned-section">
-            <div class="faction-burned-header chaos">
-                <h3>💀 Chaos Horde</h3>
-                <span class="faction-burned-count">35 Burned</span>
-            </div>
-            <div class="burned-nfts-grid" id="chaos-burned-container">
-                <!-- Chaos faction burned NFTs will be loaded here -->
-            </div>
-        </div>
+  <!-- Numbers -->
+  <section class="section--tight" aria-labelledby="numbers-title">
+    <div class="container">
+      <h2 id="numbers-title" class="sr-only">Legends Awaken I in numbers</h2>
+      <dl class="stats reveal">
+        <div class="stat"><dt>Minted</dt><dd class="num">500</dd><dd class="sub">token IDs 1–500</dd></div>
+        <div class="stat"><dt>Burned</dt><dd class="num is-loading" data-live="burned-legendsAwaken1">—</dd><dd class="sub">held by 0x…dEaD forever</dd></div>
+        <div class="stat"><dt>Factions</dt><dd class="num">2</dd><dd class="sub">250 Guardians · 250 Chaos Horde</dd></div>
+        <div class="stat"><dt>Divisions</dt><dd class="num">16</dd><dd class="sub">8 on each side</dd></div>
+      </dl>
+      <p class="live-note" data-live-updated>Live from Cronos</p>
     </div>
+  </section>
 
-   
-        <h2 class="section-title">🛒 Buy on Secondary Markets</h2>
-        <p class="section-subtitle">Legends Awaken I NFTs are now available for purchase on these trusted marketplaces</p>
+  <!-- Factions & divisions -->
+  <section class="section" aria-labelledby="divisions-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Factions &amp; divisions</span>
+        <h2 id="divisions-title">Two armies. Sixteen divisions.</h2>
+        <p>Each side fields 250 legends in eight divisions, led by 100 Cronos Titans on one side and 100 of the Chaos Legion on the other.</p>
+      </div>
 
-        <div class="marketplace-grid">
-            <a href="https://crypto.com/nft" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">🏛️</div>
-                <h3 class="marketplace-name">Crypto.com NFT</h3>
-                <p class="marketplace-description">Official launch platform with the largest selection</p>
-            </a>
-
-            <a href="https://minted.network/collections/cronos/0x68a3192e286aa5c2182d815f5fe796401ece28ba" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">🎨</div>
-                <h3 class="marketplace-name">Minted Network</h3>
-            </a>
-
-            <a href="https://app.ebisusbay.com/collection/cronos/legends-awaken?chain=cronos" target="_blank" class="marketplace-card">
-                <div class="marketplace-icon">⛩️</div>
-                <h3 class="marketplace-name">Ebisu's Bay</h3>
-            </a>
+      <div class="faction-block" data-faction="guardian">
+        <div class="faction-head">
+          <h3>Cronos Guardians</h3>
+          <span class="chip chip--guardian">250 NFTs · 8 divisions</span>
         </div>
-    </div>
+        <p>Across the land, the light answered: 250 strong, unyielding, forged in duty and hope.</p>
+        <ul class="tiles tiles--4">
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/cronos-titans-320.webp" width="320" height="320" alt="Blue-haired warrior in silver armor holding a glowing sword" loading="lazy"></div>
+            <div class="meta"><strong>Cronos Titans</strong><span>100 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/celestial-vanguard-320.webp" width="320" height="320" alt="Cosmic sorceress cradling a star between her hands" loading="lazy"></div>
+            <div class="meta"><strong>Celestial Vanguard</strong><span>30 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/oceanic-guardians-320.webp" width="320" height="320" alt="Sea queen with a coral crown and a pearl-topped staff" loading="lazy"></div>
+            <div class="meta"><strong>Oceanic Guardians</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/verdant-guardians-320.webp" width="320" height="320" alt="Forest elf holding a golden spiral of light" loading="lazy"></div>
+            <div class="meta"><strong>Verdant Guardians</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/solar-vanguard-320.webp" width="320" height="320" alt="Silver-haired warrior with a golden sun staff in a bright cathedral" loading="lazy"></div>
+            <div class="meta"><strong>Solar Vanguard</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/icelyn-frostguard-320.webp" width="320" height="320" alt="Frost maiden holding an orb of ice under the northern lights" loading="lazy"></div>
+            <div class="meta"><strong>Icelyn Frostguard</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/empyrean-ascendants-320.webp" width="320" height="320" alt="Winged, silver-haired angel with a glowing staff" loading="lazy"></div>
+            <div class="meta"><strong>Empyrean Ascendants</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/celestial-beasts-320.webp" width="320" height="320" alt="Moss-maned lion with green eyes in a sunlit forest" loading="lazy"></div>
+            <div class="meta"><strong>Celestial Beasts</strong><span>20 NFTs</span></div>
+          </li>
+        </ul>
+      </div>
 
-   
-    <div class="section">
-        <h2 class="section-title">⚔️ The Two Factions💀</h2>
-        <p class="section-subtitle">The original forces locked in eternal conflict</p>
-
-        <!-- Divisions Section -->
-        <div class="factions-grid">
-            <!-- LIGHT FACTION -->
-            <div class="faction">
-                <div class="faction-header light">
-                    <h2 class="faction-title light">Forces of Light</h2>
-                    <p class="faction-count">8 Divisions • 387 NFTs</p>
-                </div>
-                <div class="divisions-list">
-                    <div class="division-item">
-                        <img src="../Images/LA1/Cronos Titans (2).jpg" alt="Cronos Titans" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Cronos Titans</span>
-                            <span class="division-count">100</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Celestial Vanguard (2).jpg" alt="Celestial Vanguard" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Celestial Vanguard</span>
-                            <span class="division-count">30</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Oceanic Guardians (1).jpg" alt="Oceanic Guardians" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Oceanic Guardians</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Verdant Guardians (2).jpg" alt="Verdant Guardians" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Verdant Guardians</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Solar Vanguard (2).jpg" alt="Solar Vanguard" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Solar Vanguard</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Icelyn Frostguard (2).jpg" alt="Icelyn Frostguard" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Icelyn Frostguard</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Empyrean Ascendants (1).jpg" alt="Empyrean Ascendants" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Empyrean Ascendants</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Celeastial Beasts (4).jpg" alt="Celestial Beasts" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Celestial Beasts</span>
-                            <span class="division-count">157</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CHAOS FACTION -->
-            <div class="faction">
-                <div class="faction-header chaos">
-                    <h2 class="faction-title chaos">Forces of Chaos</h2>
-                    <p class="faction-count">8 Divisions • 387 NFTs</p>
-                </div>
-                <div class="divisions-list">
-                    <div class="division-item">
-                        <img src="../Images/LA1/Chaos Legion (2).jpg" alt="Chaos Legion" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Chaos Legion</span>
-                            <span class="division-count">99</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Chaos Vanguard (3).jpg" alt="Chaos Vanguard" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Chaos Vanguard</span>
-                            <span class="division-count">30</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Deathsworn (1).jpg" alt="Deathsworn" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Deathsworn</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Shadowbark (1).jpg" alt="Shadowbark" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Shadowbark</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Nightshade Warden (1).jpg" alt="Nightshade Wardens" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Nightshade Wardens</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Horde Creatures (1).jpg" alt="Horde Creatures" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Horde Creatures</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Frostbound Horde (1).jpg" alt="Frostbound Horde" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Frostbound Horde</span>
-                            <span class="division-count">20</span>
-                        </div>
-                    </div>
-
-                    <div class="division-item">
-                        <img src="../Images/LA1/Abyss Beasts (1).jpg" alt="Abyss Beasts" class="division-image">
-                        <div class="division-info">
-                            <span class="division-name">Abyss Beasts</span>
-                            <span class="division-count">158</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="faction-block" data-faction="chaos">
+        <div class="faction-head">
+          <h3>Chaos Horde</h3>
+          <span class="chip chip--chaos">250 NFTs · 8 divisions</span>
         </div>
-       
+        <p>From the smoldering ruins the Horde rose: 250 fierce warriors, twisted by fury and forged in chaos.</p>
+        <ul class="tiles tiles--4">
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/chaos-legion-320.webp" width="320" height="320" alt="White-haired warrior with a burning sword" loading="lazy"></div>
+            <div class="meta"><strong>Chaos Legion</strong><span>100 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/chaos-vanguard-320.webp" width="320" height="320" alt="Horned, skull-faced demon in red and black armor" loading="lazy"></div>
+            <div class="meta"><strong>Chaos Vanguard</strong><span>30 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/deathsworn-320.webp" width="320" height="320" alt="Skull-faced king in a spiked crown under a full moon" loading="lazy"></div>
+            <div class="meta"><strong>Deathsworn</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/shadowbark-320.webp" width="320" height="320" alt="Grey ghoul with red eyes and pointed ears" loading="lazy"></div>
+            <div class="meta"><strong>Shadowbark</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/nightshade-warden-320.webp" width="320" height="320" alt="Pale, masked warden with red eyes in silver armor" loading="lazy"></div>
+            <div class="meta"><strong>Nightshade Wardens</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/horde-creatures-320.webp" width="320" height="320" alt="Shaggy black beast with a fiery red mouth" loading="lazy"></div>
+            <div class="meta"><strong>Horde Creatures</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/frostbound-horde-320.webp" width="320" height="320" alt="Grinning, pale-skinned warrior in icy armor" loading="lazy"></div>
+            <div class="meta"><strong>Frostbound Horde</strong><span>20 NFTs</span></div>
+          </li>
+          <li class="tile">
+            <div class="art"><img src="/assets/img/la1/abyss-beasts-320.webp" width="320" height="320" alt="Spiked, dragon-like beast with red eyes" loading="lazy"></div>
+            <div class="meta"><strong>Abyss Beasts</strong><span>20 NFTs</span></div>
+          </li>
+        </ul>
+      </div>
     </div>
+  </section>
 
-   
+  <!-- Facts -->
+  <section class="section section--deep" aria-labelledby="facts-title">
+    <div class="container container--narrow">
+      <div class="section-head">
+        <span class="eyebrow">On the record</span>
+        <h2 id="facts-title">The facts, checkable on-chain.</h2>
+        <p>Every line here can be read from the contract on the Cronos explorer.</p>
+      </div>
+      <dl class="facts">
+        <dt>Contract</dt>
+        <dd><span class="addr addr--full"><span class="label">LA&nbsp;I</span><code>0x68A3192E286AA5C2182D815F5fE796401eCe28bA</code><button type="button" data-copy="0x68A3192E286AA5C2182D815F5fE796401eCe28bA" aria-label="Copy the Legends Awaken I contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x68A3192E286AA5C2182D815F5fE796401eCe28bA" rel="noopener" target="_blank" aria-label="View Legends Awaken I on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></dd>
+        <dt>Network</dt><dd>Cronos (chain ID 25)</dd>
+        <dt>Standard</dt><dd>ERC-721A</dd>
+        <dt>Supply</dt><dd>500, all minted</dd>
+        <dt>Token IDs</dt><dd>1–500</dd>
+        <dt>Burned</dt><dd><b class="num is-loading" data-live="burned-legendsAwaken1">—</b> so far, held by the burn address 0x…dEaD</dd>
+        <dt>Royalty</dt><dd>7% of secondary sales, paid to the project wallet listed with our <a href="/about/#official">official addresses</a></dd>
+        <dt>Launched</dt><dd>2025 on Crypto.com NFT</dd>
+        <dt>Admin</dt><dd>Crypto.com NFT deployed this contract, so its admin and minter role belongs to Crypto.com NFT's deployer, <a href="https://explorer.cronos.org/address/0x083Bbe83c1b91E1CaEaF277335bd1A82F593d843" rel="noopener" target="_blank"><code>0x083B…d843</code></a>, not to us. Any token minted later would get an ID above 500 and can't be burned for $CLG.</dd>
+        <dt>Marketplace</dt><dd><a href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">Legends Awaken I on crovia.app</a></dd>
+      </dl>
+    </div>
+  </section>
 
-
-    <div class="section" style="text-align: center;">
-        <h2 class="section-title">⚔️ Become a Legend 💀</h2>
-        <p class="section-subtitle">Own a piece of where it all began</p>
-        
-        <div class="btn-group">
-            <a href="https://crypto.com/nft" target="_blank" class="btn btn-primary">Browse on Crypto.com NFT</a>
-            <a href="/la1-terms" class="btn btn-outline">Read Terms & Conditions</a>
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="btn btn-outline">Join Discord</a>
+  <!-- Burn -->
+  <section class="section band-ember" id="burn" aria-labelledby="burn-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Burn for $CLG</span>
+        <h2 id="burn-title">Retire a legend. Receive $35 of $CLG.</h2>
+        <p class="lead">Burn one Legends Awaken I NFT in a single wallet transaction and receive $35 of $CLG in that same transaction, never more than 0.3 CLG. The price is the higher of CLG's 24-hour and recent average on VVS pools, and the contract that pays has no owner.</p>
+        <div class="row" style="margin-bottom:var(--space-5)">
+          <a class="btn btn--ember btn--lg" href="/burn/">Open the burn page</a>
+          <span class="status" data-live="burn-status">Checking…</span>
         </div>
+        <p class="small faint">Claim contract: published here at launch. <a href="/burn/#rules">Read the full rules</a>.</p>
+      </div>
+      <div class="card card--pad-lg reveal">
+        <h3>Before you burn</h3>
+        <ul class="checks checks--warn" style="margin-top:var(--space-4)">
+          <li><strong>It's permanent.</strong> The NFT goes to 0x…dEaD, where nobody can ever move it again.</li>
+          <li><strong>Only the burn page's Burn button pays.</strong> Sending an NFT to 0x…dEaD yourself, or with any other tool, pays nothing.</li>
+          <li><strong>In the Crypto.com NFT app?</strong> Withdraw the NFT to your own Cronos wallet first. Withdrawing burns nothing: your NFT is still yours, just in your own wallet.</li>
+        </ul>
+        <p class="small faint" style="margin-top:var(--space-4)">We never DM first and never ask for your recovery phrase.</p>
+      </div>
+    </div>
+  </section>
 
-        <div class="info-box" style="max-width: 800px; margin: 40px auto;">
-            <strong>Looking for Legends Awaken II?</strong> The next chapter launches December 10, 2025 with 3 factions 
-            and 17 divisions. <a href="/legends-awaken-2" style="color: #FFD700;">Learn more →</a>
+  <!-- Related -->
+  <section class="section" aria-labelledby="more-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Keep exploring</span>
+        <h2 id="more-title">The story goes on.</h2>
+      </div>
+      <div class="grid-3">
+        <a class="card collection-card reveal" href="/legends-awaken-2/" data-faction="trinari">
+          <div class="art"><img src="/assets/img/art/la2-preview-800.webp" width="800" height="800" alt="Hooded figures from Legends Awaken II" loading="lazy"></div>
+          <div class="body">
+            <h3>Legends Awaken II</h3>
+            <p>774 legends across 17 divisions, and the first Trinari step into the war.</p>
+            <span class="link-arrow">The next chapter</span>
+          </div>
+        </a>
+        <a class="card collection-card reveal" href="/trinari-elderborn/" data-faction="trinari">
+          <div class="art"><img src="/assets/img/elderborn/elderborn-2-720.webp" width="720" height="720" alt="A little stone Elderborn golem wearing a crown and holding a staff" loading="lazy"></div>
+          <div class="body">
+            <h3>Trinari: Elderborn</h3>
+            <p>212 playable Elderborn, the first of the Trinari, coming to crovia.app.</p>
+            <span class="link-arrow">Meet them</span>
+          </div>
+        </a>
+        <a class="card collection-card reveal" href="/story/#legends-awaken" data-faction="chaos">
+          <div class="art"><img src="/assets/img/art/totems-chaos-800.webp" width="800" height="533" alt="Three Chaos Totems burning in a sea of fire" loading="lazy"></div>
+          <div class="body">
+            <h3>Read the saga</h3>
+            <p>The Totems shatter, and two armies rise from the ruins.</p>
+            <span class="link-arrow">Episode 2: Legends Awaken</span>
+          </div>
+        </a>
+      </div>
+      <div class="row" style="margin-top:var(--space-6)">
+        <a class="btn btn--ghost" href="/collections/">All collections</a>
+        <a class="btn btn--ghost" href="/la1-terms/">Legends Awaken I terms</a>
+        <a class="btn btn--ghost" href="/burn/#rules">Burn rules</a>
+        <a class="btn btn--ghost" href="/faq/">FAQ</a>
+        <a class="btn btn--ghost" href="/about/#official">Official addresses</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
         </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <div class="footer">
-        <p style="color: #999; font-size: 1.1rem; margin-bottom: 20px;">
-            Questions about LA I? Check our <a href="/faq" style="color: #FFD700;">FAQ</a> or join 
-            <a href="https://discord.gg/huWn4Tz4g4" style="color: #FFD700;">Discord</a>
-        </p>
-        <p style="color: #666; margin-top: 30px;">© 2025 Cronos Legends. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
     </div>
-    <script>
-        // Static NFT Statistics
-        function fmt(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
+  </div>
+</footer>
 
-        // Categorized burned token IDs by faction
-        const burnedTokensByFaction = {
-            light: [
-                // Cronos Titans (10)
-                46, 49, 60, 64, 67, 81, 84, 88, 95, 100,
-                // Celestial Beasts (3)
-                158, 161, 169,
-                // Oceanic Guardians (1)
-                200,
-                // Verdant Guardians (1)
-                216
-            ],
-            chaos: [
-                // Chaos Legion (15)
-                275, 276, 292, 306, 307, 308, 310, 318, 321, 322, 326, 333, 336, 347, 348,
-                // Chaos Vanguard (6)
-                361, 362, 366, 371, 372, 374,
-                // Deathsworn (7)
-                385, 388, 391, 396, 398, 399, 400,
-                // Horde Creatures (3)
-                405, 413, 419,
-                // Frostbound Horde (1)
-                427,
-                // Abyss Beasts (1)
-                451,
-                // Nightshade Warden (2)
-                495, 500
-            ]
-        };
-
-        const allBurnedTokenIds = [...burnedTokensByFaction.light, ...burnedTokensByFaction.chaos];
-        
-        const contractAddress = '0x68A3192E286AA5C2182D815F5fE796401eCe28bA';
-
-        // Burned NFT Image URLs from IPFS
-        const burnedNFTImages = {
-          46: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(46).jpg',
-          49: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(49).jpg',
-          60: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(60).jpg',
-          64: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(64).jpg',
-          67: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(67).jpg',
-          81: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(81).jpg',
-          84: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(84).jpg',
-          88: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(88).jpg',
-          95: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(95).jpg',
-          100: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Cronos%20Titans%20(100).jpg',
-          158: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(8).jpg',
-          161: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(11).jpg',
-          169: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Celeastial%20Beasts%20(19).jpg',
-          200: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Oceanic%20Guardians%20(10).jpg',
-          216: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Verdant%20Guardians%20(6).jpg',
-          275: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(25).jpg',
-          276: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(26).jpg',
-          292: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(42).jpg',
-          306: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(56).jpg',
-          307: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(57).jpg',
-          308: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(58).jpg',
-          310: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(60).jpg',
-          318: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(68).jpg',
-          321: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(71).jpg',
-          322: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(72).jpg',
-          326: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(76).jpg',
-          333: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(83).jpg',
-          336: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(86).jpg',
-          347: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(97).jpg',
-          348: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Legion%20(98).jpg',
-          361: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(11).jpg',
-          362: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(12).jpg',
-          366: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(16).jpg',
-          371: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(21).jpg',
-          372: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(22).jpg',
-          374: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Chaos%20Vanguard%20(24).jpg',
-          385: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(5).jpg',
-          388: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(8).jpg',
-          391: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(11).jpg',
-          396: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(16).jpg',
-          398: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(18).jpg',
-          399: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(19).jpg',
-          400: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Deathsworn%20(20).jpg',
-          405: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(5).jpg',
-          413: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(13).jpg',
-          419: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Horde%20Creatures%20(19).jpg',
-          427: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Frostbound%20Horde%20(7).jpg',
-          451: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Abyss%20Beasts%20(11).jpg',
-          495: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Nightshade%20Warden%20(15).jpg',
-          500: 'https://ipfs.io/ipfs/bafybeihpsxlj664jp6idz3c5eutxqxcsfoptcjyawckz3ecxz5w7nmauum/Nightshade%20Warden%20(20).jpg',
-        };
-
-        // NFT Names
-        const burnedNFTNames = {
-          46: 'Sentinel', 49: 'Sentinel', 60: 'Sentinel', 64: 'Sentinel', 67: 'Sentinel',
-          81: 'Sentinel', 84: 'Sentinel', 88: 'Sentinel', 95: 'Sentinel', 100: 'Sentinel',
-          158: 'Guardian', 161: 'Sentinel', 169: 'Sentinel', 200: 'Sentinel', 216: 'Guardian',
-          275: 'Berserker', 276: 'Berserker', 292: 'Raider', 306: 'Raider', 307: 'Raider',
-          308: 'Raider', 310: 'Raider', 318: 'Raider', 321: 'Raider', 322: 'Raider',
-          326: 'Raider', 333: 'Raider', 336: 'Raider', 347: 'Raider', 348: 'Raider',
-          361: 'Raider', 362: 'Raider', 366: 'Raider', 371: 'Raider', 372: 'Raider',
-          374: 'Raider', 385: 'Berserker', 388: 'Berserker', 391: 'Raider', 396: 'Raider',
-          398: 'Raider', 399: 'Raider', 400: 'Raider', 405: 'Berserker', 413: 'Raider',
-          419: 'Raider', 427: 'Berserker', 451: 'Raider', 495: 'Raider', 500: 'Raider'
-        };
-
-        // Function to create NFT card
-        function createBurnedNFTCard(tokenId) {
-            const card = document.createElement('div');
-            card.className = 'burned-nft-card';
-            
-            const imageUrl = burnedNFTImages[tokenId] || `https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}`;
-            const nftName = burnedNFTNames[tokenId] || 'BURNED';
-            
-            card.innerHTML = `
-                <img src="${imageUrl}" 
-                     alt="Burned NFT #${tokenId}" 
-                     class="burned-nft-image"
-                     loading="lazy"
-                     onerror="this.src='https://nft-cdn.minted.network/cdn-cgi/image/width=500/cronos/${contractAddress}/${tokenId}'">
-                <div class="burned-nft-info">
-                    <div class="burned-nft-id">#${tokenId}</div>
-                    <div class="burned-nft-label">${nftName}</div>
-                </div>
-            `;
-            
-            return card;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Update static stats
-            const stats = {
-                'total-supply': 500,
-                'burned-count': allBurnedTokenIds.length,
-                'remaining-count': 500 - allBurnedTokenIds.length,
-                'light-burned': burnedTokensByFaction.light.length,
-                'chaos-burned': burnedTokensByFaction.chaos.length
-            };
-            
-            Object.entries(stats).forEach(([id, val]) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.textContent = fmt(val);
-                }
-            });
-
-            // Load Cronos Guardians burned NFTs
-            const lightContainer = document.getElementById('light-burned-container');
-            burnedTokensByFaction.light.forEach(tokenId => {
-                lightContainer.appendChild(createBurnedNFTCard(tokenId));
-            });
-
-            // Load Chaos Horde burned NFTs
-            const chaosContainer = document.getElementById('chaos-burned-container');
-            burnedTokensByFaction.chaos.forEach(tokenId => {
-                chaosContainer.appendChild(createBurnedNFTCard(tokenId));
-            });
-        });
-    </script>
-    <script src="/scripts/notice-banner.js" defer></script>
+<script src="/assets/js/chain-lite.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

@@ -1,1069 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinari Elderborn - Cronos Legends</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 20px 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            padding: 15px 0;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #00ff64, #00cc50);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #00ff64;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(0, 255, 100, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(0, 255, 100, 0.1);
-            color: #00ff64;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #00ff64;
-            color: #00ff64;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(0, 255, 100, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                border: none;
-                background: transparent;
-                padding: 10px 0 0 20px;
-                display: none;
-            }
-
-            .dropdown:hover .dropdown-menu,
-            .dropdown.active .dropdown-menu {
-                display: block;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: visible;
-            background: linear-gradient(to bottom, 
-                rgba(0, 255, 100, 0.08) 0%,
-                rgba(0, 200, 80, 0.08) 50%,
-                rgba(0, 150, 60, 0.08) 100%
-            ), #0a0a0a;
-            margin-top: 80px;
-            padding-bottom: 100px;
-            padding-top: 40px;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 150px;
-            background: linear-gradient(to bottom, transparent, #0a0a0a);
-            pointer-events: none;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 100, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 50% 60%, rgba(0, 200, 80, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 80% 40%, rgba(0, 150, 60, 0.08) 0%, transparent 40%);
-            animation: pulseGlow 8s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #00ff64, #00cc50, #00ff64);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 40px rgba(0, 255, 100, 0.6));
-            letter-spacing: 4px;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #00ff64;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 400;
-        }
-
-        /* Coming Soon Badge */
-        .coming-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #00ff64, #00cc50);
-            color: #000;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: 10px 25px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Main Info Box */
-        .info-box {
-            background: linear-gradient(135deg, rgba(0, 255, 100, 0.06), rgba(0, 200, 80, 0.03));
-            border: 2px solid rgba(0, 255, 100, 0.25);
-            border-radius: 20px;
-            padding: 50px 30px;
-            margin: 30px auto;
-            max-width: 900px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 50px rgba(0, 255, 100, 0.15);
-        }
-
-        .info-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #00ff64;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .info-text {
-            font-size: 1.1rem;
-            color: #ccc;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        /* Countdown Timer */
-        .countdown-container {
-            display: inline-block;
-            margin: 30px auto;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(0, 255, 100, 0.3);
-            border-radius: 15px;
-            padding: 25px 30px;
-        }
-
-        .countdown-title {
-            font-size: 0.95rem;
-            color: #00ff64;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .countdown {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #00ff64;
-            font-family: 'Cinzel', serif;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .countdown-label {
-            font-size: 0.8rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Image Carousel */
-        .preview-carousel {
-            position: relative;
-            width: 100%;
-            max-width: 550px;
-            aspect-ratio: 1 / 1;
-            margin: 40px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 4px solid rgba(0, 255, 100, 0.3);
-            box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
-                        inset 0 0 30px rgba(0, 0, 0, 0.3);
-            background: #0a0a0a;
-            animation: frameGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes frameGlow {
-            0%, 100% {
-                box-shadow: 0 15px 50px rgba(0, 255, 100, 0.2), 
-                            inset 0 0 30px rgba(0, 0, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 20px 60px rgba(0, 255, 100, 0.35), 
-                            inset 0 0 30px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        .carousel-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .carousel-image.active {
-            opacity: 1;
-        }
-
-        .carousel-indicator {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.85);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            color: #00ff64;
-            font-weight: 700;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(0, 255, 100, 0.3);
-        }
-
-        /* Section Styles */
-        .section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #00ff64, #00cc50);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #ccc;
-            font-size: 1.1rem;
-            margin-bottom: 60px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Free Mint Mechanics */
-        .mint-mechanics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto 60px;
-        }
-
-        .mechanic-card {
-            background: rgba(0, 255, 100, 0.03);
-            border: 2px solid rgba(0, 255, 100, 0.15);
-            border-radius: 15px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .mechanic-card:hover {
-            border-color: rgba(0, 255, 100, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 100, 0.2);
-        }
-
-        .mechanic-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .mechanic-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #00ff64;
-            margin-bottom: 15px;
-        }
-
-        .mechanic-desc {
-            color: #ccc;
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        .highlight {
-            color: #00ff64;
-            font-weight: 700;
-        }
-
-        /* Story Section */
-        .story-section {
-            background: linear-gradient(135deg, rgba(0, 255, 100, 0.04), rgba(0, 200, 80, 0.03));
-            padding: 100px 20px;
-            position: relative;
-        }
-
-        .story-content {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .story-text {
-            font-size: 1.2rem;
-            line-height: 2;
-            color: #ddd;
-            margin-bottom: 30px;
-        }
-
-        /* Utility Cards */
-        .utility-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .utility-card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(0, 255, 100, 0.15);
-            border-radius: 15px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .utility-card:hover {
-            border-color: rgba(0, 255, 100, 0.5);
-            transform: translateY(-5px);
-        }
-
-        .utility-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .utility-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #00ff64;
-            margin-bottom: 15px;
-        }
-
-        .utility-desc {
-            color: #ccc;
-            line-height: 1.7;
-        }
-
-        /* Alert Box */
-        .alert-box {
-            background: rgba(0, 255, 100, 0.05);
-            border: 2px solid rgba(0, 255, 100, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        .alert-title {
-            font-size: 1.2rem;
-            color: #00ff64;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .alert-text {
-            color: #ccc;
-            line-height: 1.7;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00ff64, #00cc50);
-            color: #000;
-            box-shadow: 0 5px 20px rgba(0, 255, 100, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #00ff64;
-            color: #00ff64;
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 255, 100, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #404eed);
-            color: #fff;
-        }
-
-        .btn-discord:hover {
-            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: 80px 20px 40px;
-            text-align: center;
-            border-top: 2px solid rgba(0, 255, 100, 0.2);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #00ff64;
-        }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .countdown {
-                gap: 12px;
-            }
-
-            .countdown-value {
-                font-size: 2rem;
-            }
-
-            .countdown-label {
-                font-size: 0.75rem;
-            }
-
-            .countdown-container {
-                padding: 20px 20px;
-            }
-
-            .preview-carousel {
-                max-width: 100%;
-            }
-
-            .info-box {
-                padding: 30px 20px;
-            }
-
-            .info-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trinari: Elderborn — 212 playable Trinari | Cronos Legends</title>
+  <meta name="description" content="Meet the Elderborn, the first of the Trinari: 212 playable characters launching on crovia.app. Public mint 400 CRO, max 10 per wallet, and a 3D model for every holder.">
+  <link rel="canonical" href="https://cronoslegends.com/trinari-elderborn/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="Meet the Elderborn, the first of the Trinari">
+  <meta property="og:description" content="212 playable Elderborn, each shaped from a single element. Launching on crovia.app.">
+  <meta property="og:url" content="https://cronoslegends.com/trinari-elderborn/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/elderborn.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/elderborn.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/elderborn/elderborn-t54-720.webp" fetchpriority="high">
+  <style>
+    /* Meadow bands: darker eyebrow, breadcrumb and focus ring for AA contrast on the light ground. */
+    .band-meadow .eyebrow { color: #4a6818; }
+    .band-meadow .breadcrumb { color: var(--meadow-ink-2); }
+    .band-meadow :focus-visible { outline-color: #6a4a00; }
+    .band-meadow .chip--trinari { background: rgba(94, 214, 160, 0.28); border-color: rgba(22, 85, 58, 0.35); color: #16553a; }
+    .eb-hero-art { width: min(100%, 380px); justify-self: center; }
+    .eb-facts { margin-top: var(--space-7); align-items: start; }
+    .stat dd.sub { margin: 0; font-weight: 500; line-height: 1.4; }
+    .eb-gallery { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-6) var(--space-4); grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 600px) { .eb-gallery { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1000px) { .eb-gallery { grid-template-columns: repeat(6, 1fr); } }
+    .eb-gallery figure { margin: 0; text-align: center; }
+    .eb-gallery .sticker { width: 100%; max-width: 190px; margin-inline: auto; }
+    .eb-gallery li:nth-child(even) .sticker { rotate: 3deg; }
+    .eb-gallery figcaption { margin-top: var(--space-4); font-weight: 700; font-size: 1.05rem; }
+    .eb-gallery figcaption span { display: block; font-weight: 500; font-size: var(--fs-small); color: var(--meadow-ink-2); }
+    .eb-note { margin: var(--space-6) 0 0; }
+    .eb-icon { width: 36px; height: 36px; color: var(--accent); margin-bottom: var(--space-4); }
+  </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                        <li><a href="/trinari-elderborn">Trinari Elderborn</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/Earn/">Earn & Swap</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/" aria-current="page">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
     </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-content">
-            <div class="coming-badge">🌟 Coming February 2026</div>
-            <h1 class="logo">TRINARI ELDERBORN</h1>
-            <p class="subtitle">🌿 The Ancient Origins • The First Awakening</p>
-
-            <div class="info-box">
-                <h2 class="info-title">The Genesis Collection</h2>
-                <p class="info-text">
-                    XXX (TBA) ultra-exclusive NFTs representing the very first Trinari elders born from the meteor's impact. 
-                    These ancient beings emerged from different elements and materials, marking the beginning of the Trinari lineage.
-                </p>
-
-                <div class="countdown-container">
-                    <div class="countdown-title">🔥 Launch: February 21, 2026 - 21:20 CET</div>
-                    <div style="font-size: 0.85rem; color: #999; margin-bottom: 15px;">(22:20 Finland Time / 20:20 GMT)</div>
-                    <div class="countdown">
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="days">00</div>
-                            <div class="countdown-label">Days</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="hours">00</div>
-                            <div class="countdown-label">Hours</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="minutes">00</div>
-                            <div class="countdown-label">Minutes</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="seconds">00</div>
-                            <div class="countdown-label">Seconds</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="preview-carousel">
-                    <img src="../Images/TrinariElderborn/1.png" class="carousel-image active" alt="Preview 1">
-                    <img src="../Images/TrinariElderborn/2.png" class="carousel-image" alt="Preview 2">
-                    <img src="../Images/TrinariElderborn/3.png" class="carousel-image" alt="Preview 3">
-                    <img src="../Images/TrinariElderborn/4.png" class="carousel-image" alt="Preview 4">
-                    <img src="../Images/TrinariElderborn/5.png" class="carousel-image" alt="Preview 5">
-                    <div class="carousel-indicator">
-                        <span id="carousel-counter">1 / 5</span>
-                    </div>
-                </div>
-
-                <div class="alert-box">
-                    <div class="alert-title">⚡ Exclusive Limited Supply</div>
-                    <div class="alert-text">
-                        Only XXX (TBA) Trinari Elderborn will ever exist. Many will be distributed for free to loyal community members. 
-                        This is the most exclusive Cronos Legends collection to date.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
     </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/" aria-current="page">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
 
-    <!-- Free Mint Mechanics Section -->
-    <div class="section">
-        <h2 class="section-title">🎁 Free Mint Mechanics (SUBJECT TO CHANGES, THESE ARE PLACEHOLDERS!!!)</h2>
-        <p class="section-subtitle">
-            Rewarding our most dedicated Trinari holders with this exclusive genesis collection.
-        </p>
+<main id="main">
 
-        <div class="mint-mechanics">
-            <div class="mechanic-card">
-                <div class="mechanic-icon">🌿</div>
-                <h3 class="mechanic-title">1% Trinari Holder</h3>
-                <p class="mechanic-desc">
-                    Hold <span class="highlight">1% of Trinari supply</span> from Legends Awaken II?<br>
-                    Receive <span class="highlight">1 FREE Trinari Elderborn NFT</span>
-                </p>
-            </div>
-
-            <div class="mechanic-card">
-                <div class="mechanic-icon">✨</div>
-                <h3 class="mechanic-title">2% Trinari Holder</h3>
-                <p class="mechanic-desc">
-                    Hold <span class="highlight">2% of Trinari supply</span> from Legends Awaken II?<br>
-                    Receive <span class="highlight">2 FREE Trinari Elderborn NFTs</span>
-                </p>
-            </div>
-
-            <div class="mechanic-card">
-                <div class="mechanic-icon">💎</div>
-                <h3 class="mechanic-title">3 Trinari Bundle</h3>
-                <p class="mechanic-desc">
-                    Hold <span class="highlight">3 Trinari NFTs</span> from Legends Awaken II collection?<br>
-                    Receive <span class="highlight">1 FREE Trinari Elderborn NFT</span>
-                </p>
-            </div>
+  <!-- Hero -->
+  <section class="page-hero band-meadow" data-faction="trinari" aria-labelledby="eb-title">
+    <div class="container split">
+      <div>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/collections/">Collections</a> / Trinari: Elderborn</nav>
+        <span class="eyebrow">Trinari: Elderborn</span>
+        <h1 id="eb-title" class="display">Meet the Elderborn.</h1>
+        <p class="lead">Where a star fell, the first Trinari opened their eyes: little beings of stone, lava, wood, moss, shadow, and light. There are 212 of them. Every one is a playable character in Cronos City, and every holder can download their Elderborn's 3D model.</p>
+        <div class="row" style="margin-bottom:var(--space-5)">
+          <span class="chip chip--trinari"><span class="dot"></span>Upcoming on crovia.app</span><span class="chip">212 unique</span><span class="chip">Playable in Cronos City</span>
         </div>
-
-        <div class="alert-box" style="background: rgba(255, 200, 0, 0.1); border-color: rgba(255, 200, 0, 0.3);">
-            <div class="alert-title" style="color: #ffc800;">📢 Whitelist Details Coming Soon</div>
-            <div class="alert-text">
-                Whitelist pricing and accessibility will be announced closer to launch date. 
-                Stay tuned to our Discord for the latest updates!
-            </div>
+        <div class="hero-actions">
+          <a class="btn btn--gold btn--lg" href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">Launch details on crovia.app</a>
+          <a class="btn btn--lg" href="#facts">See the facts</a>
         </div>
+        <p class="small" style="margin-top:var(--space-4)">Mint timing lives on the crovia.app launch page, so it's always current.</p>
+      </div>
+      <div class="sticker eb-hero-art bob" aria-hidden="true">
+        <img src="/assets/img/elderborn/elderborn-t54-720.webp" width="720" height="720" alt="" fetchpriority="high">
+      </div>
     </div>
+  </section>
 
-    <!-- Story Section -->
-    <div class="story-section">
-        <div class="story-content">
-            <h2 class="section-title">✨ The Origin Story</h2>
-            <p class="story-text">
-                Long before the Trinari awakened in the forests and winds, there was the First Impact. 
-                A celestial meteor streaked across the sky, crashing into the realm with earth-shaking force.
-            </p>
-            <p class="story-text">
-                From this cosmic event, the very first Trinari emerged—the <span style="color: #00ff64; font-weight: 700;">Elderborn</span>. 
-                Born from different elements touched by the meteor's magic: fire sprites dancing in eternal flame, 
-                crystal wisps shimmering with otherworldly light, earth guardians carved from ancient stone, 
-                and storm spirits crackling with primal energy.
-            </p>
-            <p class="story-text" style="color: #00ff64; font-weight: 600;">
-                These are not just Trinari. These are the ancestors. The first. The Elderborn.
-            </p>
+  <!-- Facts -->
+  <section class="section" id="facts" aria-labelledby="facts-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The facts</span>
+        <h2 id="facts-title">Small beings, clear numbers.</h2>
+        <p>The mint runs on crovia.app. Here's everything worth knowing before you go.</p>
+      </div>
+      <dl class="stats reveal">
+        <div class="stat"><dt>Supply</dt><dd class="num">212</dd><dd class="sub">unique Elderborn</dd></div>
+        <div class="stat"><dt>Public mint</dt><dd class="num">400 CRO</dd><dd class="sub">each, on crovia.app</dd></div>
+        <div class="stat"><dt>Per wallet</dt><dd class="num">10</dd><dd class="sub">maximum in the mint</dd></div>
+        <div class="stat"><dt>Royalty</dt><dd class="num">5%</dd><dd class="sub">on secondary sales</dd></div>
+        <div class="stat"><dt>Chain</dt><dd>Cronos</dd><dd class="sub">held in your own wallet</dd></div>
+      </dl>
+      <div class="split eb-facts">
+        <dl class="facts">
+          <dt>Where to mint</dt><dd><a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app/launch/trinari-elderborn</a></dd>
+          <dt>When</dt><dd>On the crovia.app launch page, so the timing is always current</dd>
+          <dt>What you get</dt><dd>An Elderborn NFT that is also a playable character in Cronos City, plus its 3D model to download</dd>
+          <dt>Model use</dt><dd>Crovia keeps the right to use the models in Crovia and Cronos City</dd>
+          <dt>Contract</dt><dd>Not deployed yet. Once it is, you'll find the address on the launch page and in <a href="/about/#official">our official addresses</a>.</dd>
+          <dt>Burn for $CLG</dt><dd>$15 of $CLG per Elderborn, only after the mint has sold out. <a href="#after-the-mint">How it works</a></dd>
+        </dl>
+        <div class="callout callout--warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+          <p><strong>Only mint on crovia.app</strong>The one official mint page is crovia.app/launch/trinari-elderborn. Ignore mint links in DMs and replies. We never DM first and never ask for your recovery phrase.</p>
         </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Utilities Section -->
-    <div class="section">
-        <h2 class="section-title">🎮 Utilities & Benefits</h2>
-        <p class="section-subtitle">
-            Trinari Elderborn holders gain exclusive benefits within the Cronos Legends ecosystem.
-        </p>
-
-        <div class="utility-grid">
-            <div class="utility-card">
-                <div class="utility-icon">💰</div>
-                <h3 class="utility-title">$TRI Staking</h3>
-                <p class="utility-desc">
-                    Stake your Trinari Elderborn NFT to earn $TRI tokens from a large reward pool. 
-                    Pool amount to be announced. Passive income for holders!
-                </p>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">⚔️</div>
-                <h3 class="utility-title">Game Boosts</h3>
-                <p class="utility-desc">
-                    Potential boosters and advantages in Cronos Legends games. 
-                    Eligibility and specifics will be announced as features are developed.
-                </p>
-            </div>
-
-            <div class="utility-card">
-                <div class="utility-icon">👑</div>
-                <h3 class="utility-title">Elite Status</h3>
-                <p class="utility-desc">
-                    As the most exclusive collection, Elderborn holders gain recognition and 
-                    priority access to future Trinari-related events and drops.
-                </p>
-            </div>
-        </div>
-
-        <div class="alert-box" style="margin-top: 60px;">
-            <div class="alert-title">🔗 Blockchain & Marketplace</div>
-            <div class="alert-text">
-                Trinari Elderborn will be minted on the <span class="highlight">Cronos Chain</span>.<br>
-                Minting platform and marketplace details will be announced soon!
-            </div>
-        </div>
+  <!-- Gallery -->
+  <section class="section band-meadow" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Say hello</span>
+        <h2 id="gallery-title">One element each. Plenty of personality.</h2>
+        <p>Every Elderborn is shaped from a single element the falling star touched. Here are a few of the faces you might meet.</p>
+      </div>
+      <ul class="eb-gallery">
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-2-360.webp" width="360" height="360" alt="A sandstone Elderborn with glowing turquoise runes, a carved stone crown and a stone staff" loading="lazy"></div>
+            <figcaption>Stone<span>Carved its own crown.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-3-360.webp" width="360" height="360" alt="A small obsidian Elderborn dragon with glowing lava cracks, holding two fiery sickles" loading="lazy"></div>
+            <figcaption>Lava<span>Cool outside. Very warm inside.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-4-360.webp" width="360" height="360" alt="A smiling wooden Elderborn sprout with a leaf on its head, a twig staff and a glowing orb" loading="lazy"></div>
+            <figcaption>Wood<span>Grew a leaf, a staff and a grin.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-5-360.webp" width="360" height="360" alt="A mossy Elderborn made of roots, with glowing eyes, beside a campfire at night" loading="lazy"></div>
+            <figcaption>Moss<span>Keeps the campfire going.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-1-360.webp" width="360" height="360" alt="A small black shadow cat Elderborn with glowing red eyes, holding two daggers" loading="lazy"></div>
+            <figcaption>Shadow<span>Quiet, quick, never without its daggers.</span></figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <div class="sticker"><img src="/assets/img/elderborn/elderborn-t54-360.webp" width="360" height="360" alt="A fluffy golden Elderborn with big round eyes, holding a flaming hammer in a sunny meadow" loading="lazy"></div>
+            <figcaption>Light<span>Will not put down the hammer.</span></figcaption>
+          </figure>
+        </li>
+      </ul>
+      <p class="small center eb-note">Preview art. The whole collection shows on the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app launch page</a>.</p>
     </div>
+  </section>
 
-    <!-- Footer -->
-    <div class="footer">
-        <h2 class="section-title">🌿 Join The Ancient Awakening</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Don't miss your chance to own one of the rarest pieces in Cronos Legends history. 
-            The Elderborn await. Will you answer the call?
-        </p>
-        
-        <div class="social-links">
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="btn btn-discord">💬 Join Discord</a>
-            <a href="/" class="btn btn-outline">🏠 Back to Home</a>
+  <!-- What playable means -->
+  <section class="section section--deep" data-faction="trinari" aria-labelledby="playable-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What "playable" means</span>
+        <h2 id="playable-title">A character, not just a picture.</h2>
+        <p>An Elderborn sits in your wallet like any NFT. It also steps off the card.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card card--accent reveal">
+          <svg class="eb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6.5 12h4M8.5 10v4M15.5 11h.01M17.5 13h.01"/></svg>
+          <h3>Play as your Elderborn</h3>
+          <p>Every Elderborn is a playable character in Cronos City, the 3D world Crovia is building on crovia.app.</p>
         </div>
-        
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/totems">Totems</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
+        <div class="card card--accent reveal">
+          <svg class="eb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          <h3>Download its 3D model</h3>
+          <p>Every holder can download the 3D model of their own Elderborn. Crovia keeps the right to use the models in Crovia and Cronos City.</p>
         </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+        <div class="card card--accent reveal">
+          <svg class="eb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/><path d="M16.5 14h.01"/></svg>
+          <h3>Keep it in your wallet</h3>
+          <p>It's an NFT on Cronos, held in your own wallet. Keep it, trade it on crovia.app, or burn it for $CLG once the mint has sold out.</p>
+        </div>
+      </div>
+      <p class="small faint" style="margin-top:var(--space-5)">Full details and terms are on the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app launch page</a>.</p>
     </div>
+  </section>
 
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
+  <!-- Origin lore -->
+  <section class="section" data-faction="trinari" aria-labelledby="origin-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Origin story</span>
+        <h2 id="origin-title">The First Impact</h2>
+        <div class="prose">
+          <p>Long before the Trinari awakened in the forests and winds, there was the First Impact. A celestial meteor streaked across the sky, crashing into the realm with earth-shaking force.</p>
+          <p>From this cosmic event, the very first Trinari emerged: the <strong>Elderborn</strong>. Each was born from a single element the meteor's magic touched. Stone and lava. Wood and moss. Shadow, and a little golden light.</p>
+          <blockquote>These are not just Trinari. These are the ancestors. The first. The Elderborn.</blockquote>
+        </div>
+        <a class="link-arrow" href="/story/#elderborn">Read their chapter in the saga</a>
+      </div>
+      <div class="art art--frame reveal">
+        <img src="/assets/img/elderborn/elderborn-5-720.webp" width="720" height="720" alt="A mossy Elderborn made of roots, with glowing eyes, beside a campfire in a dark forest" loading="lazy">
+      </div>
+    </div>
+  </section>
 
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
+  <!-- After the mint -->
+  <section class="section band-ember" id="after-the-mint" aria-labelledby="burn-title">
+    <div class="container split split--flip">
+      <div>
+        <span class="eyebrow">After the mint</span>
+        <h2 id="burn-title">Burn one for $15 of $CLG, once the mint sells out.</h2>
+        <p class="lead">When all 212 Elderborn are minted, Trinari: Elderborn joins the burn program. Burn one in a single wallet transaction and the $CLG lands in your wallet in that same transaction.</p>
+        <dl class="facts">
+          <dt>Payout</dt><dd>$15 of $CLG per Elderborn, never more than 0.13 CLG</dd>
+          <dt>Starts</dt><dd>Only after the mint has sold out. Until then, there is no Elderborn burn.</dd>
+          <dt>Price</dt><dd>The higher of CLG's 24-hour and recent average on VVS pools, like every burn</dd>
+          <dt>Contract</dt><dd>Published on the burn page when it launches</dd>
+          <dt>Permanent</dt><dd>A burned Elderborn goes to 0x…dEaD and can never be moved again</dd>
+        </dl>
+        <div class="hero-actions" style="margin-top:var(--space-6)">
+          <a class="btn btn--ember" href="/burn/#rules">Read the burn rules</a>
+          <a class="btn" href="/burn/">Open the burn page</a>
+        </div>
+      </div>
+      <div class="art art--frame reveal" data-faction="chaos">
+        <img src="/assets/img/elderborn/elderborn-3-720.webp" width="720" height="720" alt="A little obsidian Elderborn dragon with glowing lava cracks and two fiery sickles, in front of a volcano" loading="lazy">
+      </div>
+    </div>
+  </section>
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (!link.classList.contains('dropdown-toggle')) {
-                link.addEventListener('click', () => {
-                    document.getElementById('navLinks').classList.remove('active');
-                });
-            }
-        });
+  <!-- Mini FAQ -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container container--narrow">
+      <div class="section-head">
+        <span class="eyebrow">Questions</span>
+        <h2 id="faq-title">Good to know</h2>
+      </div>
+      <div class="accordion">
+        <details>
+          <summary>When does the mint open?</summary>
+          <div><p>The timing lives on the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app launch page</a>, so it's always current. The Discord hears the news first.</p></div>
+        </details>
+        <details>
+          <summary>How much does an Elderborn cost?</summary>
+          <div><p>The public mint is 400 CRO per Elderborn, up to 10 per wallet, plus a little CRO for gas. The launch page is the source of truth for price and phases.</p></div>
+        </details>
+        <details>
+          <summary>What does "playable" mean?</summary>
+          <div><p>Every Elderborn is a playable character in Cronos City, Crovia's 3D world on crovia.app, and every holder can download their Elderborn's 3D model. Crovia keeps the right to use the models in Crovia and Cronos City.</p></div>
+        </details>
+        <details>
+          <summary>Can I burn an Elderborn for $CLG?</summary>
+          <div><p>Yes, once the mint has sold out: $15 of $CLG per Elderborn, never more than 0.13 CLG, paid in the same transaction as the burn. Before the sell-out there is no Elderborn burn. Burning is permanent. <a href="/burn/#rules">Read the burn rules</a>.</p></div>
+        </details>
+        <details>
+          <summary>How do I avoid fake mint sites?</summary>
+          <div><p>Only mint at crovia.app/launch/trinari-elderborn, and check the address bar before you connect a wallet. Ignore mint links in DMs and replies. We never DM first and never ask for your recovery phrase. Every official link is on <a href="/about/#official">one page</a>.</p></div>
+        </details>
+      </div>
+      <p style="margin-top:var(--space-5)"><a class="link-arrow" href="/faq/">More answers in the FAQ</a></p>
+    </div>
+  </section>
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+  <!-- CTA -->
+  <section class="section band-meadow" aria-labelledby="cta-title">
+    <div class="container container--narrow center">
+      <span class="eyebrow">Next chapter · on crovia.app</span>
+      <h2 id="cta-title">The ancestors are waking up.</h2>
+      <p class="lead" style="margin-inline:auto">Price, phases and timing all live on the crovia.app launch page. Pull up a log in the Discord while you wait.</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn--gold btn--lg" href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">Go to the launch page</a>
+        <a class="btn btn--lg" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Join the Discord</a>
+      </div>
+    </div>
+  </section>
 
-        // Countdown Timer to February 21, 2026 21:20 CET (20:20 GMT)
-        const countdownDate = new Date('February 21, 2026 20:20:00 GMT').getTime();
+</main>
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = String(days).padStart(2, '0');
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
-            if (distance < 0) {
-                document.querySelector('.countdown-title').textContent = '🎉 Trinari Elderborn Launched!';
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
-            }
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        // Image Carousel Auto-Rotation
-        let currentImageIndex = 0;
-        const carouselImages = document.querySelectorAll('.carousel-image');
-        const totalImages = carouselImages.length;
-        const carouselCounter = document.getElementById('carousel-counter');
-
-        function rotateCarousel() {
-            carouselImages[currentImageIndex].classList.remove('active');
-            currentImageIndex = (currentImageIndex + 1) % totalImages;
-            carouselImages[currentImageIndex].classList.add('active');
-            carouselCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
-        }
-
-        setInterval(rotateCarousel, 2000);
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.mechanic-card, .utility-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-    <script src="/scripts/notice-banner.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>
-
-

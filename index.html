@@ -1,1220 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronos Legends - Web3 Gaming & NFT Ecosystem on Cronos</title>
-    <meta name="description" content="Cronos Legends is a Web3 gaming and NFT ecosystem on Cronos. Three factions, $CLG and $TRI tokens, expanding collections, and an active Discord arena.">
-    <meta name="theme-color" content="#FFD700">
-    <link rel="canonical" href="https://cronoslegends.com/">
-
-    <!-- Open Graph / Twitter -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Cronos Legends">
-    <meta property="og:title" content="Cronos Legends - Web3 Gaming & NFT Ecosystem">
-    <meta property="og:description" content="Three factions. Multiple tokens. Expanding NFT collections. Enter the Cronos Legends universe.">
-    <meta property="og:url" content="https://cronoslegends.com/">
-    <meta property="og:image" content="https://cronoslegends.com/Images/projectoverviewlowres.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@CronosLegends">
-    <meta name="twitter:title" content="Cronos Legends - Web3 Gaming & NFT Ecosystem">
-    <meta name="twitter:description" content="Three factions. Multiple tokens. Expanding NFT collections. Enter the Cronos Legends universe.">
-    <meta name="twitter:image" content="https://cronoslegends.com/Images/projectoverviewlowres.png">
-
-    <link rel="icon" type="image/png" href="/Images/clg-logo.png">
-    <link rel="apple-touch-icon" href="/Images/clg-logo.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 20px 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            padding: 15px 0;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a:focus-visible,
-        .dropdown-toggle:focus-visible {
-            color: #FFD700;
-            outline: none;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a:focus-visible::after {
-            width: 100%;
-        }
-
-        /* Accessible focus ring for interactive elements */
-        a:focus-visible,
-        button:focus-visible,
-        .btn:focus-visible {
-            outline: 2px solid #FFD700;
-            outline-offset: 3px;
-            border-radius: 4px;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-            background: none;
-            border: none;
-            font: inherit;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ccc;
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                border: none;
-                background: transparent;
-                padding: 10px 0 0 20px;
-                display: none;
-            }
-
-            .dropdown:hover .dropdown-menu,
-            .dropdown.active .dropdown-menu {
-                display: block;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(to bottom, 
-                rgba(0, 100, 255, 0.15) 0%,
-                rgba(0, 255, 100, 0.15) 50%,
-                rgba(255, 50, 50, 0.15) 100%
-            ), #0a0a0a;
-            margin-top: 80px;
-            padding: 60px 20px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 100, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 50% 60%, rgba(0, 255, 100, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 40%, rgba(255, 50, 50, 0.15) 0%, transparent 40%);
-            animation: pulseGlow 8s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6));
-            letter-spacing: 4px;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            color: #FFD700;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 700;
-        }
-
-        .hero-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #ccc;
-            max-width: 900px;
-            margin: 0 auto 50px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-
-        /* Ecosystem Overview Section */
-        .ecosystem-section {
-            background: linear-gradient(135deg, rgba(10, 10, 30, 0.6), rgba(30, 10, 40, 0.6));
-            padding: 100px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ecosystem-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(0, 100, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 50, 50, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .ecosystem-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .ecosystem-title {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-        }
-
-        .ecosystem-subtitle {
-            text-align: center;
-            color: #ccc;
-            font-size: 1.1rem;
-            margin-bottom: 80px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Main Token */
-        .main-token {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .main-token-label {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            color: #FFD700;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .main-token-box {
-            display: inline-block;
-            background: rgba(20, 20, 20, 0.8);
-            border: 3px solid rgba(255, 215, 0, 0.5);
-            border-radius: 20px;
-            padding: 40px 80px;
-            transition: all 0.3s ease;
-        }
-
-        .main-token-box:hover {
-            border-color: rgba(255, 215, 0, 0.8);
-            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .main-token-content {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .main-token-logo {
-            width: 105px;
-            height: 105px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .main-token-logo:hover {
-            width: 145px;
-            height: 145px;
-            border-color: rgba(255, 215, 0, 0.8);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-        }
-
-        .main-token-name {
-            font-size: 3.25rem;
-            font-weight: 900;
-            color: #FFD700;
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Three Factions */
-        .factions-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            color: #FFD700;
-            margin-bottom: 60px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .factions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-bottom: 80px;
-        }
-
-        .faction-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid;
-            transition: all 0.4s ease;
-            text-align: center;
-        }
-
-        .faction-card.guardians {
-            border-color: rgba(0, 100, 255, 0.3);
-        }
-
-        .faction-card.trinari {
-            border-color: rgba(0, 255, 100, 0.3);
-        }
-
-        .faction-card.horde {
-            border-color: rgba(255, 50, 50, 0.3);
-        }
-
-        .faction-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
-        }
-
-        .faction-card.guardians:hover {
-            border-color: rgba(0, 100, 255, 0.6);
-            box-shadow: 0 20px 60px rgba(0, 100, 255, 0.3);
-        }
-
-        .faction-card.trinari:hover {
-            border-color: rgba(0, 255, 100, 0.6);
-            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.3);
-        }
-
-        .faction-card.horde:hover {
-            border-color: rgba(255, 50, 50, 0.6);
-            box-shadow: 0 20px 60px rgba(255, 50, 50, 0.3);
-        }
-
-        .faction-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .faction-card.guardians .faction-name {
-            color: #4d9fff;
-        }
-
-        .faction-card.trinari .faction-name {
-            color: #00ff64;
-        }
-
-        .faction-card.horde .faction-name {
-            color: #ff3232;
-        }
-
-        .faction-token {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .faction-token-label {
-            font-size: 0.9rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .faction-token-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .faction-token-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .faction-token-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #FFD700;
-        }
-
-        .faction-image {
-            width: 100%;
-            height: 250px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .faction-nft-note {
-            font-size: 0.85rem;
-            color: #FFD700;
-            background: rgba(255, 215, 0, 0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        /* NFT Collections Section */
-        .collections-overview {
-            margin-top: 80px;
-        }
-
-        .collections-category-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            text-align: center;
-            color: #FFD700;
-            margin: 60px 0 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .collections-category-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-        }
-
-        .collections-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .collection-mini-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            display: block;
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .collection-mini-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
-        }
-
-        .collection-mini-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .collection-mini-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .collection-mini-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #FFD700;
-            margin-bottom: 10px;
-        }
-
-        .collection-mini-subtitle {
-            font-size: 0.85rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Section Styles */
-        .section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #ccc;
-            font-size: 1.1rem;
-            margin-bottom: 60px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Features Section */
-        .features-section {
-            background: linear-gradient(135deg, rgba(0, 100, 255, 0.05), rgba(0, 255, 100, 0.05));
-            padding: 100px 20px;
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-        }
-
-        .feature-card {
-            background: rgba(20, 20, 20, 0.6);
-            padding: 40px 30px;
-            border-radius: 15px;
-            border: 2px solid rgba(255, 215, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(255, 215, 0, 0.4);
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #FFD700;
-            margin-bottom: 15px;
-        }
-
-        .feature-desc {
-            color: #ccc;
-            line-height: 1.7;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-block;
-            padding: 18px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #404eed);
-            color: #fff;
-        }
-
-        .btn-discord:hover {
-            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
-        }
-
-        .btn-twitter {
-            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
-            color: #fff;
-        }
-
-        .btn-twitter:hover {
-            box-shadow: 0 8px 30px rgba(29, 161, 242, 0.4);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: 80px 20px 40px;
-            text-align: center;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #FFD700;
-        }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .ecosystem-title,
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .factions-grid,
-            .collections-row,
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .main-token-content {
-                flex-direction: column;
-            }
-
-            .main-token-box {
-                padding: 20px 30px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cronos Legends — Three factions. One realm. Your legend.</title>
+  <meta name="description" content="Cronos Legends is a hand-painted fantasy world on Cronos: collect Guardians, Chaos Horde and Trinari NFTs, play in your browser, burn an NFT for $CLG, and check every number live on-chain.">
+  <link rel="canonical" href="https://cronoslegends.com/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="Cronos Legends — Three factions. One realm.">
+  <meta property="og:description" content="Collect the legends, play in your browser and hold $CLG — with every number read live from Cronos.">
+  <meta property="og:url" content="https://cronoslegends.com/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/elderborn/elderborn-t54-720.webp" fetchpriority="high">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Cronos Legends","url":"https://cronoslegends.com/","logo":"https://cronoslegends.com/assets/img/icon-512.png","sameAs":["https://x.com/CronosLegends","https://discord.gg/huWn4Tz4g4","https://crovia.app/creators/cronoslegends"]}
+  </script>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <button type="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">NFT Collections</button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                        <li><a href="/trinari-elderborn">Trinari Elderborn</a></li>
-                        <li><a href="/nft">All Collections</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/Earn/">Earn & Swap</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">☰</button>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
     </nav>
-
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1 class="logo">CRONOS LEGENDS</h1>
-            <p class="subtitle"><span aria-hidden="true">⚔️</span> Web3 Gaming &amp; NFT Ecosystem</p>
-            <p class="hero-text">
-                Enter a world where three factions clash for dominance. Collect unique NFTs,
-                earn tokens, battle in the arena, and shape the destiny of the Cronos blockchain.
-            </p>
-            <div class="hero-buttons">
-                <a href="/nft" class="btn btn-primary"><span aria-hidden="true">🎨</span> Explore NFTs</a>
-                <a href="/game" class="btn btn-outline"><span aria-hidden="true">🎮</span> Play the Game</a>
-                <a href="https://discord.gg/huWn4Tz4g4" target="_blank" rel="noopener" class="btn btn-discord"><span aria-hidden="true">💬</span> Join Discord</a>
-            </div>
-        </div>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
     </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
 
-    <!-- Ecosystem Overview Section -->
-    <div class="ecosystem-section">
-        <div class="ecosystem-container">
-            <h2 class="ecosystem-title">🌌 Complete Ecosystem Overview</h2>
-            <p class="ecosystem-subtitle">
-                Discover the full Cronos Legends universe: one main token powering three powerful factions, 
-                each with their own token, extensive NFT collections, and an ever-expanding gaming ecosystem.
-            </p>
+<main id="main">
 
-            <!-- Main Token -->
-            <div class="main-token">
-                <div class="main-token-label">Main Token</div>
-                <div class="main-token-box">
-                    <div class="main-token-content">
-                        <picture>
-                            <source srcset="Images/clg-logo.webp" type="image/webp">
-                            <img src="Images/clg-logo.png" alt="CLG Token logo" class="main-token-logo" width="105" height="105" decoding="async">
-                        </picture>
-                        <div class="main-token-name">$CLG</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Three Factions -->
-            <h3 class="factions-title">⚔️ Three Factions</h3>
-            <div class="factions-grid">
-                <!-- Cronos Guardians -->
-                <div class="faction-card guardians">
-                    <h4 class="faction-name">CRONOS GUARDIANS</h4>
-                    <picture>
-                        <source srcset="Images/cara1.webp" type="image/webp">
-                        <img src="Images/cara1.png" alt="Cronos Guardians faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
-                    </picture>
-                </div>
-
-                <!-- Trinari -->
-                <div class="faction-card trinari">
-                    <h4 class="faction-name">TRINARI</h4>
-                    <picture>
-                        <source srcset="Images/trinari-logo.webp" type="image/webp">
-                        <img src="Images/trinari-logo.jpg" alt="Trinari faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
-                    </picture>
-                    <div class="faction-token">
-                        <div class="faction-token-label">Faction Token</div>
-                        <div class="faction-token-content">
-                            <picture>
-                                <source srcset="Images/tri-logo.webp" type="image/webp">
-                                <img src="Images/tri-logo.png" alt="TRI Token logo" class="faction-token-logo" loading="lazy" decoding="async" width="60" height="60">
-                            </picture>
-                            <div class="faction-token-name">$TRI</div>
-                        </div>
-                        <div class="faction-nft-note">150 pcs Trinari in LA2</div>
-                    </div>
-                </div>
-
-                <!-- Chaos Horde -->
-                <div class="faction-card horde">
-                    <h4 class="faction-name">CHAOS HORDE</h4>
-                    <picture>
-                        <source srcset="Images/Lyra.webp" type="image/webp">
-                        <img src="Images/Lyra.jpg" alt="Chaos Horde faction artwork" class="faction-image" loading="lazy" decoding="async" width="600" height="500">
-                    </picture>
-                </div>
-            </div>
-
-            <!-- NFT Collections -->
-            <div class="collections-overview">
-                <h3 class="collections-category-title">🎨 Main NFT Collections</h3>
-                <div class="collections-row">
-                    <a href="/legends-awaken-1" class="collection-mini-card">
-                        <picture>
-                            <source srcset="Images/LA1/Horde Creatures (1).webp" type="image/webp">
-                            <img src="Images/LA1/Horde Creatures (1).jpg" alt="Legends Awaken I collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
-                        </picture>
-                        <div class="collection-mini-info">
-                            <h4 class="collection-mini-title">Legends Awaken I</h4>
-                            <p class="collection-mini-subtitle">Original Collection</p>
-                        </div>
-                    </a>
-
-                    <a href="/legends-awaken-2" class="collection-mini-card">
-                        <picture>
-                            <source srcset="Images/PreviewLAII/1.webp" type="image/webp">
-                            <img src="Images/PreviewLAII/1.jpg" alt="Legends Awaken II collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
-                        </picture>
-                        <div class="collection-mini-info">
-                            <h4 class="collection-mini-title">Legends Awaken II</h4>
-                            <p class="collection-mini-subtitle">Three Factions United</p>
-                        </div>
-                    </a>
-                </div>
-
-                <h3 class="collections-category-title">✨ Exclusive Collections</h3>
-                <div class="collections-row">
-                    <a href="/totems" class="collection-mini-card">
-                        <picture>
-                            <source srcset="Images/totem-collection.webp" type="image/webp">
-                            <img src="Images/totem-collection.jpg" alt="Totems of Power collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
-                        </picture>
-                        <div class="collection-mini-info">
-                            <h4 class="collection-mini-title">Totems of Power</h4>
-                            <p class="collection-mini-subtitle">Mystical Artifacts</p>
-                        </div>
-                    </a>
-
-                    <a href="/trinari-elderborn" class="collection-mini-card" style="position: relative;">
-                        <picture>
-                            <source srcset="Images/TrinariElderborn/T54.webp" type="image/webp">
-                            <img src="Images/TrinariElderborn/T54.png" alt="Trinari Elderborn collection preview" class="collection-mini-image" loading="lazy" decoding="async" width="600" height="600">
-                        </picture>
-                        <div class="collection-badge" style="position: absolute; top: 20px; right: 20px; background: linear-gradient(135deg, #00ff64, #00cc50); color: #000; padding: 8px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(10px); z-index: 2;"><span aria-hidden="true">🌟</span> COMING SOON</div>
-                        <div class="collection-mini-info">
-                            <h4 class="collection-mini-title">Trinari Elderborn</h4>
-                            <p class="collection-mini-subtitle">Next Generation</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">A fantasy world on Cronos</span>
+        <h1 class="display">Three factions.<br>One realm.<br><span class="gold">Your legend.</span></h1>
+        <p class="lead">Cronos Legends is a hand-painted world of noble Guardians, the furious Chaos Horde and the curious little Trinari. Collect the characters, play in your browser, and hold the realm's one token, $CLG — with every number on this site read live from Cronos.</p>
+        <div class="hero-actions">
+          <a class="btn btn--gold btn--lg" href="/collections/">Explore the collections</a>
+          <a class="btn btn--lg" href="/burn/">Burn an NFT for $CLG</a>
         </div>
+        <p style="margin-top:var(--space-5)"><a class="link-arrow" href="/trinari-elderborn/">Meet the Elderborn, coming to crovia.app</a></p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="card-art" data-faction="guardian"><img src="/assets/img/art/guardian-king-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art" data-faction="chaos"><img src="/assets/img/art/chaos-archer-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art bob" data-faction="trinari"><img src="/assets/img/elderborn/elderborn-t54-720.webp" width="720" height="720" alt="" fetchpriority="high"></div>
+      </div>
     </div>
+  </section>
 
-    <!-- Features Section -->
-    <div class="features-section">
-        <div class="section">
-            <h2 class="section-title">🎮 Ecosystem Features</h2>
-            <p class="section-subtitle">
-                More than just NFTs. Cronos Legends is a complete gaming ecosystem 
-                with multiple ways to engage, earn, and compete.
-            </p>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚔️</div>
-                    <h3 class="feature-title">Legends Arena</h3>
-                    <p class="feature-desc">
-                        Battle in our Discord game. Your NFTs and tokens act as boosters. Prize pool of $1,500+.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🪙</div>
-                    <h3 class="feature-title">Multiple Tokens</h3>
-                    <p class="feature-desc">
-                        $CLG and $TRI tokens power the ecosystem.
-                        Earn through gameplay, staking, and participation.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3 class="feature-title">Strong Community</h3>
-                    <p class="feature-desc">
-                        Join an active community of collectors and gamers. 
-                        Participate in events, governance, and shape the future.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🗺️</div>
-                    <h3 class="feature-title">Expanding Universe</h3>
-                    <p class="feature-desc">
-                        New collections, games, and features constantly in development. 
-                        The legend continues to grow.
-                    </p>
-                </div>
-            </div>
-        </div>
+  <!-- Live proof strip -->
+  <section class="section--tight" aria-labelledby="proof-title">
+    <div class="container">
+      <h2 id="proof-title" class="sr-only">Live on-chain numbers</h2>
+      <dl class="stats reveal">
+        <div class="stat"><dt>$CLG supply</dt><dd class="num">500</dd><dd class="sub">fixed forever · owner renounced</dd></div>
+        <div class="stat"><dt>Liquidity on VVS</dt><dd class="num is-loading" data-live="lp-tvl">—</dd><dd class="sub">CLG/CRONUS pool · 1% fee</dd></div>
+        <div class="stat"><dt>LP fees earned</dt><dd class="num is-loading" data-live="lp-earned">—</dd><dd class="sub">collected + waiting</dd></div>
+        <div class="stat"><dt>NFTs burned</dt><dd class="num is-loading" data-live="burned">—</dd><dd class="sub">sent to 0x…dEaD forever</dd></div>
+        <div class="stat"><dt>Burn reserve</dt><dd class="num is-loading" data-live="reserve">—</dd><dd class="sub" data-live="reserve-sub">&nbsp;</dd></div>
+      </dl>
+      <p class="live-note" data-live-updated>Live from Cronos</p>
     </div>
+  </section>
 
-    <!-- Factions Teaser -->
-    <div class="section">
-        <h2 class="section-title">⚡ Choose Your Faction</h2>
-        <p class="section-subtitle">
-            Three factions, each with unique strengths and philosophies. 
-            Which path will you choose?
-        </p>
-
-        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="feature-card" style="border-color: rgba(0, 100, 255, 0.3);">
-                <div class="feature-icon">⚔️</div>
-                <h3 class="feature-title">Cronos Guardians</h3>
-                <p class="feature-desc">
-                    Noble defenders of order. Wielding ancient power and unwavering discipline, 
-                    they stand as the bulwark against chaos.
-                </p>
-            </div>
-
-            <div class="feature-card" style="border-color: rgba(255, 50, 50, 0.3);">
-                <div class="feature-icon">🔥</div>
-                <h3 class="feature-title">Chaos Horde</h3>
-                <p class="feature-desc">
-                    Fierce warriors of dominance. Through raw power and unrelenting fury, 
-                    they seek to reshape the world in their image.
-                </p>
-            </div>
-
-            <div class="feature-card" style="border-color: rgba(0, 255, 100, 0.3);">
-                <div class="feature-icon">🌿</div>
-                <h3 class="feature-title">Trinari</h3>
-                <p class="feature-desc">
-                    Mystical guardians of nature. Embodying primal elements and ancient magic, 
-                    they rise to restore balance through harmony or power.
-                </p>
-            </div>
-        </div>
+  <!-- Factions -->
+  <section class="section" aria-labelledby="factions-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The three factions</span>
+        <h2 id="factions-title">Who do you stand with?</h2>
+        <p>The Guardians keep order. The Chaos Horde wants it gone. And where a star fell, a third people woke up: the Trinari, who came not to fight, but to stand between.</p>
+      </div>
+      <div class="grid-3">
+        <a class="card faction-card tilt reveal" data-faction="guardian" href="/story/#legends-awaken">
+          <img src="/assets/img/art/guardian-crowned-800.webp" width="800" height="800" alt="A crowned Guardian king in frost-lit armor" loading="lazy">
+          <div class="body">
+            <span class="eyebrow">Order</span>
+            <h3>Cronos Guardians</h3>
+            <p>Keepers of order and light. Oath-bound, gold-armored and very hard to rattle.</p>
+            <span class="link-arrow">Meet the Guardians</span>
+          </div>
+        </a>
+        <a class="card faction-card tilt reveal" data-faction="chaos" href="/story/#legends-awaken">
+          <img src="/assets/img/art/chaos-legion-800.webp" width="800" height="800" alt="A Chaos Legion warrior with a burning sword" loading="lazy">
+          <div class="body">
+            <span class="eyebrow">Fury</span>
+            <h3>Chaos Horde</h3>
+            <p>Fury with a plan. The Horde takes what it wants, and it wants everything.</p>
+            <span class="link-arrow">Meet the Horde</span>
+          </div>
+        </a>
+        <a class="card faction-card tilt reveal" data-faction="trinari" href="/story/#trinari">
+          <img src="/assets/img/art/trinari-sprout-800.webp" width="800" height="800" alt="A small Trinari root sprite among glowing mushrooms" loading="lazy">
+          <div class="body">
+            <span class="eyebrow">Balance</span>
+            <h3>Trinari</h3>
+            <p>Born where a star fell. Made of moss, stone and stubbornness. They don't pick sides. They stand between.</p>
+            <span class="link-arrow">Meet the Trinari</span>
+          </div>
+        </a>
+      </div>
     </div>
+  </section>
 
-    <!-- Footer -->
-    <div class="footer">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Be part of an epic journey. Collect legendary NFTs, battle in the arena, 
-            earn rewards, and help write the next chapter of Cronos Legends.
-        </p>
-        
-        <div class="social-links">
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" rel="noopener" class="btn btn-discord"><span aria-hidden="true">💬</span> Join Discord</a>
-            <a href="https://x.com/CronosLegends" target="_blank" rel="noopener" class="btn btn-twitter"><span aria-hidden="true">🐦</span> Follow on X</a>
-        </div>
-
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/totems">Totems</a>
-            <a href="/trinari-elderborn">Trinari Elderborn</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/Earn/">Earn &amp; Swap</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
-            <a href="/la2-terms">LA2 Terms</a>
-            <a href="/la1-terms">LA1 Terms</a>
-        </div>
-
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2026 Cronos Legends. All rights reserved.</p>
+  <!-- Collections -->
+  <section class="section section--deep section--rim" aria-labelledby="collections-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Collections</span>
+        <h2 id="collections-title">Four collections, one world.</h2>
+        <p>Every character lives on Cronos. View and trade them on crovia.app.</p>
+      </div>
+      <div class="scroll-row">
+        <a class="card collection-card reveal" href="/legends-awaken-1/" data-faction="chaos">
+          <div class="art"><img src="/assets/img/art/horde-creatures-800.webp" width="800" height="800" alt="Horde Creatures, a Chaos division of Legends Awaken I" loading="lazy"></div>
+          <div class="body">
+            <h3>Legends Awaken I</h3>
+            <p>The original 500. Where the war between the Guardians and the Chaos Horde began.</p>
+            <div class="row"><span class="chip">500 NFTs</span><span class="chip">16 divisions</span><span class="chip">Burned: <b class="num" data-live="burned-legendsAwaken1">—</b></span></div>
+          </div>
+        </a>
+        <a class="card collection-card reveal" href="/legends-awaken-2/" data-faction="trinari">
+          <div class="art"><img src="/assets/img/art/la2-preview-800.webp" width="800" height="800" alt="Hooded figures from Legends Awaken II" loading="lazy"></div>
+          <div class="body">
+            <h3>Legends Awaken II</h3>
+            <p>774 legends across 17 divisions — and the first Trinari step into the war.</p>
+            <div class="row"><span class="chip">774 NFTs</span><span class="chip">3 factions</span><span class="chip">Burned: <b class="num" data-live="burned-legendsAwaken2">—</b></span></div>
+          </div>
+        </a>
+        <a class="card collection-card reveal" href="/trinari-elderborn/" data-faction="trinari">
+          <div class="art"><img src="/assets/img/elderborn/elderborn-4-720.webp" width="720" height="720" alt="A cheerful wooden Elderborn sprout holding a glowing staff" loading="lazy"></div>
+          <div class="body">
+            <h3>Trinari: Elderborn</h3>
+            <p>212 playable Elderborn, the first of the Trinari, each shaped from a single element.</p>
+            <div class="row"><span class="chip chip--trinari"><span class="dot"></span>Upcoming on crovia.app</span></div>
+          </div>
+        </a>
+        <a class="card collection-card reveal" href="/collections/#totems" data-faction="guardian">
+          <div class="art"><img src="/assets/img/art/totems-trio-800.webp" width="800" height="533" alt="The three Totems of Power: Chaos, Guardian and Trinari" loading="lazy"></div>
+          <div class="body">
+            <h3>Totems of Power</h3>
+            <p>Nine artifacts of awakening, three for each faction, held on Crypto.com NFT.</p>
+            <div class="row"><span class="chip">9 artifacts</span><span class="chip">Cronos POS</span></div>
+          </div>
+        </a>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const btn = document.querySelector('.mobile-menu-toggle');
-            const open = navLinks.classList.toggle('active');
-            if (btn) btn.setAttribute('aria-expanded', String(open));
-        }
+  <!-- Elderborn -->
+  <section class="section band-meadow" aria-labelledby="elderborn-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Next chapter · on crovia.app</span>
+        <h2 id="elderborn-title">Meet the Elderborn.</h2>
+        <p class="lead">Long before the Trinari Totem woke, a star fell. Where it landed, moss and stone and ember opened their eyes. 212 Elderborn, and every one is a playable character in Cronos City, with a 3D model you can download.</p>
+        <div class="row" style="margin-bottom:var(--space-5)">
+          <span class="chip">212 unique</span><span class="chip">400 CRO public mint</span><span class="chip">Max 10 per wallet</span><span class="chip">Playable 3D</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn--gold" href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">Launch details on crovia.app</a>
+          <a class="btn" href="/trinari-elderborn/">Meet them</a>
+        </div>
+        <p class="small" style="margin-top:var(--space-4)">Mint timing lives on the crovia.app launch page, so it's always current.</p>
+      </div>
+      <div class="stickers" aria-hidden="true">
+        <div class="sticker"><img src="/assets/img/elderborn/elderborn-1-360.webp" width="360" height="360" alt="" loading="lazy"></div>
+        <div class="sticker"><img src="/assets/img/elderborn/elderborn-2-360.webp" width="360" height="360" alt="" loading="lazy"></div>
+        <div class="sticker is-big"><img src="/assets/img/elderborn/elderborn-t54-360.webp" width="360" height="360" alt="" loading="lazy"></div>
+        <div class="sticker"><img src="/assets/img/elderborn/elderborn-4-360.webp" width="360" height="360" alt="" loading="lazy"></div>
+        <div class="sticker"><img src="/assets/img/elderborn/elderborn-5-360.webp" width="360" height="360" alt="" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
 
-        // Dropdown toggle (mobile tap + keyboard)
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    const open = dropdown.classList.toggle('active');
-                    toggle.setAttribute('aria-expanded', String(open));
-                }
-            });
-        });
+  <!-- Burn -->
+  <section class="section band-ember" aria-labelledby="burn-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Burn for $CLG</span>
+        <h2 id="burn-title">Retire a legend. Receive $35 of $CLG.</h2>
+        <p class="lead">Burn one Legends Awaken I or II NFT in a single wallet transaction and the $CLG lands in your wallet right away. The price comes from the chain, and the contract that pays has no owner.</p>
+        <ol class="steps" style="margin-bottom:var(--space-6)">
+          <li><strong>Connect your Cronos wallet</strong>Crypto.com Onchain, MetaMask, Rabby and more.</li>
+          <li><strong>Pick the NFT</strong>Only your eligible Legends Awaken NFTs are shown.</li>
+          <li><strong>Confirm once</strong>The NFT goes to 0x…dEaD and $CLG arrives in the same transaction.</li>
+        </ol>
+        <div class="row">
+          <a class="btn btn--ember btn--lg" href="/burn/">Open the burn page</a>
+          <span class="status" data-live="burn-status">Checking…</span>
+        </div>
+        <p class="small faint" style="margin-top:var(--space-4)">Payouts are priced at the higher of CLG's 24-hour and recent average and never exceed 0.3 CLG per Legends Awaken NFT. Trinari: Elderborn follows with $15 of $CLG (never more than 0.13 CLG) once its mint has sold out. <a href="/burn/#rules">Read the full rules</a>.</p>
+      </div>
+      <div class="card card--pad-lg reveal">
+        <h3>The rules are code</h3>
+        <p class="muted">The burn contracts are published, immutable and ownerless. Here is what that means for you:</p>
+        <ul class="checks">
+          <li>No owner, no admin, no upgrades — nobody can change the rules</li>
+          <li>The reserve can only pay burners: no withdraw function, not even for the team</li>
+          <li>No per-wallet limits, no windows, no queues</li>
+          <li>The price comes from VVS pools, not from us</li>
+          <li>One transaction, no token approvals, never a signature</li>
+        </ul>
+        <p class="small faint" style="margin-top:var(--space-4)">Burns pause by themselves when price data can't be trusted, for example if pool liquidity drops. <a href="/burn/#rules">When that happens</a>.</p>
+      </div>
+    </div>
+  </section>
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (!link.classList.contains('dropdown-toggle')) {
-                link.addEventListener('click', () => {
-                    document.getElementById('navLinks').classList.remove('active');
-                });
-            }
-        });
+  <!-- $CLG & liquidity -->
+  <section class="section" aria-labelledby="clg-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">$CLG</span>
+        <h2 id="clg-title">500 $CLG. That's all there will ever be.</h2>
+        <p class="lead">$CLG is the one token of Cronos Legends. Its supply was fixed when it was created and ownership was renounced in 2024, so nobody can ever mint more.</p>
+        <p><span class="addr"><span class="label">$CLG</span><code>0x08d9cb5100C306C2909B63415d7ff05268633b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank" aria-label="View $CLG on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></p>
+        <div class="hero-actions">
+          <a class="btn btn--gold" href="https://vvs.finance/swap?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank">Get $CLG on VVS</a>
+          <a class="btn" href="/clg/">About $CLG</a>
+        </div>
+      </div>
+      <div class="card card--pad-lg reveal" data-lp-widget>
+        <span class="eyebrow">Our liquidity at work</span>
+        <h3>VVS CLG/CRONUS pool · 1% fee</h3>
+        <dl class="facts" style="margin-top:var(--space-4)">
+          <dt>Pool value</dt><dd class="num" data-lp="tvl">—</dd>
+          <dt>Fees earned</dt><dd class="num"><span data-lp="earned-usd">—</span></dd>
+          <dt>Waiting to collect</dt><dd class="num"><span data-lp="uncollected-clg">—</span> + <span data-lp="uncollected-cronus">—</span></dd>
+        </dl>
+        <div class="callout callout--tba" style="margin-top:var(--space-5)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <p><strong>What we do with LP fees: TBA</strong>The plan will be published here. Until then the fees stay on-chain where anyone can see them.</p>
+        </div>
+        <p style="margin-top:var(--space-4)"><a class="link-arrow" href="/clg/#liquidity">See the numbers</a></p>
+      </div>
+    </div>
+  </section>
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+  <!-- Play -->
+  <section class="section section--deep" aria-labelledby="play-title">
+    <div class="container split split--flip">
+      <div>
+        <span class="eyebrow">Play</span>
+        <h2 id="play-title">Defend the forest.</h2>
+        <p class="lead">Trinari Defense is a free wave-survival game in your browser, on desktop or phone. Survive the waves and climb the Hall of Legends.</p>
+        <a class="btn btn--gold" href="/game/">Play now</a>
+      </div>
+      <a class="art art--wide art--frame tilt reveal" data-faction="trinari" href="/game/">
+        <img src="/assets/img/art/trinari-defense-800.webp" width="800" height="800" alt="A fluffy white Trinari in a sunny forest" loading="lazy">
+      </a>
+    </div>
+  </section>
 
-        // Smooth scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+  <!-- Lore teaser -->
+  <section class="section" aria-labelledby="lore-title">
+    <div class="container container--narrow center">
+      <span class="eyebrow">Episode 1</span>
+      <h2 id="lore-title">The Fall of the Old World</h2>
+      <p class="lead" style="margin-inline:auto">Long ago, the world thrived under the Cronos Guardians. At the heart of their realm stood a Totem, pulsing with ancient energy. Then the Chaos Horde came for it, war erupted — and the sky cracked open.</p>
+      <a class="link-arrow" href="/story/">Read the saga</a>
+    </div>
+  </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+  <!-- Community -->
+  <section class="section band-ember" aria-labelledby="community-title">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Community</span>
+        <h2 id="community-title">Pull up a log.</h2>
+        <p class="lead">The Discord is where holders gather, games run and news lands first. Follow on X for the headlines.</p>
+        <div class="hero-actions">
+          <a class="btn btn--gold" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Join the Discord</a>
+          <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">Follow on X</a>
+        </div>
+        <p class="small faint" style="margin-top:var(--space-5)">We never DM first and never ask for your recovery phrase. Official addresses are listed on <a href="/about/#official">one page</a>.</p>
+      </div>
+      <div class="art art--frame" data-faction="trinari" aria-hidden="true" style="max-width:420px;justify-self:center">
+        <img src="/assets/img/elderborn/elderborn-5-720.webp" width="720" height="720" alt="" loading="lazy">
+      </div>
+    </div>
+  </section>
 
-        document.querySelectorAll('.faction-card, .collection-mini-card, .feature-card, .main-token-box').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-    <script src="/scripts/notice-banner.js" defer></script>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/chain-lite.js" defer></script>
+<script src="/assets/js/lp.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

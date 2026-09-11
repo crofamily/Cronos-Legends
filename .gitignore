@@ -1,5 +1,10 @@
 node_modules/
 package-lock.json
+monitor/.local/
+.monitor-state/
+.lp-history-cache/
+_dev/
+.claude/
 .DS_Store
 Thumbs.db
 *.log
