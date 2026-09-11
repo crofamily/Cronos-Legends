@@ -1,0 +1,62 @@
+{
+  "chainId": 25,
+  "rpc": [
+    "https://evm.cronos.org",
+    "https://cronos-evm-rpc.publicnode.com",
+    "https://cronos.drpc.org"
+  ],
+  "explorer": "https://explorer.cronos.org",
+  "burnAddress": "0x000000000000000000000000000000000000dEaD",
+  "clg": "0x08d9cb5100C306C2909B63415d7ff05268633b41",
+  "cronus": "0x71b60B37f030D0cff949855b9D0405915057B116",
+  "oracle": null,
+  "collections": [
+    {
+      "key": "legendsAwaken1",
+      "name": "Legends Awaken I",
+      "nft": "0x68A3192E286AA5C2182D815F5fE796401eCe28bA",
+      "redeemer": null,
+      "usdPerNft": 35,
+      "maxClgPerNft": 0.3,
+      "minTokenId": 1,
+      "maxTokenId": 500,
+      "standard": "erc721a",
+      "croviaUrl": "https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba"
+    },
+    {
+      "key": "legendsAwaken2",
+      "name": "Legends Awaken II",
+      "nft": "0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d",
+      "redeemer": null,
+      "usdPerNft": 35,
+      "maxClgPerNft": 0.3,
+      "minTokenId": 1,
+      "maxTokenId": 774,
+      "standard": "erc721a",
+      "croviaUrl": "https://crovia.app/collections/0xb9669ad823feb0d0e6c9a7154033ab15e85d6a0d"
+    },
+    {
+      "key": "trinariElderborn",
+      "name": "Trinari: Elderborn",
+      "nft": null,
+      "redeemer": null,
+      "usdPerNft": 15,
+      "maxClgPerNft": 0.13,
+      "minTokenId": null,
+      "maxTokenId": 212,
+      "standard": "erc721",
+      "croviaUrl": "https://crovia.app/launch/trinari-elderborn"
+    }
+  ],
+  "lp": {
+    "pool": "0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818",
+    "positionManager": "0xc2DDB059FEc2afa593dFF9c70Fda2cfABe9b4eC8",
+    "owner": "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D",
+    "feeTier": 10000,
+    "vvsUrl": "https://vvs.finance/swap?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41"
+  },
+  "pricing": {
+    "cronusWcroPair": "0x9e44225db6A7c0d31f081D9FfA658979B8e523db",
+    "wcroUsdcPair": "0xe61Db569E231B3f5530168Aa2C9D50246525b6d6"
+  }
+}

@@ -1,722 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legends Awaken NFT - Terms & Conditions</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-            color: #fff;
-            line-height: 1.8;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 20px 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            padding: 15px 0;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #FFD700;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 0;
-                visibility: hidden;
-                max-height: 0;
-                overflow: hidden;
-                transform: none;
-                transition: all 0.3s ease, max-height 0.3s ease;
-            }
-
-            .dropdown.active .dropdown-menu {
-                opacity: 1;
-                visibility: hidden;
-                max-height: 500px;
-                margin-top: 10px;
-            }
-        }
-
-
-        .container {
-            max-width: 1000px;
-            margin: 80px auto 0;
-            padding: 60px 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            animation: fadeIn 0.8s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: #FFD700;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            color: #FFD700;
-            margin: 40px 0 20px;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: #FFD700;
-            margin: 30px 0 15px;
-            font-weight: 700;
-        }
-
-        h3 {
-            font-size: 1.2rem;
-            color: #FFA500;
-            margin: 20px 0 10px;
-            font-weight: 600;
-        }
-
-        p {
-            color: #ccc;
-            margin-bottom: 15px;
-        }
-
-        .intro {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 165, 0, 0.05));
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
-        }
-
-        .section {
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            border-left: 4px solid rgba(255, 215, 0, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .section:hover {
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
-        }
-
-        ul {
-            margin-left: 20px;
-            color: #ccc;
-            list-style-type: none;
-        }
-
-        ul li {
-            margin-bottom: 12px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        ul li:before {
-            content: "►";
-            position: absolute;
-            left: 0;
-            color: #FFD700;
-        }
-
-        .utility-item {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .utility-item:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateX(5px);
-        }
-
-        .utility-title {
-            color: #FFD700;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-        }
-
-        .restriction {
-            background: rgba(255, 50, 50, 0.12);
-            border: 1px solid rgba(255, 50, 50, 0.4);
-            padding: 18px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        .restriction-title {
-            color: #FF6B6B;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        .country-tag {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.25);
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            color: #FFD700;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .warning {
-            background: rgba(255, 165, 0, 0.12);
-            border: 2px solid rgba(255, 165, 0, 0.4);
-            padding: 25px;
-            border-radius: 12px;
-            margin: 30px 0;
-        }
-
-        .warning-title {
-            font-size: 1.3rem;
-            color: #FFA500;
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-family: 'Cinzel', serif;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 2px solid rgba(255, 215, 0, 0.3);
-            color: #888;
-        }
-
-        .home-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 10px;
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .home-link:hover {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
-        }
-
-        .instructions {
-            background: rgba(100, 150, 255, 0.12);
-            border: 1px solid rgba(100, 150, 255, 0.4);
-            padding: 18px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        .instructions-title {
-            color: #6BA3FF;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        strong {
-            color: #FFD700;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legends Awaken I terms and conditions — Cronos Legends</title>
+  <meta name="description" content="The terms and conditions for owning and using a Legends Awaken I NFT, the original 500-NFT Cronos Legends collection on Cronos. Launch-era utilities that have ended are marked.">
+  <link rel="canonical" href="https://cronoslegends.com/la1-terms/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="Legends Awaken I terms and conditions">
+  <meta property="og:description" content="The terms for Legends Awaken I NFT holders, with ended launch-era utilities clearly marked.">
+  <meta property="og:url" content="https://cronoslegends.com/la1-terms/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Cronos Legends","url":"https://cronoslegends.com/","logo":"https://cronoslegends.com/assets/img/icon-512.png","sameAs":["https://x.com/CronosLegends","https://discord.gg/huWn4Tz4g4","https://crovia.app/creators/cronoslegends"]}
+  </script>
+  <style>
+    .page-hero .facts { margin-top: var(--space-5); }
+    .terms h2 { font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem); margin: var(--space-7) 0 var(--space-3); }
+    .terms h3 { font-size: 1.05rem; margin: var(--space-5) 0 var(--space-2); }
+    .terms p, .terms li { color: var(--text-2); }
+    .terms ul { margin: 0 0 var(--space-4); }
+    .terms li + li { margin-top: 6px; }
+    .legal-note { border-left: 2px solid var(--line-strong); padding: 2px 0 2px 14px; font-size: 0.95rem; }
+    .ended { list-style: none; padding: 0; }
+    .ended li { display: flex; gap: 10px; align-items: baseline; }
+    .ended .chip { flex-shrink: 0; }
+    .toc { margin-top: var(--space-6); }
+    .toc ol { columns: 2 220px; column-gap: var(--space-6); margin: 0; }
+    .toc li { break-inside: avoid; margin-bottom: 6px; color: var(--text-3); }
+    .toc a { text-decoration: none; }
+  </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/Earn/">Earn & Swap</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
     </nav>
-
-    <div class="container">
-        <div class="header">
-            <div class="logo">LEGENDS AWAKEN</div>
-            <div class="subtitle">Terms and Conditions</div>
-        </div>
-
-        <div class="intro">
-            <h1>Introduction</h1>
-            <p>These Terms and Conditions ("Terms") govern the ownership and use of the Legends Awaken NFT ("NFT"). By purchasing, acquiring, or using a Legends Awaken NFT, you ("Holder") agree to be bound by these Terms. These Terms are subject to the local laws of the respective country and will be enforced accordingly.</p>
-        </div>
-
-        <div class="section">
-            <h2>1. Ownership Rights</h2>
-            <p>The Holder of a Legends Awaken NFT has ownership rights to the NFT associated with the project. However, ownership of the NFT does not grant any rights, either express or implied, to the intellectual property or any associated materials of the Legends Awaken NFT project beyond the utilities outlined in these Terms.</p>
-        </div>
-
-        <div class="section">
-            <h2>2. Accessing Utilities</h2>
-            <p>To access the utilities provided by Legends Awaken NFT, holders must join our Discord community. This will grant you access to exclusive events, airdrops, and community privileges, including:</p>
-            <ul>
-                <li><strong>50% Royalty Sharing</strong> – For the first two weeks, 50% of the royalties from NFT sales will be distributed among community holders in Discord.</li>
-                <li><strong>Daily claim of $CLG in Discord</strong> – A daily reward system where NFT holders can claim their share from a $500 pool of $CLG tokens.</li>
-                <li><strong>Participation in Battleground competitions</strong> – Engage in community battles and earn rewards from a $500 prize pool in Discord.</li>
-                <li><strong>NFT staking for $CLG, $CHAOS, or $GUARDIAN</strong> – Stake your Legends Awaken NFTs and earn rewards. Staking platform is to be announced as soon as possible after successful sold out of the collection.</li>
-                <li><strong>NFT buybacks for marketing</strong> – A $500 fund dedicated to NFT buybacks to support the ecosystem and marketing initiatives.</li>
-                <li><strong>10x Discord Nitro subscriptions</strong> – 10 lucky community members will receive a 1-month Discord Nitro subscription in Discord competitions within 1 month once NFT's are sold out.</li>
-                <li><strong>Airdrop of $CARA tokens</strong> – A $500 airdrop pool of $CARA tokens exclusively for NFT holders. To be eligble for airdrop, you must transfer your NFT to your decentralized Cronos wallet.</li>
-                <li><strong>Exclusive role & future NFT rewards</strong> – Hold at least 5 Legends Awaken NFTs to earn the Legend Awaken role in Discord and qualify for a free NFT in the next Legends Awaken II collection.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>3. Utilities</h2>
-            <p>The following utilities are granted to Cronos Legends NFT holders. Restrictions or limitations are indicated only for applicable countries using their abbreviations (e.g., UK, US, DE, CN):</p>
-
-            <div class="utility-item">
-                <div class="utility-title">Exclusive Community Access:</div>
-                <p>Holders will have access to private community channels or events related to the Legends Awaken project. There are no global restrictions for this utility.</p>
-            </div>
-
-            <div class="utility-item">
-                <div class="utility-title">Staking and Rewards:</div>
-                <div class="restriction">
-                    <div class="restriction-title">Restrictions:</div>
-                    <div>
-                        <span class="country-tag">UK</span>
-                        <span class="country-tag">US</span>
-                        <span class="country-tag">DE</span>
-                        <span class="country-tag">CN</span>
-                        <span class="country-tag">IT</span>
-                    </div>
-                    <p style="margin-top: 12px;">Restricted. Subject to local financial regulations regarding staking activities. In the US, staking may be considered a financial service and could be subject to SEC regulations. In Germany and Italy, financial authorities may regulate staking. In China, all staking activities are prohibited.</p>
-                </div>
-                <div class="instructions">
-                    <div class="instructions-title">Instructions:</div>
-                    <p>Staking will be conducted on Cronos network DApps. To stake, you must transfer your NFT to your decentralized Cronos wallet.</p>
-                </div>
-            </div>
-
-            <div class="utility-item">
-                <div class="utility-title">In-Game Use:</div>
-                <div class="restriction">
-                    <div class="restriction-title">Restrictions:</div>
-                    <div>
-                        <span class="country-tag">CN</span>
-                    </div>
-                    <p style="margin-top: 12px;">Restricted. Digital assets in games are heavily regulated or prohibited in China.</p>
-                </div>
-                <div class="instructions">
-                    <div class="instructions-title">Instructions:</div>
-                    <p>To participate in any game, you must transfer your NFT to your decentralized Cronos wallet.</p>
-                </div>
-            </div>
-
-            <div class="utility-item">
-                <div class="utility-title">Royalty Share:</div>
-                <div class="restriction">
-                    <div class="restriction-title">Tax Regulations:</div>
-                    <div>
-                        <span class="country-tag">UK</span>
-                        <span class="country-tag">FR</span>
-                        <span class="country-tag">IT</span>
-                        <span class="country-tag">US</span>
-                        <span class="country-tag">JP</span>
-                        <span class="country-tag">AU</span>
-                    </div>
-                    <p style="margin-top: 12px;">Subject to local tax regulations. Royalties must be declared and may be taxed accordingly. In the US, royalty income is taxable and must be reported to the IRS. In Australia, royalty payments may be subject to withholding tax.</p>
-                </div>
-            </div>
-
-            <div class="utility-item">
-                <div class="utility-title">Voting Rights:</div>
-                <div class="restriction">
-                    <div class="restriction-title">Restrictions:</div>
-                    <div>
-                        <span class="country-tag">CN</span>
-                        <span class="country-tag">KR</span>
-                    </div>
-                    <p style="margin-top: 12px;">Restricted. Decentralized voting mechanisms are limited due to local governance regulations.</p>
-                </div>
-                <div class="instructions">
-                    <div class="instructions-title">Instructions:</div>
-                    <p>Voting processes will be conducted via Discord.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>4. Transferability</h2>
-            <p>Legends Awaken NFTs can be transferred to third parties through supported platforms. The Holder acknowledges that any transfer of the NFT will also transfer the associated rights and utilities to the new owner.</p>
-            <div class="restriction">
-                <div class="restriction-title">Transfer Regulations:</div>
-                <div>
-                    <span class="country-tag">US</span>
-                    <span class="country-tag">JP</span>
-                    <span class="country-tag">KR</span>
-                </div>
-                <p style="margin-top: 12px;">Transfer of digital assets may be subject to specific regulations, such as the Financial Services Agency in Japan or the SEC in the US. Holders must comply with local laws.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>5. Disclaimer</h2>
-            <p>The Legends Awaken project, including any associated utilities or rewards, is provided "as is" without warranty of any kind. The project team makes no representations regarding the long-term availability of utilities, rewards, or the Legends Awaken NFT ecosystem.</p>
-            <div class="warning">
-                <div class="warning-title">⚠️ Important Notice</div>
-                <p style="font-weight: 600;">The above utilities and rewards will only take effect once the Legends Awaken NFT collection is fully sold out.</p>
-            </div>
-            <div class="restriction">
-                <div class="restriction-title">Consumer Protection:</div>
-                <div>
-                    <span class="country-tag">US</span>
-                    <span class="country-tag">UK</span>
-                    <span class="country-tag">EU</span>
-                </div>
-                <p style="margin-top: 12px;">Local consumer protection laws may apply, and any warranties or representations could be subject to additional requirements.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>6. Changes to Terms</h2>
-            <p>The project team reserves the right to modify or amend these Terms at any time. Any changes will be communicated to the Holders through official channels.</p>
-            <div class="restriction">
-                <div class="restriction-title">Regulatory Compliance:</div>
-                <div>
-                    <span class="country-tag">US</span>
-                    <span class="country-tag">UK</span>
-                    <span class="country-tag">EU</span>
-                </div>
-                <p style="margin-top: 12px;">Any changes will be made in compliance with local regulations.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>7. Liability</h2>
-            <p>The project team shall not be liable for any damages, including financial losses, resulting from the purchase, use, or transfer of Legends Awaken NFTs.</p>
-            <div class="restriction">
-                <div class="restriction-title">Liability Limitations:</div>
-                <div>
-                    <span class="country-tag">US</span>
-                    <span class="country-tag">JP</span>
-                    <span class="country-tag">EU</span>
-                </div>
-                <p style="margin-top: 12px;">Local laws may impose additional liability limitations, and Holders should be aware of their rights under those jurisdictions.</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>8. Governing Law</h2>
-            <p>These Terms will be governed by and construed in accordance with the laws of the applicable jurisdiction.</p>
-            <div class="restriction">
-                <div class="restriction-title">Legal Framework:</div>
-                <div>
-                    <span class="country-tag">UK</span>
-                    <span class="country-tag">US</span>
-                    <span class="country-tag">FR</span>
-                    <span class="country-tag">JP</span>
-                </div>
-                <p style="margin-top: 12px;">Local regulations may impose additional rules or limitations based on the country's legal framework.</p>
-            </div>
-        </div>
-
-            <!-- Footer -->
-    <div class="footer" id="community">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
-            this chapter is a defining moment—and the beginning of something far greater.
-        </p>
-        <div class="social-links">
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
-        </div>
-        
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
-            <a href="/la2-terms">LA2 Terms</a>
-            <a href="/la1-terms">LA1 Terms</a>
-        </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
     </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
 
-    
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
+<main id="main">
 
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
+  <section class="page-hero" aria-labelledby="terms-title">
+    <div class="container container--narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/legends-awaken-1/">Legends Awaken I</a> <span aria-hidden="true">/</span> <span aria-current="page">Terms</span></nav>
+      <span class="eyebrow">Legal</span>
+      <h1 id="terms-title">Legends Awaken I terms and conditions</h1>
+      <p class="lead">These terms govern owning and using a Legends Awaken I NFT. They were written for the collection's launch in 2025, and the launch-era utilities that have since ended are marked as ended.</p>
+      <dl class="facts">
+        <dt>Contract</dt>
+        <dd><span class="addr addr--full"><span class="label">LA I</span><code>0x68A3192E286AA5C2182D815F5fE796401eCe28bA</code><button type="button" data-copy="0x68A3192E286AA5C2182D815F5fE796401eCe28bA" aria-label="Copy the Legends Awaken I contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/address/0x68A3192E286AA5C2182D815F5fE796401eCe28bA" rel="noopener" target="_blank" aria-label="View the Legends Awaken I contract on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></dd>
+        <dt>Supply</dt><dd>500 NFTs, token IDs 1–500, all minted</dd>
+        <dt>Network</dt><dd>Cronos (chain 25), ERC-721A</dd>
+        <dt>Launched</dt><dd>2025, on Crypto.com NFT</dd>
+      </dl>
+      <div class="hero-actions" style="margin-top:var(--space-5)">
+        <a class="btn" href="/legends-awaken-1/">About the collection</a>
+        <a class="btn" href="/burn/#rules">Burn rules</a>
+      </div>
+    </div>
+  </section>
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (!link.classList.contains('dropdown-toggle')) {
-                link.addEventListener('click', () => {
-                    document.getElementById('navLinks').classList.remove('active');
-                });
-            }
-        });
+  <section class="section section--tight" aria-label="Terms and conditions">
+    <div class="container container--narrow terms">
 
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (navbar && window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else if (navbar) {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+      <div class="callout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <p><strong>About this page</strong>These terms were first published for the collection's launch in 2025. In 2026 this page was redesigned: launch-era utilities that have ended are now marked as ended, the contract address and supply were added, and the wording was lightly edited for clarity. Cronos Legends is created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+      </div>
 
-    <script src="/scripts/notice-banner.js" defer></script>
+      <nav class="card toc" aria-label="On this page">
+        <span class="eyebrow">On this page</span>
+        <ol>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#ownership">Ownership rights</a></li>
+          <li><a href="#accessing-utilities">Accessing utilities</a></li>
+          <li><a href="#utilities">Utilities</a></li>
+          <li><a href="#transferability">Transferability</a></li>
+          <li><a href="#disclaimer">Disclaimer</a></li>
+          <li><a href="#changes">Changes to terms</a></li>
+          <li><a href="#liability">Liability</a></li>
+          <li><a href="#governing-law">Governing law</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="introduction">Introduction</h2>
+      <p>These Terms and Conditions ("Terms") govern the ownership and use of the Legends Awaken NFT (Legends Awaken I, the "NFT"). By purchasing, acquiring, or using a Legends Awaken NFT, you ("Holder") agree to be bound by these Terms. These Terms are subject to the local laws of the respective country and will be enforced accordingly.</p>
+
+      <h2 id="ownership">1. Ownership rights</h2>
+      <p>The Holder of a Legends Awaken NFT has ownership rights to the NFT associated with the project. However, ownership of the NFT does not grant any rights, either express or implied, to the intellectual property or any associated materials of the Legends Awaken NFT project beyond the utilities outlined in these Terms.</p>
+
+      <h2 id="accessing-utilities">2. Accessing utilities</h2>
+      <p>To access the utilities provided by the Legends Awaken NFT, holders must join our Discord community. This gives holders access to community events and privileges.</p>
+      <h3>Launch-era utilities</h3>
+      <p>When the collection launched, holders were offered the following utilities. All of them have ended and are no longer offered:</p>
+      <ul class="ended">
+        <li><span class="chip">Ended</span><span>A royalty share for holders in Discord during the first two weeks after launch</span></li>
+        <li><span class="chip">Ended</span><span>Daily $CLG claims in Discord from a launch reward pool</span></li>
+        <li><span class="chip">Ended</span><span>Battleground competitions in Discord with a launch prize pool</span></li>
+        <li><span class="chip">Ended</span><span>NFT staking</span></li>
+        <li><span class="chip">Ended</span><span>An NFT buyback fund for marketing</span></li>
+        <li><span class="chip">Ended</span><span>Discord Nitro giveaways for community members</span></li>
+        <li><span class="chip">Ended</span><span>A token airdrop for holders</span></li>
+        <li><span class="chip">Ended</span><span>A free Legends Awaken II NFT for holders of at least five Legends Awaken NFTs</span></li>
+      </ul>
+
+      <h2 id="utilities">3. Utilities</h2>
+      <p>The following utilities are granted to Cronos Legends NFT holders. Restrictions or limitations are indicated only for applicable countries using their abbreviations (for example UK, US, DE, CN).</p>
+
+      <h3>Community access</h3>
+      <p>Holders will have access to private community channels or events related to the Legends Awaken project. There are no global restrictions for this utility.</p>
+
+      <h3>In-game use</h3>
+      <p class="legal-note"><strong>Restrictions (CN):</strong> Restricted. Digital assets in games are heavily regulated or prohibited in China.</p>
+      <p class="legal-note"><strong>Instructions:</strong> To participate in any game, you must transfer your NFT to your decentralized Cronos wallet.</p>
+
+      <h3>Voting rights</h3>
+      <p class="legal-note"><strong>Restrictions (CN, KR):</strong> Restricted. Decentralized voting mechanisms are limited due to local governance regulations.</p>
+      <p class="legal-note"><strong>Instructions:</strong> Voting processes will be conducted via Discord.</p>
+
+      <h3>Ended utilities</h3>
+      <p>The staking and royalty-share utilities that were listed in this section at launch have ended (see section 2).</p>
+
+      <h3>Burn program</h3>
+      <p>A Legends Awaken I NFT can be burned on-chain for $CLG. The burn program runs on its own published rules: see the <a href="/burn/#rules">burn rules</a>.</p>
+
+      <h2 id="transferability">4. Transferability</h2>
+      <p>Legends Awaken NFTs can be transferred to third parties through supported platforms. The Holder acknowledges that any transfer of the NFT will also transfer the associated rights and utilities to the new owner.</p>
+      <p class="legal-note"><strong>Transfer regulations (US, JP, KR):</strong> Transfer of digital assets may be subject to specific regulations, such as the Financial Services Agency in Japan or the SEC in the US. Holders must comply with local laws.</p>
+
+      <h2 id="disclaimer">5. Disclaimer</h2>
+      <p>The Legends Awaken project, including any associated utilities or rewards, is provided "as is" without warranty of any kind. The project team makes no representations regarding the long-term availability of utilities, rewards, or the Legends Awaken NFT ecosystem.</p>
+      <p>The original Terms stated that the utilities and rewards would only take effect once the Legends Awaken NFT collection was fully sold out. All 500 Legends Awaken I NFTs have been minted.</p>
+      <p class="legal-note"><strong>Consumer protection (US, UK, EU):</strong> Local consumer protection laws may apply, and any warranties or representations could be subject to additional requirements.</p>
+
+      <h2 id="changes">6. Changes to terms</h2>
+      <p>The project team reserves the right to modify or amend these Terms at any time. Any changes will be communicated to the Holders through official channels.</p>
+      <p class="legal-note"><strong>Regulatory compliance (US, UK, EU):</strong> Any changes will be made in compliance with local regulations.</p>
+
+      <h2 id="liability">7. Liability</h2>
+      <p>The project team shall not be liable for any damages, including financial losses, resulting from the purchase, use, or transfer of Legends Awaken NFTs.</p>
+      <p class="legal-note"><strong>Liability limitations (US, JP, EU):</strong> Local laws may impose additional liability limitations, and Holders should be aware of their rights under those jurisdictions.</p>
+
+      <h2 id="governing-law">8. Governing law</h2>
+      <p>These Terms will be governed by and construed in accordance with the laws of the applicable jurisdiction.</p>
+      <p class="legal-note"><strong>Legal framework (UK, US, FR, JP):</strong> Local regulations may impose additional rules or limitations based on the country's legal framework.</p>
+
+      <hr>
+      <p>Questions about these Terms? Email <a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a> or ask in the <a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>. See also the <a href="/la2-terms/">Legends Awaken II terms</a> and our <a href="/privacy/">Privacy notice</a>.</p>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

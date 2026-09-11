@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Burn program deployer · Cronos Legends</title>
+<style>
+  :root { --bg:#0f1117; --panel:#171a23; --line:#2a2f3d; --text:#e8e9ee; --muted:#9aa0b1; --gold:#f2b93b; --ok:#3ecf8e; --bad:#ff6b6b; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width: 940px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 0 0 12px; }
+  p.lead { color: var(--muted); margin: 0 0 24px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 18px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  button { background: var(--gold); color:#1a1405; border:0; border-radius: 10px; padding: 9px 16px; font-weight: 650; cursor:pointer; }
+  button.secondary { background: transparent; color: var(--text); border:1px solid var(--line); }
+  button:disabled { opacity:.45; cursor: not-allowed; }
+  input { background:#0c0e13; color:var(--text); border:1px solid var(--line); border-radius:10px; padding:8px 10px; font: 14px ui-monospace, SFMono-Regular, Consolas, monospace; min-width: 0; }
+  table { width:100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 4px 8px 4px 0; vertical-align: top; } td:first-child { color: var(--muted); white-space: nowrap; }
+  code, .mono { font: 13px ui-monospace, SFMono-Regular, Consolas, monospace; word-break: break-all; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); } .muted { color: var(--muted); }
+  .warn { border-left: 3px solid var(--gold); padding: 8px 12px; background:#1f1a0e; border-radius: 8px; margin: 12px 0; }
+  .danger { border-left: 3px solid var(--bad); padding: 8px 12px; background:#2a1215; border-radius: 8px; margin: 12px 0; }
+  pre { background:#0c0e13; border:1px solid var(--line); border-radius: 10px; padding: 12px; overflow:auto; font-size: 12px; }
+  #log { max-height: 220px; overflow:auto; }
+  .wallets button { background:#232838; color: var(--text); display:flex; align-items:center; gap:8px; }
+  .wallets img { width: 22px; height: 22px; }
+  ol.steps { margin: 0; padding-left: 20px; color: var(--muted); } ol.steps li { margin: 4px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Burn program deployer</h1>
+  <p class="lead">Deploys the ownerless CLG price oracle and one burn redeemer per collection from <b>your own wallet</b>, then helps you fund them. Nothing here holds keys; every step is a wallet transaction you approve. Parameters come from <code>contracts/deploy/addresses.json</code>.</p>
+
+  <section>
+    <h2>Order of operations</h2>
+    <ol class="steps">
+      <li>Connect the <b>project wallet</b> (0xAF87…175D), so the contracts record it as their deployer.</li>
+      <li>Send the project wallet's own Legends Awaken NFTs to 0x…dEaD first (e.g. with crovia.app/tools/burn), so the team can never redeem from the reserve.</li>
+      <li>Deploy the oracle. Set up the keeper (the <code>POKE_PRIVATE_KEY</code> secret of the burn monitor) right away: the oracle needs a checkpoint about every hour.</li>
+      <li>Wait 24 hours. Deploy the redeemers any time; they can't pay until the oracle is warm.</li>
+      <li>Only fund a redeemer once its payout below shows about $35 (or $15 for Elderborn).</li>
+      <li>Put the addresses into <code>assets/data/burn.json</code>, verify both contracts on the explorer, and publish the site.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>1 · Connect</h2>
+    <div class="wallets row" id="wallets"><span class="muted">Looking for wallets…</span></div>
+    <p id="account" class="muted"></p>
+    <div id="notProject" class="danger" hidden>This is not the project wallet 0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D. The contracts will record this address as their deployer. Switch accounts unless you mean to.</div>
+  </section>
+
+  <section>
+    <h2>2 · Price oracle</h2>
+    <table id="oracleArgs"></table>
+    <div class="row" style="margin-top:12px">
+      <button id="deployOracle" disabled>Deploy oracle</button>
+      <span class="muted">or use an existing one:</span>
+      <input id="oracleAddr" placeholder="0x…" size="44">
+      <button class="secondary" id="useOracle">Use</button>
+      <button class="secondary" id="pokeOracle" disabled>Record price checkpoint</button>
+    </div>
+    <div id="oracleStatus" class="mono" style="margin-top:10px"></div>
+  </section>
+
+  <section>
+    <h2>3 · Redeemers</h2>
+    <div id="redeemers"></div>
+  </section>
+
+  <section>
+    <h2>4 · Website config</h2>
+    <p class="muted">Paste these into <code>assets/data/burn.json</code> (field <code>oracle</code> and each collection's <code>redeemer</code>; for Elderborn also <code>nft</code>, <code>minTokenId</code> and <code>maxTokenId</code>).</p>
+    <pre id="configOut">(deploy something first)</pre>
+  </section>
+
+  <section>
+    <h2>Log</h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+
+<script src="../../assets/vendor/ethers-6.17.0.umd.min.js"></script>
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const log = (msg) => { $("log").textContent = `[${new Date().toLocaleTimeString()}] ${msg}\n` + $("log").textContent; };
+  const STORE = "cl-burn-deployer-v2";
+  const PROJECT_WALLET = "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D";
+  const saved = (() => { try { return JSON.parse(localStorage.getItem(STORE) || "{}"); } catch { return {}; } })();
+  const save = () => { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch {} renderConfig(); };
+
+  const [A, ART] = await Promise.all([
+    fetch("./addresses.json").then((r) => r.json()),
+    fetch("./artifacts.json").then((r) => r.json()),
+  ]).catch((e) => { document.body.innerHTML = `<main><h1>Open this page through a local web server</h1><p>From the repo root run <code>python -m http.server 8099</code> and open http://localhost:8099/contracts/deploy/deploy.html (${e})</p></main>`; throw e; });
+
+  const CRONOS = { chainId: "0x19", chainName: "Cronos Mainnet", nativeCurrency: { name: "Cronos", symbol: "CRO", decimals: 18 }, rpcUrls: ["https://evm.cronos.org"], blockExplorerUrls: ["https://explorer.cronos.org"] };
+  const EXPLORER = A.explorer.replace(/\/$/, "");
+  const link = (addr, kind = "address") => `<a href="${EXPLORER}/${kind}/${addr}" target="_blank" rel="noopener">${addr}</a>`;
+  let provider, signer, account;
+
+  // ---------- wallet discovery (EIP-6963 + legacy fallback) ----------
+  const found = new Map();
+  window.addEventListener("eip6963:announceProvider", (e) => { found.set(e.detail.info.uuid, e.detail); renderWallets(); });
+  window.dispatchEvent(new Event("eip6963:requestProvider"));
+  setTimeout(() => { if (!found.size && window.ethereum) { found.set("legacy", { info: { name: "Browser wallet", icon: "" }, provider: window.ethereum }); } renderWallets(); }, 600);
+
+  function renderWallets() {
+    const box = $("wallets"); box.textContent = "";
+    if (!found.size) { box.innerHTML = '<span class="muted">No browser wallet found. Open this page in a browser with MetaMask, Rabby or Crypto.com Onchain installed.</span>'; return; }
+    for (const d of found.values()) {
+      const b = document.createElement("button");
+      if (d.info.icon && /^data:image\//.test(d.info.icon)) { const img = document.createElement("img"); img.src = d.info.icon; img.alt = ""; b.appendChild(img); }
+      b.appendChild(document.createTextNode(d.info.name));
+      b.onclick = () => connect(d.provider);
+      box.appendChild(b);
+    }
+  }
+
+  async function connect(eip1193) {
+    try {
+      await eip1193.request({ method: "eth_requestAccounts" });
+      let chain = await eip1193.request({ method: "eth_chainId" });
+      if (chain !== CRONOS.chainId) {
+        try { await eip1193.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CRONOS.chainId }] }); }
+        catch (e) {
+          const code = e?.code ?? e?.data?.originalError?.code;
+          if (code === 4902 || code === -32603) await eip1193.request({ method: "wallet_addEthereumChain", params: [CRONOS] });
+          else throw e;
+        }
+        chain = await eip1193.request({ method: "eth_chainId" });
+        if (chain !== CRONOS.chainId) throw new Error("Wallet is not on Cronos (chain 25).");
+      }
+      provider = new ethers.BrowserProvider(eip1193, 25);
+      signer = await provider.getSigner();
+      account = await signer.getAddress();
+      const bal = await provider.getBalance(account);
+      $("account").innerHTML = `Connected ${link(account)} · ${Number(ethers.formatEther(bal)).toFixed(2)} CRO`;
+      $("notProject").hidden = account.toLowerCase() === PROJECT_WALLET.toLowerCase();
+      eip1193.on?.("chainChanged", () => location.reload());
+      eip1193.on?.("accountsChanged", () => location.reload());
+      $("deployOracle").disabled = !!saved.oracle;
+      $("pokeOracle").disabled = !saved.oracle;
+      renderRedeemers();
+      refresh();
+    } catch (e) { log("Connect failed: " + (e.shortMessage || e.message)); }
+  }
+
+  // ---------- oracle ----------
+  const o = A.oracle;
+  const oracleConfig = {
+    clgCronusPool: o.clgCronusPool, cronusWcroPair: o.cronusWcroPair, wcroUsdcPair: o.wcroUsdcPair,
+    clg: A.tokens.CLG, cronus: A.tokens.CRONUS, wcro: A.tokens.WCRO, usdc: A.tokens.USDC,
+    longWindow: o.longWindowSeconds, shortWindow: o.shortWindowSeconds, maxStaleness: o.maxStalenessSeconds, checkpointInterval: o.checkpointIntervalSeconds,
+    minPoolCronus: BigInt(o.minPoolCronus), minInRangeLiquidity: BigInt(o.minInRangeLiquidity), minCronusPairWcro: BigInt(o.minCronusPairWcro), minCroPairUsdc: BigInt(o.minCroPairUsdc),
+  };
+  const labels = {
+    clgCronusPool: "CLG/CRONUS V3 1% pool", cronusWcroPair: "CRONUS/WCRO V2 pair", wcroUsdcPair: "WCRO/USDC V2 pair",
+    clg: "CLG", cronus: "CRONUS", wcro: "WCRO", usdc: "USDC",
+    longWindow: "Long average (s)", shortWindow: "Short average (s)", maxStaleness: "Max staleness (s)", checkpointInterval: "Checkpoint interval (s)",
+    minPoolCronus: "Min CRONUS in pool", minInRangeLiquidity: "Min in-range liquidity", minCronusPairWcro: "Min WCRO in CRONUS/WCRO", minCroPairUsdc: "Min USDC in WCRO/USDC",
+  };
+  const shown = (k, v) => {
+    if (typeof v === "string" && v.startsWith("0x")) return link(v);
+    if (k === "minPoolCronus" || k === "minCronusPairWcro") return ethers.formatUnits(v, 18);
+    if (k === "minCroPairUsdc") return ethers.formatUnits(v, 6);
+    return String(v);
+  };
+  $("oracleArgs").innerHTML = Object.entries(oracleConfig).map(([k, v]) => `<tr><td>${labels[k]}</td><td class="mono">${shown(k, v)}</td></tr>`).join("");
+
+  async function deploy(name, args) {
+    const f = new ethers.ContractFactory(ART[name].abi, ART[name].bytecode, signer);
+    log(`Deploying ${name}… confirm in your wallet.`);
+    const c = await f.deploy(...args);
+    log(`${name} tx ${c.deploymentTransaction().hash}`);
+    await c.waitForDeployment();
+    const addr = await c.getAddress();
+    log(`${name} deployed at ${addr}`);
+    return { addr, encoded: f.interface.encodeDeploy(args).slice(2) };
+  }
+
+  $("deployOracle").onclick = async () => {
+    try {
+      $("deployOracle").disabled = true;
+      const r = await deploy("ClgPriceOracle", [oracleConfig]);
+      saved.oracle = r.addr; saved.oracleArgs = r.encoded; save(); refresh(); renderRedeemers();
+      $("pokeOracle").disabled = false;
+    } catch (e) { log("Oracle deploy failed: " + (e.shortMessage || e.message)); $("deployOracle").disabled = false; }
+  };
+  $("useOracle").onclick = () => { const v = $("oracleAddr").value.trim(); if (ethers.isAddress(v)) { saved.oracle = ethers.getAddress(v); save(); refresh(); renderRedeemers(); $("pokeOracle").disabled = !signer; } };
+  $("pokeOracle").onclick = async () => {
+    try {
+      const oc = new ethers.Contract(saved.oracle, ART.ClgPriceOracle.abi, signer);
+      if (!(await oc.poke.staticCall())) { log("No checkpoint due yet (at most one per hour)."); return; }
+      const tx = await oc.poke(); await tx.wait(); log("Checkpoint recorded: " + tx.hash); refresh();
+    } catch (e) { log("Poke failed: " + (e.shortMessage || e.message)); }
+  };
+
+  // ---------- redeemers ----------
+  const V8 = ["function totalMinted() view returns (uint256)", "function maxSupply() view returns (uint256)", "function ownerOf(uint256) view returns (address)"];
+
+  async function redeemerArgs(key, c) {
+    let maxTokenId = c.maxTokenId;
+    if (key === "trinariElderborn") {
+      // Only IDs that exist when the redeemer is deployed are eligible, so a reopened mint can never
+      // create redeemable tokens.
+      const nft = new ethers.Contract(c.address, V8, provider);
+      maxTokenId = Number(await nft.totalMinted());
+    }
+    return [c.address, A.tokens.CLG, saved.oracle, ethers.parseUnits(c.usdPerNft, 18), ethers.parseUnits(c.maxClgPerNft, 18), c.minTokenId, maxTokenId];
+  }
+
+  async function renderRedeemers() {
+    const box = $("redeemers"); box.textContent = "";
+    for (const [key, c] of Object.entries(A.collections)) {
+      const div = document.createElement("div");
+      div.style.cssText = "border-top:1px solid var(--line);padding:14px 0";
+      const addr = saved.redeemers?.[key];
+      div.innerHTML = `<b>${c.name}</b> · $${c.usdPerNft} of CLG per NFT (max ${c.maxClgPerNft} CLG) · token IDs ${c.minTokenId ?? "?"}–${c.maxTokenId}
+        <div class="mono muted">NFT ${c.address ? link(c.address) : "not deployed yet"}</div>
+        <div class="gate"></div><div class="row" style="margin-top:8px"></div><div class="status mono" style="margin-top:6px"></div>`;
+      const row = div.querySelector(".row");
+      const gate = div.querySelector(".gate");
+      const status = div.querySelector(".status");
+      box.appendChild(div);
+      if (!c.address || c.minTokenId == null) { row.innerHTML = '<span class="muted">Waiting for the collection contract. Fill in address and minTokenId in addresses.json.</span>'; continue; }
+      if (key === "trinariElderborn" && !addr) {
+        try {
+          const nft = new ethers.Contract(c.address, V8, provider || RO);
+          const [minted, max] = await Promise.all([nft.totalMinted(), nft.maxSupply()]);
+          if (minted < max) {
+            gate.innerHTML = `<div class="danger">Only ${minted} of ${max} Elderborn are minted. Deploy this redeemer only when the mint has sold out, so no new redeemable NFTs can be minted afterwards. It will use token IDs ${c.minTokenId}–${minted}.</div>`;
+            continue;
+          }
+          gate.innerHTML = `<div class="warn">Sold out (${minted}/${max}). Eligible token IDs will be ${c.minTokenId}–${minted}.</div>`;
+        } catch (e) { gate.innerHTML = `<div class="danger">Could not read the Elderborn contract: ${e.shortMessage || e.message}</div>`; continue; }
+      }
+      if (!addr) {
+        const b = document.createElement("button");
+        b.textContent = "Deploy redeemer"; b.disabled = !signer || !saved.oracle;
+        b.onclick = async () => {
+          try { b.disabled = true; const r = await deploy("LegendsBurnRedeemer", await redeemerArgs(key, c)); saved.redeemers = { ...(saved.redeemers || {}), [key]: r.addr }; saved.redeemerArgs = { ...(saved.redeemerArgs || {}), [key]: r.encoded }; save(); renderRedeemers(); refresh(); }
+          catch (e) { log(`${c.name} deploy failed: ` + (e.shortMessage || e.message)); b.disabled = false; }
+        };
+        row.appendChild(b);
+        if (!saved.oracle) row.insertAdjacentHTML("beforeend", '<span class="muted">Deploy or set the oracle first.</span>');
+      } else {
+        const amt = document.createElement("input"); amt.placeholder = "CLG amount, e.g. 1"; amt.size = 16;
+        const b = document.createElement("button"); b.textContent = "Send CLG to reserve"; b.disabled = !signer;
+        b.onclick = async () => {
+          try {
+            const value = ethers.parseUnits(amt.value.trim() || "0", 18);
+            if (value <= 0n) return;
+            const red = new ethers.Contract(addr, ART.LegendsBurnRedeemer.abi, provider);
+            try { await red.quote(); } catch { if (!confirm("The oracle can't price a burn yet (warming up, stale or liquidity too low). Fund anyway?")) return; }
+            const clg = new ethers.Contract(A.tokens.CLG, ["function transfer(address,uint256) returns (bool)"], signer);
+            log(`Sending ${amt.value} CLG to ${c.name} reserve… confirm in your wallet.`);
+            const tx = await clg.transfer(addr, value); await tx.wait(); log(`Funded: ${tx.hash}`); refresh();
+          } catch (e) { log("Funding failed: " + (e.shortMessage || e.message)); }
+        };
+        row.append(amt, b);
+        status.dataset.redeemer = addr;
+      }
+    }
+    refresh();
+  }
+
+  // ---------- status ----------
+  const RO = new ethers.JsonRpcProvider("https://evm.cronos.org", 25, { staticNetwork: true });
+  const errName = (e, abi) => { try { return new ethers.Interface(abi).parseError(e.data)?.name; } catch { return null; } };
+
+  async function refresh() {
+    const p = provider || RO;
+    if (saved.oracle) {
+      const oc = new ethers.Contract(saved.oracle, ART.ClgPriceOracle.abi, p);
+      try {
+        const [cp0, latest] = await Promise.all([oc.checkpoint(0), oc.latestCheckpoint()]);
+        const age = Math.floor(Date.now() / 1000) - Number(latest.timestamp);
+        let line = `Oracle ${link(saved.oracle)}<br>Latest checkpoint ${Math.round(age / 60)} min ago${age > 7200 ? ' <span class="bad">(keeper not running?)</span>' : ""}<br>`;
+        try { const price = await oc.clgUsdPrice(); line += `<span class="ok">Ready · CLG = $${Number(ethers.formatUnits(price, 18)).toFixed(2)}</span>`; }
+        catch (e) {
+          const n = errName(e, ART.ClgPriceOracle.abi) || "not ready";
+          const readyAt = Number(cp0.timestamp) + A.oracle.longWindowSeconds;
+          line += `<span class="bad">${n}${n === "WarmingUp" ? ` · ready ≈ ${new Date(readyAt * 1000).toLocaleString()} if checkpoints keep arriving hourly` : ""}</span>`;
+        }
+        if (saved.oracleArgs) line += `<br><span class="muted">Constructor args (for verification):</span> ${saved.oracleArgs}`;
+        $("oracleStatus").innerHTML = line;
+      } catch (e) { $("oracleStatus").textContent = "Could not read oracle: " + (e.shortMessage || e.message); }
+    }
+    for (const el of document.querySelectorAll("[data-redeemer]")) {
+      const addr = el.dataset.redeemer;
+      const r = new ethers.Contract(addr, ART.LegendsBurnRedeemer.abi, p);
+      const key = Object.keys(saved.redeemers || {}).find((k) => saved.redeemers[k] === addr);
+      try {
+        const reserve = await r.reserveBalance();
+        let line = `Redeemer ${link(addr)} · reserve ${ethers.formatUnits(reserve, 18)} CLG`;
+        try {
+          const [amount, price] = await r.quote();
+          const usd = Number(ethers.formatUnits(amount, 18)) * Number(ethers.formatUnits(price, 18));
+          line += ` · payout ${Number(ethers.formatUnits(amount, 18)).toFixed(5)} CLG ($${usd.toFixed(2)}) · ${reserve / amount} burns covered`;
+        } catch { line += ' · <span class="muted">payout available once the oracle is ready</span>'; }
+        if (saved.redeemerArgs?.[key]) line += `<br><span class="muted">Constructor args:</span> ${saved.redeemerArgs[key]}`;
+        el.innerHTML = line;
+      } catch (e) { el.textContent = "Could not read redeemer: " + (e.shortMessage || e.message); }
+    }
+  }
+
+  function renderConfig() {
+    $("configOut").textContent = JSON.stringify({ oracle: saved.oracle || null, redeemers: saved.redeemers || {} }, null, 2);
+  }
+
+  renderRedeemers(); renderConfig(); setInterval(refresh, 30000);
+})();
+</script>
+</body>
+</html>

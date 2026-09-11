@@ -1,1717 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Cronos Legends</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            line-height: 1.6;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 20px 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #FFD700;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 0;
-                visibility: hidden;
-                max-height: 0;
-                overflow: hidden;
-                transform: none;
-                transition: all 0.3s ease, max-height 0.3s ease;
-            }
-
-            .dropdown.active .dropdown-menu {
-                opacity: 1;
-                visibility: visible;
-                max-height: 500px;
-                margin-top: 10px;
-            }
-        }
-
-        .back-home-btn {
-            padding: 12px 30px;
-            background: transparent;
-            border: 2px solid #FFD700;
-            border-radius: 50px;
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-home-btn:hover {
-            background: rgba(255, 215, 0, 0.1);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            transform: translateX(-5px);
-        }
-
-        .hero-section {
-            padding: 150px 20px 80px;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.05), transparent);
-        }
-
-        .page-title {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-
-        .page-subtitle {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 18px 50px 18px 20px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 50px;
-            color: #fff;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-box:focus {
-            border-color: #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.3rem;
-            color: #FFD700;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        .category-tabs {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 60px;
-            padding: 0 20px;
-        }
-
-        .tab-btn {
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 50px;
-            color: #888;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .tab-btn:hover, .tab-btn.active {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: #FFD700;
-            color: #FFD700;
-        }
-
-        .faq-category {
-            margin-bottom: 60px;
-        }
-
-        .category-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: #FFD700;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-        }
-
-        .faq-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: 15px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-        }
-
-        .faq-question {
-            padding: 25px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            color: #FFD700;
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            color: #FFD700;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 5000px;
-        }
-
-        .faq-answer-content {
-            padding: 0 30px 25px;
-            color: #bbb;
-            line-height: 1.8;
-        }
-
-        .faq-answer-content ul {
-            margin: 15px 0 15px 25px;
-        }
-
-        .faq-answer-content li {
-            margin-bottom: 8px;
-        }
-
-        .faq-answer-content strong {
-            color: #FFD700;
-        }
-
-        /* Game Section Styles */
-        .game-section {
-            background: rgba(255, 215, 0, 0.05);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .game-section:hover {
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .game-section-header {
-            padding: 25px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .game-section-header:hover {
-            background: rgba(255, 215, 0, 0.08);
-        }
-
-        .game-section-title {
-            font-family: 'Cinzel', serif;
-            color: #FFD700;
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .game-section-toggle {
-            font-size: 2rem;
-            color: #FFD700;
-            transition: transform 0.3s ease;
-        }
-
-        .game-section.active .game-section-toggle {
-            transform: rotate(180deg);
-        }
-
-        .game-section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-
-        .game-section.active .game-section-content {
-            max-height: 10000px;
-        }
-
-        .game-section-inner {
-            padding: 0 30px 30px;
-        }
-
-        .faq-table {
-            width: 100%;
-            margin: 20px 0;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .faq-table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .faq-table td {
-            padding: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .contract-address {
-            background: rgba(255, 215, 0, 0.1);
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            color: #FFD700;
-            word-break: break-all;
-            margin: 10px 0;
-        }
-
-        .link-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            margin: 10px 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .link-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 999;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-        }
-
-        @media (max-width: 768px) {
-            .page-title {
-                font-size: 2.5rem;
-            }
-
-            .category-title {
-                font-size: 1.8rem;
-            }
-
-            .faq-question {
-                padding: 20px;
-                font-size: 1rem;
-            }
-
-            .faq-answer-content {
-                padding: 0 20px 20px;
-            }
-
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-
-
-        /* Footer */
-        .footer {
-            background: rgba(10, 10, 10, 0.9);
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            padding: 60px 20px 40px;
-            text-align: center;
-        }
-
-        .footer .section-title {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #4752C4);
-            color: #fff;
-            border: 2px solid #5865F2;
-        }
-
-        .btn-discord:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
-        }
-
-        .btn-twitter {
-            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
-            color: #fff;
-            border: 2px solid #1DA1F2;
-        }
-
-        .btn-twitter:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(29, 161, 242, 0.4);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #FFD700;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Cronos Legends</title>
+  <meta name="description" content="Straight answers about Cronos Legends: $CLG, liquidity and fees, burning an NFT for $CLG, the collections, Trinari: Elderborn, wallet safety, Trinari Defense and the Discord.">
+  <link rel="canonical" href="https://cronoslegends.com/faq/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="Cronos Legends FAQ — questions, answered">
+  <meta property="og:description" content="$CLG, burning, the collections and staying safe, in short, straight answers.">
+  <meta property="og:url" content="https://cronoslegends.com/faq/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Cronos Legends","url":"https://cronoslegends.com/","logo":"https://cronoslegends.com/assets/img/icon-512.png","sameAs":["https://x.com/CronosLegends","https://discord.gg/huWn4Tz4g4","https://crovia.app/creators/cronoslegends"]}
+  </script>
+  <!-- FAQPage structured data: generated from the questions and answers below, word for word. -->
+  <script type="application/ld+json" id="faq-ld">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Cronos Legends?","acceptedAnswer":{"@type":"Answer","text":"A hand-painted fantasy world on the Cronos blockchain. You can collect its characters as NFTs, read the saga, play Trinari Defense in your browser and hold $CLG, the realm's one token. Cronos Legends is created and operated by Crovia Oy (Finland), the team behind crovia.app. Every official link and address is listed on our About page."}},{"@type":"Question","name":"Who are the three factions?","acceptedAnswer":{"@type":"Answer","text":"The Cronos Guardians keep order and light. The Chaos Horde runs on fury and wants the old world gone. And the Trinari, born where a star fell, don't pick sides: they stand between. Their story is on the Lore page."}},{"@type":"Question","name":"Why should I trust any of this?","acceptedAnswer":{"@type":"Answer","text":"You shouldn't have to take our word for it, so check. $CLG's supply is fixed and its ownership is renounced. The burn contracts have no owner. Our liquidity and its fees are public. The numbers on this site are read live from Cronos, and every address links to the Cronos explorer. Like any crypto asset, $CLG and the NFTs can lose value. Nothing on this site is financial advice."}},{"@type":"Question","name":"What is $CLG?","acceptedAnswer":{"@type":"Answer","text":"The one token of Cronos Legends. There are exactly 500, all minted once when the token was created in 2024, and its ownership was renounced four days later. It's a plain ERC-20 on Cronos: no mint, no tax, no blacklist and no pause. The details are on our $CLG page."}},{"@type":"Question","name":"What is the $CLG contract address?","acceptedAnswer":{"@type":"Answer","text":"The only $CLG contract, on Cronos (chain 25), is: 0x08d9cb5100C306C2909B63415d7ff05268633b41. Anyone can create a token called CLG, so check the first and last four characters every time you paste it."}},{"@type":"Question","name":"Where do I get $CLG?","acceptedAnswer":{"@type":"Answer","text":"On VVS Finance, a decentralized exchange on Cronos. The Get $CLG on VVS button on our $CLG page opens VVS with the real $CLG already selected. Most $CLG liquidity sits in the VVS V3 CLG/CRONUS 1% pool; other $CLG pools are tiny, and their prices can be far off."}},{"@type":"Question","name":"What can I do with $CLG?","acceptedAnswer":{"@type":"Answer","text":"It's what the burn program pays: burn a Legends Awaken I or II NFT and you receive $CLG in the same transaction. Holding $CLG also unlocks holder roles in the Discord once you verify your wallet."}},{"@type":"Question","name":"Can anyone make more $CLG?","acceptedAnswer":{"@type":"Answer","text":"No. The contract has no mint function and its ownership was renounced in 2024, so the supply is 500, forever. And $CLG sent to the burn address 0x…dEaD can never move again, so the amount in circulation can only go down."}},{"@type":"Question","name":"What happened to the other community tokens?","acceptedAnswer":{"@type":"Answer","text":"Older community tokens were retired. $CLG is the only Cronos Legends token."}},{"@type":"Question","name":"Where is $CLG's liquidity?","acceptedAnswer":{"@type":"Answer","text":"In the VVS Finance V3 CLG/CRONUS pool with a 1% fee, at 0x3d7e…d818. Our project wallet holds position #49804 in it, which covers the full price range and makes up most of the pool's liquidity. The live numbers are on our $CLG page."}},{"@type":"Question","name":"Why does $CRONUS show up?","acceptedAnswer":{"@type":"Answer","text":"Only because it's the pool's pair token. Every trade in this pool has $CLG on one side and $CRONUS on the other, so the pool and its fees are counted in both."}},{"@type":"Question","name":"What happens to the LP fees?","acceptedAnswer":{"@type":"Answer","text":"TBA. Every trade in the pool pays a 1% fee to the liquidity in it, which is mostly our position. What we do with those fees will be published on this site. Until then they stay on-chain, where anyone can see them: the $CLG page shows the fees waiting to collect and the fees collected so far, live."}},{"@type":"Question","name":"Who controls the liquidity?","acceptedAnswer":{"@type":"Answer","text":"Position #49804 is held by our single-key project wallet, the same wallet that receives NFT royalties. It isn't locked, so the wallet can add or remove liquidity. Any change shows up on the $CLG page as soon as it happens."}},{"@type":"Question","name":"How does burning work?","acceptedAnswer":{"@type":"Answer","text":"Open the burn page, connect your Cronos wallet, pick one of your Legends Awaken I or II NFTs and confirm once. In that single wallet transaction the NFT goes to the burn address 0x…dEaD and $CLG arrives in your wallet. No token approvals, and never a message to sign. The burn contracts have no owner and can't be changed. Their addresses are published on this site at launch."}},{"@type":"Question","name":"Which NFTs can I burn?","acceptedAnswer":{"@type":"Answer","text":"Legends Awaken I (token IDs 1–500) and Legends Awaken II (token IDs 1–774). Trinari: Elderborn can be burned too, but only after its mint has sold out. The Totems of Power live on Cronos POS and aren't part of the burn program."}},{"@type":"Question","name":"How much $CLG do I receive?","acceptedAnswer":{"@type":"Answer","text":"For each Legends Awaken I or II NFT: $35 of $CLG, and never more than 0.3 CLG. The $CLG price used is the higher of CLG's 24-hour and recent average price on VVS pools. Trinari: Elderborn pays $15 of $CLG, only after its mint has sold out. The burn page shows the exact amount before you confirm."}},{"@type":"Question","name":"Why might I receive less than $35?","acceptedAnswer":{"@type":"Answer","text":"Two rules, both on purpose. First, the price used is the higher of CLG's 24-hour and recent average, so right after a sharp fall, the $CLG you receive is worth less than $35 at the current market price. Second, a burn never pays more than 0.3 CLG, so whenever $CLG trades below about $117, 0.3 CLG is worth less than $35. Together they make it pointless to push the price down to squeeze more $CLG out of a reserve. The burn page also sets a minimum when you confirm. If the price moves past it before your transaction lands, nothing happens and your NFT is still yours."}},{"@type":"Question","name":"My NFT is in the Crypto.com NFT app. Can I burn it?","acceptedAnswer":{"@type":"Answer","text":"Not from there. Withdraw it to your own Cronos wallet first, for example Crypto.com Onchain, MetaMask or Rabby, then open the burn page. The burn happens in your wallet, so the NFT has to be in it."}},{"@type":"Question","name":"What if the reserve is empty?","acceptedAnswer":{"@type":"Answer","text":"Then burns wait. Each burn contract pays from its own reserve of $CLG, which the team funds by sending $CLG to it, and it's first come, first served while the reserve lasts. If a reserve can't cover a burn, the transaction doesn't go through: nothing moves and your NFT is still yours. Burns work again once more $CLG arrives, and the burn page shows each reserve live."}},{"@type":"Question","name":"What if I send my NFT to 0x…dEaD myself, or use another tool?","acceptedAnswer":{"@type":"Answer","text":"You receive nothing, and you can't undo it. Only the Burn button on cronoslegends.com/burn pays, because it sends your NFT straight into the burn contract with safeTransferFrom, and that's what triggers the payout. Sending it to 0x…dEaD yourself, a marketplace's or wallet's burn feature, or a plain transfer to the burn contract pays nothing."}},{"@type":"Question","name":"Can I undo a burn?","acceptedAnswer":{"@type":"Answer","text":"No. A burned NFT sits at 0x…dEaD forever, and nobody can bring it back, including us. That's why the burn page asks you to tick a box before you confirm. Take a last look at your legend first."}},{"@type":"Question","name":"Can the team stop or change the burn program?","acceptedAnswer":{"@type":"Answer","text":"Nobody can pause or change the burn contracts: they have no owner, no admin and no upgrade path, and $CLG in a reserve can only leave as a burn payout. But burns do stop automatically whenever the price data can't be trusted, for example if liquidity is withdrawn from the CLG/CRONUS pool. Most of that liquidity is our own position #49804, so if we removed it, burns would stop while it's out and for up to a day after it returns. Burns also wait when a reserve runs out. Whenever burns are stopped, nothing moves and your NFT stays yours."}},{"@type":"Question","name":"Which collections are there?","acceptedAnswer":{"@type":"Answer","text":"Four. Legends Awaken I (500 NFTs) and Legends Awaken II (774 NFTs) launched in 2025 on Crypto.com NFT. Trinari: Elderborn (212) is coming to crovia.app. The Totems of Power are nine artifacts held on Crypto.com NFT. Meet them all on the Collections page."}},{"@type":"Question","name":"Where can I view or trade Legends Awaken NFTs?","acceptedAnswer":{"@type":"Answer","text":"On crovia.app: Legends Awaken I and Legends Awaken II. Both collections live on Cronos."}},{"@type":"Question","name":"What is Trinari: Elderborn?","acceptedAnswer":{"@type":"Answer","text":"212 unique Elderborn, the first of the Trinari, each shaped from a single element. Every one is a playable character in Cronos City, and each holder can download its 3D model (Crovia keeps the usage rights in Crovia and Cronos City). The public mint is 400 CRO, with up to 10 per wallet and 5% royalties. Mint timing lives on the crovia.app launch page, so it's always current. After the mint has sold out, an Elderborn can be burned for $15 of $CLG."}},{"@type":"Question","name":"What are the Totems of Power?","acceptedAnswer":{"@type":"Answer","text":"Nine artifacts of awakening, three for each faction (Rare, Legendary and Mythic), held on Crypto.com NFT on Cronos POS. They aren't Cronos EVM NFTs and aren't part of the burn program. You can view them on crovia.app. The Totem of Peace was contributed to Crypto.com's \"Art of Giving: STAY with UNICEF\" charity drop."}},{"@type":"Question","name":"Which wallets work?","acceptedAnswer":{"@type":"Answer","text":"Any Cronos wallet that connects in your browser, such as Crypto.com Onchain, MetaMask or Rabby. On a phone, open cronoslegends.com/burn in your wallet app's built-in browser. Wallets connect only on the burn page; the rest of the site never asks."}},{"@type":"Question","name":"Will you ever ask for my recovery phrase?","acceptedAnswer":{"@type":"Answer","text":"Never. We never DM first and never ask for your recovery phrase or private key. Real help happens in public Discord channels or in a support ticket you open yourself. A burn is one normal transaction that your wallet shows you before you confirm: no approvals, never a message to sign. If anything asks for more, stop."}},{"@type":"Question","name":"How do I spot a fake?","acceptedAnswer":{"@type":"Answer","text":"Check the address, not the name. Anyone can create a token or an NFT collection called Cronos Legends or CLG. Our official links and contract addresses are all on one page: if it's not listed there, it's not us. Be wary of DMs, \"support\" accounts that contact you first, airdrops you need to claim, and anything urgent."}},{"@type":"Question","name":"What does this site know about me?","acceptedAnswer":{"@type":"Answer","text":"Very little. This site sets no cookies and runs no analytics. If you connect a wallet on the burn page, your address is used in your browser only and never stored by us. The public Cronos RPC services our pages read from, and Google Fonts, can see your IP address. Trinari Defense leaderboard names are stored in Google Firebase. Details are on the Privacy page."}},{"@type":"Question","name":"What can I play?","acceptedAnswer":{"@type":"Answer","text":"Trinari Defense, a free wave-survival game in your browser. You're a Trinari forest guardian holding off the Chaos Horde and the Cronos Guardians, on a computer or a phone. No wallet needed."}},{"@type":"Question","name":"Is my Trinari Defense score saved?","acceptedAnswer":{"@type":"Answer","text":"Yes. When a run ends, your name, kills, wave and survival time go to the Hall of Legends, the game's global leaderboard. Names are stored in Google Firebase and shown publicly, so use a nickname, not your real name."}},{"@type":"Question","name":"What happens in the Discord?","acceptedAnswer":{"@type":"Answer","text":"It's where holders gather, community games and events run, and news lands first. Verify your wallet there to unlock holder roles for your Legends Awaken NFTs and $CLG. Rules for community games are posted in the Discord."}},{"@type":"Question","name":"How do I get help?","acceptedAnswer":{"@type":"Answer","text":"Open a support ticket in the Discord, or email contact@cronoslegends.com. We'll never ask for your recovery phrase."}}]}
+  </script>
+  <style>
+    .topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--space-5); }
+    .topics a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--radius-pill); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line); color: var(--text-2); font-weight: 600; text-decoration: none; }
+    .topics a:hover { color: var(--text); border-color: var(--line-strong); }
+    .faq-group + .faq-group { margin-top: var(--space-8); }
+    .faq-group > h2 { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.9rem); }
+    .faq-group > .row { margin-bottom: var(--space-4); }
+    .help-card { margin-top: var(--space-8); text-align: center; }
+    .help-card p { margin-inline: auto; max-width: 52ch; }
+    .help-card .row { justify-content: center; }
+    .nb { white-space: nowrap; }
+  </style>
 </head>
 <body>
-        <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/Earn/">Earn & Swap</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/" aria-current="page">FAQ</a></li>
+      </ul>
     </nav>
-
-    <div class="hero-section">
-        <h1 class="page-title">❓ Frequently Asked Questions</h1>
-        <p class="page-subtitle">Find answers to common questions about Cronos Legends, tokens, NFTs, and more</p>
-        
-        <div class="search-container">
-            <input type="text" class="search-box" id="searchBox" placeholder="Search for answers...">
-            <span class="search-icon">🔍</span>
-        </div>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
     </div>
-
-    <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all')">All</button>
-        <button class="tab-btn" onclick="filterCategory('basics')">Basics</button>
-        <button class="tab-btn" onclick="filterCategory('tokens')">Tokens & Trading</button>
-        <button class="tab-btn" onclick="filterCategory('nfts')">NFTs</button>
-        <button class="tab-btn" onclick="filterCategory('gameplay')">Gameplay & Rewards</button>
-        <button class="tab-btn" onclick="filterCategory('community')">Community</button>
-    </div>
-
-    <div class="container">
-        <!-- BASICS CATEGORY -->
-        <div class="faq-category" data-category="basics">
-            <h2 class="category-title"><span class="category-icon">🌟</span>The Basics</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is Cronos Legends?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Cronos Legends is a Web3 ecosystem built on the Cronos blockchain. It features collectible NFTs, immersive lore, and a unique games where players can compete and earn crypto rewards. The project includes multiple tokens and NFTs across three powerful factions: the Chaos Horde, Cronos Guardians, and Trinari.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are the Factions?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Cronos Legends features three powerful factions, each with unique traits and philosophy:
-                        <ul>
-                            <li><strong>💀 Chaos Horde</strong> — Embodies raw destruction, power, and chaos. Warriors driven by conquest and fury.</li>
-                            <li><strong>⚔️ Cronos Guardians</strong> — Represents order, protection, and celestial might. Noble defenders of tradition and honor.</li>
-                            <li><strong>🌿 Trinari</strong> — Mystical beings of nature embodying balance and ancient wisdom. Elemental spirits risen to restore harmony.</li>
-                        </ul>
-                        Your faction choice may influence your journey and available rewards throughout the Cronos Legends universe.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Is the project safe?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Yes! Cronos Legends is built with transparency and community trust as core principles. All tokenomics are publicly available, the development team is active and accessible, and liquidity pools are visible on-chain for verification. We aim to stand apart from typical short-lived projects by focusing on long-term value and community engagement.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Is there a roadmap?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        Yes! Our roadmap outlines the project's development phases, upcoming features, and major milestones. Visit our website or Discord for the latest roadmap updates and announcements.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TOKENS & TRADING CATEGORY -->
-        <div class="faq-category" data-category="tokens">
-            <h2 class="category-title"><span class="category-icon">💰</span>Tokens & Trading</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is the $CLG Token?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        The $CLG token is the core utility and community token of Cronos Legends. It serves multiple purposes within the ecosystem:
-                        <ul>
-                            <li>Access to Battleground competitions and events</li>
-                            <li>Staking and liquidity provision rewards</li>
-                            <li>Special perks and benefits for holders</li>
-                            <li>Required for certain Discord game features</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Where can I buy the tokens?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        You can buy $CLG on VVS Finance or other supported DEXs on the Cronos chain. Always verify you're using the correct contract address:
-                        <div class="contract-address">0x08d9cb5100C306C2909B63415d7ff05268633b41</div>
-                        <strong>Important:</strong> Never buy from unofficial sources and always double-check the contract address to avoid scams.
-                        <br><br>
-                        <a href="https://vvs.finance/?outputCurrency=0x08d9cb5100C306C2909B63415d7ff05268633b41" target="_blank" class="link-button">Trade on VVS Finance →</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How can I add liquidity to $CLG?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Step-by-step guide to adding liquidity on VVS Finance:</strong>
-                        <ol style="margin: 15px 0 15px 25px;">
-                            <li>Visit VVS Finance and connect your wallet</li>
-                            <li>Navigate to the "Liquidity" section</li>
-                            <li>Select $CLG and pair it with $CRO or another token</li>
-                            <li>Make sure you select the <strong>V2 pool</strong></li>
-                            <li>Enter the amount of either $CLG or $CRO/$CRONUS you want to add</li>
-                            <li>VVS Finance will automatically calculate the matching amount for the other token</li>
-                            <li>Confirm the transaction in your wallet</li>
-                        </ol>
-                        LP providers may be eligible for future rewards and staking benefits. Always ensure you understand impermanent loss before providing liquidity.
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What is $CRONUS and how does it relate to Cronos Legends?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        $CRONUS is a partner project token within the Cronos Legends ecosystem. Holders of $CRONUS may receive special bonuses and benefits in Battlegrounds and other events.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NFTS CATEGORY -->
-        <div class="faq-category" data-category="nfts">
-            <h2 class="category-title"><span class="category-icon">🖼️</span>NFTs & Collections</h2>
-            
-           <div class="faq-item">
-    <div class="faq-question" onclick="toggleFaq(this)">
-        How to receive free Legends Awaken II NFT?
-        <span class="faq-toggle">▼</span>
-    </div>
-    <div class="faq-answer">
-        <div class="faq-answer-content">
-            There are <strong>two ways</strong> to qualify for a free Legends Awaken II NFT:
-            <br><br>
-            
-            <!-- NFT Holder Program -->
-            <strong>🎁 Method 1: NFT Holder Reward Program</strong><br>
-            Hold 5 or more Legends Awaken I NFTs (in your Crypto.com/NFT account or non-custodial wallet) to be eligible for 1 free Legends Awaken II NFT.
-            <br><br>
-            
-            <hr style="border: 1px solid rgba(255, 215, 0, 0.2); margin: 25px 0;">
-            
-            <!-- $TRI Holder Program -->
-            <strong>💎 Method 2: $TRI 1% Holders Program</strong><br>
-            Hold 1% of the total supply of Trinari coin ($TRI) — that's <strong>10,000,000 $TRI</strong> — to be eligible for 1 free Legends Awaken II NFT.
-            <br><br>
-            
-            <strong>⚠️ Important:</strong> This is a special campaign with full Terms & Conditions to be announced in Discord after the drop.
-            <br><br>
-            
-            <strong>🔗 Where to Buy $TRI:</strong><br>
-            <a href="https://dexscreener.com/cronos/0x5964f4ff2e2e041b33dae95ccd07c0f81169b9e9" target="_blank" class="link-button">📊 View on Dexscreener</a>
-            <a href="https://wolfswap.app/swap?chainId=25&sellToken=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&buyToken=0xF1F8B074D616796Ae529651a41874246389eC6d3" target="_blank" class="link-button">🐺 Buy on Wolfswap</a>
-            <a href="https://obsidian.finance/?outputCurrency=0xF1F8B074D616796Ae529651a41874246389eC6d3" target="_blank" class="link-button">💎 Buy on Obsidian Finance</a>
-            <br><br>
-            
-           
-            <hr style="border: 1px solid rgba(255, 215, 0, 0.2); margin: 25px 0;">
-            
-			            <!-- General Information -->
-            <strong>📅 To claim your free Legends, you have to stay active in Discord and notice the announcement to know the claim period, and create ticket in Discord!:</strong><br>
-            <br><br>
-                        
-            </div>
-    </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/" aria-current="page">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
 </div>
 
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What are the different NFT tiers?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>Legends Awaken (1st Edition) NFT Tiers:</strong>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-				<th>Required amount</th>
-                                <th>Battleground Bonus</th>
-                                <th>Special Benefits</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened Legend💎</strong></td>
-				<td>+10</td>
-                                <td>+$3.00</td>
-                                <td>Access to exclusive updates channel in Discord, bragging rights</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened X</strong></td>
-				<td>+5</td>
-                                <td>+$2.00</td>
-                                <td>Access to exclusive updates channel in Discord</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened +</strong></td>
-				<td>+3</td>
-                                <td>+$1.00</td>
-                                <td>May receive more rewards such as airdrops than Awakaned</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened</strong></td>
-				<td>1</td>
-                                <td>+$0.50</td>
-                                <td>Standard access</td>
-                            </tr>
-                        </table>
-                        <br>
-                        Each tier provides increasing benefits in Battlegrounds and other ecosystem activities.
-                    </div>
-                </div>
-            </div>
-        </div>
+<main id="main">
 
-                <!-- GAMEPLAY & REWARDS CATEGORY -->
-        <div class="faq-category" data-category="gameplay">
-            <h2 class="category-title"><span class="category-icon">🎮</span>Gameplay & Rewards</h2>
-            
-            <!-- LEGENDS ARENA GAME SECTION -->
-            <div class="game-section">
-                <div class="game-section-header" onclick="toggleGameSection(this)">
-                    <div class="game-section-title">
-                        <span>💎</span>
-                        <span>Legends Arena</span>
-                    </div>
-                    <span class="game-section-toggle">▼</span>
-                </div>
-                <div class="game-section-content">
-                    <div class="game-section-inner">
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What is Legends Arena?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    Legends Arena is a Discord-based combat game where players fight to earn 💎 Crystals. The game features NFT-based gameplay with role perks, token holder bonuses, and a reward shop where you can spend your earned Crystals on real crypto rewards!
-                                    <br><br>
-                                    <strong>🏆 Season 1 Prize Pool:</strong> Minimum of $1,500!
-                                    <br><br>
-                                    <strong>📅 Season Duration:</strong> The season ending time will be announced later, or ends when the shop runs out of items.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                How do I start playing Legends Arena?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>📋 Getting Started (3 Simple Steps):</strong>
-                                    <ol style="margin: 15px 0 15px 25px;">
-                                        <li><strong>Create your profile:</strong> Use the command <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/balance</code> in Discord to initialize your game account</li>
-                                        <li><strong>Set your wallet:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet 0x00000</code> and replace "0x00000" with your actual Cronos wallet address. This is where SHOP rewards will be sent</li>
-                                        <li><strong>Start fighting:</strong> Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/fight</code> to begin earning 💎 Crystals!</li>
-                                    </ol>
-                                    <br>
-                                    <strong>⚠️ Important Entry Requirement:</strong> You need at least <strong>one Legends Awaken II NFT</strong> to play and earn Crystals.
-                                    <br><br>
-                                    <strong>💡 Pro Tip:</strong> Make sure to set your wallet address correctly before making any SHOP purchases, as rewards cannot be recovered if sent to an incorrect address.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What are the available commands?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>🎮 User Commands:</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Command</th>
-                                            <th>Description</th>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #FFD700;">/balance</code></td>
-                                            <td>Create your profile and check your 💎 Crystal balance</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #FFD700;">/fight</code></td>
-                                            <td>Enter combat to earn 💎 Crystals</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #FFD700;">/shop-view</code></td>
-                                            <td>Browse available items in the reward shop</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #FFD700;">/wallet 0x0</code></td>
-                                            <td>Set your Cronos wallet address for SHOP rewards</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #FFD700;">/leaderboard</code></td>
-                                            <td>View top players and their Crystal earnings</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What are 💎 Crystals and how do I earn them?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>💎 Crystals</strong> are the in-game currency earned through combat in Legends Arena. You can spend Crystals in the SHOP for real crypto rewards!
-                                    <br><br>
-                                    <strong>💰 Base Mechanics per Fight:</strong>
-                                    <ul>
-                                        <li><strong>Default Win Chance:</strong> 50%</li>
-                                        <li><strong>Default Cooldown:</strong> 9 hours between fights</li>
-                                    </ul>
-                                    <br>
-                                    Your earnings and cooldowns can be significantly improved through NFT holdings and token bonuses (detailed below).
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What are all the Legends Arena perks and bonuses?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>✨ All perks are STACKABLE! Maximize your earnings and minimize cooldowns by holding multiple assets.</strong>
-                                    <br><br>
-                                    
-                                    <!-- Legends Awaken II Perks -->
-                                    <strong>🎭 Legends Awaken II NFT Perks (Crystal Earnings):</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>NFT Holdings</th>
-                                            <th>Crystals Earned (Random Range)</th>
-                                            <th>Special Benefit</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>1 LA2 NFT</strong></td>
-                                            <td>1–10 💎</td>
-                                            <td>Access to Game (Required to play)</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>3 LA2 NFTs</strong></td>
-                                            <td>3–15 💎</td>
-                                            <td>Enhanced earnings</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>5 LA2 NFTs</strong></td>
-                                            <td>5–20 💎</td>
-                                            <td>Elite earnings</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>10 LA2 NFTs</strong></td>
-                                            <td>10–30 💎</td>
-                                            <td>Maximum earnings</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    <em>💡 Note: The amount of crystals won is randomized within the range based on your NFT holdings.</em>
-                                    <br><br>
-                                    
-                                    <!-- Legends Awaken I Perks -->
-                                    <strong>⏰ Legends Awaken I NFT Perks (Cooldown Reduction):</strong><br>
-                                    <em>LA1 NFTs work as boosters to reduce your fight cooldown!</em>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Cooldown Time</th>
-                                            <th>Benefit</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Default</strong></td>
-                                            <td>9 hours ⏳</td>
-                                            <td>Base cooldown</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Awakened</strong></td>
-                                            <td>8 hours ⏳</td>
-                                            <td>-1 hour</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Awakened +</strong></td>
-                                            <td>7.5 hours ⏳</td>
-                                            <td>-1.5 hours</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Awakened X</strong></td>
-                                            <td>7 hours ⏳</td>
-                                            <td>-2 hours</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Awakened Legend 💎</strong></td>
-                                            <td>6.5 hours ⏳</td>
-                                            <td>-2.5 hours (Fight more often!)</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    
-                                    <!-- CLG Token Perks -->
-                                    <strong>💰 $CLG Token Perks (Win Chance Boost):</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Required Amount</th>
-                                            <th>Win Chance</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Default</strong></td>
-                                            <td>—</td>
-                                            <td>50%</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@$CLG Holder</strong></td>
-                                            <td>1 $CLG</td>
-                                            <td>+3% = <strong>53%</strong> ⚔️</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@$CLG +</strong></td>
-                                            <td>2 $CLG</td>
-                                            <td>+6% = <strong>56%</strong> ⚔️</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@$CLG X</strong></td>
-                                            <td>3 $CLG</td>
-                                            <td>+9% = <strong>59%</strong> ⚔️</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@$CLG Legend 💎</strong></td>
-                                            <td>4 $CLG</td>
-                                            <td>+12% = <strong>62%</strong> ⚔️</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    
-                                    <!-- Trinari Token Perks -->
-                                    <strong>🌿 Trinari Token Perks (Special Abilities):</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Special Ability</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Trinari 0.5%</strong></td>
-                                            <td>5% chance to apply <strong>0 cooldown</strong> ⏳ (fight immediately!)</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>@Trinari 1%</strong></td>
-                                            <td>5% chance to get <strong>x2.5 rewards</strong> 💎</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    
-                                    <!-- Example Maximum Setup -->
-                                    <strong>🚀 Example Maximum Setup:</strong>
-                                    <ul>
-                                        <li><strong>10 LA2 NFTs</strong> = 10–30 💎 base earnings (randomized)</li>
-                                        <li><strong>@Awakened Legend 💎</strong> = 6.5 hour cooldown</li>
-                                        <li><strong>@$CLG Legend 💎</strong> (4 CLG) = 62% win chance</li>
-                                        <li><strong>@Trinari 1%</strong> = 5% chance for x2.5 rewards</li>
-                                    </ul>
-                                    <strong>Result:</strong> Fight every 6.5 hours with 62% win chance, earning 13–33 💎 per win, with a chance to hit massive 2.5x multipliers!
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What is the SHOP and what rewards can I get?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    The <strong>SHOP</strong> is where you spend your hard-earned 💎 Crystals on real crypto rewards! All rewards are sent directly to the wallet address you set using <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/wallet</code>.
-                                    <br><br>
-                                    <strong>🛒 How to Use the Shop:</strong>
-                                    <ol style="margin: 15px 0 15px 25px;">
-                                        <li>Use <code style="background: rgba(255, 215, 0, 0.1); padding: 4px 8px; border-radius: 4px; color: #FFD700;">/shop-view</code> to browse available items</li>
-                                        <li>Choose your desired reward</li>
-                                        <li>Purchase with your earned 💎 Crystals</li>
-                                        <li>Rewards are manually sent by the team to your registered wallet as soon as possible, typically within 24–48 hours.</li>
-                                    </ol>
-                                    <br>
-                                    <strong>🏆 Season 2 Details:</strong>
-                                    <ul>
-                                        <li>Prize Pool: <strong>Minimum $1,500</strong></li>
-                                        <li>Season ends when announced OR when shop items run out</li>
-                                        <li>New items and rewards added regularly</li>
-                                    </ul>
-                                    <br>
-                                    <strong>⚠️ Important:</strong> Make sure your wallet address is set correctly before purchasing. Rewards cannot be recovered if sent to wrong addresses!
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-
-            <!-- BATTLEGROUND GAME SECTION -->
-            <div class="game-section">
-                <div class="game-section-header" onclick="toggleGameSection(this)">
-                    <div class="game-section-title">
-                        <span>⚔️</span>
-                        <span>Battleground</span>
-                    </div>
-                    <span class="game-section-toggle">▼</span>
-                </div>
-                <div class="game-section-content">
-                    <div class="game-section-inner">
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                How does the Battleground game work?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>Battlegrounds Overview:</strong><br>
-                                    Battlegrounds are competitive events where $CLG holders and NFT owners can enter and compete for massive prize pools. Winners are determined through various mechanics including skill, strategy, luck, or event-specific challenges.
-                                    <br><br>
-                                    <strong>📋 Entry Requirements:</strong><br>
-                                    To participate in Battlegrounds, you must hold at least 1 $CLG token or Legends Awaken NFT making you eligible for participation.
-                                    <br><br>
-                                    <strong>🎭 Legends Awaken NFT Tier Bonuses:</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Required Amount</th>
-                                            <th>Battleground Bonus</th>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Awakened Legend💎</strong></td>
-                                            <td>10 NFT</td>
-                                            <td>+$3.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Awakened X</strong></td>
-                                            <td>5 NFT</td>
-                                            <td>+$2.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Awakened +</strong></td>
-                                            <td>3 NFT</td>
-                                            <td>+$1.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Awakened</strong></td>
-                                            <td>1 NFT</td>
-                                            <td>+$0.50</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    <strong>💎 Token/Coin Holder Bonuses:</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Required Amount</th>
-                                            <th>Battleground Bonus</th>
-                                        </tr>
-                                        <tr>
-                                            <td>CLG Holder </td>
-                                            <td>1 $CLG</td>
-                                            <td>$0.50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CLG Legend 💎</td>
-                                            <td>5 $CLG</td>
-                                            <td>$1.50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Trinari 1% Holder</td>
-                                            <td>10000000 $TRI</td>
-                                            <td>+$1.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Trinari 0.5% Holder</td>
-                                            <td>5000000 $TRI</td>
-                                            <td>+$0.50</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    <strong>🤝 Partner Project ($CRONUS) Bonuses:</strong>
-                                    <table class="faq-table">
-                                        <tr>
-                                            <th>Discord Role</th>
-                                            <th>Required Amount</th>
-                                            <th>Battleground Bonus</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Cronus Overlord</td>
-                                            <td>1000000 $CRONUS</td>
-                                            <td>+$1.50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cronus Warrior</td>
-                                            <td>500000 $CRONUS</td>
-                                            <td>+$1.00</td>
-                                        </tr>
-                                    </table>
-                                    <br>
-                                    All bonuses are stackable, allowing players to maximize their rewards by holding multiple qualifying assets and roles! Please note, rewards are subject to change.
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-
-            <!-- WEBSITE GAMES SECTION -->
-            <div class="game-section">
-                <div class="game-section-header" onclick="toggleGameSection(this)">
-                    <div class="game-section-title">
-                        <span>🌐</span>
-                        <span>Website Games</span>
-                    </div>
-                    <span class="game-section-toggle">▼</span>
-                </div>
-                <div class="game-section-content">
-                    <div class="game-section-inner">
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                What are the Website Games?
-                                <span class="faq-toggle">▼</span>
-                            </div>
-                            <div class="faq-answer">
-                                <div class="faq-answer-content">
-                                    <strong>🚀 Coming Soon!</strong>
-                                    <br><br>
-                                    Website Games are browser-based games that will be accessible directly from the Cronos Legends website. These games will offer additional ways to engage with the ecosystem and earn rewards!
-                                    <br><br>
-                                    <strong>📅 More Information:</strong><br>
-                                    Details about Website Games, including gameplay mechanics, reward structures, and launch dates, will be announced in Discord and on our social media channels. Stay tuned for updates!
-                                    <br><br>
-                                    <strong>💡 Stay Connected:</strong><br>
-                                    Join our <a href="https://discord.gg/huWn4Tz4g4" target="_blank" style="color: #FFD700; text-decoration: underline;">Discord</a> and follow us on <a href="https://x.com/CronosLegends" target="_blank" style="color: #FFD700; text-decoration: underline;">X (Twitter)</a> to be the first to know when Website Games launch!
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-
-        <!-- COMMUNITY CATEGORY -->
-        <div class="faq-category" data-category="community">
-            <h2 class="category-title"><span class="category-icon">💬</span>Community & Support</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    What Discord roles are there and what are the requirements?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>👑 Supreme Totemkeeper Roles (Highest Tier):</strong><br>
-                        These exclusive roles were once earned by community members. Today these can ONLY be obtained by purchasing the respective Totem NFTs from Crypto.com/NFT:
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Requirement</th>
-                                <th>How to Obtain</th>
-                            </tr>
-                            <tr>
-                                <td><strong>🌿 Trinari Totemkeeper 👑</strong></td>
-                                <td>Own Trinari Totem NFT</td>
-                                <td>Purchase from Crypto.com/NFT</td>
-                            </tr>
-                            <tr>
-                                <td><strong>⚔️ Guardian Totemkeeper ⚔️ 👑</strong></td>
-                                <td>Own Guardian Totem NFT</td>
-                                <td>Purchase from Crypto.com/NFT</td>
-                            </tr>
-                            <tr>
-                                <td><strong>💀 Chaos Totemkeeper 💀 👑</strong></td>
-                                <td>Own Chaos Totem NFT</td>
-                                <td>Purchase from Crypto.com/NFT</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>📋 Standard Community Roles (In Hierarchy Order):</strong><br>
-                        <em>Note: Due to Discord limitations, if you have CLG Legend 💎 or Awakened Legend 💎 role, you will have access to choose your preferred role from any that are listed below these roles.</em>
-                        <table class="faq-table">
-                            <tr>
-                                <th>Discord Role</th>
-                                <th>Requirement</th>
-                                <th>Type</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened Legend 💎</strong></td>
-                                <td>10+ Legends Awaken I NFTs</td>
-                                <td>NFT Holder</td>
-                            </tr>
-							                            <tr>
-                                <td><strong>CLG Legend 💎</strong></td>
-                                <td>4+ $CLG tokens</td>
-                                <td>Token Holder</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Awakened X</strong></td>
-                                <td>5+ Legends Awaken I NFTs</td>
-                                <td>NFT Holder</td>
-                            </tr>
-
-
-                            <tr>
-                                <td><strong>Trinari 1% Holder</strong></td>
-                                <td>10,000,000+ $TRI</td>
-                                <td>Token Holder</td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Trinari 0.5% Holder</strong></td>
-                                <td>5,000,000+ $TRI</td>
-                                <td>Token Holder</td>
-                            </tr>
-							                            <tr>
-                                <td><strong>Awakened +</strong></td>
-                                <td>3+ Legends Awaken I NFTs</td>
-                                <td>NFT Holder</td>
-                            </tr>
-							<tr>
-                                <td><strong>CLG X</strong></td>
-                                <td>3+ $CLG tokens</td>
-                                <td>Token Holder</td>
-                            </tr>
-							<tr>
-                                <td><strong>Cronus Overlord</strong></td>
-                                <td>1,000,000+ $CRONUS</td>
-                                <td>Partner Token</td>
-                            </tr>
-							 <tr>
-                                <td><strong>CLG +</strong></td>
-                                <td>2+ $CLG tokens</td>
-                                <td>Token Holder</td>
-                            </tr>
-							 <tr>
-                                <td><strong>CLG Holder</strong></td>
-                                <td>1+ $CLG tokens</td>
-                                <td>Token Holder</td>
-                            </tr>
-							                            <tr>
-                                <td><strong>Awakened</strong></td>
-                                <td>1+ Legends Awaken I NFTs</td>
-                                <td>NFT Holder</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Cronus Warrior</strong></td>
-                                <td>500,000+ $CRONUS</td>
-                                <td>Partner Token</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <strong>💡 Important Notes:</strong>
-                        <ul>
-                            <li>Roles are automatically assigned based on verified holdings in your connected wallet</li>
-                            <li>If automatic verification doesn't work, open a support ticket for manual verification</li>
-                            <li>Most roles provide stacking bonuses in Battlegrounds and other events</li>
-                            <li>Higher tier roles grant access to exclusive channels and benefits</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Where can I join the community?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🌟 Join us and become a Legend:</strong>
-                        <br><br>
-                        <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="link-button">💬 Discord Community</a>
-                        <a href="https://x.com/CronosLegends" target="_blank" class="link-button">🐦 X (Twitter)</a>
-                        <a href="https://cronoslegends.com" target="_blank" class="link-button">🌐 Official Website</a>
-                        <br><br>
-                        Our Discord is the heart of the community, featuring:
-                        <ul>
-                            <li>Daily discussions and updates</li>
-                            <li>Interactive games and competitions</li>
-                            <li>Direct communication with the team</li>
-                            <li>Exclusive announcements and events</li>
-                            <li>Community-driven initiatives</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How do I get support or ask questions?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🎫 Support Ticket System:</strong><br>
-                        Open a support ticket in our Discord server for:
-                        <ul>
-                            <li>Technical issues or bugs</li>
-                            <li>Claiming rewards</li>
-                            <li>Manual verification for NFT/Coin eligibility roles</li>
-                            <li>General questions and assistance</li>
-                        </ul>
-                        <br>
-                        Our community moderators and team members are active and ready to help!
-                        <br><br>
-                        <strong>💡 Pro Tip:</strong> Before opening a ticket, check this FAQ page and the Discord announcements channel — your question may already be answered!
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    How can I contribute to the project?
-                    <span class="faq-toggle">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <strong>🤝 Ways to Contribute:</strong>
-                        <ul>
-                            <li><strong>Community Engagement:</strong> Be active in Discord, help new members, share ideas</li>
-                            <li><strong>Content Creation:</strong> Create art, memes, guides, or promotional content</li>
-                            <li><strong>Social Media:</strong> Share project updates and spread the word</li>
-                            <li><strong>Feedback:</strong> Provide constructive feedback to help improve the project</li>
-                            <li><strong>Competitions:</strong> Participate in community events and competitions</li>
-                        </ul>
-                        <br>
-                        Active and valuable community members are often recognized with special rewards, roles, and even NFTs! Your contributions matter and help build a stronger Cronos Legends universe.
-                    </div>
-                </div>
-            </div>
-        </div>
+  <section class="page-hero" aria-labelledby="faq-title">
+    <div class="container container--narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">FAQ</span></nav>
+      <span class="eyebrow">Help</span>
+      <h1 id="faq-title">Questions, answered.</h1>
+      <p class="lead">Short, straight answers about $CLG, burning, the collections and protecting your wallet. Still stuck? Ask in the Discord or email <a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a>.</p>
+      <nav class="topics" aria-label="FAQ topics">
+        <a href="#basics">Basics</a>
+        <a href="#clg">$CLG</a>
+        <a href="#liquidity">Liquidity &amp; fees</a>
+        <a href="#burning">Burning</a>
+        <a href="#collections">Collections &amp; Elderborn</a>
+        <a href="#safety">Wallets &amp; safety</a>
+        <a href="#play">Play &amp; Discord</a>
+      </nav>
     </div>
+  </section>
 
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+  <section class="section section--tight" aria-label="Frequently asked questions">
+    <div class="container container--narrow">
 
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
-        // Toggle FAQ items
-        function toggleFaq(element) {
-            const faqItem = element.parentElement;
-            const wasActive = faqItem.classList.contains('active');
-            
-            // Close all other items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Toggle current item
-            if (!wasActive) {
-                faqItem.classList.add('active');
-            }
-        }
-
-        // Toggle Game Sections
-        function toggleGameSection(element) {
-            const gameSection = element.parentElement;
-            gameSection.classList.toggle('active');
-        }
-
-        // Search functionality
-        const searchBox = document.getElementById('searchBox');
-        searchBox.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            const categories = document.querySelectorAll('.faq-category');
-            
-            if (searchTerm === '') {
-                // Show all if search is empty
-                faqItems.forEach(item => item.style.display = 'block');
-                categories.forEach(cat => cat.style.display = 'block');
-                return;
-            }
-            
-            categories.forEach(category => {
-                let hasVisibleItem = false;
-                const items = category.querySelectorAll('.faq-item');
-                
-                items.forEach(item => {
-                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                    const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
-                    
-                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                        item.style.display = 'block';
-                        hasVisibleItem = true;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-                
-                // Hide category if no items match
-                category.style.display = hasVisibleItem ? 'block' : 'none';
-            });
-        });
-
-        // Category filter
-        function filterCategory(category) {
-            const categories = document.querySelectorAll('.faq-category');
-            const tabs = document.querySelectorAll('.tab-btn');
-            
-            // Update active tab
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Filter categories
-            if (category === 'all') {
-                categories.forEach(cat => cat.style.display = 'block');
-            } else {
-                categories.forEach(cat => {
-                    if (cat.dataset.category === category) {
-                        cat.style.display = 'block';
-                    } else {
-                        cat.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Clear search when filtering
-            searchBox.value = '';
-        }
-
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-
-    <!-- Footer -->
-    <div class="footer" id="community">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Whether you're a long-time faction loyalist or newly drawn to the mystery of the Trinari,
-            this chapter is a defining moment—and the beginning of something far greater.
-        </p>
-        <div class="social-links">
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+      <!-- Basics -->
+      <section class="faq-group" id="basics" aria-labelledby="basics-title">
+        <h2 id="basics-title">Basics</h2>
+        <div class="accordion">
+          <details>
+            <summary>What is Cronos Legends?</summary>
+            <div>
+              <p>A hand-painted fantasy world on the Cronos blockchain. You can collect its characters as NFTs, read the saga, play Trinari Defense in your browser and hold $CLG, the realm's one token.</p>
+              <p>Cronos Legends is created and operated by Crovia Oy (Finland), the team behind crovia.app. Every official link and address is listed on our <a href="/about/#official">About page</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Who are the three factions?</summary>
+            <div>
+              <p>The Cronos Guardians keep order and light. The Chaos Horde runs on fury and wants the old world gone. And the Trinari, born where a star fell, don't pick sides: they stand between. Their story is on the <a href="/story/">Lore page</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Why should I trust any of this?</summary>
+            <div>
+              <p>You shouldn't have to take our word for it, so check. $CLG's supply is fixed and its ownership is renounced. The burn contracts have no owner. Our liquidity and its fees are public. The numbers on this site are read live from Cronos, and every address links to the Cronos explorer.</p>
+              <p>Like any crypto asset, $CLG and the NFTs can lose value. Nothing on this site is financial advice.</p>
+            </div>
+          </details>
         </div>
-        
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
-            <a href="/la2-terms">LA2 Terms</a>
-            <a href="/la1-terms">LA1 Terms</a>
+      </section>
+
+      <!-- $CLG -->
+      <section class="faq-group" id="clg" aria-labelledby="clg-title">
+        <h2 id="clg-title">$CLG</h2>
+        <div class="accordion">
+          <details>
+            <summary>What is $CLG?</summary>
+            <div>
+              <p>The one token of Cronos Legends. There are exactly 500, all minted once when the token was created in 2024, and its ownership was renounced four days later. It's a plain ERC-20 on Cronos: no mint, no tax, no blacklist and no pause. The details are on our <a href="/clg/">$CLG page</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What is the $CLG contract address?</summary>
+            <div>
+              <p>The only $CLG contract, on Cronos (chain 25), is:</p>
+              <p><span class="addr addr--full"><span class="label">$CLG</span><code>0x08d9cb5100C306C2909B63415d7ff05268633b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x08d9cb5100C306C2909B63415d7ff05268633b41" rel="noopener" target="_blank" aria-label="View $CLG on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></p>
+              <p>Anyone can create a token called CLG, so check the first and last four characters every time you paste it.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Where do I get $CLG?</summary>
+            <div>
+              <p>On VVS Finance, a decentralized exchange on Cronos. The Get $CLG on VVS button on our <a href="/clg/#get">$CLG page</a> opens VVS with the real $CLG already selected. Most $CLG liquidity sits in the VVS V3 CLG/CRONUS 1% pool; other $CLG pools are tiny, and their prices can be far off.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What can I do with $CLG?</summary>
+            <div>
+              <p>It's what the burn program pays: burn a Legends Awaken I or II NFT and you receive $CLG in the same transaction. Holding $CLG also unlocks holder roles in the Discord once you verify your wallet.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Can anyone make more $CLG?</summary>
+            <div>
+              <p>No. The contract has no mint function and its ownership was renounced in 2024, so the supply is 500, forever. And $CLG sent to the burn address <span class="nb">0x…dEaD</span> can never move again, so the amount in circulation can only go down.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What happened to the other community tokens?</summary>
+            <div>
+              <p>Older community tokens were retired. $CLG is the only Cronos Legends token.</p>
+            </div>
+          </details>
         </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
+      </section>
+
+      <!-- Liquidity & fees -->
+      <section class="faq-group" id="liquidity" aria-labelledby="liquidity-title">
+        <h2 id="liquidity-title">Liquidity &amp; fees</h2>
+        <div class="accordion">
+          <details>
+            <summary>Where is $CLG's liquidity?</summary>
+            <div>
+              <p>In the VVS Finance V3 CLG/CRONUS pool with a 1% fee, at <span class="nb">0x3d7e…d818</span>. Our project wallet holds position #49804 in it, which covers the full price range and makes up most of the pool's liquidity. The live numbers are on our <a href="/clg/#liquidity">$CLG page</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Why does $CRONUS show up?</summary>
+            <div>
+              <p>Only because it's the pool's pair token. Every trade in this pool has $CLG on one side and $CRONUS on the other, so the pool and its fees are counted in both.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What happens to the LP fees?</summary>
+            <div>
+              <p>TBA. Every trade in the pool pays a 1% fee to the liquidity in it, which is mostly our position. What we do with those fees will be published on this site. Until then they stay on-chain, where anyone can see them: the <a href="/clg/#liquidity">$CLG page</a> shows the fees waiting to collect and the fees collected so far, live.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Who controls the liquidity?</summary>
+            <div>
+              <p>Position #49804 is held by our single-key project wallet, the same wallet that receives NFT royalties. It isn't locked, so the wallet can add or remove liquidity. Any change shows up on the $CLG page as soon as it happens.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Burning -->
+      <section class="faq-group" id="burning" aria-labelledby="burning-title">
+        <h2 id="burning-title">Burning</h2>
+        <p class="row"><span class="status" data-live="burn-status">Checking…</span><a class="link-arrow" href="/burn/">Open the burn page</a></p>
+        <div class="accordion">
+          <details>
+            <summary>How does burning work?</summary>
+            <div>
+              <p>Open the <a href="/burn/">burn page</a>, connect your Cronos wallet, pick one of your Legends Awaken I or II NFTs and confirm once. In that single wallet transaction the NFT goes to the burn address <span class="nb">0x…dEaD</span> and $CLG arrives in your wallet. No token approvals, and never a message to sign.</p>
+              <p>The burn contracts have no owner and can't be changed. Their addresses are published on this site at launch.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Which NFTs can I burn?</summary>
+            <div>
+              <p>Legends Awaken I (token IDs 1–500) and Legends Awaken II (token IDs 1–774). Trinari: Elderborn can be burned too, but only after its mint has sold out. The Totems of Power live on Cronos POS and aren't part of the burn program.</p>
+            </div>
+          </details>
+          <details>
+            <summary>How much $CLG do I receive?</summary>
+            <div>
+              <p>For each Legends Awaken I or II NFT: $35 of $CLG, and never more than 0.3 CLG. The $CLG price used is the higher of CLG's 24-hour and recent average price on VVS pools.</p>
+              <p>Trinari: Elderborn pays $15 of $CLG, only after its mint has sold out. The burn page shows the exact amount before you confirm.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Why might I receive less than $35?</summary>
+            <div>
+              <p>Two rules, both on purpose. First, the price used is the higher of CLG's 24-hour and recent average, so right after a sharp fall, the $CLG you receive is worth less than $35 at the current market price. Second, a burn never pays more than 0.3 CLG, so whenever $CLG trades below about $117, 0.3 CLG is worth less than $35. Together they make it pointless to push the price down to squeeze more $CLG out of a reserve.</p>
+              <p>The burn page also sets a minimum when you confirm. If the price moves past it before your transaction lands, nothing happens and your NFT is still yours.</p>
+            </div>
+          </details>
+          <details>
+            <summary>My NFT is in the Crypto.com NFT app. Can I burn it?</summary>
+            <div>
+              <p>Not from there. Withdraw it to your own Cronos wallet first, for example Crypto.com Onchain, MetaMask or Rabby, then open the burn page. The burn happens in your wallet, so the NFT has to be in it.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What if the reserve is empty?</summary>
+            <div>
+              <p>Then burns wait. Each burn contract pays from its own reserve of $CLG, which the team funds by sending $CLG to it, and it's first come, first served while the reserve lasts. If a reserve can't cover a burn, the transaction doesn't go through: nothing moves and your NFT is still yours. Burns work again once more $CLG arrives, and the burn page shows each reserve live.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What if I send my NFT to 0x…dEaD myself, or use another tool?</summary>
+            <div>
+              <p>You receive nothing, and you can't undo it. Only the Burn button on cronoslegends.com/burn pays, because it sends your NFT straight into the burn contract with safeTransferFrom, and that's what triggers the payout. Sending it to <span class="nb">0x…dEaD</span> yourself, a marketplace's or wallet's burn feature, or a plain transfer to the burn contract pays nothing.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Can I undo a burn?</summary>
+            <div>
+              <p>No. A burned NFT sits at <span class="nb">0x…dEaD</span> forever, and nobody can bring it back, including us. That's why the burn page asks you to tick a box before you confirm. Take a last look at your legend first.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Can the team stop or change the burn program?</summary>
+            <div>
+              <p>Nobody can pause or change the burn contracts: they have no owner, no admin and no upgrade path, and $CLG in a reserve can only leave as a burn payout.</p>
+              <p>But burns do stop automatically whenever the price data can't be trusted, for example if liquidity is withdrawn from the CLG/CRONUS pool. Most of that liquidity is our own position #49804, so if we removed it, burns would stop while it's out and for up to a day after it returns. Burns also wait when a reserve runs out. Whenever burns are stopped, nothing moves and your NFT stays yours.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Collections & Elderborn -->
+      <section class="faq-group" id="collections" aria-labelledby="collections-title">
+        <h2 id="collections-title">Collections &amp; Elderborn</h2>
+        <div class="accordion">
+          <details>
+            <summary>Which collections are there?</summary>
+            <div>
+              <p>Four. Legends Awaken I (500 NFTs) and Legends Awaken II (774 NFTs) launched in 2025 on Crypto.com NFT. Trinari: Elderborn (212) is coming to crovia.app. The Totems of Power are nine artifacts held on Crypto.com NFT. Meet them all on the <a href="/collections/">Collections page</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Where can I view or trade Legends Awaken NFTs?</summary>
+            <div>
+              <p>On crovia.app: <a href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">Legends Awaken I</a> and <a href="https://crovia.app/collections/0xb9669ad823feb0d0e6c9a7154033ab15e85d6a0d" rel="noopener" target="_blank">Legends Awaken II</a>. Both collections live on Cronos.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What is Trinari: Elderborn?</summary>
+            <div>
+              <p>212 unique Elderborn, the first of the Trinari, each shaped from a single element. Every one is a playable character in Cronos City, and each holder can download its 3D model (Crovia keeps the usage rights in Crovia and Cronos City). The public mint is 400 CRO, with up to 10 per wallet and 5% royalties.</p>
+              <p>Mint timing lives on the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app launch page</a>, so it's always current. After the mint has sold out, an Elderborn can be burned for $15 of $CLG.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What are the Totems of Power?</summary>
+            <div>
+              <p>Nine artifacts of awakening, three for each faction (Rare, Legendary and Mythic), held on Crypto.com NFT on Cronos POS. They aren't Cronos EVM NFTs and aren't part of the burn program. You can <a href="https://crovia.app/pos/20d1ecd900c3f048db208cf4e5cd8772" rel="noopener" target="_blank">view them on crovia.app</a>.</p>
+              <p>The Totem of Peace was contributed to Crypto.com's "Art of Giving: STAY with UNICEF" charity drop.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Wallets & safety -->
+      <section class="faq-group" id="safety" aria-labelledby="safety-title">
+        <h2 id="safety-title">Wallets &amp; safety</h2>
+        <div class="accordion">
+          <details>
+            <summary>Which wallets work?</summary>
+            <div>
+              <p>Any Cronos wallet that connects in your browser, such as Crypto.com Onchain, MetaMask or Rabby. On a phone, open cronoslegends.com/burn in your wallet app's built-in browser. Wallets connect only on the burn page; the rest of the site never asks.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Will you ever ask for my recovery phrase?</summary>
+            <div>
+              <p>Never. We never DM first and never ask for your recovery phrase or private key. Real help happens in public Discord channels or in a support ticket you open yourself.</p>
+              <p>A burn is one normal transaction that your wallet shows you before you confirm: no approvals, never a message to sign. If anything asks for more, stop.</p>
+            </div>
+          </details>
+          <details>
+            <summary>How do I spot a fake?</summary>
+            <div>
+              <p>Check the address, not the name. Anyone can create a token or an NFT collection called Cronos Legends or CLG. Our official links and contract addresses are all on <a href="/about/#official">one page</a>: if it's not listed there, it's not us. Be wary of DMs, "support" accounts that contact you first, airdrops you need to claim, and anything urgent.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What does this site know about me?</summary>
+            <div>
+              <p>Very little. This site sets no cookies and runs no analytics. If you connect a wallet on the burn page, your address is used in your browser only and never stored by us. The public Cronos RPC services our pages read from, and Google Fonts, can see your IP address. Trinari Defense leaderboard names are stored in Google Firebase. Details are on the <a href="/privacy/">Privacy page</a>.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Play & Discord -->
+      <section class="faq-group" id="play" aria-labelledby="play-title">
+        <h2 id="play-title">Play &amp; Discord</h2>
+        <div class="accordion">
+          <details>
+            <summary>What can I play?</summary>
+            <div>
+              <p><a href="/game/">Trinari Defense</a>, a free wave-survival game in your browser. You're a Trinari forest guardian holding off the Chaos Horde and the Cronos Guardians, on a computer or a phone. No wallet needed.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Is my Trinari Defense score saved?</summary>
+            <div>
+              <p>Yes. When a run ends, your name, kills, wave and survival time go to the Hall of Legends, the game's global leaderboard. Names are stored in Google Firebase and shown publicly, so use a nickname, not your real name.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What happens in the Discord?</summary>
+            <div>
+              <p>It's where holders gather, community games and events run, and news lands first. Verify your wallet there to unlock holder roles for your Legends Awaken NFTs and $CLG. Rules for community games are posted in the Discord.</p>
+            </div>
+          </details>
+          <details>
+            <summary>How do I get help?</summary>
+            <div>
+              <p>Open a support ticket in the <a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>, or email <a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a>. We'll never ask for your recovery phrase.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <div class="card card--pad-lg help-card">
+        <h2>Still wondering?</h2>
+        <p class="muted">Ask in the Discord or send us an email. We never DM first, so if someone messages you claiming to be us, it isn't.</p>
+        <div class="row">
+          <a class="btn btn--gold" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Ask in the Discord</a>
+          <a class="btn" href="mailto:contact@cronoslegends.com">Email us</a>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <script src="/scripts/notice-banner.js" defer></script>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/chain-lite.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

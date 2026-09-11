@@ -1,848 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Epic Story of Cronos Legends - Follow the journey from the Fall of the Old World through the awakening of the Trinari">
-    <meta name="keywords" content="Cronos Legends, NFT Story, Lore, Chaos Horde, Cronos Guardians, Trinari, Epic Fantasy">
-    <title>The Story of Cronos Legends | Epic Fantasy Lore</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Color Palette */
-            --color-gold: #FFD700;
-            --color-orange: #FFA500;
-            --color-blue: #0064FF;
-            --color-dark: #0a0a0a;
-            --color-dark-alt: #141414;
-            --color-gray-light: #ccc;
-            --color-gray: #999;
-            --color-gray-dark: #666;
-            --color-white: #fff;
-            
-            /* Spacing */
-            --spacing-xs: 10px;
-            --spacing-sm: 20px;
-            --spacing-md: 30px;
-            --spacing-lg: 40px;
-            --spacing-xl: 60px;
-            --spacing-xxl: 80px;
-            
-            /* Borders */
-            --border-radius-sm: 8px;
-            --border-radius-md: 15px;
-            --border-radius-lg: 20px;
-            --border-radius-pill: 50px;
-            
-            /* Transitions */
-            --transition-base: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--color-dark);
-            color: var(--color-white);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-            padding: var(--spacing-sm) 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-sm);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-            padding: 10px 0;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #FFD700;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-toggle {
-            cursor: pointer;
-        }
-
-        .dropdown-toggle::before {
-            content: '▼';
-            font-size: 0.7rem;
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown:hover .dropdown-toggle::before {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            list-style: none;
-        }
-
-        .dropdown-menu a {
-            padding: 12px 25px;
-            color: #ccc;
-            display: block;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu a::after {
-            display: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding-left: 30px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-
-        @media (max-width: 968px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 40px 20px;
-                gap: 30px;
-                transition: left 0.3s ease;
-                border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-                align-items: flex-start;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 0;
-                visibility: hidden;
-                max-height: 0;
-                overflow: hidden;
-                transform: none;
-                transition: all 0.3s ease, max-height 0.3s ease;
-            }
-
-            .dropdown.active .dropdown-menu {
-                opacity: 1;
-                visibility: visible;
-                max-height: 500px;
-                margin-top: 10px;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 100px;
-            padding: var(--spacing-xxl) var(--spacing-sm);
-            text-align: center;
-            background: linear-gradient(to bottom, 
-                rgba(0, 100, 255, 0.1) 0%,
-                rgba(0, 255, 100, 0.1) 50%,
-                rgba(255, 50, 50, 0.1) 100%
-            ), var(--color-dark);
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 100, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 50% 60%, rgba(0, 255, 100, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 40%, rgba(255, 50, 50, 0.1) 0%, transparent 40%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .collection-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            color: #000;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: var(--spacing-xs) 25px;
-            border-radius: var(--border-radius-pill);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--spacing-sm);
-            letter-spacing: 3px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--color-gray-light);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.6;
-        }
-
-        /* Episode Section */
-        .episode-section {
-            max-width: 1200px;
-            margin: var(--spacing-xxl) auto;
-            padding: 0 var(--spacing-sm);
-        }
-
-        .episode-card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: var(--border-radius-lg);
-            margin-bottom: var(--spacing-xl);
-            overflow: hidden;
-            transition: var(--transition-base);
-        }
-
-        .episode-card:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.2);
-        }
-
-        .episode-header {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
-            padding: var(--spacing-lg);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .episode-number {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            color: var(--color-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .episode-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--color-white);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .episode-subtitle {
-            color: var(--color-gray);
-            font-size: 1.1rem;
-            font-style: italic;
-        }
-
-        .episode-content {
-            padding: var(--spacing-lg);
-        }
-
-        .episode-image {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto var(--spacing-lg);
-            border-radius: var(--border-radius-md);
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .episode-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .episode-card:hover .episode-image img {
-            transform: scale(1.05);
-        }
-
-        .episode-text {
-            color: var(--color-gray-light);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .episode-text strong {
-            color: var(--color-gold);
-        }
-
-        /* Timeline Connector */
-        .timeline-connector {
-            text-align: center;
-            margin: var(--spacing-lg) 0;
-            position: relative;
-        }
-
-        .timeline-connector::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 2px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--color-gold), transparent);
-        }
-
-        .timeline-icon {
-            display: inline-block;
-            font-size: 2rem;
-            background: var(--color-dark);
-            padding: var(--spacing-sm);
-            border-radius: 50%;
-            border: 2px solid var(--color-gold);
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(5, 5, 5, 0.9);
-            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-lg);
-            text-align: center;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            margin-top: var(--spacing-xxl);
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--color-gold), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .social-links {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-            margin: var(--spacing-lg) 0;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 18px var(--spacing-lg);
-            border-radius: var(--border-radius-pill);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.95rem;
-            transition: var(--transition-base);
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .btn-discord {
-            background: #5865F2;
-            color: #fff;
-        }
-
-        .btn-discord:hover {
-            background: #4752C4;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
-        }
-
-        .btn-twitter {
-            background: #1DA1F2;
-            color: #fff;
-        }
-
-        .btn-twitter:hover {
-            background: #1A8CD8;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(29, 161, 242, 0.4);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: var(--spacing-lg) 0;
-        }
-
-        .footer-links a {
-            color: var(--color-gray);
-            text-decoration: none;
-            transition: var(--transition-base);
-            font-size: 0.95rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--color-gold);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .episode-title {
-                font-size: 1.8rem;
-            }
-
-            .episode-text {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Scroll Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Story of Cronos Legends — the saga in five episodes</title>
+  <meta name="description" content="Read the Cronos Legends saga in five episodes: the fall of the old world, the Legends Awaken war, the birth of the Trinari, the turning of the Totems, and the Elderborn.">
+  <link rel="canonical" href="https://cronoslegends.com/story/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="The Story of Cronos Legends">
+  <meta property="og:description" content="War, balance, and destiny: the Cronos Legends saga, from the fall of the old world to the Elderborn.">
+  <meta property="og:url" content="https://cronoslegends.com/story/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    /* Lore page: episode index, chapter art variants and the end-of-chapter collection card. */
+    .episodes ol { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+    .episodes a { display: block; height: 100%; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--surface); color: var(--text); font-weight: 700; text-decoration: none; transition: border-color var(--t-fast), transform var(--t-fast) var(--ease); }
+    .episodes a:hover { color: var(--text); border-color: var(--gold); transform: translateY(-2px); }
+    .episodes span { display: block; font: 700 var(--fs-micro)/1.6 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+    .chapter .episode { margin-bottom: var(--space-2); }
+    .chapter h2 { margin-bottom: var(--space-5); }
+    .chapter .prose p:first-of-type { display: flow-root; }
+    .chapter-art--pair { aspect-ratio: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; background: var(--line); }
+    .chapter-art--pair img { aspect-ratio: 1; height: auto; }
+    .chapter-art--wide { aspect-ratio: 3 / 2; }
+    .chapter-art--meadow { aspect-ratio: auto; padding: clamp(20px, 5vw, 40px) 8px; background: linear-gradient(180deg, var(--meadow-1), var(--meadow-2)); }
+    .chapter-art--meadow .stickers { flex-wrap: nowrap; gap: 3%; }
+    .chapter-art--meadow .sticker { width: 27%; }
+    .chapter-art--meadow .sticker.is-big { width: 36%; }
+    .chapter-link { display: flex; flex-direction: column; gap: 4px; margin-top: var(--space-6); }
+    .chapter-link .eyebrow { margin-bottom: 0; }
+    .chapter-link strong { font: 700 1.3rem/1.25 var(--font-display); }
+    .chapter-link .small { color: var(--text-2); }
+  </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">CRONOS LEGENDS</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">NFT Collection</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/legends-awaken-2">Legends Awaken II</a></li>
-                        <li><a href="/legends-awaken-1">Legends Awaken I</a></li>
-                        <li><a href="/totems">Totems</a></li>
-                    </ul>
-                </li>
-                <li><a href="/tokens">Tokens</a></li>
-                <li><a href="/game">Game</a></li>
-                <li><a href="/roadmap">Roadmap</a></li>
-                <li><a href="/faq">FAQ</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/" aria-current="page">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
     </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/" aria-current="page">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
+<div class="progress" aria-hidden="true"></div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="collection-badge">📖 THE EPIC SAGA</div>
-                <h1>THE STORY OF CRONOS LEGENDS</h1>
-                <p class="hero-subtitle">
-                    Journey through the ages, from the fall of the old world to the awakening of the Trinari.<br>
-                    Experience the epic tale of war, balance, and destiny.
-                </p>
-            </div>
-        </section>
+<main id="main">
 
-        <!-- Episode 1 -->
-        <section class="episode-section">
-            <article class="episode-card fade-in">
-                <div class="episode-header">
-                    <div class="episode-number">⚔️ Episode 1</div>
-                    <h2 class="episode-title">The Fall of the Old World</h2>
-                    <p class="episode-subtitle">Past History</p>
-                </div>
-                <div class="episode-content">
-                    <div class="episode-image">
-                        <img src="/Images/episode1.jpg" alt="The Fall of the Old World">
-                    </div>
-                    <p class="episode-text">
-                        Long ago, the world thrived under the guidance of the <strong>Cronos Guardians</strong> — noble protectors who upheld order and peace. At the heart of their realm stood a powerful <strong>Totem</strong>, pulsing with ancient energy — a symbol of balance and strength.
-                    </p>
-                    <p class="episode-text">
-                        But from the shadows, the <strong>Chaos Horde</strong> emerged. Twisted by fury and hunger, they sought to corrupt the Totem and claim its power for themselves. War erupted.
-                    </p>
-                    <p class="episode-text">
-                        As the battlefield burned and the Totem trembled under the strain of clashing forces… the sky cracked open. A blazing meteor tore through the heavens, crashing into the land. Both sides fell silent, forced to retreat — to recover, regroup, and prepare for the war to continue.
-                    </p>
-                </div>
-            </article>
+  <!-- Hero -->
+  <section class="page-hero" aria-labelledby="story-title">
+    <div class="container container--narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Lore</nav>
+      <span class="eyebrow">The saga</span>
+      <h1 id="story-title">The Story of Cronos Legends</h1>
+      <p class="lead">Journey through the ages, from the fall of the old world to the awakening of the Trinari. A tale of war, balance, and destiny, told in five episodes.</p>
+      <div class="hero-actions">
+        <a class="btn btn--gold" href="#fall-of-the-old-world">Start reading</a>
+        <a class="btn" href="/collections/">Meet the collections</a>
+      </div>
+      <nav class="episodes" aria-label="Episodes">
+        <ol>
+          <li><a href="#fall-of-the-old-world"><span>Episode 1</span>The Fall of the Old World</a></li>
+          <li><a href="#legends-awaken"><span>Episode 2</span>Legends Awaken</a></li>
+          <li><a href="#trinari"><span>Episode 3</span>The Birth of the Trinari</a></li>
+          <li><a href="#totems"><span>Episode 4</span>The Turning of the Totems</a></li>
+          <li><a href="#elderborn"><span>Episode 5</span>The Elderborn</a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
 
-            <div class="timeline-connector">
-                <span class="timeline-icon">⬇️</span>
-            </div>
+  <div class="container container--read">
 
-            <!-- Episode 2 -->
-            <article class="episode-card fade-in">
-                <div class="episode-header">
-                    <div class="episode-number">⚔️ Episode 2</div>
-                    <h2 class="episode-title">Legends Awaken</h2>
-                    <p class="episode-subtitle">The Rise of Warriors</p>
-                </div>
-                <div class="episode-content">
-                    <div class="episode-image">
-                        <img src="/Images/episode2.jpg" alt="Legends Awaken">
-                    </div>
-                    <p class="episode-text">
-                        When the meteor struck, the sacred Totems shattered. The powers of both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> waned—fractured, fading.
-                    </p>
-                    <p class="episode-text">
-                        Yet one Totem stood untouched. Ancient. Unclaimed. It belonged to neither side… and its silence echoed louder than the roar of war.
-                    </p>
-                    <p class="episode-text">
-                        From the smoldering ruins, the <strong>Chaos Horde</strong> rose—<strong>250 fierce warriors</strong> twisted by fury and forged in chaos.
-                    </p>
-                    <p class="episode-text">
-                        Across the land, the light answered. The <strong>Cronos Guardians</strong> emerged—<strong>250 strong</strong>, unyielding, forged in duty and hope.
-                    </p>
-                    <p class="episode-text">
-                        With the mysterious Totem's energy awakening, neither side hesitated. Battle cries rang out. Blades were drawn.
-                    </p>
-                    <p class="episode-text">
-                        The two armies charged—flame against light, wrath against will.
-                    </p>
-                </div>
-            </article>
+    <!-- Episode 1 -->
+    <article class="chapter" id="fall-of-the-old-world" aria-labelledby="ep1-title">
+      <div class="chapter-art chapter-art--pair">
+        <img src="/assets/img/art/totems-guardians-800.webp" width="800" height="533" alt="A Guardian Totem glowing blue under a starry sky">
+        <img src="/assets/img/art/totems-chaos-800.webp" width="800" height="533" alt="A Chaos Totem of horned skulls wreathed in fire">
+      </div>
+      <p class="episode">Episode 1 · Before the awakening</p>
+      <h2 id="ep1-title">The Fall of the Old World</h2>
+      <div class="prose">
+        <p>Long ago, the world thrived under the guidance of the <strong>Cronos Guardians</strong> — noble protectors who upheld order and peace. At the heart of their realm stood a powerful <strong>Totem</strong>, pulsing with ancient energy — a symbol of balance and strength.</p>
+        <p>But from the shadows, the <strong>Chaos Horde</strong> emerged, carrying a Totem of their own that burned with a darker fire. Twisted by fury and hunger, they sought to corrupt the Guardians' Totem and claim its power for themselves. War erupted.</p>
+        <p>As the battlefield burned and the Totems trembled under the strain of clashing forces… the sky cracked open. A blazing meteor tore through the heavens, crashing into the land. Both sides fell silent, forced to retreat — to recover, regroup, and prepare for the war to continue.</p>
+      </div>
+      <a class="card chapter-link" href="/collections/">
+        <span class="eyebrow">Meet the collections</span>
+        <strong>Four collections, one world</strong>
+        <span class="small">Legends Awaken I and II, the Totems of Power, and the Elderborn</span>
+      </a>
+    </article>
 
-            <div class="timeline-connector">
-                <span class="timeline-icon">⬇️</span>
-            </div>
+    <!-- Episode 2 -->
+    <article class="chapter" id="legends-awaken" aria-labelledby="ep2-title">
+      <div class="chapter-art chapter-art--pair">
+        <img src="/assets/img/art/cronos-titans-800.webp" width="800" height="800" alt="A Cronos Guardian with long blue hair, silver armor and a shining sword" loading="lazy">
+        <img src="/assets/img/art/chaos-legion-800.webp" width="800" height="800" alt="A Chaos Horde warrior with glowing eyes and a burning sword" loading="lazy">
+      </div>
+      <p class="episode">Episode 2 · The rise of warriors</p>
+      <h2 id="ep2-title">Legends Awaken</h2>
+      <div class="prose">
+        <p>When the meteor struck, the sacred Totems cracked. The powers of both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> waned — fractured, fading.</p>
+        <p>Yet one Totem stood untouched. Ancient. Unclaimed. It belonged to neither side… and its silence echoed louder than the roar of war.</p>
+        <p>From the smoldering ruins, the <strong>Chaos Horde</strong> rose — <strong>250 fierce warriors</strong> twisted by fury and forged in chaos.</p>
+        <p>Across the land, the light answered. The <strong>Cronos Guardians</strong> emerged — <strong>250 strong</strong>, unyielding, forged in duty and hope.</p>
+        <p>With the mysterious Totem's energy awakening, neither side hesitated. Battle cries rang out. Blades were drawn.</p>
+        <blockquote>The two armies charged — flame against light, wrath against will.</blockquote>
+      </div>
+      <a class="card chapter-link" href="/legends-awaken-1/" data-faction="chaos">
+        <span class="eyebrow">Meet this collection</span>
+        <strong>Legends Awaken I</strong>
+        <span class="small">500 legends: 250 Cronos Guardians and 250 of the Chaos Horde</span>
+      </a>
+    </article>
 
-            <!-- Episode 3 -->
-            <article class="episode-card fade-in">
-                <div class="episode-header">
-                    <div class="episode-number">⚔️ Episode 3</div>
-                    <h2 class="episode-title">The Birth of the Trinari</h2>
-                    <p class="episode-subtitle">A New Hope Emerges</p>
-                </div>
-                <div class="episode-content">
-                    <div class="episode-image">
-                        <img src="/Images/episode3.jpg" alt="The Birth of the Trinari">
-                    </div>
-                    <p class="episode-text">
-                        The war raged on. Steel clashed with fury, and light met shadow. Both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> suffered great losses. Their once-mighty Totems — fractured, dimmed, and fading — no longer fueled the strength they once held.
-                    </p>
-                    <p class="episode-text">
-                        Yet one Totem remained.
-                    </p>
-                    <p class="episode-text">
-                        Unclaimed. Undisturbed. And now, pulsing stronger than ever.
-                    </p>
-                    <p class="episode-text">
-                        The <strong>Trinari Totem</strong> — born of earth, flame, light, and shadow — awakened.
-                    </p>
-                    <p class="episode-text">
-                        From the very crater where the meteor had struck, the <strong>Trinari</strong> emerged.
-                    </p>
-                    <p class="episode-text">
-                        Mystical, radiant beings—neither Horde nor Guardian. Shaped by the natural world, forged in the impact of celestial fire, and woven with the essence of both rival factions. They carried the glow of balance, the calm of the forest, the fury of storms, and the memory of war.
-                    </p>
-                    <p class="episode-text">
-                        Though some bore the mark of Chaos… and others carried the light of the Guardians… they were something new.
-                    </p>
-                    <p class="episode-text">
-                        Something united. The Trinari did not come to conquer. They came to restore.
-                    </p>
-                    <p class="episode-text">
-                        Peace is their purpose. Healing, their strength. And though the scars of war run deep, the Trinari believe in what others have forgotten:
-                    </p>
-                    <p class="episode-text">
-                        That peace is still possible.<br>
-                        That even broken things can be made whole.
-                    </p>
-                    <p class="episode-text">
-                        Now, as Chaos and Guardians prepare for another clash…<br>
-                        The Trinari rise — not to fight, but to stand between.
-                    </p>
-                    <p class="episode-text">
-                        To offer a new path.
-                    </p>
-                </div>
-            </article>
+    <!-- Episode 3 -->
+    <article class="chapter" id="trinari" aria-labelledby="ep3-title">
+      <div class="chapter-art chapter-art--pair">
+        <img src="/assets/img/art/totems-trinari-800.webp" width="800" height="533" alt="The Trinari Totem, a carved green stone glowing in a dark forest" loading="lazy">
+        <img src="/assets/img/art/trinari-forest-800.webp" width="800" height="800" alt="A small Trinari made of roots and moss, standing among glowing mushrooms" loading="lazy">
+      </div>
+      <p class="episode">Episode 3 · A new hope emerges</p>
+      <h2 id="ep3-title">The Birth of the Trinari</h2>
+      <div class="prose">
+        <p>The war raged on. Steel clashed with fury, and light met shadow. Both the <strong>Chaos Horde</strong> and the <strong>Cronos Guardians</strong> suffered great losses. Their once-mighty Totems — fractured, dimmed, and fading — no longer fueled the strength they once held.</p>
+        <p>Yet one Totem remained.</p>
+        <p>Unclaimed. Undisturbed. And now, pulsing stronger than ever.</p>
+        <p>The <strong>Trinari Totem</strong> — born of earth, flame, light, and shadow — awakened.</p>
+        <p>From the very crater where the meteor had struck, the <strong>Trinari</strong> emerged.</p>
+        <p>Mystical, radiant beings — neither Horde nor Guardian. Shaped by the natural world, forged in the impact of celestial fire, and woven with the essence of both rival factions. They carried the glow of balance, the calm of the forest, the fury of storms, and the memory of war.</p>
+        <p>Though some bore the mark of Chaos… and others carried the light of the Guardians… they were something new.</p>
+        <p>Something united. The Trinari did not come to conquer. They came to restore.</p>
+        <p>Peace is their purpose. Healing, their strength. And though the scars of war run deep, the Trinari believe in what others have forgotten:</p>
+        <p>That peace is still possible.<br>That even broken things can be made whole.</p>
+        <p>Now, as Chaos and Guardians prepare for another clash…<br>The Trinari rise — not to fight, but to stand between.</p>
+        <p>To offer a new path.</p>
+      </div>
+      <a class="card chapter-link" href="/legends-awaken-2/" data-faction="trinari">
+        <span class="eyebrow">Meet this collection</span>
+        <strong>Legends Awaken II</strong>
+        <span class="small">774 legends, and the first Trinari to step into the war</span>
+      </a>
+    </article>
 
-            <div class="timeline-connector">
-                <span class="timeline-icon">⬇️</span>
-            </div>
+    <!-- Episode 4 -->
+    <article class="chapter" id="totems" aria-labelledby="ep4-title">
+      <div class="chapter-art chapter-art--wide">
+        <img src="/assets/img/art/totems-trio-1200.webp" width="1200" height="800" alt="The three Totems of Power side by side: Chaos in flame, the Guardians in blue light, and the green and gold Trinari Totem" loading="lazy">
+      </div>
+      <p class="episode">Episode 4 · Balance on the edge</p>
+      <h2 id="ep4-title">The Turning of the Totems</h2>
+      <div class="prose">
+        <p>The age of war had scarred the world.</p>
+        <p>The <strong>Chaos Horde</strong> burned with restless fury, and the <strong>Cronos Guardians</strong> stood weary beneath the weight of endless battle. Both sides had fought for honor, for survival — yet the light of their Totems had dimmed, no longer shining with the same might as before.</p>
+        <p>Then came the tremor.</p>
+        <p>The <strong>Trinari Totem</strong>, the brightest of all, began to pulse — its radiance spilling across the land like a heartbeat from the earth itself. The air shimmered, and the balance of power began to shift.</p>
+        <p>The <strong>Totem of Chaos</strong> still burned, but its flame flickered uncertainly.<br>The <strong>Totem of Guardians</strong> still glowed, but its calm light quivered with unease.</p>
+        <p>Something deeper than allegiance was stirring.</p>
+        <p>Across the lands, Guardians and Chaos warriors alike began to change. Some Guardians felt a pull toward the unknown light of the Trinari, their loyalty shaken by visions of unity. Others within the Chaos ranks found their rage softening, their hearts caught between shadow and peace.</p>
+        <p>The balance itself trembled — not broken, but unstable. The world felt it in every breath, every whisper of the wind.</p>
+        <p>Is the power of the Trinari Totem truly strong enough to bring peace?<br>Or will its light only deepen the cracks between order and chaos?</p>
+        <p>The Totems still stand. Their power still flows.<br><strong>Trinari</strong> — the brightest of them all.</p>
+      </div>
+      <a class="card chapter-link" href="/collections/#totems">
+        <span class="eyebrow">Meet this collection</span>
+        <strong>Totems of Power</strong>
+        <span class="small">Nine artifacts, three for each faction</span>
+      </a>
+    </article>
 
-            <!-- Episode 4 -->
-            <article class="episode-card fade-in">
-                <div class="episode-header">
-                    <div class="episode-number">⚔️ Episode 4</div>
-                    <h2 class="episode-title">The Turning of the Totems</h2>
-                    <p class="episode-subtitle">Balance on the Edge</p>
-                </div>
-                <div class="episode-content">
-                    <div class="episode-image">
-                        <img src="/Images/episode4.jpg" alt="The Turning of the Totems">
-                    </div>
-                    <p class="episode-text">
-                        The age of war had scarred the world.
-                    </p>
-                    <p class="episode-text">
-                        The <strong>Chaos Horde</strong> burned with restless fury, and the <strong>Cronos Guardians</strong> stood weary beneath the weight of endless battle. Both sides had fought for honor, for survival — yet the light of their Totems had dimmed, no longer shining with the same might as before.
-                    </p>
-                    <p class="episode-text">
-                        Then came the tremor.
-                    </p>
-                    <p class="episode-text">
-                        The <strong>Trinari Totem</strong>, the brightest of all, began to pulse — its radiance spilling across the land like a heartbeat from the earth itself. The air shimmered, and the balance of power began to shift.
-                    </p>
-                    <p class="episode-text">
-                        The <strong>Totem of Chaos</strong> still burned, but its flame flickered uncertainly.<br>
-                        The <strong>Totem of Guardians</strong> still glowed, but its calm light quivered with unease.
-                    </p>
-                    <p class="episode-text">
-                        Something deeper than allegiance was stirring.
-                    </p>
-                    <p class="episode-text">
-                        Across the lands, Guardians and Chaos warriors alike began to change. Some Guardians felt a pull toward the unknown light of the Trinari, their loyalty shaken by visions of unity. Others within the Chaos ranks found their rage softening, their hearts caught between shadow and peace.
-                    </p>
-                    <p class="episode-text">
-                        The balance itself trembled — not broken, but unstable. The world felt it in every breath, every whisper of the wind.
-                    </p>
-                    <p class="episode-text">
-                        Is the power of the Trinari Totem truly strong enough to bring peace?<br>
-                        Or will its light only deepen the cracks between order and chaos?
-                    </p>
-                    <p class="episode-text">
-                        The Totems still stand. Their power still flows.<br>
-                        <strong>Trinari</strong> — the brightest of them all.
-                    </p>
-                    <p class="episode-text" style="margin-top: var(--spacing-lg); font-size: 1.3rem; color: var(--color-gold); text-align: center;">
-                        ⚔️ <strong>Legends Awaken II</strong> – Launched November 2025
-                    </p>
-                </div>
-            </article>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" id="community">
-        <h2 class="section-title">🔮 Join The Legends</h2>
-        <p style="color: #ccc; font-size: 1.1rem; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            Become part of the epic saga. Join our community and help shape the future of Cronos Legends.
-        </p>
-        <div class="social-links">
-            <a href="https://discord.gg/huWn4Tz4g4" target="_blank" class="btn btn-discord"><span>💬 Join Discord</span></a>
-            <a href="https://x.com/CronosLegends" target="_blank" class="btn btn-twitter"><span>🐦 Follow on X</span></a>
+    <!-- Episode 5 -->
+    <article class="chapter" id="elderborn" aria-labelledby="ep5-title">
+      <div class="chapter-art chapter-art--meadow">
+        <div class="stickers">
+          <div class="sticker"><img src="/assets/img/elderborn/elderborn-2-360.webp" width="360" height="360" alt="A sandstone Elderborn with glowing runes and a carved crown" loading="lazy"></div>
+          <div class="sticker is-big"><img src="/assets/img/elderborn/elderborn-t54-720.webp" width="720" height="720" alt="A golden Elderborn holding a flaming hammer" loading="lazy"></div>
+          <div class="sticker"><img src="/assets/img/elderborn/elderborn-4-360.webp" width="360" height="360" alt="A wooden Elderborn sprout with a leaf on its head and a staff" loading="lazy"></div>
         </div>
-        
-        <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/legends-awaken-2">Legends Awaken II</a>
-            <a href="/legends-awaken-1">Legends Awaken I</a>
-            <a href="/tokens">Tokens</a>
-            <a href="/game">Game</a>
-            <a href="/roadmap">Roadmap</a>
-            <a href="/faq">FAQ</a>
-            <a href="/la2-terms">LA2 Terms</a>
-            <a href="/la1-terms">LA1 Terms</a>
+      </div>
+      <p class="episode">Episode 5 · The first of the Trinari</p>
+      <h2 id="ep5-title">The Elderborn</h2>
+      <div class="prose">
+        <p>Long before the Trinari awakened in the forests and winds, there was the First Impact.</p>
+        <p>A celestial meteor streaked across the sky, crashing into the realm with earth-shaking force. It was the same blazing star that silenced the old war. The armies retreated to recover, and no one stayed to watch the crater cool.</p>
+        <p>So no one saw the very first Trinari emerge: the <strong>Elderborn</strong>.</p>
+        <p>Each was born from a single element the meteor's magic had touched. Stone that stood up and carved itself a crown. Lava that cooled into scales but kept its fire. Old wood that sprouted a leaf and a grin. Moss and root that gathered around the first campfire. Shadow that found a pair of red eyes, and a pair of daggers to go with them. And light, golden and warm, that simply refused to put down its hammer.</p>
+        <p>Earth, flame, light, and shadow — the very forces that would one day wake the Trinari Totem.</p>
+        <p>Through the long war, the Elderborn kept to the quiet places: the cooling craters, the deep woods, the warm edges of campfires no one remembered lighting.</p>
+        <blockquote>These are not just Trinari. These are the ancestors. The first. The Elderborn.</blockquote>
+        <p>Now, as the Trinari Totem shines brightest of all, the ancestors are waking up.</p>
+      </div>
+      <a class="card chapter-link" href="/trinari-elderborn/" data-faction="trinari">
+        <span class="eyebrow">Meet this collection</span>
+        <strong>Trinari: Elderborn</strong>
+        <span class="small">212 playable Elderborn, upcoming on crovia.app</span>
+      </a>
+    </article>
+
+  </div>
+
+  <!-- Closing -->
+  <section class="section band-ember" aria-labelledby="continue-title">
+    <div class="container container--narrow center">
+      <span class="eyebrow">The saga continues</span>
+      <h2 id="continue-title">Pick a side. Or stand between.</h2>
+      <p class="lead" style="margin-inline:auto">The legends live on Cronos, and the lore talk lives in the Discord.</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn--gold" href="/collections/">Explore the collections</a>
+        <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Join the Discord</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
         </div>
-        
-        <p style="color: #666; margin-top: 40px; font-size: 0.9rem;">© 2025 Cronos Legends. All rights reserved.</p>
-    </footer>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
 
-    <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Mobile dropdown toggle
-        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 968) {
-                    e.preventDefault();
-                    const dropdown = toggle.closest('.dropdown');
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            if (!link.classList.contains('dropdown-toggle')) {
-                link.addEventListener('click', () => {
-                    document.getElementById('navLinks').classList.remove('active');
-                });
-            }
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (navbar && window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else if (navbar) {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
-    <script src="/scripts/notice-banner.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

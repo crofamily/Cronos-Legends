@@ -1,0 +1,57 @@
+{
+  "chainId": 25,
+  "explorer": "https://explorer.cronos.org",
+  "burnAddress": "0x000000000000000000000000000000000000dEaD",
+  "tokens": {
+    "CLG": "0x08d9cb5100C306C2909B63415d7ff05268633b41",
+    "CRONUS": "0x71b60B37f030D0cff949855b9D0405915057B116",
+    "WCRO": "0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23",
+    "USDC": "0xc21223249CA28397B4B6541dfFaEcC539BfF0c59"
+  },
+  "oracle": {
+    "clgCronusPool": "0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818",
+    "cronusWcroPair": "0x9e44225db6A7c0d31f081D9FfA658979B8e523db",
+    "wcroUsdcPair": "0xe61Db569E231B3f5530168Aa2C9D50246525b6d6",
+    "longWindowSeconds": 86400,
+    "shortWindowSeconds": 600,
+    "maxStalenessSeconds": 21600,
+    "checkpointIntervalSeconds": 3600,
+    "minPoolCronus": "3000000000000000000000000",
+    "minInRangeLiquidity": "10000000000000000000000",
+    "minCronusPairWcro": "300000000000000000000000",
+    "minCroPairUsdc": "300000000000",
+    "notes": "Floors vs 2026-09-10: pool CRONUS 8.29M (floor 3M = 36%), in-range L 2.76e22 (floor 1e22 = 36%), CRONUS/WCRO pair 1.15M WCRO (floor 300k), WCRO/USDC pair 2.89M USDC (floor 300k)."
+  },
+  "collections": {
+    "legendsAwaken1": {
+      "name": "Legends Awaken I",
+      "address": "0x68A3192E286AA5C2182D815F5fE796401eCe28bA",
+      "usdPerNft": "35",
+      "maxClgPerNft": "0.3",
+      "minTokenId": 1,
+      "maxTokenId": 500
+    },
+    "legendsAwaken2": {
+      "name": "Legends Awaken II",
+      "address": "0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d",
+      "usdPerNft": "35",
+      "maxClgPerNft": "0.3",
+      "minTokenId": 1,
+      "maxTokenId": 774
+    },
+    "trinariElderborn": {
+      "name": "Trinari: Elderborn",
+      "address": null,
+      "usdPerNft": "15",
+      "maxClgPerNft": "0.13",
+      "minTokenId": null,
+      "maxTokenId": 212,
+      "note": "Deploy after the crovia.app mint has closed. Set address and minTokenId from the deployed CroviaCollectionV8 contract."
+    }
+  },
+  "lp": {
+    "pool": "0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818",
+    "positionManager": "0xc2DDB059FEc2afa593dFF9c70Fda2cfABe9b4eC8",
+    "owner": "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D"
+  }
+}

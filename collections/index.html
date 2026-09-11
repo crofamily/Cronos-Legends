@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collections — Cronos Legends</title>
+  <meta name="description" content="Every Cronos Legends collection in one place: Legends Awaken I and II, Trinari: Elderborn, and the nine Totems of Power, with contract addresses and live burn counts.">
+  <link rel="canonical" href="https://cronoslegends.com/collections/">
+  <meta name="theme-color" content="#0e0f16">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cronos Legends">
+  <meta property="og:title" content="The Cronos Legends collections">
+  <meta property="og:description" content="Legends Awaken I and II, Trinari: Elderborn, and the Totems of Power, with every contract listed and burn counts read live from Cronos.">
+  <meta property="og:url" content="https://cronoslegends.com/collections/">
+  <meta property="og:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CronosLegends">
+  <meta name="twitter:image" content="https://cronoslegends.com/assets/img/og/home.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/elderborn/elderborn-2-720.webp" fetchpriority="high">
+  <style>
+    .collection-card .foot { margin-top: auto; display: grid; gap: var(--space-4); justify-items: start; }
+    .collection-card .foot .link-arrow { min-height: 44px; }
+    .totem-grid { list-style: none; margin: var(--space-7) 0 0; padding: 0; display: grid; gap: var(--space-4); }
+    @media (min-width: 900px) { .totem-grid { grid-template-columns: repeat(3, 1fr); } }
+    .totem { display: grid; grid-template-columns: 104px 1fr; gap: var(--space-4); align-items: start; padding: var(--space-3); border-radius: var(--radius-m); background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+    @media (min-width: 1100px) { .totem { grid-template-columns: 120px 1fr; } }
+    .totem img { width: 100%; height: auto; border-radius: var(--radius-s); background: var(--surface-2); }
+    .totem .eyebrow { margin-bottom: 4px; }
+    .totem h3 { margin: 0 0 var(--space-2); font: 700 1.08rem/1.25 var(--font-display); }
+    .totem p { margin: 0; font-size: var(--fs-small); line-height: 1.55; color: var(--text-2); font-style: italic; }
+    .link-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 2px; }
+    .link-list a { min-height: 44px; }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="/" aria-label="Cronos Legends home">
+      <img src="/assets/img/clg-96.webp" width="36" height="36" alt="">
+      <span>CRONOS LEGENDS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="/collections/" aria-current="page">Collections</a></li>
+        <li><a href="/trinari-elderborn/">Elderborn</a></li>
+        <li><a href="/burn/">Burn</a></li>
+        <li><a href="/clg/">$CLG</a></li>
+        <li><a href="/story/">Lore</a></li>
+        <li><a href="/game/">Play</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank" aria-label="Cronos Legends on Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.2a18.3 18.3 0 0 0-5.5 0L8.7 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18a19.9 19.9 0 0 0 6 3l1.3-2c-.7-.2-1.3-.6-1.9-.9l.4-.3a14.2 14.2 0 0 0 12.1 0l.4.3c-.6.3-1.2.7-1.9.9l1.3 2a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.6ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+      <a class="icon-link" href="https://x.com/CronosLegends" rel="noopener" target="_blank" aria-label="Cronos Legends on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2.3h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.8-6 6.8H1.7l7.7-8.8L1.3 2.3h6.8l4.7 6.2 5.4-6.2Zm-1.1 17.5h1.8L7.1 4.1H5.1l12 15.7Z"/></svg></a>
+      <a class="btn btn--gold btn--sm header-burn" href="/burn/">Burn for $CLG</a>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="site-sheet">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="site-sheet" hidden>
+  <button class="menu-btn sheet-close" type="button" data-menu-close>Close</button>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collections/" aria-current="page">Collections</a></li>
+      <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+      <li><a href="/burn/">Burn for $CLG</a></li>
+      <li><a href="/clg/">$CLG &amp; liquidity</a></li>
+      <li><a href="/story/">Lore</a></li>
+      <li><a href="/game/">Play</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
+  </nav>
+  <div class="row">
+    <a class="btn" href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a>
+    <a class="btn" href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container split">
+      <div>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Collections</nav>
+        <span class="eyebrow">Collections</span>
+        <h1>Every legend, in one place.</h1>
+        <p class="lead">Cronos Legends lives on Cronos in four collections: the original Legends Awaken I, the three-faction Legends Awaken II, the upcoming Trinari: Elderborn, and nine Totems of Power. Meet them, check their contracts, and see how many have been burned, read live from the chain.</p>
+        <div class="hero-actions">
+          <a class="btn btn--gold btn--lg" href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">Browse on crovia.app</a>
+          <a class="btn btn--lg" href="/burn/">Burn an NFT for $CLG</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="card-art" data-faction="guardian"><img src="/assets/img/art/cronos-titans-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art" data-faction="chaos"><img src="/assets/img/art/chaos-archer-480.webp" width="480" height="480" alt=""></div>
+        <div class="card-art bob" data-faction="trinari"><img src="/assets/img/elderborn/elderborn-2-720.webp" width="720" height="720" alt="" fetchpriority="high"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Character collections -->
+  <section class="section" aria-labelledby="collections-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">On Cronos</span>
+        <h2 id="collections-title">Collect the characters.</h2>
+        <p>Two collections are out in the world and trading on crovia.app. The third is on its way.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card collection-card reveal" data-faction="chaos">
+          <div class="art"><img src="/assets/img/art/horde-creatures-800.webp" width="800" height="800" alt="Horde Creatures, a Chaos division of Legends Awaken I" loading="lazy"></div>
+          <div class="body">
+            <h3>Legends Awaken I</h3>
+            <p>The original 500: 250 Cronos Guardians and 250 of the Chaos Horde. This is where the war began.</p>
+            <div class="foot">
+              <div class="row"><span class="chip">500 NFTs</span><span class="chip">16 divisions</span><span class="chip">Burned: <b class="num is-loading" data-live="burned-legendsAwaken1">—</b></span></div>
+              <span class="addr"><span class="label">Contract</span><code>0x68A3…28bA</code><button type="button" data-copy="0x68A3192E286AA5C2182D815F5fE796401eCe28bA" aria-label="Copy the Legends Awaken I contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0x68A3192E286AA5C2182D815F5fE796401eCe28bA" rel="noopener" target="_blank" aria-label="View Legends Awaken I on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span>
+              <div class="row">
+                <a class="btn" href="/legends-awaken-1/">Explore<span class="sr-only"> Legends Awaken I</span></a>
+                <a class="link-arrow" href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">View on crovia.app</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card collection-card reveal" data-faction="trinari">
+          <div class="art"><img src="/assets/img/art/la2-preview-800.webp" width="800" height="800" alt="Hooded figures from Legends Awaken II" loading="lazy"></div>
+          <div class="body">
+            <h3>Legends Awaken II</h3>
+            <p>774 legends across 17 divisions, and the first Trinari step into the war.</p>
+            <div class="foot">
+              <div class="row"><span class="chip">774 NFTs</span><span class="chip">3 factions</span><span class="chip">Burned: <b class="num is-loading" data-live="burned-legendsAwaken2">—</b></span></div>
+              <span class="addr"><span class="label">Contract</span><code>0xB966…6a0d</code><button type="button" data-copy="0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d" aria-label="Copy the Legends Awaken II contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/token/0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d" rel="noopener" target="_blank" aria-label="View Legends Awaken II on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span>
+              <div class="row">
+                <a class="btn" href="/legends-awaken-2/">Explore<span class="sr-only"> Legends Awaken II</span></a>
+                <a class="link-arrow" href="https://crovia.app/collections/0xb9669ad823feb0d0e6c9a7154033ab15e85d6a0d" rel="noopener" target="_blank">View on crovia.app</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card collection-card reveal" data-faction="trinari">
+          <div class="art"><img src="/assets/img/elderborn/elderborn-4-720.webp" width="720" height="720" alt="A cheerful wooden Elderborn sprout holding a glowing staff" loading="lazy"></div>
+          <div class="body">
+            <h3>Trinari: Elderborn</h3>
+            <p>212 playable Elderborn, the first of the Trinari, each shaped from a single element.</p>
+            <div class="foot">
+              <div class="row"><span class="chip chip--trinari"><span class="dot"></span>Upcoming on crovia.app</span><span class="chip">212 unique</span><span class="chip">400 CRO public mint</span><span class="chip">Max 10 per wallet</span></div>
+              <p class="small">No contract yet. It's created at launch on crovia.app.</p>
+              <div class="row">
+                <a class="btn" href="/trinari-elderborn/">Explore<span class="sr-only"> Trinari: Elderborn</span></a>
+                <a class="link-arrow" href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">View on crovia.app</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="live-note" data-live-updated>Live from Cronos</p>
+
+      <div class="callout callout--tba" style="margin-top:var(--space-6)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <p><strong>Burn for $CLG</strong>Burn one Legends Awaken I or II NFT in a single wallet transaction and receive $35 of $CLG, never more than 0.3 CLG. Trinari: Elderborn pays $15 of $CLG, only after its mint has sold out. The Totems of Power aren't part of the program. “Burned” above counts NFTs held by 0x…dEaD, where nobody can move them again. <a href="/burn/#rules">Read the rules</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Totems of Power -->
+  <section class="section section--deep section--rim" id="totems" aria-labelledby="totems-title">
+    <div class="container">
+      <div class="split">
+        <div>
+          <span class="eyebrow">Totems of Power</span>
+          <h2 id="totems-title">Nine Totems. Three for every faction.</h2>
+          <p class="lead">When the meteor struck, the old Totems cracked, and one that belonged to no one woke up. Each of these nine artifacts marks a stage of awakening for its faction: Rare, Legendary, and Mythic.</p>
+          <div class="row" style="margin-bottom:var(--space-5)"><span class="chip">9 artifacts</span><span class="chip">3 per faction</span><span class="chip">Crypto.com NFT</span><span class="chip">Cronos POS</span></div>
+          <p class="muted">The Totems are held on Crypto.com NFT, on the Cronos POS chain rather than Cronos EVM, so they have no EVM contract address and aren't part of the burn program. Totem holders get their faction's Totemkeeper role in the Discord.</p>
+          <div class="hero-actions">
+            <a class="btn btn--gold" href="https://crovia.app/pos/20d1ecd900c3f048db208cf4e5cd8772" rel="noopener" target="_blank">View on crovia.app</a>
+            <a class="btn" href="/story/#totems">Read the Totem lore</a>
+          </div>
+        </div>
+        <div class="art art--wide art--frame reveal">
+          <img src="/assets/img/art/totems-trio-1200.webp" width="1200" height="800" alt="The three faction Totems side by side, Chaos in flame, Guardian in blue crystal, and Trinari in green light, above the words Totems of Power" loading="lazy">
+        </div>
+      </div>
+
+      <ul class="totem-grid">
+        <li class="totem" data-faction="guardian">
+          <img src="/assets/img/totems/guardian1-400.webp" width="400" height="600" alt="Blue crystal monolith marked with crossed swords" loading="lazy">
+          <div>
+            <span class="eyebrow">Guardians · Rare</span>
+            <h3>Aegis of Eternity</h3>
+            <p>“Crafted from the temporal core of Cronos’ realm, this rare totem acts as a protective anchor, shielding the Guardians and ensuring their unwavering stand against all threats.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="guardian">
+          <img src="/assets/img/totems/guardian2-400.webp" width="400" height="600" alt="Stone pillar with crossed swords above a bed of blue crystals" loading="lazy">
+          <div>
+            <span class="eyebrow">Guardians · Legendary</span>
+            <h3>Chronoheart Pillar</h3>
+            <p>“Within its crystalline heart beats the rhythm of time itself, anchoring the Guardians to their eternal purpose across all dimensions.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="guardian">
+          <img src="/assets/img/totems/guardian3-400.webp" width="400" height="600" alt="Pillar crowned with a stern carved face, wreathed in blue flame" loading="lazy">
+          <div>
+            <span class="eyebrow">Guardians · Mythic</span>
+            <h3>Lumenheart Pillar</h3>
+            <p>“Born from the crystallized essence of Cronos’ eternal light, legends claim that when darkness surges, the Pillar’s light intensifies, calling upon the spirits of fallen Guardians to rise once more.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="chaos">
+          <img src="/assets/img/totems/chaos1-400.webp" width="400" height="600" alt="Horned demon head atop a cracked stone pillar wrapped in flames" loading="lazy">
+          <div>
+            <span class="eyebrow">Chaos · Rare</span>
+            <h3>Flameborne Obelisk</h3>
+            <p>“A towering totem forged in the heart of chaos, its cracked stone veins pulse with molten fire. Born from the wrath of the inferno, those who stand before it feel their fury ignite.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="chaos">
+          <img src="/assets/img/totems/chaos2-400.webp" width="400" height="600" alt="Tower of horned skulls rising out of the fire" loading="lazy">
+          <div>
+            <span class="eyebrow">Chaos · Legendary</span>
+            <h3>Infernal Bastion</h3>
+            <p>“Forged from obsidian and bone, flames pour from its skull-crowned peak, pulsing with wrath and madness. Warriors who stand before it feel their fury rise, as if the totem itself feeds on rage.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="chaos">
+          <img src="/assets/img/totems/chaos3-400.webp" width="400" height="600" alt="Snarling horned idol stacked with skulls above a lava field" loading="lazy">
+          <div>
+            <span class="eyebrow">Chaos · Mythic</span>
+            <h3>Abyssal Devourer</h3>
+            <p>“Carved from blackened brimstone and fed with the souls of fallen gods, its horned visage hungers eternally. Legends claim it feeds not on flesh, but on courage, leaving behind hollow vessels.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="trinari">
+          <img src="/assets/img/totems/trinari1-400.webp" width="400" height="600" alt="Green stone obelisk carved with a glowing spiral" loading="lazy">
+          <div>
+            <span class="eyebrow">Trinari · Rare</span>
+            <h3>The Verdant Spiral</h3>
+            <p>“The Verdant Spiral pulses with ancient, natural energy. Its swirling core channels the cycle of life, death, and rebirth, marking the beginning of nature’s return.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="trinari">
+          <img src="/assets/img/totems/trinari2-400.webp" width="400" height="600" alt="Carved green pillar of glowing runes rising from roots and crystal" loading="lazy">
+          <div>
+            <span class="eyebrow">Trinari · Legendary</span>
+            <h3>Lifestream Obelisk</h3>
+            <p>“Born of ancient roots, the Lifestream Obelisk glows with primal energy. Vines and crystal veins spiral skyward, channeling life, decay, and rebirth as whispers of Trinari spirits fill the wind.”</p>
+          </div>
+        </li>
+        <li class="totem" data-faction="trinari">
+          <img src="/assets/img/totems/trinari3-400.webp" width="400" height="600" alt="Gold-carved green obelisk glowing from within" loading="lazy">
+          <div>
+            <span class="eyebrow">Trinari · Mythic</span>
+            <h3>Verdant Nexus</h3>
+            <p>“Rooted in the heart of the world’s primal essence, the Verdant Nexus breathes with the rhythm of creation itself, channeling the first spark of life that binds all realms together.”</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="card card--pad-lg reveal" style="margin-top:var(--space-7)">
+        <div class="split split--flip">
+          <div>
+            <span class="eyebrow">Special edition</span>
+            <h3>Totem of Peace</h3>
+            <p class="muted">Cronos Legends contributed the Totem of Peace to Crypto.com's “Art of Giving: STAY with UNICEF” charity drop. It lives in that drop, apart from the nine Totems of Power.</p>
+            <p class="faint"><em>“The Totem of Peace rises as a beacon of hope, glowing with golden light that transforms the land into harmony and growth. Children gather in joy beneath its radiance, celebrating the promise of brighter days.”</em></p>
+            <a class="link-arrow" href="https://crypto.com/nft/collection/533c2cea6dbf51ff05c6ebfc079f5b05" rel="noopener" target="_blank">See the drop on Crypto.com NFT</a>
+          </div>
+          <div class="art art--frame" style="max-width:360px;width:100%;justify-self:center">
+            <img src="/assets/img/art/totem-of-peace-800.webp" width="800" height="800" alt="The Totem of Peace, a stone monolith glowing with the word PEACE above children playing in a flower meadow" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to trade -->
+  <section class="section" aria-labelledby="trade-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Where to trade</span>
+        <h2 id="trade-title">Buy, sell, and view on crovia.app.</h2>
+        <p>Wherever you trade, the contract address is how you know it's the real thing.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card card--pad-lg reveal">
+          <span class="eyebrow">Our marketplace</span>
+          <h3>crovia.app</h3>
+          <p class="muted">Built by our team at Crovia Oy. Both Legends Awaken collections trade there, you can view the Totems there, and Trinari: Elderborn launches there.</p>
+          <ul class="link-list">
+            <li><a class="link-arrow" href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">Legends Awaken I</a></li>
+            <li><a class="link-arrow" href="https://crovia.app/collections/0xb9669ad823feb0d0e6c9a7154033ab15e85d6a0d" rel="noopener" target="_blank">Legends Awaken II</a></li>
+            <li><a class="link-arrow" href="https://crovia.app/pos/20d1ecd900c3f048db208cf4e5cd8772" rel="noopener" target="_blank">Totems of Power</a></li>
+            <li><a class="link-arrow" href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">Everything by Cronos Legends</a></li>
+          </ul>
+        </div>
+        <div class="card card--pad-lg reveal">
+          <span class="eyebrow">Where it started</span>
+          <h3>Crypto.com NFT</h3>
+          <p class="muted">Both Legends Awaken collections launched on Crypto.com NFT in 2025, and the Totems of Power live there.</p>
+          <p class="muted">NFTs kept in the Crypto.com NFT app sit in Crypto.com's custody. To burn one for $CLG, withdraw it to your own Cronos wallet first. Withdrawing burns nothing: your NFT is still yours, just in your own wallet.</p>
+        </div>
+        <div class="card card--pad-lg reveal">
+          <span class="eyebrow">Anywhere else</span>
+          <h3>Check before you buy</h3>
+          <p class="muted">Legends Awaken I and II are standard Cronos NFTs, so other Cronos marketplaces can list them too. Compare the contract address with the one on this page before you buy.</p>
+          <p class="muted">We never DM first and never ask for your recovery phrase. Every official address is on <a href="/about/#official">one page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/"><img src="/assets/img/clg-96.webp" width="36" height="36" alt=""><span>CRONOS LEGENDS</span></a>
+        <p>A hand-painted fantasy world on Cronos, created and operated by Crovia Oy (Finland), the team behind crovia.app.</p>
+        <span class="addr"><span class="label">$CLG</span><code>0x08d9…3b41</code><button type="button" data-copy="0x08d9cb5100C306C2909B63415d7ff05268633b41" aria-label="Copy the $CLG contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button></span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/collections/">Collections</a></li>
+            <li><a href="/trinari-elderborn/">Trinari: Elderborn</a></li>
+            <li><a href="/story/">Lore</a></li>
+            <li><a href="/game/">Play</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>$CLG</h3>
+          <ul>
+            <li><a href="/clg/">About $CLG</a></li>
+            <li><a href="/clg/#liquidity">Liquidity &amp; fees</a></li>
+            <li><a href="/burn/">Burn for $CLG</a></li>
+            <li><a href="/burn/#rules">Burn rules</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About us</a></li>
+            <li><a href="/about/#official">Official addresses</a></li>
+            <li><a href="mailto:contact@cronoslegends.com">contact@cronoslegends.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Community</h3>
+          <ul>
+            <li><a href="https://discord.gg/huWn4Tz4g4" rel="noopener" target="_blank">Discord</a></li>
+            <li><a href="https://x.com/CronosLegends" rel="noopener" target="_blank">X</a></li>
+            <li><a href="https://crovia.app/creators/cronoslegends" rel="noopener" target="_blank">crovia.app</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
+      <p>© <span data-year></span> Crovia Oy</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/chain-lite.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -2,32 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+  <script src="/assets/js/gate.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinari vs Chaos & Guardians (PC only!)</title>
+    <title>Trinari Defense — Cronos Legends</title>
+    <meta name="description" content="Trinari Defense: a free wave-survival game in your browser. Defend the forest from the Chaos Horde and the Cronos Guardians, then climb the Hall of Legends.">
+    <link rel="canonical" href="https://cronoslegends.com/games/trinari-defense.html">
+    <meta name="theme-color" content="#0e0f16">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Figtree:wght@400;500;600;700&display=swap">
     <style>
+        /* Site colours and fonts: the same values as /assets/css/site.css */
+        :root {
+            color-scheme: dark;
+            --bg: #0e0f16;
+            --surface: #151724;
+            --surface-2: #1c1f30;
+            --line: #2a2e45;
+            --line-strong: #3a3f5c;
+            --text: #f4efe6;
+            --text-2: #c6c1d2;
+            --text-3: #938fa8;
+            --gold: #f2b93b;
+            --gold-hi: #ffd36e;
+            --on-gold: #1f1503;
+            --guardian: #62b0ff;
+            --trinari: #5ed6a0;
+            --font-display: "Cinzel", Georgia, "Times New Roman", serif;
+            --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+
         body {
             margin: 0;
             padding: 20px;
-            background: linear-gradient(to right, rgba(0,100,255,0.2), rgba(0,255,100,0.2), rgba(255,50,50,0.2)), #0a0a0a;
-            color: white;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, rgba(98, 176, 255, 0.12), rgba(94, 214, 160, 0.12), rgba(255, 106, 82, 0.12)), var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
             text-align: center;
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
         }
 
+        :focus-visible {
+            outline: 3px solid var(--gold-hi);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute !important;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         .back-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 25px;
+            background: rgba(14, 15, 22, 0.85);
+            border: 1px solid var(--line-strong);
+            color: var(--text);
+            min-height: 44px;
+            padding: 0 18px;
+            font: 700 1rem var(--font-body);
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
@@ -37,24 +84,36 @@
             z-index: 1000;
         }
 
-        .back-button:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: translateX(-5px);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+        .back-button svg {
+            width: 18px;
+            height: 18px;
         }
 
-        h1 { 
-            color: #FFD700; 
-            text-shadow: 0 0 20px rgba(255,215,0,0.8);
-            margin-top: 20px;
+        .back-button:hover {
+            border-color: var(--gold);
+            color: var(--gold-hi);
+            transform: translateX(-3px);
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 1.1rem + 2vw, 2.4rem);
+            color: var(--gold);
+            text-shadow: 0 0 24px rgba(242, 185, 59, 0.45);
+            margin: 20px 0 4px;
+        }
+
+        .tagline {
+            color: var(--text-2);
+            margin: 0 0 10px;
         }
 
         canvas {
             display: block;
             margin: 20px auto;
             background: #1a1a2e;
-            border: 4px solid #FFD700;
-            border-radius: 10px;
+            border: 2px solid var(--gold);
+            border-radius: 14px;
             cursor: crosshair;
             max-width: 100%;
             height: auto;
@@ -62,25 +121,27 @@
         }
 
         button {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
+            background: linear-gradient(180deg, #ffcf5f, #eaa928);
+            color: var(--on-gold);
             border: none;
             padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 50px;
+            font: 700 1.1rem var(--font-body);
+            border-radius: 14px;
             cursor: pointer;
             margin: 10px;
             transition: all 0.3s;
         }
 
-        button:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 5px 20px rgba(255,215,0,0.5); 
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 32px -10px rgba(242, 185, 59, 0.55);
         }
 
-        button:disabled { 
-            opacity: 0.5; 
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .stats {
@@ -92,16 +153,21 @@
         }
 
         .stat {
-            background: rgba(0,0,0,0.7);
+            background: var(--surface);
+            color: var(--text-2);
+            font-weight: 600;
             padding: 15px 25px;
-            border-radius: 10px;
-            border: 3px solid;
+            border-radius: 14px;
+            border: 2px solid;
         }
 
-        .stat.health { border-color: #00FF64; }
-        .stat.wave { border-color: #c084fc; }
-        .stat.kills { border-color: #FFD700; }
-        .stat-value { font-size: 2rem; font-weight: bold; }
+        .stat.health { border-color: var(--trinari); }
+        .stat.wave { border-color: var(--guardian); }
+        .stat.kills { border-color: var(--gold); }
+        .stat-value { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .stat.health .stat-value { color: var(--trinari); }
+        .stat.wave .stat-value { color: var(--guardian); }
+        .stat.kills .stat-value { color: var(--gold); }
 
         .abilities {
             display: flex;
@@ -112,21 +178,37 @@
         }
 
         .ability {
-            background: rgba(0,0,0,0.7);
-            border: 2px solid #FFD700;
+            background: var(--surface);
+            border: 1px solid var(--gold);
+            color: var(--text);
+            font-weight: 600;
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .ability:hover:not(.cooldown) { 
-            background: rgba(255,215,0,0.2); 
+        .ability small {
+            color: var(--text-3);
+            font-weight: 500;
         }
 
-        .ability.cooldown { 
-            opacity: 0.3; 
-            cursor: not-allowed; 
+        .ability--passive {
+            cursor: default;
+            border-color: var(--trinari);
+        }
+
+        .ability--passive small {
+            color: var(--trinari);
+        }
+
+        .ability:hover:not(.cooldown):not(.ability--passive) {
+            background: rgba(242, 185, 59, 0.12);
+        }
+
+        .ability.cooldown {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
 
         .modal-overlay {
@@ -135,7 +217,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(9, 10, 16, 0.88);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -147,9 +229,10 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(10, 10, 10, 0.95));
-            border: 3px solid #FFD700;
-            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--line-strong);
+            border-radius: 28px;
+            box-shadow: 0 26px 60px -24px rgba(0, 0, 0, 0.85);
             padding: 40px;
             max-width: 500px;
             width: 90%;
@@ -161,14 +244,14 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px solid rgba(255, 0, 0, 0.5);
-            color: #ff4444;
-            width: 40px;
-            height: 40px;
+            background: transparent;
+            border: 1px solid var(--line-strong);
+            color: var(--text-2);
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            margin: 0;
             border-radius: 50%;
-            font-size: 1.5rem;
-            font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -176,42 +259,74 @@
             transition: all 0.3s ease;
         }
 
+        .modal-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .modal-close:hover {
-            background: rgba(255, 0, 0, 0.4);
-            border-color: #ff0000;
-            transform: rotate(90deg);
+            color: var(--text);
+            border-color: var(--text-3);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 30px rgba(242, 185, 59, 0.4);
+            background: var(--surface-2);
+        }
+
+        .modal-avatar img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .modal-title {
-            font-family: 'Cinzel', serif;
+            font-family: var(--font-display);
             font-size: 2rem;
-            color: #FFD700;
-            margin-bottom: 20px;
+            color: var(--gold);
+            margin: 0 0 16px;
         }
 
         .modal-text {
-            color: #bbb;
+            color: var(--text-2);
             margin-bottom: 25px;
             line-height: 1.6;
         }
 
+        .modal-note {
+            color: var(--text-3);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: -8px 0 16px;
+        }
+
         .name-input {
             width: 100%;
+            box-sizing: border-box;
             padding: 15px;
             font-size: 1.1rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            color: white;
+            background: var(--bg);
+            border: 1px solid var(--line-strong);
+            border-radius: 14px;
+            color: var(--text);
             text-align: center;
             margin-bottom: 20px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-body);
         }
 
         .name-input:focus {
             outline: none;
-            border-color: #FFD700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(242, 185, 59, 0.25);
         }
 
         .modal-buttons {
@@ -224,21 +339,22 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #FFD700;
-            color: #FFD700;
-            padding: 12px 24px;
+            background: rgba(14, 15, 22, 0.85);
+            border: 1px solid var(--gold);
+            color: var(--gold-hi);
+            min-height: 44px;
+            padding: 0 18px;
+            margin: 0;
             font-size: 1rem;
-            font-weight: bold;
-            border-radius: 25px;
+            font-weight: 700;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
             z-index: 1000;
         }
 
         .leaderboard-button:hover {
-            background: rgba(255, 215, 0, 0.2);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+            background: rgba(242, 185, 59, 0.12);
         }
 
         .leaderboard-modal {
@@ -251,23 +367,32 @@
             gap: 10px;
             margin-bottom: 30px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .tab-button {
-            padding: 12px 30px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 25px;
-            color: #888;
+            padding: 12px 24px;
+            margin: 0;
+            background: transparent;
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            color: var(--text-2);
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 1rem;
             font-weight: 600;
         }
 
+        .tab-button:hover {
+            transform: none;
+            box-shadow: none;
+            color: var(--text);
+        }
+
         .tab-button.active {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: #FFD700;
-            color: #FFD700;
+            background: rgba(242, 185, 59, 0.12);
+            border-color: var(--gold);
+            color: var(--gold-hi);
         }
 
         .leaderboard-content {
@@ -278,25 +403,32 @@
         .leaderboard-table {
             width: 100%;
             border-collapse: collapse;
+            text-align: left;
         }
 
         .leaderboard-table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            padding: 15px;
-            text-align: left;
-            font-weight: 700;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            color: var(--text-3);
+            padding: 12px 15px;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--line-strong);
         }
 
         .leaderboard-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccc;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--line);
+            color: var(--text-2);
+            font-variant-numeric: tabular-nums;
         }
 
-        .leaderboard-table tr:hover {
-            background: rgba(255, 215, 0, 0.05);
+        .leaderboard-table td strong {
+            color: var(--text);
+            overflow-wrap: anywhere;
+        }
+
+        .leaderboard-table tbody tr:hover td {
+            background: rgba(242, 185, 59, 0.05);
         }
 
         .rank-badge {
@@ -310,35 +442,35 @@
         }
 
         .rank-1 {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
+            background: linear-gradient(135deg, #ffd36e, #eaa928);
+            color: #1f1503;
         }
 
         .rank-2 {
-            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
-            color: #000;
+            background: linear-gradient(135deg, #e3e3ea, #a9a9b8);
+            color: #16161d;
         }
 
         .rank-3 {
-            background: linear-gradient(135deg, #CD7F32, #B87333);
-            color: #000;
+            background: linear-gradient(135deg, #e0a36b, #b87333);
+            color: #1f1206;
         }
 
         .rank-other {
-            background: rgba(255, 255, 255, 0.1);
-            color: #888;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-2);
         }
 
         .empty-leaderboard {
             text-align: center;
             padding: 40px;
-            color: #888;
+            color: var(--text-3);
         }
 
         .loading {
             text-align: center;
             padding: 40px;
-            color: #FFD700;
+            color: var(--gold);
         }
 
         .joystick-area {
@@ -347,8 +479,8 @@
             left: 20px;
             width: 150px;
             height: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 3px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid rgba(242, 185, 59, 0.35);
             border-radius: 50%;
             display: none;
         }
@@ -357,13 +489,13 @@
             position: absolute;
             width: 60px;
             height: 60px;
-            background: rgba(255, 215, 0, 0.6);
-            border: 3px solid #FFD700;
+            background: rgba(242, 185, 59, 0.6);
+            border: 3px solid var(--gold);
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 20px rgba(242, 185, 59, 0.45);
         }
 
         .mobile-ability-buttons {
@@ -378,11 +510,10 @@
         .mobile-ability-btn {
             width: 70px;
             height: 70px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #FFD700;
+            background: rgba(14, 15, 22, 0.85);
+            border: 3px solid var(--gold);
             border-radius: 50%;
-            color: #FFD700;
-            font-size: 1.5rem;
+            color: var(--gold-hi);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -391,9 +522,14 @@
             touch-action: manipulation;
         }
 
+        .mobile-ability-btn svg {
+            width: 30px;
+            height: 30px;
+        }
+
         .mobile-ability-btn:active {
             transform: scale(0.9);
-            background: rgba(255, 215, 0, 0.3);
+            background: rgba(242, 185, 59, 0.3);
         }
 
         .mobile-ability-btn.cooldown {
@@ -409,21 +545,21 @@
             .back-button {
                 top: 10px;
                 left: 10px;
-                padding: 8px 16px;
-                font-size: 0.85rem;
+                padding: 0 14px;
+                font-size: 0.9rem;
             }
 
             .leaderboard-button {
                 top: 60px;
                 right: 10px;
-                padding: 8px 16px;
-                font-size: 0.85rem;
+                padding: 0 14px;
+                font-size: 0.9rem;
             }
 
             h1 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
                 margin-top: 100px;
-                margin-bottom: 10px;
+                margin-bottom: 4px;
             }
 
             canvas {
@@ -460,7 +596,7 @@
             }
 
             .modal-content {
-                padding: 20px;
+                padding: 24px 20px;
                 max-width: 90%;
             }
 
@@ -474,71 +610,48 @@
                 font-size: 0.9rem;
             }
         }
-
-        .firebase-notice {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px auto;
-            max-width: 600px;
-            color: #FFD700;
-        }
-
-        .firebase-notice strong {
-            display: block;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="window.history.back()">
-        ← Back
-    </button>
+    <a class="back-button" href="/game/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back<span class="sr-only"> to the Play page</span></a>
 
-    <button class="leaderboard-button" onclick="showLeaderboard()">
-        🏆 Leaderboard
-    </button>
-
-    <!-- Firebase Configuration Notice -->
-    <div class="firebase-notice">
-        <strong>⚠️ Firebase Setup Required</strong>
-        To enable the global leaderboard, you need to configure Firebase. See instructions in the code comments.
-    </div>
+    <button type="button" class="leaderboard-button" id="leaderboardBtn">Leaderboard</button>
 
     <!-- Player Name Modal -->
     <div id="nameModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeNameModal()">✕</button>
-            <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #00FF64, #5a8a4a); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFD700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); font-size: 4rem;">🌿</div>
-            <h2 class="modal-title">🌿 Welcome, Trinari! 🌿</h2>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
+            <button type="button" class="modal-close" id="nameModalClose" aria-label="Leave the game"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+            <div class="modal-avatar"><img src="/assets/img/art/trinari-sprout-480.webp" width="120" height="120" alt=""></div>
+            <h2 class="modal-title" id="nameModalTitle">Welcome, Trinari!</h2>
             <p class="modal-text">
                 Enter your name to begin your defense of the forest.<br>
-                Your scores will be recorded on the leaderboard!
+                Your scores will be recorded in the Hall of Legends.
             </p>
-            <input 
-                type="text" 
-                id="playerNameInput" 
-                class="name-input" 
-                placeholder="Enter your name..."
+            <label class="sr-only" for="playerNameInput">Player name</label>
+            <input
+                type="text"
+                id="playerNameInput"
+                class="name-input"
+                placeholder="Your nickname"
                 maxlength="20"
-                onkeypress="if(event.key === 'Enter') submitName()"
+                autocomplete="nickname"
             >
+            <p class="modal-note">Your name is stored in Google Firebase and shown publicly on the leaderboard, so use a nickname.</p>
             <div class="modal-buttons">
-                <button onclick="submitName()">Start Adventure</button>
+                <button type="button" id="startAdventureBtn">Start adventure</button>
             </div>
         </div>
     </div>
 
     <!-- Leaderboard Modal -->
     <div id="leaderboardModal" class="modal-overlay hidden">
-        <div class="modal-content leaderboard-modal">
-            <button class="modal-close" onclick="closeLeaderboard()">✕</button>
-            <h2 class="modal-title">🏆 Hall of Legends 🏆</h2>
-            
+        <div class="modal-content leaderboard-modal" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <button type="button" class="modal-close" id="leaderboardClose" aria-label="Close the leaderboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+            <h2 class="modal-title" id="leaderboardTitle">Hall of Legends</h2>
+
             <div class="leaderboard-tabs">
-                <button class="tab-button active" onclick="switchTab(event, 'kills')">⚔️ Most Kills</button>
-                <button class="tab-button" onclick="switchTab(event, 'survival')">⏱️ Longest Survival</button>
+                <button type="button" class="tab-button active" data-tab="kills" aria-pressed="true">Most kills</button>
+                <button type="button" class="tab-button" data-tab="survival" aria-pressed="false">Longest survival</button>
             </div>
 
             <div class="leaderboard-content" id="leaderboardContent">
@@ -546,45 +659,46 @@
             </div>
 
             <div class="modal-buttons" style="margin-top: 30px;">
-                <button onclick="closeLeaderboard()">Close</button>
+                <button type="button" id="leaderboardCloseBottom">Close</button>
             </div>
         </div>
     </div>
 
-    <h1>🌿 TRINARI VS CHAOS & GUARDIANS 🛡️</h1>
-    
+    <h1>Trinari Defense</h1>
+    <p class="tagline">Hold the forest against the Chaos Horde and the Cronos Guardians.</p>
+
     <div class="stats">
         <div class="stat health">
-            <div>💚 Health</div>
-            <div class="stat-value" style="color: #00FF64;" id="health">10</div>
+            <div>Health</div>
+            <div class="stat-value" id="health">10</div>
         </div>
         <div class="stat wave">
-            <div>🌊 Wave</div>
-            <div class="stat-value" style="color: #c084fc;" id="wave">1</div>
+            <div>Wave</div>
+            <div class="stat-value" id="wave">1</div>
         </div>
         <div class="stat kills">
-            <div>⚔️ Kills</div>
-            <div class="stat-value" style="color: #FFD700;" id="kills">0</div>
+            <div>Kills</div>
+            <div class="stat-value" id="kills">0</div>
         </div>
     </div>
 
     <div class="abilities">
-        <div class="ability" style="cursor: default; border-color: #8B5CF6;">
-            ✨ ARCANE BOLT (Click/Tap)<br><small style="color: #c084fc;">Always Ready</small>
+        <div class="ability ability--passive">
+            Arcane Bolt · Click<br><small>Always ready</small>
         </div>
-        <div class="ability" onclick="useDash()" id="dashBtn">
-            ⚡ DASH (Space)<br><small id="dashCD">Ready</small>
+        <div class="ability" id="dashBtn">
+            Dash · Space<br><small id="dashCD">Ready</small>
         </div>
-        <div class="ability" onclick="useSpecial()" id="specialBtn">
-            🌟 AUTO-FIRE (E)<br><small id="specialCD">Ready</small>
+        <div class="ability" id="specialBtn">
+            Auto-Fire · E<br><small id="specialCD">Ready</small>
         </div>
-        <div class="ability" onclick="useUltimate()" id="ultBtn">
-            💥 ULTIMATE (Q)<br><small id="ultCD">Ready</small>
+        <div class="ability" id="ultBtn">
+            Ultimate · Q<br><small id="ultCD">Ready</small>
         </div>
     </div>
 
-    <button onclick="startGame()" id="startBtn">🎮 START GAME</button>
-    
+    <button type="button" id="startBtn">Start game</button>
+
     <canvas id="canvas" width="800" height="600"></canvas>
 
     <!-- Mobile Controls -->
@@ -593,9 +707,9 @@
     </div>
 
     <div class="mobile-ability-buttons">
-        <div class="mobile-ability-btn" id="mobileDash" ontouchstart="event.stopPropagation(); useDash();">⚡</div>
-        <div class="mobile-ability-btn" id="mobileSpecial" ontouchstart="event.stopPropagation(); useSpecial();">🌟</div>
-        <div class="mobile-ability-btn" id="mobileUlt" ontouchstart="event.stopPropagation(); useUltimate();">💥</div>
+        <div class="mobile-ability-btn" id="mobileDash" role="button" aria-label="Dash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="mobile-ability-btn" id="mobileSpecial" role="button" aria-label="Auto-Fire"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="mobile-ability-btn" id="mobileUlt" role="button" aria-label="Ultimate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg></div>
     </div>
 
     <!-- Firebase SDKs - Updated versions -->
@@ -624,17 +738,16 @@
         function initializeFirebase() {
             try {
                 if (typeof firebase === 'undefined') {
-                    console.error("❌ Firebase SDK not loaded");
+                    console.error("Firebase SDK not loaded");
                     return;
                 }
                 
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
                 firebaseEnabled = true;
-                console.log("✅ Firebase connected successfully!");
-                document.querySelector('.firebase-notice').style.display = 'none';
+                console.log("Firebase connected");
             } catch (error) {
-                console.error("❌ Firebase initialization error:", error);
+                console.error("Firebase initialization error:", error);
                 console.log("Falling back to localStorage");
             }
         }
@@ -704,15 +817,15 @@
                 wave: wave,
                 survivalTime: survivalTime,
                 date: new Date().toISOString(),
-                timestamp: firebase.firestore.FieldValue.serverTimestamp ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
+                timestamp: firebaseEnabled && firebase.firestore.FieldValue.serverTimestamp ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
             };
             
             if (firebaseEnabled && db) {
                 try {
                     await db.collection('trinari_leaderboard').add(entry);
-                    console.log('✅ Score saved to Firebase!');
+                    console.log('Score saved to Firebase');
                 } catch (error) {
-                    console.error('❌ Error saving score to Firebase:', error);
+                    console.error('Error saving score to Firebase:', error);
                     // Fallback to localStorage
                     saveLocalScore(entry);
                 }
@@ -734,57 +847,91 @@
             leaderboard.survival = leaderboard.survival.slice(0, 100);
             
             localStorage.setItem('trinariLeaderboard', JSON.stringify(leaderboard));
-            console.log('💾 Score saved to localStorage');
+            console.log('Score saved to localStorage');
+        }
+
+        // Leaderboard rows come from a public database, so every field is untrusted input:
+        // numbers must be finite, names are cut to 20 characters, and no field is ever parsed
+        // as HTML: every cell is built with createElement and filled with textContent.
+        let leaderboardRequest = 0;
+
+        function cleanEntry(entry) {
+            if (!entry || typeof entry !== 'object') return null;
+            const kills = Number(entry.kills);
+            const wave = Number(entry.wave);
+            const survivalTime = Number(entry.survivalTime);
+            if (!Number.isFinite(kills) || !Number.isFinite(wave) || !Number.isFinite(survivalTime)) return null;
+            const rawName = String(entry.name == null ? '' : entry.name)
+                .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, '')
+                .trim();
+            const name = Array.from(rawName).slice(0, 20).join('') || 'Anonymous';
+            const date = new Date(entry.date);
+            return { name, kills, wave, survivalTime, date: isNaN(date.getTime()) ? '' : date.toLocaleDateString() };
+        }
+
+        function showLeaderboardMessage(content, className, text) {
+            const message = document.createElement('div');
+            message.className = className;
+            message.textContent = text;
+            content.textContent = '';
+            content.appendChild(message);
         }
 
         async function displayLeaderboard(type) {
             const content = document.getElementById('leaderboardContent');
-            content.innerHTML = '<div class="loading">Loading leaderboard...</div>';
-            
-            const leaderboard = await getLeaderboard();
-            const data = leaderboard[type] || [];
-            
+            const request = ++leaderboardRequest;
+            showLeaderboardMessage(content, 'loading', 'Loading leaderboard...');
+
+            let leaderboard;
+            try {
+                leaderboard = await getLeaderboard();
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                leaderboard = { kills: [], survival: [] };
+            }
+            if (request !== leaderboardRequest) return;
+            const data = (leaderboard[type] || []).map(cleanEntry).filter(Boolean);
+
             if (data.length === 0) {
-                content.innerHTML = '<div class="empty-leaderboard">No records yet. Be the first to set a score!</div>';
+                showLeaderboardMessage(content, 'empty-leaderboard', 'No records yet. Be the first to set a score!');
                 return;
             }
-            
-            let html = '<table class="leaderboard-table"><thead><tr>';
-            html += '<th>Rank</th>';
-            html += '<th>Player</th>';
-            
-            if (type === 'kills') {
-                html += '<th>Kills</th><th>Wave</th>';
-            } else {
-                html += '<th>Survival Time</th><th>Wave</th>';
-            }
-            
-            html += '<th>Date</th></tr></thead><tbody>';
-            
+
+            const table = document.createElement('table');
+            table.className = 'leaderboard-table';
+            const headRow = table.createTHead().insertRow();
+            ['Rank', 'Player', type === 'kills' ? 'Kills' : 'Survival time', 'Wave', 'Date'].forEach(label => {
+                const th = document.createElement('th');
+                th.scope = 'col';
+                th.textContent = label;
+                headRow.appendChild(th);
+            });
+
+            const tbody = table.createTBody();
             data.forEach((entry, index) => {
                 const rank = index + 1;
                 let rankClass = 'rank-other';
                 if (rank === 1) rankClass = 'rank-1';
                 else if (rank === 2) rankClass = 'rank-2';
                 else if (rank === 3) rankClass = 'rank-3';
-                
-                html += '<tr>';
-                html += `<td><span class="rank-badge ${rankClass}">${rank}</span></td>`;
-                html += `<td><strong>${entry.name}</strong></td>`;
-                
-                if (type === 'kills') {
-                    html += `<td>${entry.kills}</td>`;
-                } else {
-                    html += `<td>${formatTime(entry.survivalTime)}</td>`;
-                }
-                
-                html += `<td>${entry.wave}</td>`;
-                html += `<td>${new Date(entry.date).toLocaleDateString()}</td>`;
-                html += '</tr>';
+
+                const row = tbody.insertRow();
+                const badge = document.createElement('span');
+                badge.className = 'rank-badge ' + rankClass;
+                badge.textContent = String(rank);
+                row.insertCell().appendChild(badge);
+
+                const player = document.createElement('strong');
+                player.textContent = entry.name;
+                row.insertCell().appendChild(player);
+
+                row.insertCell().textContent = type === 'kills' ? String(entry.kills) : formatTime(entry.survivalTime);
+                row.insertCell().textContent = String(entry.wave);
+                row.insertCell().textContent = entry.date;
             });
-            
-            html += '</tbody></table>';
-            content.innerHTML = html;
+
+            content.textContent = '';
+            content.appendChild(table);
         }
 
         function formatTime(seconds) {
@@ -817,7 +964,7 @@
 
         function closeNameModal() {
             if (confirm('Are you sure you want to exit?')) {
-                window.history.back();
+                window.location.href = '/game/';
             }
         }
 
@@ -835,8 +982,10 @@
             
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
+                btn.setAttribute('aria-pressed', 'false');
             });
-            event.target.classList.add('active');
+            event.currentTarget.classList.add('active');
+            event.currentTarget.setAttribute('aria-pressed', 'true');
             
             await displayLeaderboard(tab);
         }
@@ -1552,7 +1701,7 @@
             
             saveScore(game.kills, game.wave, survivalTime);
             
-            alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score has been saved to the leaderboard!`);
+            alert(`Game Over!\n\nPlayer: ${playerName}\nWaves Survived: ${game.wave}\nTotal Kills: ${game.kills}\nSurvival Time: ${formatTime(survivalTime)}\n\nYour score is being saved to the Hall of Legends.`);
             game.running = false;
             document.getElementById('startBtn').disabled = false;
         }
@@ -1759,6 +1908,29 @@
         // Touch move on canvas removed - aiming only happens on tap
         // This prevents the staff from following your finger while using joystick
 
+        // Page controls (these replace the old inline onclick/onkeypress/ontouchstart attributes)
+        document.getElementById('leaderboardBtn').addEventListener('click', showLeaderboard);
+        document.getElementById('nameModalClose').addEventListener('click', closeNameModal);
+        document.getElementById('startAdventureBtn').addEventListener('click', submitName);
+        document.getElementById('playerNameInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.isComposing) submitName();
+        });
+        document.getElementById('leaderboardClose').addEventListener('click', closeLeaderboard);
+        document.getElementById('leaderboardCloseBottom').addEventListener('click', closeLeaderboard);
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', e => switchTab(e, btn.dataset.tab));
+        });
+        document.getElementById('dashBtn').addEventListener('click', useDash);
+        document.getElementById('specialBtn').addEventListener('click', useSpecial);
+        document.getElementById('ultBtn').addEventListener('click', useUltimate);
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        [['mobileDash', useDash], ['mobileSpecial', useSpecial], ['mobileUlt', useUltimate]].forEach(([id, action]) => {
+            document.getElementById(id).addEventListener('touchstart', e => {
+                e.stopPropagation();
+                action();
+            });
+        });
+
         // Initialize
         document.getElementById('startBtn').disabled = true;
         
@@ -1766,7 +1938,6 @@
             document.getElementById('playerNameInput').focus();
         });
     </script>
-    <script src="/scripts/notice-banner.js" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-10T13:58:48.942Z",
+  "asOfBlock": 93046569,
+  "pool": "0x3d7e93F1B513F14f02DA136d7DF6D72Fd6E5d818",
+  "owner": "0xAF87e4Df58D735ec2971d2D8Db663B02cA60175D",
+  "positions": [
+    {
+      "id": "49789",
+      "active": false
+    },
+    {
+      "id": "49791",
+      "active": false
+    },
+    {
+      "id": "49795",
+      "active": false
+    },
+    {
+      "id": "49801",
+      "active": false
+    },
+    {
+      "id": "49802",
+      "active": false
+    },
+    {
+      "id": "49803",
+      "active": false
+    },
+    {
+      "id": "49804",
+      "active": true
+    }
+  ],
+  "collected": {
+    "clg": "0.006503020505408513",
+    "cronus": "140.941757152424980458"
+  }
+}
