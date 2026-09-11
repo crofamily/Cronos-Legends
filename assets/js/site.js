@@ -6,6 +6,11 @@
   document.documentElement.classList.add("js");
   const CL = (window.CL = window.CL || {});
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Hero card orbit (see orbit() below).
+  const TURN = (2 * Math.PI) / 3; // the cards sit a third of a circle apart
+  const ORBIT_KEY = "cl-orbit-paused";
+  const PAUSE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+  const PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>';
 
   // ---------------------------------------------------------------- toast
   CL.toast =
@@ -119,64 +124,8 @@
       });
     }
 
-    // -------------------------------------------------------------- hero card shuffle
-    // The three fanned hero cards take turns in front: every few seconds the left card glides to
-    // the centre. Clicking a side card brings it forward. Pauses on hover, off screen and in
-    // background tabs; no automatic motion for people who prefer reduced motion.
-    document.querySelectorAll(".hero-art").forEach((art) => {
-      const cards = Array.from(art.querySelectorAll(".card-art"));
-      if (cards.length !== 3) return;
-      cards.forEach((c) => c.classList.remove("bob"));
-      let slots = { left: cards[0], center: cards[2], right: cards[1] };
-      const apply = () => {
-        Object.entries(slots).forEach(([pos, el]) => {
-          el.classList.remove("pos-left", "pos-center", "pos-right");
-          el.classList.add("pos-" + pos);
-        });
-      };
-      apply();
-
-      let timer = null;
-      let onScreen = true;
-      let hovering = false;
-      const stop = () => {
-        clearInterval(timer);
-        timer = null;
-      };
-      const start = () => {
-        if (reduceMotion || timer || !onScreen || hovering || document.hidden) return;
-        timer = setInterval(() => {
-          slots = { left: slots.right, center: slots.left, right: slots.center };
-          apply();
-        }, 5000);
-      };
-
-      cards.forEach((el) =>
-        el.addEventListener("click", () => {
-          if (slots.center === el) return;
-          slots = slots.left === el ? { left: slots.right, center: el, right: slots.center } : { left: slots.center, center: el, right: slots.left };
-          apply();
-          stop();
-          start();
-        })
-      );
-      art.addEventListener("pointerenter", () => {
-        hovering = true;
-        stop();
-      });
-      art.addEventListener("pointerleave", () => {
-        hovering = false;
-        start();
-      });
-      document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(([en]) => {
-          onScreen = en.isIntersecting;
-          onScreen ? start() : stop();
-        }).observe(art);
-      }
-      start();
-    });
+    // -------------------------------------------------------------- hero card orbit
+    document.querySelectorAll(".hero-art").forEach(orbit);
 
     // -------------------------------------------------------------- reading progress
     const bar = document.querySelector(".progress");
@@ -192,6 +141,134 @@
 
     liveNumbers();
   });
+
+  // ---------------------------------------------------------------- hero card orbit
+  // The three hero cards circle slowly and without pause, like a small carousel seen from a little
+  // above: the front card is large and bright, the others smaller, dimmer and fanned out. The motion
+  // eases each time a card reaches the front. Hovering slows it to a stop, clicking a card brings it
+  // forward, and a small button pauses it. No motion for people who prefer reduced motion.
+  // (Its constants live at the top of this file: ready() can run before this point.)
+
+  // A card's look at orbit angle a (0 = front). Translate percentages are of the card's own size.
+  function orbitPose(a) {
+    const side = -Math.sin(a); // -1 left … 1 right
+    const t = (Math.cos(a) + 1) / 2; // 0 back … 1 front
+    const scale = 0.78 + 0.34 * t * t * t; // grows mostly on the last stretch to the front
+    const x = side * 58; // 58% of a card = 30% of the stage
+    const y = (t - 0.5) * 14; // cards at the back sit a little higher
+    const tilt = side * 8 * (1 - t); // fanned out at the sides, upright at the front
+    return {
+      transform: "translate(-50%, -50%) translate(" + x.toFixed(2) + "%, " + y.toFixed(2) + "%) rotate(" + tilt.toFixed(2) + "deg) scale(" + scale.toFixed(4) + ")",
+      filter: "brightness(" + (0.58 + 0.42 * t).toFixed(3) + ") saturate(" + (0.75 + 0.25 * t).toFixed(3) + ")",
+      z: 1 + Math.round(t * 100),
+      front: t > 0.97,
+    };
+  }
+
+  function orbit(art) {
+    const cards = Array.from(art.querySelectorAll(".card-art"));
+    if (cards.length !== 3) return;
+    art.classList.add("is-orbit");
+    // The stage gets a button, so hide only the pictures from assistive technology.
+    art.removeAttribute("aria-hidden");
+    cards.forEach((c) => {
+      c.classList.remove("bob");
+      c.setAttribute("aria-hidden", "true");
+    });
+
+    const SPEED = TURN / 7; // radians per second; with the easing below a new card reaches the front about every 8 s
+    let angle = -2 * TURN; // card i sits at angle + i * TURN, so the third card starts in front
+    let pace = 0; // 0…1, eases towards 0 while paused or hovered
+    let hovering = false;
+    let paused = false;
+    let glide = null; // { from, to, start } while a clicked card glides to the front
+    let raf = 0;
+    let last = 0;
+
+    const place = () =>
+      cards.forEach((el, i) => {
+        const p = orbitPose(angle + i * TURN);
+        el.style.transform = p.transform;
+        el.style.filter = p.filter;
+        el.style.zIndex = String(p.z);
+        el.style.cursor = p.front ? "" : "pointer";
+      });
+
+    const frame = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (glide) {
+        const k = Math.min(1, (now - glide.start) / 900);
+        angle = glide.from + (glide.to - glide.from) * (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(2 - 2 * k, 3) / 2);
+        if (k === 1) {
+          glide = null;
+          pace = 0;
+        }
+      } else {
+        pace += ((paused || hovering ? 0 : 1) - pace) * Math.min(1, dt * 4);
+        // Slower while a card is at the front (every third of a turn), quicker in between.
+        angle = (angle + SPEED * pace * (1 - 0.45 * Math.cos(3 * angle)) * dt) % (2 * Math.PI);
+      }
+      place();
+      raf = requestAnimationFrame(frame);
+    };
+    const run = () => {
+      if (raf || reduceMotion) return;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    const halt = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    cards.forEach((el, i) =>
+      el.addEventListener("click", () => {
+        // The shortest way round that puts this card at the front.
+        const d = ((((-i * TURN - angle) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+        if (Math.abs(d) < 0.05) return;
+        if (reduceMotion) {
+          angle += d;
+          place();
+          return;
+        }
+        glide = { from: angle, to: angle + d, start: performance.now() };
+        run();
+      })
+    );
+    art.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse") hovering = true;
+    });
+    art.addEventListener("pointerleave", () => (hovering = false));
+
+    if (!reduceMotion) {
+      try {
+        paused = localStorage.getItem(ORBIT_KEY) === "1";
+      } catch (_) {}
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "orbit-toggle";
+      const sync = () => {
+        btn.innerHTML = paused ? PLAY_ICON : PAUSE_ICON;
+        btn.setAttribute("aria-label", paused ? "Play the card animation" : "Pause the card animation");
+      };
+      btn.addEventListener("click", () => {
+        paused = !paused;
+        try {
+          localStorage.setItem(ORBIT_KEY, paused ? "1" : "0");
+        } catch (_) {}
+        sync();
+      });
+      sync();
+      art.appendChild(btn);
+    }
+
+    place();
+    // Only animate while the stage is on screen; browsers already stop animation frames in background tabs.
+    if ("IntersectionObserver" in window) new IntersectionObserver(([en]) => (en.isIntersecting ? run() : halt())).observe(art);
+    else run();
+  }
+  CL.orbitPose = orbitPose;
 
   // ---------------------------------------------------------------- live numbers
   function set(key, text) {
