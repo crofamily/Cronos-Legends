@@ -105,7 +105,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Burn for $CLG</nav>
         <span class="eyebrow">Burn for $CLG</span>
         <h1>Retire a legend. Receive $CLG.</h1>
-        <p class="lead">Burn one Legends Awaken NFT and receive $35 of $CLG from an ownerless contract, in the same transaction. Trinari: Elderborn follows with $15 once its mint has sold out.</p>
+        <p class="lead">Burn one Legends Awaken NFT and receive $35 of $CLG from an ownerless contract, in the same transaction. Trinari: Elderborn follows once its mint has sold out; its payout is revealed then.</p>
         <div class="callout callout--success">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
           <p><strong>What this page will ask for</strong>Your address, then one transaction per burn. Never a signature, never a token approval, never your recovery phrase.</p>
@@ -213,13 +213,13 @@
               <span class="status status--paused" data-on="paused">Paused</span>
               <span class="status status--error" data-on="error">Unavailable</span>
             </div>
-            <p class="status-text" data-on="soon">Elderborn burns pay $15 of $CLG (never more than 0.13 CLG). The claim contract is deployed only after the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app mint</a> has sold out, so no new eligible NFTs can ever be minted afterwards.</p>
+            <p class="status-text" data-on="soon">Elderborn burns pay $CLG. The payout is revealed after the mint sells out. The claim contract is deployed only after the <a href="https://crovia.app/launch/trinari-elderborn" rel="noopener" target="_blank">crovia.app mint</a> has sold out, so no new eligible NFTs can ever be minted afterwards.</p>
             <p class="status-text" data-on="empty">The reserve holds less than one payout right now. Burns reopen when more CLG is deposited; there's no schedule.</p>
             <p class="status-text" data-on="warming paused error" data-stat="reason"></p>
             <div data-on="live empty" style="flex-direction:column;width:100%">
               <div class="panel-stats" style="width:100%">
                 <div><span>Payout now</span><strong class="num" data-stat="payout-clg">—</strong></div>
-                <div><span>Worth</span><strong class="num" data-stat="payout-usd">$15</strong></div>
+                <div><span>Worth</span><strong class="num" data-stat="payout-usd">After sell-out</strong></div>
                 <div><span>Reserve</span><strong class="num" data-stat="reserve">—</strong></div>
                 <div><span>Burns covered</span><strong class="num" data-stat="burns-left">—</strong></div>
                 <div><span>Burned here</span><strong class="num" data-stat="burned">—</strong></div>
@@ -287,7 +287,7 @@
 
         <div class="card card--pad-lg">
           <h3>How much you receive</h3>
-          <p class="muted"><strong>Payout = the lesser of 0.3 CLG and $35 / P</strong> for Legends Awaken I and II (for Trinari: Elderborn: the lesser of 0.13 CLG and $15 / P).</p>
+          <p class="muted"><strong>Payout = the lesser of 0.3 CLG and $35 / P</strong> for Legends Awaken I and II (for Trinari: Elderborn: revealed after its mint sells out, set in its claim contract when it is deployed).</p>
           <p class="muted">P is the price returned by the oracle: the <em>higher</em> of CLG's time-weighted average price since the newest oracle checkpoint at least 24 hours old, and since the newest checkpoint at least 10 minutes old. Both are computed through three VVS Finance pools — CLG/CRONUS V3 1% <code>0x3d7e…d818</code>, CRONUS/WCRO <code>0x9e44…23db</code> and WCRO/USDC <code>0xe61D…b6d6</code> — counting USDC as $1. Read <code>quote()</code> or <code>payout()</code> on a claim contract for the live value.</p>
           <p class="muted">Because the higher average is used, the $CLG you receive is worth $35 at that price, but at the current market price it can be worth less — for example right after a sharp fall, or whenever CLG is below about $117, when the 0.3 CLG ceiling applies. The Burn button sets a minimum 2% below the amount you're shown, so a burn reverts instead of paying less.</p>
           <p class="muted"><strong>Backing per outstanding NFT</strong> = the lesser of <code>payout()</code> and <code>reserveBalance() / outstandingNfts()</code>, readable from each claim contract.</p>

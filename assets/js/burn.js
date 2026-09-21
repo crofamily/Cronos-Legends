@@ -33,6 +33,10 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const setText = (root, sel, text) => $$(sel, root).forEach((el) => (el.textContent = text));
+  // A collection whose payout is not published yet (usdPerNft null in burn.json) says so
+  // instead of printing "$null".
+  const usdLabel = (col) => (col.usdPerNft == null ? "After sell-out" : "$" + col.usdPerNft);
+  const payoutLabel = (col) => (col.usdPerNft == null ? "Revealed after sell-out" : "$" + col.usdPerNft + " in CLG");
   const state = { cfg: null, cols: {}, dialog: null };
 
   const MESSAGES = {
@@ -116,7 +120,7 @@
         el.dataset.status = left < 1n ? "empty" : "live";
       } else {
         el.dataset.status = r.quoteError === "WarmingUp" ? "warming" : ["Stale", "LiquidityTooLow", "PairReservesTooLow"].includes(r.quoteError) ? "paused" : "error";
-        setText(el, '[data-stat="payout-usd"]', "$" + col.usdPerNft);
+        setText(el, '[data-stat="payout-usd"]', usdLabel(col));
       }
       setText(el, '[data-stat="reason"]', r.quoteError && MESSAGES[r.quoteError] ? MESSAGES[r.quoteError] : "");
     } catch (e) {
@@ -263,7 +267,7 @@
       const node = tpl.content.firstElementChild.cloneNode(true);
       setText(node, '[data-field="name"]', c.col.name);
       setText(node, '[data-field="id"]', "#" + id);
-      setText(node, '[data-field="payout"]', c.quote ? CL.fmtUnits(c.quote[0], 18, 5) + " CLG" : "$" + c.col.usdPerNft + " in CLG");
+      setText(node, '[data-field="payout"]', c.quote ? CL.fmtUnits(c.quote[0], 18, 5) + " CLG" : payoutLabel(c.col));
       if (!c.col.redeemer) setText(node, '[data-action="burn"]', "Opens soon");
       const img = $('[data-field="image"]', node);
       if (img) {
@@ -283,7 +287,7 @@
   function updateOwned(c) {
     const grid = $("[data-nft-grid]", c.el);
     if (!grid) return;
-    $$('[data-field="payout"]', grid).forEach((el) => (el.textContent = c.quote ? CL.fmtUnits(c.quote[0], 18, 5) + " CLG" : "$" + c.col.usdPerNft + " in CLG"));
+    $$('[data-field="payout"]', grid).forEach((el) => (el.textContent = c.quote ? CL.fmtUnits(c.quote[0], 18, 5) + " CLG" : payoutLabel(c.col)));
     $$('[data-action="burn"]', grid).forEach((b) => (b.disabled = c.el.dataset.status !== "live"));
   }
 

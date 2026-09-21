@@ -42,11 +42,11 @@
     "trinariElderborn": {
       "name": "Trinari: Elderborn",
       "address": null,
-      "usdPerNft": "15",
-      "maxClgPerNft": "0.13",
+      "usdPerNft": null,
+      "maxClgPerNft": null,
       "minTokenId": null,
       "maxTokenId": 212,
-      "note": "Deploy after the crovia.app mint has closed. Set address and minTokenId from the deployed CroviaCollectionV8 contract."
+      "note": "Deploy after the crovia.app mint has closed. Set address and minTokenId from the deployed CroviaCollectionV8 contract, and usdPerNft / maxClgPerNft from the private launch runbook on deploy day (they are null on purpose until then; the deploy script refuses a null)."
     }
   },
   "lp": {
