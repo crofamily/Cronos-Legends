@@ -105,7 +105,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Burn for $CLG</nav>
         <span class="eyebrow">Burn for $CLG</span>
         <h1>Retire a legend. Receive $CLG.</h1>
-        <p class="lead">Burn one Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and receive $CLG from that collection's own claim contract, in the same transaction. Burning opens once the Elderborn mint has sold out; the amounts are published then.</p>
+        <p class="lead">Burn one Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and receive $CLG from that collection's own claim contract, in the same transaction. Burning opens once the Elderborn mint has sold out. Each Legends Awaken burn pays 0.3 CLG; the Elderborn payout is revealed then.</p>
         <div class="callout callout--success">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
           <p><strong>Where you burn, and what you'll be asked for</strong>On crovia.app, in the burn panel on the collection's page. To burn one NFT, your wallet approves that one NFT for the claim contract, then confirms the burn. To burn several at once, it approves the claim contract for that collection once; the contract can use that only when you burn, and only to send your NFTs to 0x…dEaD. Never a signature, never your recovery phrase.</p>
@@ -135,7 +135,7 @@
               <h3>Legends Awaken I</h3>
               <span class="status status--soon">Opens after the Elderborn sell-out</span>
             </div>
-            <p class="muted">Token IDs 1–500. A fixed amount of $CLG per burn, first come, first served while the reserve covers it.</p>
+            <p class="muted">Token IDs 1–500. 0.3 CLG per burn, first come, first served while the reserve covers it.</p>
             <p><a class="btn btn--ember btn--sm" href="https://crovia.app/collections/0x68a3192e286aa5c2182d815f5fe796401ece28ba" rel="noopener" target="_blank">Burn on crovia.app</a></p>
             <p class="small faint" style="margin:var(--space-4) 0 0">Claim contract: published here when burning opens · NFT contract: <a href="https://explorer.cronos.org/address/0x68A3192E286AA5C2182D815F5fE796401eCe28bA" rel="noopener" target="_blank">0x68A3…28bA</a></p>
           </div>
@@ -145,7 +145,7 @@
               <h3>Legends Awaken II</h3>
               <span class="status status--soon">Opens after the Elderborn sell-out</span>
             </div>
-            <p class="muted">Token IDs 1–774. A fixed amount of $CLG per burn, first come, first served while the reserve covers it.</p>
+            <p class="muted">Token IDs 1–774. 0.3 CLG per burn, first come, first served while the reserve covers it.</p>
             <p><a class="btn btn--ember btn--sm" href="https://crovia.app/collections/0xb9669ad823feb0d0e6c9a7154033ab15e85d6a0d" rel="noopener" target="_blank">Burn on crovia.app</a></p>
             <p class="small faint" style="margin:var(--space-4) 0 0">Claim contract: published here when burning opens · NFT contract: <a href="https://explorer.cronos.org/address/0xB9669AD823feB0D0e6c9A7154033ab15e85d6a0d" rel="noopener" target="_blank">0xB966…6a0d</a></p>
           </div>
@@ -215,10 +215,10 @@
 
         <div class="card card--pad-lg">
           <h3>How much you receive</h3>
-          <p class="muted"><strong>Legends Awaken I and II:</strong> a fixed amount of $CLG per burn, set in the claim contract and the same for every burn, first come, first served while the reserve covers it. The amount is published when burning opens; read <code>payout()</code> on the claim contract for it.</p>
+          <p class="muted"><strong>Legends Awaken I and II:</strong> 0.3 CLG per burn, fixed in the claim contract and the same for every burn, first come, first served while the reserve covers it. Read <code>payout()</code> on the claim contract to check it.</p>
           <p class="muted"><strong>Trinari: Elderborn:</strong> each burn pays its share of the reserve — the reserve divided by the Elderborn NFTs still able to claim. A burn never lowers the next holder's share, and every top-up raises every remaining share. The value is revealed after the mint sells out.</p>
           <p class="muted">No price oracle is involved: payouts are counted in $CLG, never priced. What a payout is worth in CRO or dollars moves with the $CLG market. The burn panel sets the amount it showed you as the minimum, so a burn reverts instead of paying less.</p>
-          <p class="muted"><strong>Backing per outstanding NFT</strong> = the reserve divided by the NFTs still able to claim (for Legends Awaken, never more than the fixed amount), readable as <code>backingPerNft()</code> on each claim contract.</p>
+          <p class="muted"><strong>Backing per outstanding NFT</strong> = the reserve divided by the NFTs still able to claim (for Legends Awaken, never more than 0.3 CLG), readable as <code>backingPerNft()</code> on each claim contract.</p>
         </div>
 
         <div class="card card--pad-lg">
@@ -274,7 +274,7 @@
       </div>
       <div class="accordion">
         <details><summary>What will my wallet show?</summary><div><p>Two transactions on crovia.app: first an approval for the claim contract (of the one NFT you picked, or of the collection if you burn several at once), then the burn itself. The $CLG arrives in the burn transaction — you'll see it in the transaction details and in your balance.</p></div></details>
-        <details><summary>Is the amount fixed?</summary><div><p>For Legends Awaken, yes: every burn pays the same fixed amount of $CLG while the reserve covers it. For Trinari: Elderborn, each burn pays its share of the reserve, which rises whenever $CLG is added. Either way you see the exact amount before you confirm, and a burn that would pay less reverts. What the $CLG is worth moves with the market.</p></div></details>
+        <details><summary>Is the amount fixed?</summary><div><p>For Legends Awaken, yes: every burn pays the same 0.3 CLG while the reserve covers it. For Trinari: Elderborn, each burn pays its share of the reserve, which rises whenever $CLG is added. Either way you see the exact amount before you confirm, and a burn that would pay less reverts. What the $CLG is worth moves with the market.</p></div></details>
         <details><summary>What if the reserve is empty?</summary><div><p>The burn reverts and your NFT stays in your wallet. Reserves are refilled with deposits from time to time, first come, first served. There's no schedule and no commitment.</p></div></details>
         <details><summary>Can the team stop burns or take the $CLG?</summary><div><p>Nobody can pause burns or change the payout rule, the eligible IDs or the withdrawal address. The one exit is the reserve wallet, which may withdraw only after the date fixed in each contract; that date can only be pushed later and is renewed a month at a time. <a href="#rules">The rules</a> explain it in full.</p></div></details>
         <details><summary>My NFTs are in the Crypto.com NFT app.</summary><div><p>Withdraw them to your own Cronos wallet (for example Crypto.com Onchain or MetaMask) first. The burn must come from the wallet that holds the NFT.</p></div></details>
