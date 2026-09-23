@@ -233,30 +233,31 @@
     <div class="container split">
       <div>
         <span class="eyebrow">Burn for $CLG</span>
-        <h2 id="burn-title">Retire a legend. Receive $35 of $CLG.</h2>
-        <p class="lead">Burn one Legends Awaken I or II NFT in a single wallet transaction and the $CLG lands in your wallet right away. The price comes from the chain, and the contract that pays has no owner.</p>
+        <h2 id="burn-title">Retire a legend. Receive $CLG.</h2>
+        <p class="lead">Burn a Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and the $CLG lands in your wallet in the same transaction, paid by that collection's own claim contract. Burning opens once the Elderborn mint has sold out.</p>
         <ol class="steps" style="margin-bottom:var(--space-6)">
-          <li><strong>Connect your Cronos wallet</strong>Crypto.com Onchain, MetaMask, Rabby and more.</li>
-          <li><strong>Pick the NFT</strong>Only your eligible Legends Awaken NFTs are shown.</li>
-          <li><strong>Confirm once</strong>The NFT goes to 0x…dEaD and $CLG arrives in the same transaction.</li>
+          <li><strong>Open the collection on crovia.app</strong>Connect your Cronos wallet: Crypto.com Onchain, MetaMask, Rabby and more.</li>
+          <li><strong>Pick the NFT</strong>The burn panel shows your eligible NFTs and the exact $CLG each one pays.</li>
+          <li><strong>Approve it, then burn</strong>The NFT goes to 0x…dEaD and $CLG arrives in the same transaction.</li>
         </ol>
         <div class="row">
           <a class="btn btn--ember btn--lg" href="/burn/">Open the burn page</a>
           <span class="status" data-live="burn-status">Checking…</span>
         </div>
-        <p class="small faint" style="margin-top:var(--space-4)">Payouts are priced at the higher of CLG's 24-hour and recent average and never exceed 0.3 CLG per Legends Awaken NFT. Trinari: Elderborn follows with $15 of $CLG (never more than 0.13 CLG) once its mint has sold out. <a href="/burn/#rules">Read the full rules</a>.</p>
+        <p class="small faint" style="margin-top:var(--space-4)">Legends Awaken burns pay a fixed amount of $CLG, first come, first served while the reserve covers it; each Elderborn burn pays its share of the Elderborn reserve. The amounts are published when burning opens. <a href="/burn/#rules">Read the full rules</a>.</p>
       </div>
       <div class="card card--pad-lg reveal">
         <h3>The rules are code</h3>
-        <p class="muted">The burn contracts are published, immutable and ownerless. Here is what that means for you:</p>
+        <p class="muted">Each collection's claim contract is published and cannot be upgraded. Here is what that means for you:</p>
         <ul class="checks">
-          <li>No owner, no admin, no upgrades — nobody can change the rules</li>
-          <li>The reserve can only pay burners: no withdraw function, not even for the team</li>
+          <li>No upgrades, no pause — nobody can change the payout rule or the eligible NFTs</li>
+          <!-- CUSTODY: reserve-wallet model. If the reserves are deployed ownerless, use: "The reserve can only pay burners: no withdraw function, not even for the team" -->
+          <li>Only the reserve wallet may withdraw, and only after a date fixed in the contract — renewed a month at a time, never brought closer</li>
           <li>No per-wallet limits, no windows, no queues</li>
-          <li>The price comes from VVS pools, not from us</li>
-          <li>One transaction, no token approvals, never a signature</li>
+          <li>Payouts are counted in $CLG, with no price oracle</li>
+          <li>One approval for the NFT you burn, never a signature</li>
         </ul>
-        <p class="small faint" style="margin-top:var(--space-4)">Burns pause by themselves when price data can't be trusted, for example if pool liquidity drops. <a href="/burn/#rules">When that happens</a>.</p>
+        <p class="small faint" style="margin-top:var(--space-4)">A burn only fails when the reserve can't cover it, and then you keep your NFT. <a href="/burn/#rules">The full rules</a>.</p>
       </div>
     </div>
   </section>
@@ -384,7 +385,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>We never DM first and never ask for your recovery phrase. Wallets connect only on cronoslegends.com/burn.</p>
+      <p>We never DM first and never ask for your recovery phrase. This site never asks you to connect a wallet: you burn on crovia.app.</p>
       <p>Digital collectibles, not investments. Nothing here is financial advice. <a href="/privacy/">Privacy</a> · <a href="/la1-terms/">Legends Awaken I terms</a> · <a href="/la2-terms/">Legends Awaken II terms</a></p>
       <p>© <span data-year></span> Cronos Legends</p>
     </div>
