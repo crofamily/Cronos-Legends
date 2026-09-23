@@ -353,12 +353,11 @@
           Promise.all(live.map((c) => CL.lite.redeemer(c.redeemer)))
             .then((rs) => {
               const reserve = rs.reduce((a, r) => a + CL.num(r.reserve), 0);
-              const left = rs.reduce((a, r) => a + (r.burnsLeft ? Number(r.burnsLeft) : 0), 0);
-              const paused = rs.every((r) => r.error);
+              const left = rs.reduce((a, r) => a + Number(r.burnsLeft), 0);
               set("reserve", CL.fmt(reserve, 3) + " CLG");
-              set("reserve-sub", paused ? "burns paused right now" : left + " burns covered now");
-              set("burn-status", paused ? "Paused" : left > 0 ? "Open" : "Reserve empty");
-              document.querySelectorAll('[data-live="burn-status"]').forEach((el) => (el.className = "status " + (paused || left < 1 ? "status--paused" : "status--live")));
+              set("reserve-sub", left + " burns covered now");
+              set("burn-status", left > 0 ? "Open" : "Reserve empty");
+              document.querySelectorAll('[data-live="burn-status"]').forEach((el) => (el.className = "status " + (left < 1 ? "status--paused" : "status--live")));
             })
             .catch(() => set("reserve", "—"))
         );

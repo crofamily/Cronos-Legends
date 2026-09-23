@@ -7,12 +7,13 @@
 #                         monitor uses it to record the oracle's hourly price checkpoint (poke() is
 #                         permissionless). Never use the treasury key here.
 # Then run this workflow once by hand with "mode = test" to check the connection.
+#
+# RETIRED (2026-09-23): burning moved to crovia.app's CroviaBackingRedeemer contracts, and the
+# price oracle this monitor pokes and reads was never deployed (burn.json "oracle" stays null, so
+# every run exits with "Nothing to monitor"). The schedule is off; manual runs still work.
 name: Burn monitor
 
 on:
-  schedule:
-    # Every 30 minutes, off the top of the hour (GitHub delays top-of-hour schedules).
-    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       mode:

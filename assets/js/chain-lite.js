@@ -1,7 +1,7 @@
 /* Cronos Legends — tiny read-only chain client (no libraries).
  *
  * Plain JSON-RPC eth_call against public Cronos RPCs with failover, for pages that only need to
- * show live numbers (home, $CLG, collections). The burn page uses ethers instead (chain.js).
+ * show live numbers (home, $CLG, collections). Burning itself happens on crovia.app.
  * Values are BigInt; helpers convert to floats for display only.
  */
 (function () {
@@ -19,7 +19,8 @@
     collect: "0xfc6f7865",
     reserveBalance: "0xa10954fe",
     totalRedeemed: "0xf35dad40",
-    quote: "0x999b93af",
+    payout: "0x63bd1d4a",
+    burnsAvailable: "0xdbe8ba72",
     outstandingNfts: "0x9c6be17a",
   };
   const ERRORS = {
@@ -190,20 +191,16 @@
       return out;
     },
 
-    /** Reserve and live payout of a burn redeemer; `error` names the reason when it can't price. */
+    /** Reserve, payout and burns covered of a claim contract (crovia.app's CroviaBackingRedeemer).
+     *  It has no oracle and no pause, so these reads only fail when the RPCs do. */
     async redeemer(address) {
-      const [reserve, burned] = await Promise.all([
+      const [reserve, burned, amount, burnsLeft] = await Promise.all([
         call(address, SEL.reserveBalance).then((r) => u(r)),
         call(address, SEL.totalRedeemed).then((r) => u(r)),
+        call(address, SEL.payout).then((r) => u(r)),
+        call(address, SEL.burnsAvailable).then((r) => u(r)),
       ]);
-      try {
-        const q = await call(address, SEL.quote);
-        const amount = u(q, 0);
-        const price = u(q, 1);
-        return { reserve, burned, amount, price, burnsLeft: amount > 0n ? reserve / amount : 0n };
-      } catch (e) {
-        return { reserve, burned, error: e.revertName || "Unavailable" };
-      }
+      return { reserve, burned, amount, burnsLeft };
     },
   };
 
