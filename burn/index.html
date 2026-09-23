@@ -108,7 +108,7 @@
         <p class="lead">Burn one Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and receive $CLG from that collection's own claim contract, in the same transaction. Burning opens once the Elderborn mint has sold out; the amounts are published then.</p>
         <div class="callout callout--success">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-          <p><strong>Where you burn, and what you'll be asked for</strong>On crovia.app, in the burn panel on the collection's page. Your wallet approves that one NFT for the claim contract, then confirms the burn. Never a signature, never an approval for your whole collection, never your recovery phrase.</p>
+          <p><strong>Where you burn, and what you'll be asked for</strong>On crovia.app, in the burn panel on the collection's page. To burn one NFT, your wallet approves that one NFT for the claim contract, then confirms the burn. To burn several at once, it approves the claim contract for that collection once; the contract can use that only when you burn, and only to send your NFTs to 0x…dEaD. Never a signature, never your recovery phrase.</p>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
@@ -120,7 +120,7 @@
   </section>
 
   <!-- Where to burn: on crovia.app. This site no longer runs its own burn console: the claim contracts
-       are Crovia's CroviaBackingRedeemer, and holders burn in the collection page's burn panel there. -->
+       are Crovia's CroviaBackingRedeemerV2, and holders burn in the collection page's burn panel there. -->
   <section class="section--tight" aria-labelledby="console-title">
     <div class="container">
       <div class="console">
@@ -173,7 +173,7 @@
         <ol class="steps">
           <li><strong>Open the collection on crovia.app and connect your Cronos wallet</strong>The burn panel lists the eligible NFTs you hold. Nothing is signed.</li>
           <li><strong>Choose an NFT and review</strong>You see the exact $CLG amount the burn pays and the claim contract's address.</li>
-          <li><strong>Approve that one NFT, then confirm the burn</strong>The approval covers only the NFT you picked. In the burn transaction the claim contract sends it to 0x…dEaD and pays you the $CLG; if anything fails, the whole transaction reverts and you keep your NFT.</li>
+          <li><strong>Approve, then confirm the burn</strong>For one NFT, the approval covers only that NFT; for several, one approval for the collection covers the batch. In the burn transaction the claim contract sends them to 0x…dEaD and pays you the $CLG; if anything fails, the whole transaction reverts and you keep your NFTs.</li>
         </ol>
       </div>
       <div class="card card--pad-lg" data-faction="chaos">
@@ -202,7 +202,7 @@
       <div class="rules-grid">
         <div class="card card--pad-lg">
           <h3>The claim route</h3>
-          <p class="muted">Each collection has its own claim contract (Crovia's <code>CroviaBackingRedeemer</code>): Legends Awaken I accepts token IDs 1–500, Legends Awaken II token IDs 1–774, Trinari: Elderborn token IDs 1–212. In the burn panel on crovia.app you approve the one NFT you picked and call <code>redeem</code>; sending it into the claim contract with <code>safeTransferFrom</code> does the same. In that transaction the claim contract sends the NFT to <code>0x000000000000000000000000000000000000dEaD</code>, where it can never be recovered, and pays the NFT's owner in $CLG from its own balance. Each token ID can be paid only once. If anything fails, the whole transaction reverts and you keep your NFT.</p>
+          <p class="muted">Each collection has its own claim contract (Crovia's <code>CroviaBackingRedeemerV2</code>): Legends Awaken I accepts token IDs 1–500, Legends Awaken II token IDs 1–774, Trinari: Elderborn token IDs 1–212. In the burn panel on crovia.app you approve the one NFT you picked and call <code>redeem</code>; sending it into the claim contract with <code>safeTransferFrom</code> does the same. To burn up to 50 at once, the panel asks you to approve the claim contract for the collection (<code>setApprovalForAll</code>) and calls <code>redeemMany</code>. The contract only ever moves NFTs out of the wallet that calls it, and only to the burn address, so nobody else can use that approval; you can revoke it at any time. In that transaction the claim contract sends the NFT to <code>0x000000000000000000000000000000000000dEaD</code>, where it can never be recovered, and pays the NFT's owner in $CLG from its own balance. Each token ID can be paid only once. If anything fails, the whole transaction reverts and you keep your NFT.</p>
           <dl class="facts">
             <dt>Legends Awaken I claim contract</dt><dd>Published here when burning opens</dd>
             <dt>Legends Awaken II claim contract</dt><dd>Published here when burning opens</dd>
@@ -227,7 +227,7 @@
             <li>No per-wallet limit, no periodic window, no queue</li>
             <li>No allowlist, no signature, no team step: any holder can burn</li>
             <li>No pause function and no upgrade path — nobody can change the payout rule, the eligible IDs or the withdrawal address</li>
-            <li>One approval per burn, for that one NFT only</li>
+            <li>No way for a claim contract to move an NFT you didn't burn yourself, even one it is approved for</li>
           </ul>
           <!-- CUSTODY: written for the reserve-wallet model (Jani, 2026-09-23). If the reserves are deployed
                OWNERLESS instead, replace this paragraph with: "No withdraw, rescue or sweep function: nobody,
@@ -273,7 +273,7 @@
         <h2 id="burn-faq-title">Burn FAQ</h2>
       </div>
       <div class="accordion">
-        <details><summary>What will my wallet show?</summary><div><p>Two transactions on crovia.app: first an approval of the one NFT you picked for the claim contract, then the burn itself. The $CLG arrives in the burn transaction — you'll see it in the transaction details and in your balance.</p></div></details>
+        <details><summary>What will my wallet show?</summary><div><p>Two transactions on crovia.app: first an approval for the claim contract (of the one NFT you picked, or of the collection if you burn several at once), then the burn itself. The $CLG arrives in the burn transaction — you'll see it in the transaction details and in your balance.</p></div></details>
         <details><summary>Is the amount fixed?</summary><div><p>For Legends Awaken, yes: every burn pays the same fixed amount of $CLG while the reserve covers it. For Trinari: Elderborn, each burn pays its share of the reserve, which rises whenever $CLG is added. Either way you see the exact amount before you confirm, and a burn that would pay less reverts. What the $CLG is worth moves with the market.</p></div></details>
         <details><summary>What if the reserve is empty?</summary><div><p>The burn reverts and your NFT stays in your wallet. Reserves are refilled with deposits from time to time, first come, first served. There's no schedule and no commitment.</p></div></details>
         <details><summary>Can the team stop burns or take the $CLG?</summary><div><p>Nobody can pause burns or change the payout rule, the eligible IDs or the withdrawal address. The one exit is the reserve wallet, which may withdraw only after the date fixed in each contract; that date can only be pushed later and is renewed a month at a time. <a href="#rules">The rules</a> explain it in full.</p></div></details>
