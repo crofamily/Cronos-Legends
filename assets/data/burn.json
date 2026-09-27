@@ -38,14 +38,14 @@
     {
       "key": "trinariElderborn",
       "name": "Trinari: Elderborn",
-      "nft": null,
+      "nft": "0xaCBD87e450195c1107F74bC7521DA154995D0fB4",
       "redeemer": null,
       "usdPerNft": null,
       "maxClgPerNft": null,
-      "minTokenId": null,
+      "minTokenId": 1,
       "maxTokenId": 212,
       "standard": "erc721",
-      "croviaUrl": "https://crovia.app/launch/trinari-elderborn"
+      "croviaUrl": "https://crovia.app/collections/0xacbd87e450195c1107f74bc7521da154995d0fb4"
     }
   ],
   "lp": {

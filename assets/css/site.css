@@ -194,6 +194,8 @@ hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, rgb
   .menu-btn { display: none; }
   .btn.header-burn { display: inline-flex; }
 }
+/* Phones: Discord and X are in the menu sheet, so drop them from the bar or the Menu button is pushed off-screen. */
+@media (max-width: 479px) { .header-actions .icon-link { display: none; } }
 @media (max-width: 380px) { .brand span { display: none; } }
 
 .sheet { position: fixed; inset: 0; z-index: var(--z-sheet); background: rgba(9, 10, 16, 0.96); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: calc(var(--header-h) + 16px) var(--gutter) 32px; overflow-y: auto; }

@@ -1,5 +1,11 @@
 # Cronos Legends burn program — contracts
 
+> **Withdrawn design, never deployed.** The contracts in this folder (`LegendsBurnRedeemer`, `ClgPriceOracle`) and the
+> payouts below ($35 of CLG, max 0.3 CLG, oracle pricing) are NOT the burn program. The live program burns on
+> crovia.app through one CroviaBackingRedeemerV2 claim contract per collection, paying a fixed 0.1 CLG per NFT.
+> The rules and, once burning opens, the claim contract addresses are at https://cronoslegends.com/burn/#rules.
+> This folder is kept for the record only.
+
 Burn one Cronos Legends NFT, receive a fixed USD value of **$CLG** in the same transaction.
 
 | Collection | NFT contract | Payout | Eligible token IDs |
