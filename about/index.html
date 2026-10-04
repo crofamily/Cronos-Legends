@@ -34,6 +34,8 @@
     .official .hint { display: block; margin-top: 4px; font-size: var(--fs-small); color: var(--text-3); }
     .milestones dt { font: 700 1.6rem/1.2 var(--font-display); color: var(--gold); }
     .milestones dd strong { display: block; }
+    /* A year with several milestones: keep each one in the text column (the grid is one column on phones). */
+    @media (min-width: 641px) { .milestones dd { grid-column: 2; } }
     .funds-side { display: grid; gap: var(--space-5); }
   </style>
 </head>
@@ -116,7 +118,7 @@
         <dl class="facts" style="margin-top:var(--space-4)">
           <dt>Collections</dt><dd>Legends Awaken I and II, the Totems of Power, and Trinari: Elderborn (minted out on crovia.app in September 2026)</dd>
           <dt>Token</dt><dd>$CLG: 500 in total, fixed forever</dd>
-          <dt>Burn program</dt><dd>One claim contract per collection, burned through on crovia.app, a fixed 0.1 CLG per burn. Not open yet: the opening is announced on Discord and X. <a href="/burn/#rules">Read the rules</a></dd>
+          <dt>Burn program</dt><dd>One claim contract per collection, burned through on crovia.app, a fixed 0.1 CLG per burn. Open for Trinari: Elderborn. Not open yet for Legends Awaken I and II: the opening is announced on Discord and X. <a href="/burn/#rules">Read the rules</a></dd>
           <dt>Play</dt><dd>Trinari characters coming to Cronos City, and Discord games with $CLG rewards</dd>
         </dl>
       </div>
@@ -168,7 +170,7 @@
             </tr>
             <tr>
               <th scope="row">Source code</th>
-              <td><a href="https://github.com/crofamily/Cronos-Legends" rel="noopener" target="_blank">github.com/crofamily/Cronos-Legends</a><span class="hint">This website. The claim contracts' verified source is on the Cronos explorer when burning opens.</span></td>
+              <td><a href="https://github.com/crofamily/Cronos-Legends" rel="noopener" target="_blank">github.com/crofamily/Cronos-Legends</a><span class="hint">This website. The claim contracts' source code is on the Cronos explorer: Trinari: Elderborn's is submitted for verification, and Legends Awaken I and II's follow when their burning opens.</span></td>
             </tr>
             <tr>
               <th scope="row">$CLG token</th>
@@ -207,8 +209,12 @@
               <td><span class="addr addr--full"><code>0xF7192eb21130DD2b96805Ef0347808F1A1d451d4</code><button type="button" data-copy="0xF7192eb21130DD2b96805Ef0347808F1A1d451d4" aria-label="Copy the reserve wallet address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.org/address/0xF7192eb21130DD2b96805Ef0347808F1A1d451d4" rel="noopener" target="_blank" aria-label="View the reserve wallet on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span><span class="hint">The only address that may withdraw $CLG from a burn reserve, and only after the date fixed in each claim contract. <a href="/burn/#rules">Burn rules</a></span></td>
             </tr>
             <tr>
+              <th scope="row">Trinari: Elderborn burn reserve</th>
+              <td><span class="addr addr--full"><code>0xa3cB8e91912b07a3358F6166331100E1a706f184</code><button type="button" data-copy="0xa3cB8e91912b07a3358F6166331100E1a706f184" aria-label="Copy the Trinari: Elderborn claim contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.com/address/0xa3cB8e91912b07a3358F6166331100E1a706f184" rel="noopener" target="_blank" aria-label="View the Trinari: Elderborn claim contract on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span><span class="hint">The claim contract that holds the Elderborn reserve and pays 0.1 CLG for each Elderborn burned on <a href="https://crovia.app/claim/0xacbd87e450195c1107f74bc7521da154995d0fb4" rel="noopener" target="_blank">crovia.app</a>. <a href="/burn/#rules">Burn rules</a></span></td>
+            </tr>
+            <tr>
               <th scope="row">Burn contracts</th>
-              <td>Published here when burning opens. <a href="/burn/#rules">Burn rules</a></td>
+              <td>Legends Awaken I and II: published here when burning opens. <a href="/burn/#rules">Burn rules</a></td>
             </tr>
           </tbody>
         </table>
@@ -232,7 +238,7 @@
         <dd><strong>Legends Awaken I and II launch on Crypto.com NFT.</strong> 500 legends in the first collection and 774 in the second, which brought the Trinari into the war.</dd>
         <dt>2026</dt>
         <dd><strong>Deep liquidity for $CLG.</strong> A full-range CLG/CRONUS position in the VVS Finance 1% pool, held by the project wallet.</dd>
-        <dd><strong>Trinari: Elderborn mints out on crovia.app.</strong> All 212 Elderborn, the first playable Trinari, were minted in September.</dd>
+        <dd><strong>Trinari: Elderborn mints out on crovia.app.</strong> All 212 Elderborn, the first playable Trinari, were minted in September. In October their burn program opened: each one can be burned for a fixed 0.1 CLG.</dd>
       </dl>
     </div>
   </section>

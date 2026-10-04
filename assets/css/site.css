@@ -345,7 +345,7 @@ table.data th { color: var(--text-3); font-size: var(--fs-micro); letter-spacing
 .accordion summary::-webkit-details-marker { display: none; }
 .accordion summary::after { content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font: 400 1.5rem var(--font-body); color: var(--gold); transition: transform var(--t-ui) var(--ease); }
 .accordion details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
-.accordion details > div { padding: 0 20px 18px; color: var(--text-2); }
+.accordion details > div { padding: 0 20px 18px; color: var(--text-2); overflow-wrap: anywhere; }
 .accordion details > div p:last-child { margin-bottom: 0; }
 
 /* ------------------------------------------------------------------ hero */

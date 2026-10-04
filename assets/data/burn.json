@@ -38,8 +38,9 @@
     {
       "key": "trinariElderborn",
       "name": "Trinari: Elderborn",
+      "short": "Elderborn",
       "nft": "0xaCBD87e450195c1107F74bC7521DA154995D0fB4",
-      "redeemer": null,
+      "redeemer": "0xa3cB8e91912b07a3358F6166331100E1a706f184",
       "usdPerNft": null,
       "maxClgPerNft": null,
       "minTokenId": 1,

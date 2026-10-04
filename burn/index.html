@@ -105,7 +105,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / Burn for $CLG</nav>
         <span class="eyebrow">Burn for $CLG</span>
         <h1>Retire a legend. Receive $CLG.</h1>
-        <p class="lead">Burn one Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and receive $CLG from that collection's own claim contract, in the same transaction. Every burn pays a fixed 0.1 CLG. Burning isn't open yet: the claim contracts are being set up, and the opening is announced on Discord and X.</p>
+        <p class="lead">Burn one Legends Awaken I, Legends Awaken II or Trinari: Elderborn NFT on crovia.app and receive $CLG from that collection's own claim contract, in the same transaction. Every burn pays a fixed 0.1 CLG. Burning is open for Trinari: Elderborn. For Legends Awaken I and II it isn't open yet: their claim contracts are being set up, and the opening is announced on Discord and X.</p>
         <div class="callout callout--success">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
           <p><strong>Where you burn, and what you'll be asked for</strong>On crovia.app, in the burn panel on the collection's page. To burn one NFT, your wallet approves that one NFT for the claim contract, then confirms the burn. To burn several at once, it approves the claim contract for that collection once; the contract can use that only when you burn, and only to send your NFTs to 0x…dEaD. Never a signature, never your recovery phrase.</p>
@@ -121,8 +121,11 @@
 
   <!-- Where to burn: on crovia.app. This site no longer runs its own burn console: the claim contracts
        are crovia.app's CroviaBackingRedeemerV2, and holders burn in the collection page's burn panel there.
-       When burning opens: set each status to open, relabel the buttons "Burn on crovia.app", and fill in the
-       claim contract addresses here, in the rules below and in assets/data/burn.json. -->
+       Trinari: Elderborn is open (claim contract 0xa3cB8e91912b07a3358F6166331100E1a706f184).
+       When a Legends Awaken collection opens: give its status pill data-live="burn-status-<key>" (as Elderborn's),
+       relabel its button "Burn on crovia.app" with href https://crovia.app/claim/<collection>, and fill in the
+       claim contract address here, in the rules below, on /about/#official and in assets/data/burn.json
+       (`redeemer`); also update the shared "open for Trinari: Elderborn" sentences on the other pages. -->
   <section class="section--tight" aria-labelledby="console-title">
     <div class="container">
       <div class="console">
@@ -130,7 +133,7 @@
           <h2 id="console-title" style="margin:0;font-size:1.3rem">Where to burn</h2>
         </div>
         <div class="console-body">
-          <p class="muted" style="margin-top:0">Each collection has its own claim contract, and you burn in its burn panel on crovia.app. Burning isn't open yet: the claim contracts are being set up, and until they're live the panels are not shown. The opening is announced on Discord and X.</p>
+          <p class="muted" style="margin-top:0">Each collection has its own claim contract, and you burn in its burn panel on crovia.app. Trinari: Elderborn is open now. For Legends Awaken I and II burning isn't open yet: their claim contracts are being set up, and until they're live their panels are not shown. The opening is announced on Discord and X.</p>
 
           <div class="collection-panel" data-faction="chaos">
             <div class="collection-panel-head">
@@ -155,11 +158,11 @@
           <div class="collection-panel" data-faction="trinari">
             <div class="collection-panel-head">
               <h3>Trinari: Elderborn</h3>
-              <span class="status status--soon">Opening soon</span>
+              <span class="status status--live" data-live="burn-status-trinariElderborn">Open</span>
             </div>
-            <p class="muted">Token IDs 1–212. 0.1 CLG per burn, first come, first served while the reserve covers it.</p>
-            <p><a class="btn btn--ember btn--sm" href="https://crovia.app/collections/0xacbd87e450195c1107f74bc7521da154995d0fb4" rel="noopener" target="_blank">View on crovia.app</a></p>
-            <p class="small faint" style="margin:var(--space-4) 0 0">Claim contract: published here when burning opens · NFT contract: <a href="https://explorer.cronos.org/address/0xaCBD87e450195c1107F74bC7521DA154995D0fB4" rel="noopener" target="_blank">0xaCBD…0fB4</a></p>
+            <p class="muted">Token IDs 1–212. A fixed 0.1 CLG per burn, paid by the claim contract in the same transaction, with no fee, first come, first served while the reserve covers it. The reserve opened with 2 CLG, enough for the first 20 burns; more will be added over time. A burn the reserve can't cover is refused, and the Elderborn stays in your wallet.</p>
+            <p><a class="btn btn--ember btn--sm" href="https://crovia.app/claim/0xacbd87e450195c1107f74bc7521da154995d0fb4" rel="noopener" target="_blank">Burn on crovia.app</a></p>
+            <p class="small faint" style="margin:var(--space-4) 0 0">Claim contract: <a href="https://explorer.cronos.com/address/0xa3cB8e91912b07a3358F6166331100E1a706f184" rel="noopener" target="_blank">0xa3cB…f184</a> · NFT contract: <a href="https://explorer.cronos.org/address/0xaCBD87e450195c1107F74bC7521DA154995D0fB4" rel="noopener" target="_blank">0xaCBD…0fB4</a></p>
           </div>
 
         </div>
@@ -209,16 +212,16 @@
           <dl class="facts">
             <dt>Legends Awaken I claim contract</dt><dd>Published here when burning opens</dd>
             <dt>Legends Awaken II claim contract</dt><dd>Published here when burning opens</dd>
-            <dt>Trinari: Elderborn claim contract</dt><dd>Published here when burning opens</dd>
-            <dt>Reserve</dt><dd>Each claim contract holds its own $CLG reserve: the reserve is the contract's own $CLG balance. Anyone can add to it with a plain $CLG transfer; there is no schedule and no commitment to add more.</dd>
+            <dt>Trinari: Elderborn claim contract</dt><dd><span class="addr addr--full"><code>0xa3cB8e91912b07a3358F6166331100E1a706f184</code><button type="button" data-copy="0xa3cB8e91912b07a3358F6166331100E1a706f184" aria-label="Copy the Trinari: Elderborn claim contract address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button><a href="https://explorer.cronos.com/address/0xa3cB8e91912b07a3358F6166331100E1a706f184" rel="noopener" target="_blank" aria-label="View the Trinari: Elderborn claim contract on the Cronos explorer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4 10 14M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a></span></dd>
+            <dt>Reserve</dt><dd>Each claim contract holds its own $CLG reserve: the reserve is the contract's own $CLG balance. Anyone can add to it with a plain $CLG transfer; there is no fixed schedule. The Trinari: Elderborn reserve opened with 2 CLG, enough for the first 20 burns, and more will be added over time.</dd>
             <dt>Burn address</dt><dd><code>0x000000000000000000000000000000000000dEaD</code></dd>
-            <dt>Source code</dt><dd>Verified on the Cronos explorer when burning opens. Every setting is readable from the contract with <code>config()</code>.</dd>
+            <dt>Source code</dt><dd>Trinari: Elderborn's claim contract is submitted for source verification on the Cronos explorer; Legends Awaken I and II's follow when their burning opens. Every setting is readable from the contract with <code>config()</code>.</dd>
           </dl>
         </div>
 
         <div class="card card--pad-lg">
           <h3>How much you receive</h3>
-          <p class="muted"><strong>Legends Awaken I, Legends Awaken II and Trinari: Elderborn:</strong> 0.1 CLG per burn, fixed in each claim contract and the same for every burn, first come, first served while the reserve covers it. Read <code>payout()</code> on the claim contract to check it.</p>
+          <p class="muted"><strong>Legends Awaken I, Legends Awaken II and Trinari: Elderborn:</strong> 0.1 CLG per burn, fixed in each claim contract and the same for every burn, first come, first served while the reserve covers it. Read <code>payout()</code> on the claim contract to check it. Trinari: Elderborn's claim contract takes no fee: the whole 0.1 CLG goes to the holder who burns.</p>
           <p class="muted">No price oracle is involved: payouts are counted in $CLG, never priced. What a payout is worth in CRO or dollars moves with the $CLG market. The burn panel sets the amount it showed you as the minimum, so a burn reverts instead of paying less.</p>
           <p class="muted"><strong>Backing per outstanding NFT</strong> = the reserve divided by the NFTs still able to claim, never more than 0.1 CLG, readable as <code>backingPerNft()</code> on each claim contract.</p>
         </div>
@@ -234,7 +237,7 @@
           <!-- CUSTODY: written for the reserve-wallet model (Jani, 2026-09-23). If the reserves are deployed
                OWNERLESS instead, replace this paragraph with: "No withdraw, rescue or sweep function: nobody,
                including the team, can take $CLG out of a reserve; it leaves only as burn payouts." -->
-          <p class="muted"><strong>The one exit.</strong> Only the reserve wallet <code>0xF7192eb21130DD2b96805Ef0347808F1A1d451d4</code> may withdraw $CLG from a reserve, and only after a date fixed in the contract. That date can be pushed later but never brought closer; it is renewed a month at a time. Before it, $CLG leaves only as burn payouts. Read the date as <code>withdrawNotBefore()</code> on each claim contract.</p>
+          <p class="muted"><strong>The one exit.</strong> Only the reserve wallet <code>0xF7192eb21130DD2b96805Ef0347808F1A1d451d4</code> may withdraw $CLG from a reserve, and only after a date fixed in the contract. That date can be pushed later but never brought closer; it is renewed a month at a time. Before it, $CLG leaves only as burn payouts. The date only limits withdrawals: burns keep working before, at and after it. Read the date as <code>withdrawNotBefore()</code> on each claim contract.</p>
         </div>
 
         <div class="card card--pad-lg" data-faction="chaos">
@@ -277,7 +280,7 @@
       <div class="accordion">
         <details><summary>What will my wallet show?</summary><div><p>Two transactions on crovia.app: first an approval for the claim contract (of the one NFT you picked, or of the collection if you burn several at once), then the burn itself. The $CLG arrives in the burn transaction — you'll see it in the transaction details and in your balance.</p></div></details>
         <details><summary>Is the amount fixed?</summary><div><p>Yes: every burn pays the same 0.1 CLG while the reserve covers it, for all three collections. You see the exact amount before you confirm, and a burn that would pay less reverts. What the $CLG is worth moves with the market.</p></div></details>
-        <details><summary>What if the reserve is empty?</summary><div><p>The burn reverts and your NFT stays in your wallet. Reserves are refilled with deposits from time to time, first come, first served. There's no schedule and no commitment.</p></div></details>
+        <details><summary>What if the reserve is empty?</summary><div><p>The burn reverts and your NFT stays in your wallet. Reserves are refilled with deposits from time to time, first come, first served, on no fixed schedule. The Trinari: Elderborn reserve opened with 2 CLG, enough for the first 20 burns, and more will be added over time.</p></div></details>
         <details><summary>Can the team stop burns or take the $CLG?</summary><div><p>Nobody can pause burns or change the payout rule, the eligible IDs or the withdrawal address. The one exit is the reserve wallet, which may withdraw only after the date fixed in each contract; that date can only be pushed later and is renewed a month at a time. <a href="#rules">The rules</a> explain it in full.</p></div></details>
         <details><summary>My NFTs are in the Crypto.com NFT app.</summary><div><p>Withdraw them to your own Cronos wallet (for example Crypto.com Onchain or MetaMask) first. The burn must come from the wallet that holds the NFT.</p></div></details>
         <details><summary>Which wallets work?</summary><div><p>Any Cronos-compatible browser wallet that crovia.app supports: Crypto.com Onchain, MetaMask, Rabby and others. On a phone, open crovia.app inside your wallet app's browser.</p></div></details>
@@ -341,6 +344,7 @@
   </div>
 </footer>
 
+<script src="/assets/js/chain-lite.js" defer></script>
 <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

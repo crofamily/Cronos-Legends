@@ -340,24 +340,45 @@
       );
     }
 
-    // Burn reserves.
-    if (has("reserve") || has("burn-status")) {
+    // Burn reserves. Each collection has its own claim contract and is open once burn.json lists its
+    // `redeemer`. "burn-status" is the pill for the whole program (home); "burn-status-<key>" is the
+    // pill for one collection (its own page, the burn page).
+    const pills = cfg.collections.filter((c) => has("burn-status-" + c.key));
+    const overall = has("reserve") || has("burn-status");
+    if (overall || pills.length) {
+      const pill = (key, text, tone) =>
+        document.querySelectorAll('[data-live="' + key + '"]').forEach((el) => {
+          el.textContent = text;
+          el.className = "status status--" + tone;
+        });
       const live = cfg.collections.filter((c) => c.redeemer);
-      if (!live.length) {
+      pills.filter((c) => !c.redeemer).forEach((c) => pill("burn-status-" + c.key, "Launching soon", "soon"));
+      // Read only the claim contracts this page shows: all of them for the totals, else its own pills.
+      const read = overall ? live : live.filter((c) => pills.includes(c));
+      if (overall && !live.length) {
         set("reserve", "Soon");
         set("reserve-sub", "burn contracts launching soon");
-        set("burn-status", "Launching soon");
-        document.querySelectorAll('[data-live="burn-status"]').forEach((el) => (el.className = "status status--soon"));
-      } else {
+        pill("burn-status", "Launching soon", "soon");
+      } else if (read.length) {
+        // While only some collections are open, name them, so no pill reads as open for all of them.
+        const who = live.length < cfg.collections.length ? live.map((c) => c.short || c.name).join(" & ") : "";
+        const burns = (n, name) => n + (name ? " " + name : "") + (n === 1 ? " burn" : " burns");
         jobs.push(
-          Promise.all(live.map((c) => CL.lite.redeemer(c.redeemer)))
+          Promise.all(read.map((c) => CL.lite.redeemer(c.redeemer)))
             .then((rs) => {
-              const reserve = rs.reduce((a, r) => a + CL.num(r.reserve), 0);
-              const left = rs.reduce((a, r) => a + Number(r.burnsLeft), 0);
-              set("reserve", CL.fmt(reserve, 3) + " CLG");
-              set("reserve-sub", left + " burns covered now");
-              set("burn-status", left > 0 ? "Open" : "Reserve empty");
-              document.querySelectorAll('[data-live="burn-status"]').forEach((el) => (el.className = "status " + (left < 1 ? "status--paused" : "status--live")));
+              if (overall) {
+                const reserve = rs.reduce((a, r) => a + CL.num(r.reserve), 0);
+                const left = rs.reduce((a, r) => a + Number(r.burnsLeft), 0);
+                set("reserve", CL.fmt(reserve, 3) + " CLG");
+                set("reserve-sub", burns(left, who) + " covered now");
+                if (left > 0) pill("burn-status", who ? "Open for " + who : "Open", "live");
+                else pill("burn-status", who ? who + " reserve empty" : "Reserve empty", "paused");
+              }
+              read.forEach((c, i) => {
+                const n = Number(rs[i].burnsLeft);
+                if (n > 0) pill("burn-status-" + c.key, "Open · " + burns(n) + " covered", "live");
+                else pill("burn-status-" + c.key, "Reserve empty", "paused");
+              });
             })
             .catch(() => set("reserve", "—"))
         );
